@@ -1,0 +1,111 @@
+from pydantic import BaseModel, Field
+from typing import Optional
+from enum import Enum
+
+
+class IncidentStatus(str, Enum):
+    NEW = "new"
+    ALERTED = "alerted"
+    ASSIGNED = "assigned"
+    RESOLVED = "resolved"
+    CLOSED = "closed"
+
+
+class SeverityLevel(str, Enum):
+    LOW = "low"
+    MODERATE = "moderate"
+    HIGH = "high"
+    CRITICAL = "critical"
+
+
+class LocationSource(str, Enum):
+    EXIF = "exif"
+    BROWSER = "browser"
+    MANUAL = "manual"
+    UNKNOWN = "unknown"
+
+
+# --- Request Models ---
+
+class ChatQueryRequest(BaseModel):
+    message: str
+    session_id: Optional[str] = None
+
+
+class LocationUpdateRequest(BaseModel):
+    incident_id: str
+    lat: float
+    lng: float
+    source: LocationSource = LocationSource.MANUAL
+
+
+class AdminQueryRequest(BaseModel):
+    query: str
+    admin_password: str
+
+
+class IncidentStatusUpdate(BaseModel):
+    status: IncidentStatus
+    admin_password: str
+
+
+# --- Response Models ---
+
+class TriageResult(BaseModel):
+    severity: SeverityLevel
+    severity_score: int = Field(ge=1, le=10)
+    confidence: float = Field(ge=0.0, le=1.0)
+    indicators: list[str] = []
+    recommended_actions: list[str] = []
+    escalation_needed: bool = False
+    triage_summary: str = ""
+
+
+class SimilarityResult(BaseModel):
+    is_exact_duplicate: bool = False
+    exact_match_id: Optional[str] = None
+    similar_incidents: list[dict] = []
+    message: str = ""
+
+
+class ChatResponse(BaseModel):
+    response: str
+    incident_id: Optional[str] = None
+    triage: Optional[TriageResult] = None
+    similarity: Optional[SimilarityResult] = None
+    escalation_triggered: bool = False
+
+
+class AdminQueryResponse(BaseModel):
+    query: str
+    sql_generated: str
+    results: list[dict] = []
+    row_count: int = 0
+    summary: str = ""
+
+
+class IncidentDetail(BaseModel):
+    incident_id: str
+    created_at: str
+    status: str
+    triage_severity: Optional[str] = None
+    triage_confidence: Optional[float] = None
+    triage_summary: Optional[str] = None
+    lat: Optional[float] = None
+    lng: Optional[float] = None
+    location_source: Optional[str] = None
+    similar_incident_id: Optional[str] = None
+    similarity_score: Optional[float] = None
+    image_url: Optional[str] = None
+
+
+class AlertPayload(BaseModel):
+    incident_id: str
+    timestamp: str
+    severity: str
+    severity_score: int
+    confidence: float
+    distress_indicators: list[str]
+    location: Optional[dict] = None
+    similar_incident_reference: Optional[str] = None
+    admin_console_url: str = ""

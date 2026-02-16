@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dharmasala Admin - Analytics</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        .admin-container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .admin-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .admin-section h2 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            color: var(--primary-dark);
+        }
+        .query-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .query-form input[type="text"] {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .query-form input[type="password"] {
+            width: 160px;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .result-box {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 13px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .result-summary {
+            padding: 10px 0;
+            font-weight: 500;
+            color: var(--primary-dark);
+        }
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+        table.data-table th {
+            background: var(--primary-dark);
+            color: white;
+            padding: 8px 10px;
+            text-align: left;
+        }
+        table.data-table td {
+            padding: 6px 10px;
+            border-bottom: 1px solid #eee;
+        }
+        table.data-table tr:hover td {
+            background: #f0f4f0;
+        }
+        .sql-display {
+            background: #1b4332;
+            color: #95d5b2;
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-bottom: 12px;
+            overflow-x: auto;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .stat-card {
+            background: #f0f4f0;
+            border-radius: 8px;
+            padding: 16px;
+            text-align: center;
+        }
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        .stat-card .stat-label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+        .examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .example-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .example-btn:hover {
+            background: #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span class="header-icon">&#128202;</span>
+        <div>
+            <h1>Dharmasala Admin Console</h1>
+            <div class="subtitle">Natural Language Analytics</div>
+        </div>
+        <div class="header-right">
+            <a href="/">Chat</a>
+            <a href="/health">Status</a>
+        </div>
+    </div>
+
+    <div class="admin-container">
+        <div class="admin-section">
+            <h2>Dashboard</h2>
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalIncidents">-</div>
+                    <div class="stat-label">Total Incidents</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="highSeverity">-</div>
+                    <div class="stat-label">High/Critical</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalAlerts">-</div>
+                    <div class="stat-label">Alerts Sent</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="openCases">-</div>
+                    <div class="stat-label">Open Cases</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-section">
+            <h2>Ask a Question (Natural Language Query)</h2>
+            <div class="examples">
+                <button class="example-btn" onclick="setQuery('Show high-severity incidents in last 7 days')">High severity last 7 days</button>
+                <button class="example-btn" onclick="setQuery('How many incidents by severity level?')">Incidents by severity</button>
+                <button class="example-btn" onclick="setQuery('Show recent alerts')">Recent alerts</button>
+                <button class="example-btn" onclick="setQuery('Show latest 10 incidents')">Latest incidents</button>
+            </div>
+            <div class="query-form">
+                <input type="password" id="adminPassword" placeholder="Admin password" value="changeme">
+                <input type="text" id="nlQuery" placeholder='e.g., "Show high-severity incidents in last 7 days by area"' onkeydown="if(event.key==='Enter')runQuery()">
+                <button class="btn btn-primary" onclick="runQuery()">Query</button>
+            </div>
+            <div id="queryResult" style="display:none;">
+                <div class="result-summary" id="resultSummary"></div>
+                <div class="sql-display" id="sqlDisplay"></div>
+                <div class="result-box" id="resultTable"></div>
+            </div>
+        </div>
+
+        <div class="admin-section">
+            <h2>Recent Incidents</h2>
+            <div class="result-box" id="incidentsList">Loading...</div>
+        </div>
+    </div>
+
+    <script>
+        const adminPw = () => document.getElementById("adminPassword").value;
+
+        function setQuery(q) {
+            document.getElementById("nlQuery").value = q;
+            runQuery();
+        }
+
+        async function runQuery() {
+            const query = document.getElementById("nlQuery").value.trim();
+            if (!query) return;
+
+            const resultDiv = document.getElementById("queryResult");
+            resultDiv.style.display = "block";
+            document.getElementById("resultSummary").textContent = "Running query...";
+            document.getElementById("sqlDisplay").textContent = "";
+            document.getElementById("resultTable").textContent = "";
+
+            try {
+                const res = await fetch("/v1/admin/query", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query, admin_password: adminPw() }),
+                });
+                if (res.status === 403) {
+                    document.getElementById("resultSummary").textContent = "Access denied. Check your admin password.";
+                    return;
+                }
+                const data = await res.json();
+                document.getElementById("resultSummary").textContent = data.summary || "Query complete.";
+                document.getElementById("sqlDisplay").textContent = data.sql_generated || "N/A";
+
+                if (data.results && data.results.length > 0) {
+                    document.getElementById("resultTable").innerHTML = buildTable(data.results);
+                } else {
+                    document.getElementById("resultTable").textContent = "No results.";
+                }
+            } catch (err) {
+                document.getElementById("resultSummary").textContent = "Error: " + err.message;
+            }
+        }
+
+        function buildTable(rows) {
+            if (!rows.length) return "No data";
+            const cols = Object.keys(rows[0]);
+            let html = '<table class="data-table"><thead><tr>';
+            cols.forEach(c => { html += "<th>" + c + "</th>"; });
+            html += "</tr></thead><tbody>";
+            rows.forEach(row => {
+                html += "<tr>";
+                cols.forEach(c => {
+                    let val = row[c];
+                    if (val === null || val === undefined) val = "-";
+                    if (typeof val === "string" && val.length > 60) val = val.substring(0, 60) + "...";
+                    html += "<td>" + val + "</td>";
+                });
+                html += "</tr>";
+            });
+            html += "</tbody></table>";
+            return html;
+        }
+
+        async function loadDashboard() {
+            try {
+                const res = await fetch("/v1/admin/incidents?limit=200&admin_password=" + encodeURIComponent(adminPw()));
+                if (!res.ok) return;
+                const data = await res.json();
+                const incidents = data.incidents || [];
+
+                document.getElementById("totalIncidents").textContent = incidents.length;
+                document.getElementById("highSeverity").textContent = incidents.filter(
+                    i => i.triage_severity === "high" || i.triage_severity === "critical"
+                ).length;
+                document.getElementById("openCases").textContent = incidents.filter(
+                    i => i.status === "new" || i.status === "alerted"
+                ).length;
+
+                // Load recent incidents table
+                const recent = incidents.slice(0, 20);
+                if (recent.length) {
+                    document.getElementById("incidentsList").innerHTML = buildTable(
+                        recent.map(i => ({
+                            ID: (i.incident_id || "").substring(0, 8) + "...",
+                            Created: (i.created_at || "").substring(0, 19),
+                            Severity: i.triage_severity || "-",
+                            Score: i.triage_severity_score || "-",
+                            Status: i.status || "-",
+                            Summary: (i.triage_summary || "-").substring(0, 80),
+                        }))
+                    );
+                } else {
+                    document.getElementById("incidentsList").textContent = "No incidents yet.";
+                }
+            } catch (e) {
+                console.error("Dashboard load error:", e);
+            }
+
+            try {
+                const res = await fetch("/v1/admin/alerts?limit=200&admin_password=" + encodeURIComponent(adminPw()));
+                if (!res.ok) return;
+                const data = await res.json();
+                document.getElementById("totalAlerts").textContent = (data.alerts || []).length;
+            } catch (e) {
+                document.getElementById("totalAlerts").textContent = "?";
+            }
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>
