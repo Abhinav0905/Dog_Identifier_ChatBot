@@ -3,4 +3,4 @@
 .venv/
 *pycache*
 storage/*
-dharmasala.db
+dharamsala.db

@@ -1,4 +1,4 @@
-// Dharmasala Animal Rescue Chatbot - Frontend
+// Dharamsala Animal Rescue Chatbot - Frontend
 
 let sessionId = localStorage.getItem("dharmasala_session");
 if (!sessionId) {

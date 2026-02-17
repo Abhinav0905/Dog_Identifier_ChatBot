@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Dharmasala Animal Rescue Chatbot - System Test Suite
+Dharamsala Animal Rescue Chatbot - System Test Suite
 Runs end-to-end tests against a running local server (http://localhost:8000).
 
 Usage:
@@ -72,7 +72,7 @@ def api_post_json(path: str, body: dict) -> tuple[int, dict]:
 def api_post_multipart(path: str, fields: dict, files: dict) -> tuple[int, dict]:
     """POST multipart/form-data with file uploads."""
     import io
-    boundary = "----DharmasalaTestBoundary"
+    boundary = "----DharamsalaTestBoundary"
     body = io.BytesIO()
 
     for key, value in fields.items():
@@ -483,7 +483,7 @@ def main():
 
     print()
     print("=" * 60)
-    print("  Dharmasala Animal Rescue Chatbot - System Tests")
+    print("  Dharamsala Animal Rescue Chatbot - System Tests")
     print(f"  Server: {BASE_URL}")
     print(f"  Images: {EXAMPLE_IMAGES_DIR}")
     print("=" * 60)

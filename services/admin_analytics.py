@@ -13,7 +13,7 @@ logger = logging.getLogger("dharmasala.admin")
 
 client = Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
 
-NL_TO_SQL_SYSTEM = """You are a SQL query generator for the Dharmasala Animal Rescue incident database.
+NL_TO_SQL_SYSTEM = """You are a SQL query generator for the Dharamsala Animal Rescue incident database.
 You convert natural language questions into safe, read-only SQLite SELECT queries.
 
 STRICT RULES:

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Dharmasala Animal Rescue Chatbot - Unit Test Suite
+Dharamsala Animal Rescue Chatbot - Unit Test Suite
 Tests all service modules, database layer, and models in isolation.
 
 Usage:
@@ -437,7 +437,7 @@ class TestTriage(unittest.TestCase):
 
     def test_fallback_chat_default(self):
         result = self.triage._fallback_chat_response("hello there")
-        self.assertIn("Dharmasala Animal Rescue", result)
+        self.assertIn("Dharamsala Animal Rescue", result)
 
 
 # ============================================================

@@ -1,5 +1,5 @@
 """
-Dharmasala Animal Rescue Chatbot - Local Prototype
+Dharamsala Animal Rescue Chatbot - Local Prototype
 FastAPI application with all Phase 1 endpoints.
 """
 
@@ -29,7 +29,7 @@ logging.basicConfig(
 logger = logging.getLogger("dharmasala")
 
 app = FastAPI(
-    title="Dharmasala Animal Rescue Chatbot",
+    title="Dharamsala Animal Rescue Chatbot",
     version="1.0.0-prototype",
     description="AI-powered chatbot for stray dog rescue triage and guidance",
 )

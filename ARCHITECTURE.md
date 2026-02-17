@@ -1,8 +1,8 @@
-# Dharmasala Animal Rescue Chatbot - Local Demo Architecture
+# Dharamsala Animal Rescue Chatbot - Local Demo Architecture
 
 ## Overview
 
-This document describes the architecture of the local prototype for the Dharmasala Animal
+This document describes the architecture of the local prototype for the Dharamsala Animal
 Rescue Chatbot. The prototype implements all Phase 1 functional requirements using lightweight
 local substitutes for production services, enabling full end-to-end workflow validation before
 cloud deployment.

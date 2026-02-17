@@ -82,7 +82,7 @@ def check_input(text: str) -> GuardrailResult:
             if re.search(pattern, lower):
                 return GuardrailResult(
                     False,
-                    "I'm the Dharmasala Animal Rescue assistant. I can help with reporting stray animals in distress, dog bite guidance, and rescue-related questions. How can I help with an animal rescue concern?",
+                    "I'm the Dharamsala Animal Rescue assistant. I can help with reporting stray animals in distress, dog bite guidance, and rescue-related questions. How can I help with an animal rescue concern?",
                     "off_topic",
                 )
 

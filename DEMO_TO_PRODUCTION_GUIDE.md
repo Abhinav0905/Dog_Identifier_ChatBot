@@ -1,4 +1,4 @@
-# Dharmasala Animal Rescue Chatbot - Demo to Production Transition Guide
+# Dharamsala Animal Rescue Chatbot - Demo to Production Transition Guide
 
 ## Overview
 

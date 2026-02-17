@@ -1,9 +1,9 @@
-# Dharmasala Animal Rescue Chatbot - AWS Production Architecture
+# Dharamsala Animal Rescue Chatbot - AWS Production Architecture
 
 ## Overview
 
 This document describes the target AWS architecture for the production deployment of the
-Dharmasala Animal Rescue Chatbot, designed for scalability, reliability, and security as
+Dharamsala Animal Rescue Chatbot, designed for scalability, reliability, and security as
 outlined in the HLD (99.5%+ availability, P95 <4s text / <8s image).
 
 ---

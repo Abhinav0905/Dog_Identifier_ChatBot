@@ -12,7 +12,7 @@ import database as db
 
 client = Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
 
-VISION_SYSTEM_PROMPT = """You are a veterinary triage assistant for Dharmasala Animal Rescue.
+VISION_SYSTEM_PROMPT = """You are a veterinary triage assistant for Dharamsala Animal Rescue.
 You analyze images of stray dogs to assess their condition and urgency level.
 
 IMPORTANT RULES:
@@ -38,7 +38,7 @@ Severity guide:
 - high (7-8): Clear distress, significant injury, emaciation, or illness
 - critical (9-10): Life-threatening condition, severe injury, immobility, extreme distress"""
 
-CHAT_SYSTEM_PROMPT = """You are the Dharmasala Animal Rescue chatbot assistant. You help the public
+CHAT_SYSTEM_PROMPT = """You are the Dharamsala Animal Rescue chatbot assistant. You help the public
 and volunteers with animal rescue questions, particularly about stray dogs in the Dharamsala area.
 
 RULES:
@@ -202,7 +202,7 @@ def _fallback_chat_response(message: str) -> str:
             "You can upload a photo of the animal for a condition assessment."
         )
     return (
-        "Hello! I'm the Dharmasala Animal Rescue assistant. Examples of questions I can help you with:\n\n"
+        "Hello! I'm the Dharamsala Animal Rescue assistant. Examples of questions I can help you with:\n\n"
         "- **Reporting a stray dog** in distress (upload a photo for assessment)\n"
         "- **Dog bite first aid** guidance\n"
         "- **Rescue questions** about stray animals in the Dharamsala area\n\n"
