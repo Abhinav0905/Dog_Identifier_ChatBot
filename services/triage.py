@@ -138,10 +138,10 @@ def _parse_triage_response(text: str) -> dict:
 def _fallback_triage(error: str = "") -> dict:
     """Return a safe fallback triage when the model is unavailable."""
     return {
-        "severity": "moderate",
-        "severity_score": 5,
-        "confidence": 0.3,
-        "indicators": ["Unable to perform automated assessment"],
+        "severity": "unknown",
+        "severity_score": None,
+        "confidence": None,
+        "indicators": [],
         "recommended_actions": [
             "Please describe the animal's condition in text",
             "If the animal appears injured or in distress, contact local rescue services",
@@ -149,6 +149,7 @@ def _fallback_triage(error: str = "") -> dict:
         ],
         "triage_summary": "Automated image assessment is currently unavailable. Please provide a text description of the animal's condition so we can assist you.",
         "escalation_needed": False,
+        "is_fallback": True,
         "model_version": "fallback",
         "raw_output": error,
         "latency_ms": 0,
@@ -201,7 +202,7 @@ def _fallback_chat_response(message: str) -> str:
             "You can upload a photo of the animal for a condition assessment."
         )
     return (
-        "Hello! I'm the Dharmasala Animal Rescue assistant. I can help with:\n\n"
+        "Hello! I'm the Dharmasala Animal Rescue assistant. Examples of questions I can help you with:\n\n"
         "- **Reporting a stray dog** in distress (upload a photo for assessment)\n"
         "- **Dog bite first aid** guidance\n"
         "- **Rescue questions** about stray animals in the Dharamsala area\n\n"

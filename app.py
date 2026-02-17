@@ -167,10 +167,9 @@ async def triage_image(
     db.save_chat_message(session_id, "user", f"[Image uploaded: {image.filename}] {context}")
     db.save_chat_message(session_id, "assistant", response_text)
 
-    return ChatResponse(
-        response=response_text,
-        incident_id=incident_id,
-        triage={
+    triage_data = None
+    if not triage_result.get("is_fallback"):
+        triage_data = {
             "severity": triage_result["severity"],
             "severity_score": triage_result["severity_score"],
             "confidence": triage_result["confidence"],
@@ -178,7 +177,12 @@ async def triage_image(
             "recommended_actions": triage_result["recommended_actions"],
             "escalation_needed": triage_result.get("escalation_needed", False),
             "triage_summary": triage_result["triage_summary"],
-        },
+        }
+
+    return ChatResponse(
+        response=response_text,
+        incident_id=incident_id,
+        triage=triage_data,
         similarity={
             "is_exact_duplicate": sim_result["is_exact_duplicate"],
             "exact_match_id": sim_result.get("exact_match_id"),
@@ -359,6 +363,22 @@ async def health():
 def _build_triage_response(triage_result: dict, sim_result: dict, loc: dict | None) -> str:
     """Build a youth-friendly response combining triage, similarity, and location info."""
     parts = []
+    is_fallback = triage_result.get("is_fallback", False)
+
+    if is_fallback:
+        # Minimal response when AI assessment is unavailable
+        parts.append(triage_result["triage_summary"])
+
+        if triage_result["recommended_actions"]:
+            parts.append("\n**Recommended next steps:**")
+            for i, action in enumerate(triage_result["recommended_actions"][:5], 1):
+                parts.append(f"{i}. {action}")
+
+        # Similarity info still relevant
+        if sim_result.get("message"):
+            parts.append(f"\n*{sim_result['message']}*")
+
+        return "\n".join(parts)
 
     severity = triage_result["severity"]
     score = triage_result["severity_score"]

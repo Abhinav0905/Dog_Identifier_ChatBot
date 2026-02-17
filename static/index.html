@@ -25,10 +25,10 @@
                 <div class="message-avatar">&#128054;</div>
                 <div class="message-bubble">
                     <p><strong>Welcome to Dharmasala Animal Rescue!</strong></p>
-                    <p>I can help you with:</p>
+                    <p>Examples of what I can help you with:</p>
                     <ul>
                         <li><strong>Report a stray dog</strong> - Upload a photo and I'll assess their condition</li>
-                        <li><strong>Dog bite guidance</strong> - Immediate first-aid steps</li>
+                        <li><strong>Wildlife encounter guidance</strong> - Safety and first-aid advice</li>
                         <li><strong>Rescue questions</strong> - Information about animal rescue</li>
                     </ul>
                     <p>How can I help you today?</p>
@@ -46,21 +46,21 @@
             <div class="upload-preview" id="uploadPreview">
                 <img id="previewImg" src="" alt="Preview">
                 <span id="fileName"></span>
-                <button class="remove-btn" onclick="removeImage()" title="Remove image">&#10005;</button>
+                <button class="remove-btn" id="removeBtn" title="Remove image">&#10005;</button>
             </div>
             <div class="location-bar" id="locationBar">
                 &#128205; Location: <span id="locationText">Not shared</span>
             </div>
             <div class="input-row">
-                <button class="btn-icon" onclick="document.getElementById('fileInput').click()" title="Upload image">
+                <button class="btn-icon" id="cameraBtn" title="Upload image">
                     &#128247;
                 </button>
-                <button class="btn-icon" onclick="requestLocation()" title="Share location">
+                <button class="btn-icon" id="locationBtn" title="Share location">
                     &#128205;
                 </button>
-                <input type="file" id="fileInput" class="file-input" accept="image/*" onchange="handleFileSelect(event)">
-                <textarea id="messageInput" placeholder="Describe the situation or ask a rescue question..." rows="1" onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
-                <button class="btn btn-primary" onclick="sendMessage()" id="sendBtn">Send</button>
+                <input type="file" id="fileInput" class="file-input" accept="image/*">
+                <textarea id="messageInput" placeholder="Describe the situation or ask a rescue question..." rows="1"></textarea>
+                <button class="btn btn-primary" id="sendBtn">Send</button>
             </div>
         </div>
 
@@ -69,6 +69,6 @@
         </div>
     </div>
 
-    <script src="/static/app.js"></script>
+    <script src="/static/app.js?v=2"></script>
 </body>
 </html>

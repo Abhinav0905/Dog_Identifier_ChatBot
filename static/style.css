@@ -164,6 +164,10 @@ body {
 .message-bubble p:last-child { margin-bottom: 0; }
 .message-bubble strong { font-weight: 600; }
 .message-bubble ul, .message-bubble ol { margin-left: 20px; margin-bottom: 8px; }
+.message-bubble li {
+    padding: 4px 0 4px 4px;
+    line-height: 1.5;
+}
 
 /* Triage badge */
 .triage-badge {
