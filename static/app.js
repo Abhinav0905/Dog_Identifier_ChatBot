@@ -12,6 +12,23 @@ if (!sessionId) {
 let selectedFile = null;
 let userLocation = null;
 
+// Open chat button
+var openChatBtn = document.getElementById("openChatBtn");
+var chatContainer = document.querySelector(".chat-container");
+var landing = document.querySelector(".landing");
+
+var minimizeBtn = document.getElementById("minimizeBtn");
+
+openChatBtn.addEventListener("click", function () {
+    chatContainer.classList.remove("hidden");
+    landing.classList.add("hidden");
+});
+
+minimizeBtn.addEventListener("click", function () {
+    chatContainer.classList.add("hidden");
+    landing.classList.remove("hidden");
+});
+
 // Grab DOM elements
 var chatMessages = document.getElementById("chatMessages");
 var messageInput = document.getElementById("messageInput");
