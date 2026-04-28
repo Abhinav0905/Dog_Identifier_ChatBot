@@ -74,6 +74,12 @@ class ChatResponse(BaseModel):
     triage: Optional[TriageResult] = None
     similarity: Optional[SimilarityResult] = None
     escalation_triggered: bool = False
+    # None = location unknown; True = verified in region; False = outside jurisdiction
+    in_jurisdiction: Optional[bool] = None
+    # None = not applicable; True = API is waiting for user to confirm case is in Dharamsala
+    location_confirmed_needed: Optional[bool] = None
+    # Returned when location_confirmed_needed=True; pass to /v1/triage/confirm
+    pending_token: Optional[str] = None
 
 
 class AdminQueryResponse(BaseModel):

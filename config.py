@@ -7,9 +7,13 @@ BASE_DIR = Path(__file__).parent
 load_dotenv(BASE_DIR / ".env")
 STORAGE_DIR = BASE_DIR / "storage"
 STORAGE_DIR.mkdir(exist_ok=True)
-DB_PATH = BASE_DIR / "dharmasala.db"
+DB_PATH = BASE_DIR / "dharamsala.db"
 
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
+# Selects the AI backend: "claude" (default) or "openai"
+MODEL_PROVIDER = os.getenv("MODEL_PROVIDER", "claude").lower()
+
 ALERT_WEBHOOK_URL = os.getenv("ALERT_WEBHOOK_URL", "")
 SLACK_WEBHOOK_URL = os.getenv("SLACK_WEBHOOK_URL", "")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "changeme")

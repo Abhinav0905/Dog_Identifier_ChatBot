@@ -1,11 +1,23 @@
 """
-Geolocation handling: EXIF extraction, browser geolocation, manual fallback.
+Geolocation handling: EXIF extraction, browser geolocation, manual fallback,
+and Dharamsala jurisdiction verification.
 """
 
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
 from typing import Optional
 import io
+import math
+
+# ---------------------------------------------------------------------------
+# Dharamsala jurisdiction definition
+# ---------------------------------------------------------------------------
+# Centre: Dharamsala town (32.2196° N, 76.3234° E)
+# Radius: 25 km — covers Dharamsala, McLeod Ganj, Dharamkot, Kangra, and
+#         the surrounding Kangra Valley operational area.
+DHARAMSALA_CENTER_LAT: float = 32.2196
+DHARAMSALA_CENTER_LNG: float = 76.3234
+DHARAMSALA_REGION_RADIUS_KM: float = 25.0
 
 
 def _get_gps_info(exif_data: dict) -> dict:
@@ -71,3 +83,24 @@ def extract_exif_location(image_bytes: bytes) -> Optional[dict]:
 def truncate_precision(lat: float, lng: float, decimals: int = 4) -> tuple[float, float]:
     """Truncate location precision for privacy."""
     return round(lat, decimals), round(lng, decimals)
+
+
+def haversine_distance(lat1: float, lng1: float, lat2: float, lng2: float) -> float:
+    """Return the great-circle distance in km between two coordinate pairs (Haversine formula)."""
+    R = 6371.0  # Earth mean radius in km
+    phi1, phi2 = math.radians(lat1), math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlambda = math.radians(lng2 - lng1)
+    a = (
+        math.sin(dphi / 2) ** 2
+        + math.cos(phi1) * math.cos(phi2) * math.sin(dlambda / 2) ** 2
+    )
+    return R * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+
+def is_in_dharamsala_region(lat: float, lng: float) -> bool:
+    """Return True if the coordinate falls within the Dharamsala Animal Rescue jurisdiction."""
+    return (
+        haversine_distance(lat, lng, DHARAMSALA_CENTER_LAT, DHARAMSALA_CENTER_LNG)
+        <= DHARAMSALA_REGION_RADIUS_KM
+    )

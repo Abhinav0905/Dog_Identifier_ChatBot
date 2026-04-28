@@ -95,6 +95,16 @@ def init_db():
             CREATE INDEX IF NOT EXISTS idx_incidents_status ON incidents(status);
             CREATE INDEX IF NOT EXISTS idx_incidents_severity ON incidents(triage_severity);
             CREATE INDEX IF NOT EXISTS idx_chat_session ON chat_history(session_id);
+
+            CREATE TABLE IF NOT EXISTS rag_chunks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                doc_file TEXT NOT NULL,
+                title TEXT NOT NULL,
+                chunk_index INTEGER NOT NULL,
+                content TEXT NOT NULL,
+                embedding TEXT
+            );
+            CREATE INDEX IF NOT EXISTS idx_rag_chunks_doc ON rag_chunks(doc_file);
         """)
 
 
@@ -255,6 +265,27 @@ def get_incidents_list(limit: int = 100, status: str = None, severity: str = Non
     params.append(limit)
     with get_db() as conn:
         rows = conn.execute(query, params).fetchall()
+        return [dict(r) for r in rows]
+
+
+def insert_rag_chunk(doc_file: str, title: str, chunk_index: int, content: str, embedding: str | None):
+    with get_db() as conn:
+        conn.execute(
+            "INSERT INTO rag_chunks (doc_file, title, chunk_index, content, embedding) VALUES (?, ?, ?, ?, ?)",
+            (doc_file, title, chunk_index, content, embedding),
+        )
+
+
+def delete_rag_chunks_for_doc(doc_file: str):
+    with get_db() as conn:
+        conn.execute("DELETE FROM rag_chunks WHERE doc_file = ?", (doc_file,))
+
+
+def get_all_rag_chunks() -> list[dict]:
+    with get_db() as conn:
+        rows = conn.execute(
+            "SELECT id, doc_file, title, chunk_index, content, embedding FROM rag_chunks ORDER BY doc_file, chunk_index"
+        ).fetchall()
         return [dict(r) for r in rows]
 
 

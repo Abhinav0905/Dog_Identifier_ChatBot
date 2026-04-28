@@ -1,5 +1,45 @@
 // Dharamsala Animal Rescue Chatbot - Frontend
 
+// --- Welcome message ---
+
+(function () {
+    var lang = (navigator.language || "en").split("-")[0].toLowerCase();
+    var isHindi = lang === "hi";
+
+    var bubble = document.createElement("div");
+    bubble.className = "message assistant";
+
+    if (isHindi) {
+        bubble.innerHTML =
+            '<div class="message-avatar">&#128054;</div>' +
+            '<div class="message-bubble">' +
+            "<p><strong>धर्मशाला एनिमल रेस्क्यू में आपका स्वागत है!</strong></p>" +
+            "<p>मैं इन चीज़ों में आपकी मदद कर सकता हूँ:</p>" +
+            "<ul>" +
+            "<li><strong>आवारा कुत्ते की रिपोर्ट करें</strong> – एक फ़ोटो अपलोड करें और मैं उनकी स्थिति का आकलन करूँगा</li>" +
+            "<li><strong>जानवर के काटने पर सलाह</strong> – क्या करें, इस पर सुरक्षित मार्गदर्शन</li>" +
+            "<li><strong>बचाव संबंधी सवाल</strong> – धर्मशाला क्षेत्र में पशु बचाव की जानकारी</li>" +
+            "</ul>" +
+            "<p>आज मैं आपकी कैसे सहायता कर सकता हूँ?</p>" +
+            "</div>";
+    } else {
+        bubble.innerHTML =
+            '<div class="message-avatar">&#128054;</div>' +
+            '<div class="message-bubble">' +
+            "<p><strong>Welcome to Dharamsala Animal Rescue!</strong></p>" +
+            "<p>Examples of what I can help you with:</p>" +
+            "<ul>" +
+            "<li><strong>Report a stray dog</strong> – Upload a photo and I'll assess their condition</li>" +
+            "<li><strong>Dog bite advice</strong> – Safe guidance on what to do</li>" +
+            "<li><strong>Rescue questions</strong> – Information about animal rescue in the Dharamsala area</li>" +
+            "</ul>" +
+            "<p>How can I help you today?</p>" +
+            "</div>";
+    }
+
+    document.getElementById("chatMessages").appendChild(bubble);
+})();
+
 let sessionId = localStorage.getItem("dharmasala_session");
 if (!sessionId) {
     sessionId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
@@ -10,7 +50,7 @@ if (!sessionId) {
 }
 
 let selectedFile = null;
-let userLocation = null;
+let pendingToken = null;
 
 // Open chat button
 var openChatBtn = document.getElementById("openChatBtn");
@@ -41,7 +81,6 @@ var locationText = document.getElementById("locationText");
 var fileInput = document.getElementById("fileInput");
 var sendBtn = document.getElementById("sendBtn");
 var cameraBtn = document.getElementById("cameraBtn");
-var locationBtn = document.getElementById("locationBtn");
 var removeBtn = document.getElementById("removeBtn");
 
 // --- Event listeners ---
@@ -51,8 +90,6 @@ sendBtn.addEventListener("click", sendMessage);
 cameraBtn.addEventListener("click", function () {
     fileInput.click();
 });
-
-locationBtn.addEventListener("click", requestLocation);
 
 removeBtn.addEventListener("click", removeImage);
 
@@ -101,32 +138,6 @@ function removeImage() {
     fileNameSpan.textContent = "";
 }
 
-// --- Geolocation ---
-
-function requestLocation() {
-    if (!navigator.geolocation) {
-        alert("Geolocation is not supported by your browser.");
-        return;
-    }
-    locationBtn.disabled = true;
-    navigator.geolocation.getCurrentPosition(
-        function (pos) {
-            userLocation = {
-                lat: pos.coords.latitude,
-                lng: pos.coords.longitude,
-                accuracy: pos.coords.accuracy,
-            };
-            locationBar.classList.add("active");
-            locationText.textContent =
-                pos.coords.latitude.toFixed(4) + ", " + pos.coords.longitude.toFixed(4);
-            locationBtn.disabled = false;
-        },
-        function (err) {
-            alert("Unable to get location: " + err.message + "\nYou can describe the location in your message.");
-            locationBtn.disabled = false;
-        }
-    );
-}
 
 // --- Send message ---
 
@@ -183,11 +194,6 @@ function sendImageTriage(file, context) {
     formData.append("image", file);
     formData.append("context", context || "");
     formData.append("session_id", sessionId);
-    if (userLocation) {
-        formData.append("lat", userLocation.lat);
-        formData.append("lng", userLocation.lng);
-        formData.append("location_source", "browser");
-    }
     return fetch("/v1/triage/image", { method: "POST", body: formData }).then(function (res) {
         if (!res.ok) throw new Error("Triage request failed: " + res.status);
         return res.json();
@@ -253,11 +259,72 @@ function addAssistantResponse(data) {
             data.incident_id.substring(0, 8) + "...</div>";
     }
 
+    // Location confirmation buttons
+    if (data.location_confirmed_needed && data.pending_token) {
+        pendingToken = data.pending_token;
+        content +=
+            '<div style="margin-top:12px;display:flex;gap:8px;">' +
+            '<button class="btn btn-primary confirm-yes-btn">Yes, this case is in the Dharamsala region</button>' +
+            '<button class="btn confirm-no-btn" style="background:#eee;color:#333;">No, this is elsewhere</button>' +
+            '</div>';
+    }
+
     div.innerHTML =
         '<div class="message-avatar">&#128054;</div>' +
         '<div class="message-bubble">' + content + "</div>";
+
+    // Attach confirm button handlers after DOM insertion
+    if (data.location_confirmed_needed && data.pending_token) {
+        div.querySelector(".confirm-yes-btn").addEventListener("click", function () {
+            removeConfirmButtons(div);
+            addMessage("user", "Yes, this case is in the Dharamsala region");
+            showTyping(true);
+            sendConfirm(pendingToken)
+                .then(function (confirmData) {
+                    showTyping(false);
+                    pendingToken = null;
+                    addAssistantResponse(confirmData);
+                })
+                .catch(function () {
+                    showTyping(false);
+                    addMessage("assistant", "Sorry, something went wrong processing your report. Please try uploading the image again.");
+                });
+        });
+        div.querySelector(".confirm-no-btn").addEventListener("click", function () {
+            removeConfirmButtons(div);
+            pendingToken = null;
+            addMessage("user", "No, this is elsewhere");
+            addMessage(
+                "assistant",
+                "Understood. Dharamsala Animal Rescue only tracks cases within the Dharamsala region.\n\n" +
+                "Please contact a local animal rescue organisation or veterinary service in your area. " +
+                "You can reach out to:\n" +
+                "- Your nearest SPCA or animal welfare society\n" +
+                "- A local veterinary clinic\n" +
+                "- Local municipal animal control services"
+            );
+        });
+    }
+
     chatMessages.appendChild(div);
     scrollToBottom();
+}
+
+function removeConfirmButtons(div) {
+    var btnDiv = div.querySelector(".message-bubble div:last-child");
+    if (btnDiv && (btnDiv.querySelector(".confirm-yes-btn") || btnDiv.querySelector(".confirm-no-btn"))) {
+        btnDiv.remove();
+    }
+}
+
+function sendConfirm(token) {
+    var formData = new FormData();
+    formData.append("pending_token", token);
+    formData.append("session_id", sessionId);
+    return fetch("/v1/triage/confirm", { method: "POST", body: formData }).then(function (res) {
+        if (!res.ok) throw new Error("Confirm request failed: " + res.status);
+        return res.json();
+    });
 }
 
 // --- Helpers ---

@@ -63,6 +63,16 @@ PORT=8000
 
 ## Running the App
 
+**1. Ingest RAG knowledge documents (required before first run):**
+
+```bash
+python3 scripts/ingest_docs.py
+```
+
+This populates the knowledge base used by the chat assistant. Re-run whenever files in `rag_docs/` are updated.
+
+**2. Start the server:**
+
 ```bash
 python app.py
 ```
@@ -98,12 +108,18 @@ gaia-chatbot/
 ├── .env.example
 │
 ├── services/
-│   ├── triage.py            # Claude Vision API integration
+│   ├── triage.py            # Vision triage and chat response generation
+│   ├── rag.py               # RAG retrieval (BM25 / semantic)
+│   ├── ai_client.py         # Unified Anthropic/OpenAI client
 │   ├── guardrails.py        # Input validation and safety filters
 │   ├── similarity.py        # Duplicate/near-duplicate detection
-│   ├── location.py          # EXIF GPS extraction
+│   ├── location.py          # EXIF GPS extraction and jurisdiction check
 │   ├── alerts.py            # Slack/webhook alert dispatching
 │   └── admin_analytics.py   # Natural language to SQL analytics
+│
+├── rag_docs/                # Markdown knowledge documents (DAR website content)
+├── scripts/
+│   └── ingest_docs.py       # Chunk, embed, and store rag_docs into SQLite
 │
 ├── static/
 │   ├── index.html           # Public chat UI

@@ -1,17 +1,14 @@
 """
 Admin natural-language analytics service.
-Converts NL queries to safe read-only SQL using Claude, with strict allowlists.
+Converts NL queries to safe read-only SQL using the configured AI provider.
 """
 
 import json
 import logging
-from anthropic import Anthropic
-from config import ANTHROPIC_API_KEY
+from services import ai_client
 import database as db
 
 logger = logging.getLogger("dharmasala.admin")
-
-client = Anthropic(api_key=ANTHROPIC_API_KEY) if ANTHROPIC_API_KEY else None
 
 NL_TO_SQL_SYSTEM = """You are a SQL query generator for the Dharamsala Animal Rescue incident database.
 You convert natural language questions into safe, read-only SQLite SELECT queries.
@@ -92,18 +89,16 @@ def process_nl_query(nl_query: str, admin_user: str = "admin") -> dict:
 
 
 def _nl_to_sql(nl_query: str) -> tuple[str, str]:
-    """Use Claude to convert NL to SQL."""
-    if not client:
+    """Use the configured AI provider to convert NL to SQL."""
+    if not ai_client.is_available():
         return _fallback_nl_to_sql(nl_query)
 
     try:
-        response = client.messages.create(
-            model="claude-sonnet-4-5-20250929",
-            max_tokens=512,
-            system=NL_TO_SQL_SYSTEM,
+        text = ai_client.create_chat_completion(
+            system_prompt=NL_TO_SQL_SYSTEM,
             messages=[{"role": "user", "content": nl_query}],
-        )
-        text = response.content[0].text.strip()
+            max_tokens=512,
+        ).strip()
         if text.startswith("```"):
             text = text.split("```")[1]
             if text.startswith("json"):
