@@ -78,14 +78,14 @@ RULES:
 - Stay on topic: animal rescue, stray animal welfare, dog bite safety, reporting incidents.
 - If asked about non-rescue topics, politely redirect to your purpose.
 - If unsure about a situation's severity, err on the side of caution and recommend professional help.
-- If a user asks for nearby vets or animal help, tell them to share location so the app can open Google Maps searches for nearby services.
+- If a user asks for nearby vets or animal help, tell them to share location so the app can open Google Maps searches for nearby services."""
 
 CHAT_SYSTEM_PROMPT = """You are a friendly helper for Dharamsala Animal Rescue. You help people
 with questions about stray dogs and animal rescue in the Dharamsala area.
 
 RULES:
 - Use simple, clear words and short sentences. Write at a level anyone can easily understand.
-- Be warm, calm, and encouraging — the person may be worried about an animal.
+- Be warm, calm, and encouraging - the person may be worried about an animal.
 - Never give a medical diagnosis or suggest any medicine or treatment.
 - Do NOT tell users to call a helpline or share their location — our rescue team handles that.
 - Only answer questions about animal rescue, stray dogs, dog bites, and animal safety.
@@ -135,7 +135,7 @@ TRIAGE_RESPONSE_SCHEMA = {
 }
 
 
-def analyze_image(image_bytes: bytes, media_type: str, user_context: str = "") -> dict:
+def analyze_image(image_bytes: bytes, media_type: str, user_context: str = "", language: str = "en") -> dict:
     """Send image to OpenAI for distress assessment.
 
     Adds logging + a single retry on transient errors so we can diagnose why
@@ -167,41 +167,8 @@ def analyze_image(image_bytes: bytes, media_type: str, user_context: str = "") -
     if user_context:
         user_message += f"\n\nAdditional context from the reporter: {user_context}"
 
-<<<<<<< HEAD
-    system_prompt = VISION_SYSTEM_PROMPT + _language_instruction(language)
-
-    try:
-        response = client.responses.create(
-            model=OPENAI_VISION_MODEL,
-            input=[
-                {"role": "system", "content": VISION_SYSTEM_PROMPT},
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "input_text",
-                            "text": user_message,
-                        },
-                        {
-                            "type": "input_image",
-                            "image_url": f"data:{media_type};base64,{image_b64}",
-                        },
-                    ],
-                }
-            ],
-            text={
-                "format": {
-                    "type": "json_schema",
-                    "name": "animal_triage",
-                    "schema": TRIAGE_RESPONSE_SCHEMA,
-                    "strict": True,
-                }
-            },
-        )
-=======
     last_error: str = ""
     start_time = time.time()
->>>>>>> 6c21dfa (fix: preserve ordered-list numbering in chat UI; add logging+retry for vision triage)
 
     for attempt in range(1, VISION_MAX_ATTEMPTS + 1):
         try:
@@ -311,6 +278,12 @@ def _fallback_triage(error: str = "") -> dict:
     }
 
 
+def _language_instruction(language: str) -> str:
+    if language == "hi":
+        return "\n\nRespond in Hindi."
+    return ""
+
+
 def enrich_recommended_actions(triage_result: dict, language: str = "en") -> list[str]:
     """Use a second LLM call with RAG context to generate grounded recommended actions.
 
@@ -318,7 +291,7 @@ def enrich_recommended_actions(triage_result: dict, language: str = "en") -> lis
     specifically grounded in DAR's published knowledge base. Falls back to the
     original actions if the model is unavailable or the triage is a fallback.
     """
-    if not ai_client.is_available() or triage_result.get("is_fallback"):
+    if not client or triage_result.get("is_fallback"):
         return triage_result.get("recommended_actions", [])
 
     from services import rag
@@ -343,12 +316,15 @@ def enrich_recommended_actions(triage_result: dict, language: str = "en") -> lis
         system_prompt = rag_context + "\n\n" + system_prompt
 
     try:
-        raw = ai_client.create_chat_completion(
-            system_prompt=system_prompt,
-            messages=[{"role": "user", "content": user_message}],
-            max_tokens=512,
+        response = client.responses.create(
+            model=OPENAI_CHAT_MODEL,
+            input=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message},
+            ],
+            max_output_tokens=512,
         )
-        raw = raw.strip()
+        raw = (response.output_text or "").strip()
         if raw.startswith("```"):
             raw = raw.split("```")[1]
             if raw.startswith("json"):
@@ -364,7 +340,7 @@ def enrich_recommended_actions(triage_result: dict, language: str = "en") -> lis
 
 def generate_chat_response(message: str, history: list[dict], session_id: str, language: str = "en") -> str:
     """Generate a chat response for text queries, augmented with RAG context."""
-    if not ai_client.is_available():
+    if not client:
         return _fallback_chat_response(message)
 
     # Retrieve relevant knowledge chunks
@@ -384,7 +360,7 @@ def generate_chat_response(message: str, history: list[dict], session_id: str, l
     try:
         response = client.responses.create(
             model=OPENAI_CHAT_MODEL,
-            input=[{"role": "system", "content": system_prompt}] + messages,
+            input=[{"role": "system", "content": CHAT_SYSTEM_PROMPT}] + messages,
         )
         return (response.output_text or "").strip() or _fallback_chat_response(message)
     except Exception:

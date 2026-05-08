@@ -14,11 +14,12 @@
             '<div class="message-avatar">&#128054;</div>' +
             '<div class="message-bubble">' +
             "<p><strong>धर्मशाला एनिमल रेस्क्यू में आपका स्वागत है!</strong></p>" +
+            "<p>पहले स्थानीय संदर्भ जानें, फिर तय करें कि कुत्ते को बाहरी मदद की ज़रूरत है या नहीं।</p>" +
             "<p>मैं इन चीज़ों में आपकी मदद कर सकता हूँ:</p>" +
             "<ul>" +
-            "<li><strong>आवारा कुत्ते की रिपोर्ट करें</strong> – एक फ़ोटो अपलोड करें और मैं उनकी स्थिति का आकलन करूँगा</li>" +
-            "<li><strong>जानवर के काटने पर सलाह</strong> – क्या करें, इस पर सुरक्षित मार्गदर्शन</li>" +
-            "<li><strong>बचाव संबंधी सवाल</strong> – धर्मशाला क्षेत्र में पशु बचाव की जानकारी</li>" +
+            "<li><strong>आवारा कुत्ते की रिपोर्ट करें</strong> – फ़ोटो अपलोड करें और जानें कि क्या स्थानीय लोग पहले से कुत्ते को जानते या खिलाते हैं</li>" +
+            "<li><strong>सामुदायिक सवाल</strong> – फीडर, मालिक, NGO नसबंदी और टीकाकरण के बारे में पूछें</li>" +
+            "<li><strong>पास की मदद</strong> – लोकेशन शेयर करें और पास के पशु चिकित्सक या बचाव केंद्र खोलें</li>" +
             "</ul>" +
             "<p>आज मैं आपकी कैसे सहायता कर सकता हूँ?</p>" +
             "</div>";
@@ -27,11 +28,12 @@
             '<div class="message-avatar">&#128054;</div>' +
             '<div class="message-bubble">' +
             "<p><strong>Welcome to Dharamsala Animal Rescue!</strong></p>" +
+            "<p>Start with local context, then decide whether the dog needs outside help.</p>" +
             "<p>Examples of what I can help you with:</p>" +
             "<ul>" +
-            "<li><strong>Report a stray dog</strong> – Upload a photo and I'll assess their condition</li>" +
-            "<li><strong>Dog bite advice</strong> – Safe guidance on what to do</li>" +
-            "<li><strong>Rescue questions</strong> – Information about animal rescue in the Dharamsala area</li>" +
+            "<li><strong>Report a stray dog</strong> - Upload a photo and I'll help you check whether locals already know or feed the dog</li>" +
+            "<li><strong>Community questions</strong> - Ask about feeders, owners, NGO sterilization, and vaccination efforts</li>" +
+            "<li><strong>Nearby support</strong> - Share location and open Google Maps searches for vets or animal help</li>" +
             "</ul>" +
             "<p>How can I help you today?</p>" +
             "</div>";
@@ -311,6 +313,7 @@ function addAssistantResponse(data) {
             '<button class="btn btn-primary confirm-yes-btn">Yes, this case is in the Dharamsala region</button>' +
             '<button class="btn confirm-no-btn" style="background:#eee;color:#333;">No, this is elsewhere</button>' +
             '</div>';
+    }
     if (Array.isArray(data.resource_links) && data.resource_links.length) {
         content += '<div class="resource-links">';
         content += data.resource_links
