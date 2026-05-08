@@ -8,6 +8,7 @@ import json
 import logging
 from pathlib import Path
 from datetime import datetime, timezone
+from urllib.parse import quote_plus
 
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Query, Request
 from fastapi.staticfiles import StaticFiles
@@ -44,7 +45,7 @@ def startup():
     db.init_db()
     logger.info("Database initialized at %s", config.DB_PATH)
     logger.info("Storage directory: %s", config.STORAGE_DIR)
-    logger.info("API key configured: %s", bool(config.ANTHROPIC_API_KEY))
+    logger.info("OpenAI API key configured: %s", bool(config.OPENAI_API_KEY))
 
 
 # --- Language detection ---
@@ -404,6 +405,11 @@ async def triage_confirm(
         escalation_triggered = True
 
     del _pending_triage[pending_token]
+    
+    # Step 8: Build user-friendly response
+    response_text = _build_triage_response(triage_result, sim_result, loc)
+    response_text = guardrails.sanitize_response(response_text)
+    resource_links = _build_google_maps_links(loc)
 
     triage_result["recommended_actions"] = triage.enrich_recommended_actions(triage_result, lang)
     response_text = _build_triage_response(triage_result, sim_result, loc, incident_id)
@@ -434,7 +440,70 @@ async def triage_confirm(
         },
         escalation_triggered=escalation_triggered,
         in_jurisdiction=True,
+        resource_links=resource_links,
     )
+
+
+@app.post("/v1/chat/query")
+async def chat_query(request: ChatQueryRequest):
+    """UC-2: Text rescue question handling."""
+    session_id = request.session_id or str(uuid.uuid4())
+
+    # Guardrail check
+    guard = guardrails.check_input(request.message)
+    if not guard.allowed:
+        return ChatResponse(response=guard.reason)
+
+    # Get chat history for context
+    history = db.get_chat_history(session_id)
+
+    # Generate response
+    response_text = triage.generate_chat_response(request.message, history, session_id)
+    resource_links = []
+    location_context = _request_location_dict(request)
+    if _query_needs_local_services(request.message):
+        resource_links = _build_google_maps_links(location_context)
+        if not resource_links:
+            response_text += (
+                "\n\nShare your location in the app and I can give you one-tap Google Maps links "
+                "for nearby vets and animal help."
+            )
+    response_text = guardrails.sanitize_response(response_text)
+
+    # Persist
+    db.save_chat_message(session_id, "user", request.message)
+    db.save_chat_message(session_id, "assistant", response_text)
+
+    return ChatResponse(response=response_text, resource_links=resource_links)
+
+
+@app.post("/v1/location/update")
+async def update_location(request: LocationUpdateRequest):
+    """Update location for an existing incident."""
+    incident = db.get_incident(request.incident_id)
+    if not incident:
+        raise HTTPException(404, "Incident not found")
+
+    lat, lng = location.truncate_precision(request.lat, request.lng)
+    db.update_incident(
+        request.incident_id,
+        lat=lat,
+        lng=lng,
+        location_source=request.source.value,
+    )
+
+    # Re-evaluate escalation if severity was high but location was missing
+    if incident["triage_severity"] in ("high", "critical") and incident["status"] == "new":
+        triage_result = {
+            "severity": incident["triage_severity"],
+            "severity_score": incident["triage_severity_score"],
+            "confidence": incident["triage_confidence"],
+            "indicators": json.loads(incident["distress_flags"] or "[]"),
+        }
+        loc = {"lat": lat, "lng": lng, "source": request.source.value}
+        alerts.send_alert(request.incident_id, triage_result, loc)
+
+    return {"status": "updated", "incident_id": request.incident_id}
 
 
 @app.get("/v1/incidents/{incident_id}")
@@ -544,7 +613,7 @@ async def health():
     return {
         "status": "ok",
         "version": "1.0.0-prototype",
-        "ai_configured": bool(config.ANTHROPIC_API_KEY),
+        "ai_configured": bool(config.OPENAI_API_KEY),
         "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
@@ -603,6 +672,12 @@ def _build_triage_response(triage_result: dict, sim_result: dict, loc: dict | No
     if sim_result.get("message"):
         parts.append(f"\n*{sim_result['message']}*")
 
+    # Location prompt
+    if not loc:
+        parts.append("\n**Can you share the location?** This helps us avoid duplicate reports and suggest nearby vets or animal help. You can share your location using the button below or describe the nearest landmark.")
+    else:
+        parts.append("\n**Nearby help:** I've added quick Google Maps links below in case you want to check for nearby vets or animal rescue support.")
+
     # Escalation note
     if triage_result.get("escalation_needed"):
         parts.append("\n*This report has been flagged as urgent and sent to our rescue coordination team.*")
@@ -658,6 +733,57 @@ def _build_out_of_region_response(triage_result: dict) -> str:
     )
 
     return "\n".join(parts)
+
+
+def _request_location_dict(request: ChatQueryRequest) -> dict | None:
+    if request.lat is None or request.lng is None:
+        return None
+    return {
+        "lat": request.lat,
+        "lng": request.lng,
+        "source": request.location_source.value if request.location_source else "browser",
+    }
+
+
+def _build_google_maps_links(loc: dict | None) -> list[dict]:
+    if not loc:
+        return []
+
+    lat = loc.get("lat")
+    lng = loc.get("lng")
+    if lat is None or lng is None:
+        return []
+
+    nearby = f"{lat:.4f},{lng:.4f}"
+    return [
+        {
+            "label": "Find nearby vets",
+            "url": f"https://www.google.com/maps/search/?api=1&query={quote_plus(f'veterinarian near {nearby}')}",
+        },
+        {
+            "label": "Find animal help nearby",
+            "url": f"https://www.google.com/maps/search/?api=1&query={quote_plus(f'animal rescue NGO near {nearby}')}",
+        },
+    ]
+
+
+def _query_needs_local_services(message: str) -> bool:
+    lower = message.lower()
+    return any(
+        phrase in lower
+        for phrase in (
+            "near me",
+            "nearby",
+            "google maps",
+            "map",
+            "vet",
+            "veterinarian",
+            "clinic",
+            "ngo",
+            "animal help",
+            "animal hospital",
+        )
+    )
 
 
 if __name__ == "__main__":

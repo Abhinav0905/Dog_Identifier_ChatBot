@@ -78,10 +78,13 @@ var previewImg = document.getElementById("previewImg");
 var fileNameSpan = document.getElementById("fileName");
 var locationBar = document.getElementById("locationBar");
 var locationText = document.getElementById("locationText");
+var mapActions = document.getElementById("mapActions");
 var fileInput = document.getElementById("fileInput");
 var sendBtn = document.getElementById("sendBtn");
 var cameraBtn = document.getElementById("cameraBtn");
 var removeBtn = document.getElementById("removeBtn");
+var vetMapBtn = document.getElementById("vetMapBtn");
+var rescueMapBtn = document.getElementById("rescueMapBtn");
 
 // --- Event listeners ---
 
@@ -94,6 +97,14 @@ cameraBtn.addEventListener("click", function () {
 removeBtn.addEventListener("click", removeImage);
 
 fileInput.addEventListener("change", handleFileSelect);
+
+vetMapBtn.addEventListener("click", function () {
+    openGoogleMapsSearch("veterinarian");
+});
+
+rescueMapBtn.addEventListener("click", function () {
+    openGoogleMapsSearch("animal rescue NGO");
+});
 
 messageInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -138,6 +149,33 @@ function removeImage() {
     fileNameSpan.textContent = "";
 }
 
+// --- Geolocation ---
+
+function requestLocation() {
+    if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser.");
+        return;
+    }
+    locationBtn.disabled = true;
+    navigator.geolocation.getCurrentPosition(
+        function (pos) {
+            userLocation = {
+                lat: pos.coords.latitude,
+                lng: pos.coords.longitude,
+                accuracy: pos.coords.accuracy,
+            };
+            locationBar.classList.add("active");
+            locationText.textContent =
+                pos.coords.latitude.toFixed(4) + ", " + pos.coords.longitude.toFixed(4);
+            updateMapActions();
+            locationBtn.disabled = false;
+        },
+        function (err) {
+            alert("Unable to get location: " + err.message + "\nYou can describe the location in your message.");
+            locationBtn.disabled = false;
+        }
+    );
+}
 
 // --- Send message ---
 
@@ -201,10 +239,16 @@ function sendImageTriage(file, context) {
 }
 
 function sendChatQuery(message) {
+    var payload = { message: message, session_id: sessionId };
+    if (userLocation) {
+        payload.lat = userLocation.lat;
+        payload.lng = userLocation.lng;
+        payload.location_source = "browser";
+    }
     return fetch("/v1/chat/query", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: message, session_id: sessionId }),
+        body: JSON.stringify(payload),
     }).then(function (res) {
         if (!res.ok) throw new Error("Chat request failed: " + res.status);
         return res.json();
@@ -267,6 +311,19 @@ function addAssistantResponse(data) {
             '<button class="btn btn-primary confirm-yes-btn">Yes, this case is in the Dharamsala region</button>' +
             '<button class="btn confirm-no-btn" style="background:#eee;color:#333;">No, this is elsewhere</button>' +
             '</div>';
+    if (Array.isArray(data.resource_links) && data.resource_links.length) {
+        content += '<div class="resource-links">';
+        content += data.resource_links
+            .map(function (link) {
+                return (
+                    '<a class="resource-link" href="' + escapeAttr(link.url) +
+                    '" target="_blank" rel="noopener noreferrer">' +
+                    escapeHtml(link.label) +
+                    "</a>"
+                );
+            })
+            .join("");
+        content += "</div>";
     }
 
     div.innerHTML =
@@ -331,25 +388,103 @@ function sendConfirm(token) {
 
 function renderMarkdown(text) {
     if (!text) return "";
-    var html = text
+    // Escape HTML first
+    var escaped = text
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
+        .replace(/>/g, "&gt;");
+
+    // Process line-by-line so we can group consecutive list items correctly
+    // and preserve the ORIGINAL numbering of ordered lists (fixes the
+    // "serial numbers are off" bug where 3. 4. 5. would render as 1. 2. 3.).
+    var lines = escaped.split(/\n/);
+    var out = [];
+    var i = 0;
+    var orderedRe = /^(\d+)\.\s+(.+)$/;
+    var bulletRe = /^[-*]\s+(.+)$/;
+
+    while (i < lines.length) {
+        var line = lines[i];
+        var mOrd = line.match(orderedRe);
+        var mBul = line.match(bulletRe);
+
+        if (mOrd) {
+            var startNum = parseInt(mOrd[1], 10);
+            var items = [];
+            while (i < lines.length) {
+                var m = lines[i].match(orderedRe);
+                if (!m) break;
+                // Use explicit value=N to preserve gaps / non-1 starts.
+                items.push('<li value="' + parseInt(m[1], 10) + '">' + m[2] + "</li>");
+                i++;
+            }
+            out.push('<ol start="' + startNum + '">' + items.join("") + "</ol>");
+            continue;
+        }
+
+        if (mBul) {
+            var bItems = [];
+            while (i < lines.length) {
+                var mb = lines[i].match(bulletRe);
+                if (!mb) break;
+                bItems.push("<li>" + mb[1] + "</li>");
+                i++;
+            }
+            out.push("<ul>" + bItems.join("") + "</ul>");
+            continue;
+        }
+
+        out.push(line);
+        i++;
+    }
+
+    var html = out.join("\n");
+
+    // Inline formatting
+    html = html
         .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-        .replace(/\*(.+?)\*/g, "<em>$1</em>")
-        .replace(/^(\d+)\.\s+(.+)$/gm, "<li>$2</li>")
-        .replace(/^- (.+)$/gm, "<li>$1</li>")
-        .replace(/\n/g, "<br>");
-    // Wrap consecutive <li> items in <ol>
-    html = html.replace(/((?:<li>.*?<\/li>(?:<br>)?)+)/g, function (match) {
-        var items = match.replace(/<br>/g, "");
-        return "<ol>" + items + "</ol>";
+        .replace(/\*(.+?)\*/g, "<em>$1</em>");
+
+    // Convert remaining newlines to <br>, but not inside list blocks
+    html = html.replace(/\n+/g, function (m, offset, full) {
+        // Avoid inserting <br> immediately around list tags
+        var before = full.slice(Math.max(0, offset - 5), offset);
+        var after = full.slice(offset + m.length, offset + m.length + 5);
+        if (/<\/(ol|ul|li)>$/.test(before) || /^<(ol|ul|li)/.test(after)) {
+            return "";
+        }
+        return "<br>";
     });
+
     return html;
 }
 
 function escapeAttr(str) {
     return str.replace(/&/g, "&amp;").replace(/"/g, "&quot;");
+}
+
+function escapeHtml(str) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+function updateMapActions() {
+    mapActions.classList.toggle("active", !!userLocation);
+}
+
+function openGoogleMapsSearch(query) {
+    if (!userLocation) {
+        alert("Share your location first so we can open nearby results.");
+        return;
+    }
+    var nearbyQuery = query + " near " + userLocation.lat.toFixed(4) + "," + userLocation.lng.toFixed(4);
+    window.open(
+        "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(nearbyQuery),
+        "_blank",
+        "noopener"
+    );
 }
 
 function showTyping(show) {

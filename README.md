@@ -3,7 +3,9 @@
 ## Features
 
 - **Image triage**: Upload a photo and get an AI-powered distress severity assessment (1–10 scale)
+- **Community-first guidance**: Starts with local questions about feeders, owners, and ongoing NGO sterilization/vaccination work
 - **Text chat**: Ask rescue questions, get guidance on dog bites, incident reporting, and more
+- **Google Maps quick links**: Open nearby vets or animal-help searches after sharing location
 - **Duplicate detection**: Prevents redundant reports using perceptual image hashing
 - **Location tracking**: Extracts GPS from image EXIF data or browser geolocation
 - **Automated alerts**: High-severity cases (score ≥ 7) trigger Slack/webhook notifications
@@ -12,7 +14,7 @@
 ## Prerequisites
 
 - Python 3.11+
-- An [Anthropic API key](https://console.anthropic.com/)
+- An [OpenAI API key](https://platform.openai.com/api-keys)
 
 ## Setup
 
@@ -47,7 +49,13 @@ Edit `.env` and set the following:
 
 ```env
 # Required
-ANTHROPIC_API_KEY=sk-ant-your-key-here
+OPENAI_API_KEY=sk-your-openai-key-here
+
+# Optional model overrides
+OPENAI_MODEL=gpt-5.4-mini
+OPENAI_VISION_MODEL=
+OPENAI_CHAT_MODEL=
+OPENAI_ADMIN_MODEL=
 
 # Optional — alerts log to console if not set
 SLACK_WEBHOOK_URL=
@@ -59,6 +67,10 @@ ADMIN_PASSWORD=changeme
 # Server config (defaults shown)
 HOST=0.0.0.0
 PORT=8000
+
+# Optional persistent paths (helpful for Docker/EC2)
+DB_PATH=
+STORAGE_DIR=
 ```
 
 ## Running the App
@@ -95,6 +107,18 @@ python test_unit.py
 # System / integration tests
 python test_system.py
 ```
+
+## EC2 Deployment
+
+For a shareable open link on EC2, use the Docker-based flow in [`EC2_DEPLOYMENT.md`](EC2_DEPLOYMENT.md).
+At a minimum, the instance needs:
+
+- A **public IPv4 or Elastic IP**
+- A **security group allowing inbound HTTP (80)** from `0.0.0.0/0`
+- Docker installed
+- A populated `.env` with your OpenAI key and admin password
+
+Once deployed, the app can be shared at `http://<ec2-public-ip>/` or a domain pointed at that IP.
 
 ## Project Structure
 
@@ -167,3 +191,4 @@ Key settings in `config.py`:
 - [`ARCHITECTURE.md`](ARCHITECTURE.md) — Component breakdown and local demo architecture
 - [`AWS_PRODUCTION_ARCHITECTURE.md`](AWS_PRODUCTION_ARCHITECTURE.md) — Production deployment on AWS (ECS, RDS, S3)
 - [`DEMO_TO_PRODUCTION_GUIDE.md`](DEMO_TO_PRODUCTION_GUIDE.md) — Step-by-step migration from local SQLite to AWS
+- [`EC2_DEPLOYMENT.md`](EC2_DEPLOYMENT.md) — Fast path for a public EC2 deployment and shareable link

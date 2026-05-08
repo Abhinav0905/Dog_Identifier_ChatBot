@@ -1,14 +1,17 @@
 """
 Admin natural-language analytics service.
-Converts NL queries to safe read-only SQL using the configured AI provider.
+Converts NL queries to safe read-only SQL using OpenAI, with strict allowlists.
 """
 
 import json
 import logging
-from services import ai_client
+from openai import OpenAI
+from config import OPENAI_API_KEY, OPENAI_ADMIN_MODEL
 import database as db
 
 logger = logging.getLogger("dharmasala.admin")
+
+client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
 NL_TO_SQL_SYSTEM = """You are a SQL query generator for the Dharamsala Animal Rescue incident database.
 You convert natural language questions into safe, read-only SQLite SELECT queries.
@@ -32,6 +35,16 @@ Respond with ONLY a valid JSON object:
     "sql": "SELECT ...",
     "explanation": "Brief explanation of what this query does"
 }"""
+
+NL_TO_SQL_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "sql": {"type": "string"},
+        "explanation": {"type": "string"},
+    },
+    "required": ["sql", "explanation"],
+    "additionalProperties": False,
+}
 
 # Allowed table names for validation
 ALLOWED_TABLES = {"incidents", "alerts", "triage_events"}
@@ -89,16 +102,29 @@ def process_nl_query(nl_query: str, admin_user: str = "admin") -> dict:
 
 
 def _nl_to_sql(nl_query: str) -> tuple[str, str]:
-    """Use the configured AI provider to convert NL to SQL."""
-    if not ai_client.is_available():
+    """Use OpenAI to convert NL to SQL."""
+    if not client:
         return _fallback_nl_to_sql(nl_query)
 
     try:
-        text = ai_client.create_chat_completion(
-            system_prompt=NL_TO_SQL_SYSTEM,
-            messages=[{"role": "user", "content": nl_query}],
-            max_tokens=512,
-        ).strip()
+        response = client.responses.create(
+            model=OPENAI_ADMIN_MODEL,
+            input=[
+                {"role": "system", "content": NL_TO_SQL_SYSTEM},
+                {"role": "user", "content": nl_query},
+            ],
+            text={
+                "format": {
+                    "type": "json_schema",
+                    "name": "admin_sql_query",
+                    "schema": NL_TO_SQL_SCHEMA,
+                    "strict": True,
+                }
+            },
+        )
+        text = (response.output_text or "").strip()
+        if not text:
+            raise ValueError("OpenAI returned an empty structured response")
         if text.startswith("```"):
             text = text.split("```")[1]
             if text.startswith("json"):

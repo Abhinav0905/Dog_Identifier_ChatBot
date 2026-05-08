@@ -51,12 +51,12 @@ outlined in the HLD (99.5%+ availability, P95 <4s text / <8s image).
          │  │           Service Integrations            │ │
          │  │                                          │ │
          │  │  ┌──────────┐  ┌──────────┐            │ │
-         │  │  │ Anthropic│  │  SQS     │            │ │
-         │  │  │ Claude   │  │  Alert   │            │ │
+         │  │  │ OpenAI   │  │  SQS     │            │ │
+         │  │  │ API      │  │  Alert   │            │ │
          │  │  │ API      │  │  Queue   │            │ │
-         │  │  │ (Bedrock │  └────┬─────┘            │ │
-         │  │  │  or      │       │                   │ │
-         │  │  │  direct) │  ┌────▼─────┐            │ │
+         │  │  │ (direct) │  └────┬─────┘            │ │
+         │  │  │          │       │                   │ │
+         │  │  │          │  ┌────▼─────┐            │ │
          │  │  └──────────┘  │  Lambda  │            │ │
          │  │                │  Alert   │            │ │
          │  │                │  Dispatch│            │ │
@@ -110,7 +110,7 @@ outlined in the HLD (99.5%+ availability, P95 <4s text / <8s image).
 | Local filesystem (`storage/`) | **S3** with pre-signed URLs | Durable, scalable image blob storage |
 | Console alert logging | **SQS + Lambda + Slack/SNS** | Async alert pipeline with retry |
 | Simple password auth | **Cognito + JWT + ALB auth** | Federated identity, RBAC |
-| Anthropic API (direct) | **Amazon Bedrock** or direct API | Managed AI model access |
+| OpenAI API (direct) | **OpenAI API** from ECS tasks | Managed AI model access |
 | pHash similarity | **OpenSearch** with kNN | Vector similarity search at scale |
 | In-process chat history | **ElastiCache Redis** | Session management and cache |
 | `print()` logging | **CloudWatch + X-Ray** | Centralized logs, metrics, distributed traces |
@@ -150,10 +150,10 @@ outlined in the HLD (99.5%+ availability, P95 <4s text / <8s image).
 - **Lifecycle**: Transition to S3-IA after 90 days, Glacier after 365 days
 - **Encryption**: SSE-S3 or SSE-KMS
 
-### AI/ML: Anthropic Claude
+### AI/ML: OpenAI Models
 
-- **Option A**: Direct Anthropic API via Secrets Manager key
-- **Option B**: Amazon Bedrock (Claude models available via Bedrock)
+- **Primary option**: Direct OpenAI API via Secrets Manager key
+- **Recommended model**: `gpt-5.4-mini` for text, vision, and structured outputs
 - **Timeout**: 30s for vision, 15s for text
 - **Retry**: Exponential backoff with 3 retries
 - **Fallback**: Template-based responses if model is unavailable
@@ -241,10 +241,10 @@ GitHub Push → CodePipeline
 | CloudFront | 10GB transfer | ~$2 |
 | ElastiCache | cache.t3.micro | ~$15 |
 | ALB | Standard | ~$20 |
-| Anthropic API | ~1000 requests/month | ~$20-50 |
+| OpenAI API | Usage dependent | See current OpenAI pricing |
 | CloudWatch | Standard | ~$10 |
 | Secrets Manager | 5 secrets | ~$3 |
-| **Total** | | **~$130-160/month** |
+| **Total** | | **Variable based on model usage** |
 
 ---
 

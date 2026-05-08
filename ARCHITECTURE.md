@@ -52,7 +52,7 @@ cloud deployment.
     └─────────────────┘  └────────────────-┘
                │
     ┌──────────▼──────────┐
-    │  Anthropic Claude   │
+    │  OpenAI Responses   │
     │  API (External)     │
     │  - Vision triage    │
     │  - Chat responses   │
@@ -98,11 +98,11 @@ FastAPI application exposing all endpoints defined in the HLD:
 | Service | File | Responsibility |
 |---------|------|----------------|
 | **Guardrails** | `services/guardrails.py` | Domain relevance filtering, harmful input detection, prompt injection protection, medical-certainty limitation |
-| **Triage** | `services/triage.py` | Claude Vision API integration for distress assessment, chat response generation, fallback responses when API is unavailable |
+| **Triage** | `services/triage.py` | OpenAI vision/chat integration for distress assessment, chat response generation, fallback responses when API is unavailable |
 | **Similarity** | `services/similarity.py` | SHA-256 exact duplicate detection, perceptual hash (pHash) near-duplicate detection |
 | **Location** | `services/location.py` | EXIF GPS extraction from images, coordinate precision truncation for privacy |
 | **Alerts** | `services/alerts.py` | Console logging of alerts, optional Slack/webhook dispatch, alert record persistence |
-| **Admin Analytics** | `services/admin_analytics.py` | NL-to-SQL via Claude, template-based fallback, read-only query execution with safety validation |
+| **Admin Analytics** | `services/admin_analytics.py` | NL-to-SQL via OpenAI, template-based fallback, read-only query execution with safety validation |
 
 ### 4. Data Layer
 
@@ -121,7 +121,7 @@ FastAPI application exposing all endpoints defined in the HLD:
 
 | Dependency | Purpose | Demo Substitute |
 |------------|---------|-----------------|
-| Anthropic Claude API | Vision triage, chat, NL-to-SQL | Falls back to template responses if API key not configured |
+| OpenAI Responses API | Vision triage, chat, NL-to-SQL | Falls back to template responses if API key not configured |
 | Slack | Operational alerts | Console logging |
 | MySQL/RDS | Relational data | SQLite |
 | S3 | Blob storage | Local filesystem |
@@ -136,7 +136,7 @@ FastAPI application exposing all endpoints defined in the HLD:
 ```
 User uploads image → API validates file/size → Guardrails check context text
 → Save blob to storage/ → Compute SHA-256 + pHash → Extract EXIF GPS
-→ Call Claude Vision for triage → Check duplicates/similarity
+→ Call OpenAI vision model for triage → Check duplicates/similarity
 → Create incident record → Evaluate severity threshold
 → (If urgent) Send alert → Build response → Return to user
 ```
@@ -145,13 +145,13 @@ User uploads image → API validates file/size → Guardrails check context text
 
 ```
 User sends text → Guardrails check → Load chat history
-→ Call Claude for response → Sanitize response → Persist to history → Return
+→ Call OpenAI model for response → Sanitize response → Persist to history → Return
 ```
 
 ### Flow C: Admin NL Query (UC-5)
 
 ```
-Admin enters question → Validate password → Send to Claude for SQL generation
+Admin enters question → Validate password → Send to OpenAI for SQL generation
 → Validate SQL safety (read-only, allowed tables) → Execute query
 → Summarize results → Log to audit table → Return
 ```
@@ -176,7 +176,7 @@ Admin enters question → Validate password → Send to Claude for SQL generatio
 ```bash
 cd gaia_ai/chatbot
 pip install -r requirements.txt
-cp .env.example .env          # Edit with your Anthropic API key
+cp .env.example .env          # Edit with your OpenAI API key
 python app.py                 # Starts on http://localhost:8000
 ```
 

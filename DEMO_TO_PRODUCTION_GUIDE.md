@@ -14,7 +14,7 @@ with specific tasks, configuration, and validation steps.
 - AWS CLI v2 configured
 - Docker installed locally
 - Terraform or AWS CDK installed (IaC recommended)
-- Anthropic API key (production tier)
+- OpenAI API key (production tier)
 - Slack workspace with webhook configured
 - Domain name registered (e.g., `rescue.dharmasala.org`)
 
@@ -51,7 +51,7 @@ with specific tasks, configuration, and validation steps.
 aws secretsmanager create-secret \
   --name dharmasala/prod/api-keys \
   --secret-string '{
-    "ANTHROPIC_API_KEY": "sk-ant-...",
+    "OPENAI_API_KEY": "sk-...",
     "SLACK_WEBHOOK_URL": "https://hooks.slack.com/...",
     "ADMIN_PASSWORD": "<strong-generated-password>"
   }'
@@ -392,7 +392,7 @@ artifacts:
 - [ ] AWS account set up with appropriate IAM roles
 - [ ] Domain registered, hosted zone in Route 53
 - [ ] ACM certificate issued for domain
-- [ ] Anthropic API key with production rate limits
+- [ ] OpenAI API key with production rate limits
 - [ ] Slack webhook URL for production channel
 
 ### Infrastructure

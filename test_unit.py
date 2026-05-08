@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).parent))
 # Stub external packages so imports succeed without installing them.
 # No actual API calls are made -- all AI-dependent code paths use
 # the offline fallbacks or are mocked at the function level.
-for _mod in ("anthropic", "imagehash"):
+for _mod in ("openai", "imagehash"):
     if _mod not in sys.modules:
         sys.modules[_mod] = MagicMock()
 
@@ -127,7 +127,7 @@ class TestGuardrails(unittest.TestCase):
         self.assertIn("not a veterinary diagnosis", result.lower())
 
     def test_sanitize_response_clean(self):
-        response = "Please keep a safe distance from the animal."
+        response = "Ask nearby people whether the dog has a regular feeder or owner."
         result = self.guardrails.sanitize_response(response)
         self.assertEqual(result, response)
 
@@ -401,8 +401,8 @@ class TestTriage(unittest.TestCase):
     def test_parse_malformed_json(self):
         result = self.triage._parse_triage_response("this is not json at all")
         # Should return fallback
-        self.assertEqual(result["severity"], "moderate")
-        self.assertEqual(result["severity_score"], 5)
+        self.assertEqual(result["severity"], "unknown")
+        self.assertIsNone(result["severity_score"])
 
     def test_parse_missing_fields(self):
         text = json.dumps({})
@@ -414,9 +414,9 @@ class TestTriage(unittest.TestCase):
 
     def test_fallback_triage(self):
         result = self.triage._fallback_triage()
-        self.assertEqual(result["severity"], "moderate")
-        self.assertEqual(result["severity_score"], 5)
-        self.assertAlmostEqual(result["confidence"], 0.3)
+        self.assertEqual(result["severity"], "unknown")
+        self.assertIsNone(result["severity_score"])
+        self.assertIsNone(result["confidence"])
         self.assertFalse(result["escalation_needed"])
         self.assertEqual(result["model_version"], "fallback")
 
@@ -433,7 +433,23 @@ class TestTriage(unittest.TestCase):
 
     def test_fallback_chat_injured(self):
         result = self.triage._fallback_chat_response("I see an injured dog")
-        self.assertIn("safe distance", result.lower())
+        self.assertIn("feeder", result.lower())
+        self.assertIn("owner", result.lower())
+
+    def test_apply_local_workflow_guidance_adds_community_steps(self):
+        result = self.triage.apply_local_workflow_guidance({
+            "severity": "moderate",
+            "severity_score": 5,
+            "confidence": 0.7,
+            "indicators": ["thin coat"],
+            "recommended_actions": ["call ngo"],
+            "triage_summary": "Dog appears thin but alert.",
+        })
+        actions = " ".join(result["recommended_actions"]).lower()
+        self.assertIn("feeder", actions)
+        self.assertIn("owner", actions)
+        self.assertIn("vaccinating", actions)
+        self.assertIn("sterilizing", actions)
 
     def test_fallback_chat_default(self):
         result = self.triage._fallback_chat_response("hello there")
@@ -767,6 +783,8 @@ class TestModels(unittest.TestCase):
     def test_chat_query_defaults(self):
         req = self.models.ChatQueryRequest(message="hello")
         self.assertIsNone(req.session_id)
+        self.assertIsNone(req.lat)
+        self.assertIsNone(req.lng)
 
     def test_incident_status_enum(self):
         for val in ["new", "alerted", "assigned", "resolved", "closed"]:
@@ -779,6 +797,28 @@ class TestModels(unittest.TestCase):
     def test_location_source_enum(self):
         for val in ["exif", "browser", "manual", "unknown"]:
             self.assertEqual(self.models.LocationSource(val).value, val)
+
+
+# ============================================================
+# 9. TestAppHelpers
+# ============================================================
+
+class TestAppHelpers(unittest.TestCase):
+    """Tests for helper functions in app.py."""
+
+    def setUp(self):
+        import app
+        self.app = app
+
+    def test_build_google_maps_links(self):
+        links = self.app._build_google_maps_links({"lat": 32.219, "lng": 76.3234})
+        self.assertEqual(len(links), 2)
+        self.assertIn("google.com/maps/search", links[0]["url"])
+        self.assertIn("veterinarian", links[0]["url"])
+
+    def test_query_needs_local_services(self):
+        self.assertTrue(self.app._query_needs_local_services("Can you find a vet near me?"))
+        self.assertFalse(self.app._query_needs_local_services("hello there"))
 
 
 # ============================================================

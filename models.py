@@ -30,6 +30,9 @@ class LocationSource(str, Enum):
 class ChatQueryRequest(BaseModel):
     message: str
     session_id: Optional[str] = None
+    lat: Optional[float] = None
+    lng: Optional[float] = None
+    location_source: Optional[LocationSource] = None
 
 
 class LocationUpdateRequest(BaseModel):
@@ -55,8 +58,8 @@ class TriageResult(BaseModel):
     severity: SeverityLevel
     severity_score: int = Field(ge=1, le=10)
     confidence: float = Field(ge=0.0, le=1.0)
-    indicators: list[str] = []
-    recommended_actions: list[str] = []
+    indicators: list[str] = Field(default_factory=list)
+    recommended_actions: list[str] = Field(default_factory=list)
     escalation_needed: bool = False
     triage_summary: str = ""
 
@@ -64,8 +67,13 @@ class TriageResult(BaseModel):
 class SimilarityResult(BaseModel):
     is_exact_duplicate: bool = False
     exact_match_id: Optional[str] = None
-    similar_incidents: list[dict] = []
+    similar_incidents: list[dict] = Field(default_factory=list)
     message: str = ""
+
+
+class ResourceLink(BaseModel):
+    label: str
+    url: str
 
 
 class ChatResponse(BaseModel):
@@ -80,12 +88,13 @@ class ChatResponse(BaseModel):
     location_confirmed_needed: Optional[bool] = None
     # Returned when location_confirmed_needed=True; pass to /v1/triage/confirm
     pending_token: Optional[str] = None
+    resource_links: list[ResourceLink] = Field(default_factory=list)
 
 
 class AdminQueryResponse(BaseModel):
     query: str
     sql_generated: str
-    results: list[dict] = []
+    results: list[dict] = Field(default_factory=list)
     row_count: int = 0
     summary: str = ""
 
@@ -111,7 +120,7 @@ class AlertPayload(BaseModel):
     severity: str
     severity_score: int
     confidence: float
-    distress_indicators: list[str]
+    distress_indicators: list[str] = Field(default_factory=list)
     location: Optional[dict] = None
     similar_incident_reference: Optional[str] = None
     admin_console_url: str = ""
