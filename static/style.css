@@ -252,6 +252,61 @@ body {
 .triage-badge.high { background: var(--severity-high); color: white; }
 .triage-badge.critical { background: var(--severity-critical); color: white; }
 
+/* Location verification audit */
+.location-audit {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(45, 106, 79, 0.18);
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+.location-audit summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    cursor: pointer;
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+.location-decision {
+    border-radius: 10px;
+    padding: 2px 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+}
+
+.location-decision.accepted {
+    background: var(--severity-low);
+    color: var(--primary-dark);
+}
+
+.location-decision.rejected {
+    background: #fde4e4;
+    color: var(--danger);
+}
+
+.location-audit-reason {
+    margin-top: 8px;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.location-candidates {
+    margin-top: 6px;
+}
+
+.location-candidate {
+    padding-top: 5px;
+    overflow-wrap: anywhere;
+}
+
+.location-radius {
+    margin-top: 6px;
+}
+
 /* Image preview */
 .image-preview {
     max-width: 200px;

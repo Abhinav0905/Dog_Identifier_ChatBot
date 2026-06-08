@@ -50,11 +50,14 @@
                 <button class="map-action-btn" id="rescueMapBtn">Animal help nearby</button>
             </div>
             <div class="input-row">
+                <button class="btn-icon" id="locationBtn" title="Share location">
+                    &#128205;
+                </button>
                 <button class="btn-icon" id="cameraBtn" title="Upload image">
                     &#128247;
                 </button>
 
-                <input type="file" id="fileInput" class="file-input" accept="image/*">
+                <input type="file" id="fileInput" class="file-input" accept="image/*,.heic,.heif">
                 <textarea id="messageInput" placeholder="Describe the situation or ask a rescue question..." rows="1"></textarea>
                 <button class="btn btn-primary" id="sendBtn">Send</button>
             </div>
@@ -65,6 +68,6 @@
         </div>
     </div>
 
-    <script src="/static/app.js?v=7"></script>
+    <script src="/static/app.js?v=10"></script>
 </body>
 </html>

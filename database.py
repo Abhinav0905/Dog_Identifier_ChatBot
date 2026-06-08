@@ -96,6 +96,14 @@ def init_db():
             CREATE INDEX IF NOT EXISTS idx_incidents_severity ON incidents(triage_severity);
             CREATE INDEX IF NOT EXISTS idx_chat_session ON chat_history(session_id);
 
+            CREATE TABLE IF NOT EXISTS session_locations (
+                session_id TEXT PRIMARY KEY,
+                lat REAL NOT NULL,
+                lng REAL NOT NULL,
+                source TEXT NOT NULL,
+                updated_at TEXT NOT NULL
+            );
+
             CREATE TABLE IF NOT EXISTS rag_chunks (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 doc_file TEXT NOT NULL,
@@ -106,6 +114,33 @@ def init_db():
             );
             CREATE INDEX IF NOT EXISTS idx_rag_chunks_doc ON rag_chunks(doc_file);
         """)
+
+
+def save_session_location(session_id: str, lat: float, lng: float, source: str) -> None:
+    """Persist the latest verified reporter location for channel workflows."""
+    now = datetime.now(timezone.utc).isoformat()
+    with get_db() as conn:
+        conn.execute(
+            """
+            INSERT INTO session_locations (session_id, lat, lng, source, updated_at)
+            VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT(session_id) DO UPDATE SET
+                lat = excluded.lat,
+                lng = excluded.lng,
+                source = excluded.source,
+                updated_at = excluded.updated_at
+            """,
+            (session_id, lat, lng, source, now),
+        )
+
+
+def get_session_location(session_id: str) -> dict | None:
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT lat, lng, source, updated_at FROM session_locations WHERE session_id = ?",
+            (session_id,),
+        ).fetchone()
+        return dict(row) if row else None
 
 
 def create_incident(

@@ -12,13 +12,14 @@ Uses example images from example_images/ for triage tests.
 
 import sys
 import json
+import os
 import time
 import urllib.request
 import urllib.parse
 from pathlib import Path
 
-BASE_URL = "http://localhost:8000"
-ADMIN_PASSWORD = "changeme"
+BASE_URL = os.getenv("TEST_BASE_URL", "http://localhost:8000")
+ADMIN_PASSWORD = os.getenv("TEST_ADMIN_PASSWORD") or os.getenv("ADMIN_PASSWORD", "")
 EXAMPLE_IMAGES_DIR = Path(__file__).parent / "example_images"
 
 # Track results
@@ -215,7 +216,8 @@ def test_guardrail_empty_input():
 
 def _load_example_image(name: str) -> tuple[bytes, str]:
     path = EXAMPLE_IMAGES_DIR / name
-    return path.read_bytes(), "image/png"
+    content_type = "image/jpeg" if path.suffix.lower() in (".jpg", ".jpeg") else "image/png"
+    return path.read_bytes(), content_type
 
 
 def test_triage_image_dog1():
@@ -242,7 +244,7 @@ def test_triage_image_dog1():
                 log("PASS", f"T09 Image triage dog_1.png (severity={triage['severity']}, score={triage['severity_score']})")
             else:
                 log("FAIL", "T09 Image triage dog_1.png", f"Invalid triage fields: {triage}")
-        elif data.get("response") and len(data.get("resource_links", [])) == 2:
+        elif data.get("response") and len(data.get("resource_links", [])) >= 2:
             log("PASS", "T09 Image triage dog_1.png (fallback mode with map links)")
         else:
             log("FAIL", "T09 Image triage dog_1.png", f"Unexpected fallback response: keys={list(data.keys())}")
@@ -259,6 +261,9 @@ def test_triage_image_dog2():
         fields={
             "context": "Stray dog spotted in McLeod Ganj, seems to be limping",
             "session_id": "systest-triage-2",
+            "lat": "32.2422",
+            "lng": "76.3215",
+            "location_source": "manual",
         },
         files={"image": ("dog_2.png", img_bytes, ctype)},
     )
@@ -280,6 +285,9 @@ def test_triage_image_dog3():
         fields={
             "context": "Dog near temple area, not moving much",
             "session_id": "systest-triage-3",
+            "lat": "32.2196",
+            "lng": "76.3234",
+            "location_source": "manual",
         },
         files={"image": ("dog_3.png", img_bytes, ctype)},
     )
@@ -305,6 +313,9 @@ def test_duplicate_detection():
         fields={
             "context": "Reporting same dog again",
             "session_id": "systest-dup-1",
+            "lat": "32.2190",
+            "lng": "76.3234",
+            "location_source": "manual",
         },
         files={"image": ("dog_1.png", img_bytes, ctype)},
     )
@@ -323,6 +334,9 @@ def test_near_duplicate_detection():
         fields={
             "context": "Different dog",
             "session_id": "systest-dup-2",
+            "lat": "32.2422",
+            "lng": "76.3215",
+            "location_source": "manual",
         },
         files={"image": ("dog_2.png", img_bytes, ctype)},
     )
@@ -333,6 +347,56 @@ def test_near_duplicate_detection():
         log("PASS", f"T13 Similarity check completed (exact_dup={sim.get('is_exact_duplicate')}, similar_count={len(sim.get('similar_incidents', []))})")
     else:
         log("FAIL", "T13 Similarity check", f"status={code}")
+
+
+def test_triage_requires_verified_location():
+    """T13a: Image without EXIF/browser coordinates is rejected before assessment."""
+    img_bytes, ctype = _load_example_image("dog_2.png")
+    code, data = api_post_multipart(
+        "/v1/triage/image",
+        fields={
+            "context": "Dog location not shared",
+            "session_id": "systest-strict-no-location",
+        },
+        files={"image": ("dog_2.png", img_bytes, ctype)},
+    )
+    verification = data.get("location_verification") or {}
+    if (
+        code == 200
+        and data.get("in_jurisdiction") is None
+        and not data.get("incident_id")
+        and verification.get("resolution_reason") == "rejected_no_verified_location"
+    ):
+        log("PASS", "T13a Strict gate requires EXIF/browser location")
+    else:
+        log("FAIL", "T13a Strict gate requires EXIF/browser location", f"status={code}, body={data}")
+
+
+def test_triage_rejects_out_of_region_location():
+    """T13b: Browser/user coordinates outside Dharamsala are rejected before assessment."""
+    img_bytes, ctype = _load_example_image("dog_2.png")
+    code, data = api_post_multipart(
+        "/v1/triage/image",
+        fields={
+            "context": "Dog report from outside Dharamsala",
+            "session_id": "systest-strict-outside-location",
+            "lat": "37.6914",
+            "lng": "-121.9225",
+            "location_source": "browser",
+        },
+        files={"image": ("dog_2.png", img_bytes, ctype)},
+    )
+    verification = data.get("location_verification") or {}
+    if (
+        code == 200
+        and data.get("in_jurisdiction") is False
+        and not data.get("incident_id")
+        and verification.get("resolution_reason") == "rejected_all_verified_locations_outside"
+        and verification.get("distance_km")
+    ):
+        log("PASS", "T13b Strict gate rejects out-of-region browser location")
+    else:
+        log("FAIL", "T13b Strict gate rejects out-of-region browser location", f"status={code}, body={data}")
 
 
 # --- Incident Retrieval ---
@@ -541,6 +605,8 @@ def main():
     print("--- Duplicate Detection ---")
     test_duplicate_detection()
     test_near_duplicate_detection()
+    test_triage_requires_verified_location()
+    test_triage_rejects_out_of_region_location()
     print()
 
     # Use an incident ID from triage tests

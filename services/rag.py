@@ -12,8 +12,12 @@ Run scripts/ingest_docs.py once to populate rag_chunks before starting the serve
 
 import json
 import math
-from config import MODEL_PROVIDER
+import logging
+import re
+from config import MODEL_PROVIDER, RAG_VECTOR_BACKEND
 import database as db
+
+logger = logging.getLogger(__name__)
 
 # In-memory BM25 index (built lazily on first query, reset after ingestion)
 _bm25_cache: tuple | None = None
@@ -21,6 +25,16 @@ _bm25_cache: tuple | None = None
 
 def retrieve(query: str, k: int = 3) -> list[dict]:
     """Return top-k relevant knowledge chunks for the given query."""
+    if RAG_VECTOR_BACKEND == "chroma":
+        chroma_chunks = _retrieve_chroma(query, k)
+        if chroma_chunks:
+            return chroma_chunks
+
+    if RAG_VECTOR_BACKEND == "pinecone":
+        pinecone_chunks = _retrieve_pinecone(query, k)
+        if pinecone_chunks:
+            return pinecone_chunks
+
     if MODEL_PROVIDER == "openai":
         return _retrieve_semantic(query, k)
     return _retrieve_bm25(query, k)
@@ -42,6 +56,24 @@ def reset_cache():
     _bm25_cache = None
 
 
+def _retrieve_chroma(query: str, k: int) -> list[dict]:
+    try:
+        from services import chroma_rag
+        return chroma_rag.retrieve(query, k)
+    except Exception as exc:  # noqa: BLE001 - local retrieval remains available
+        logger.warning("Chroma retrieval unavailable: %s", exc)
+        return []
+
+
+def _retrieve_pinecone(query: str, k: int) -> list[dict]:
+    try:
+        from services import pinecone_rag
+        return pinecone_rag.retrieve(query, k)
+    except Exception as exc:  # noqa: BLE001 - local retrieval remains available
+        logger.warning("Pinecone retrieval unavailable: %s", exc)
+        return []
+
+
 # ---------------------------------------------------------------------------
 # Semantic retrieval (OpenAI)
 # ---------------------------------------------------------------------------
@@ -58,11 +90,22 @@ def _cosine_similarity(a: list[float], b: list[float]) -> float:
 def _retrieve_semantic(query: str, k: int) -> list[dict]:
     from services import ai_client
 
-    query_embedding = ai_client.create_embedding(query)
-    if not query_embedding:
+    chunks = db.get_all_rag_chunks()
+    if not chunks:
         return []
 
-    chunks = db.get_all_rag_chunks()
+    if not any(chunk["embedding"] for chunk in chunks):
+        return _retrieve_bm25(query, k)
+
+    try:
+        query_embedding = ai_client.create_embedding(query)
+    except Exception as exc:  # noqa: BLE001 - retrieval should not break chat
+        logger.warning("Semantic RAG retrieval skipped: embedding failed: %s", exc)
+        return _retrieve_bm25(query, k)
+
+    if not query_embedding:
+        return _retrieve_bm25(query, k)
+
     scored = []
     for chunk in chunks:
         if not chunk["embedding"]:
@@ -90,7 +133,7 @@ def _get_bm25_index():
             from rank_bm25 import BM25Okapi
         except ImportError:
             return None, []
-        corpus = [chunk["content"].lower().split() for chunk in chunks]
+        corpus = [_tokenize(chunk["content"]) for chunk in chunks]
         _bm25_cache = (BM25Okapi(corpus), chunks)
     return _bm25_cache
 
@@ -100,8 +143,12 @@ def _retrieve_bm25(query: str, k: int) -> list[dict]:
     if index is None or not chunks:
         return []
 
-    tokenized_query = query.lower().split()
+    tokenized_query = _tokenize(query)
     scores = index.get_scores(tokenized_query)
     top_indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:k]
     # Only return chunks with a non-trivial score
     return [chunks[i] for i in top_indices if scores[i] > 0.5]
+
+
+def _tokenize(text: str) -> list[str]:
+    return re.findall(r"[a-z0-9]+", text.lower())

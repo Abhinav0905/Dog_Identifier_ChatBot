@@ -3,11 +3,13 @@
 ## Features
 
 - **Image triage**: Upload a photo and get an AI-powered distress severity assessment (1–10 scale)
+- **Smartphone photo support**: Accepts HEIC/HEIF and high-resolution uploads, then creates a vision-safe JPEG copy for assessment
 - **Community-first guidance**: Starts with local questions about feeders, owners, and ongoing NGO sterilization/vaccination work
 - **Text chat**: Ask rescue questions, get guidance on dog bites, incident reporting, and more
 - **Google Maps quick links**: Open nearby vets or animal-help searches after sharing location
 - **Duplicate detection**: Prevents redundant reports using perceptual image hashing
 - **Location tracking**: Extracts GPS from image EXIF data or browser geolocation
+- **Strict jurisdiction gate**: Image reports are assessed only when EXIF GPS or shared browser location verifies the case is within the Dharamsala service area
 - **Automated alerts**: High-severity cases (score ≥ 7) trigger Slack/webhook notifications
 - **Admin analytics**: Query incident data using natural language
 
@@ -52,7 +54,7 @@ Edit `.env` and set the following:
 OPENAI_API_KEY=sk-your-openai-key-here
 
 # Optional model overrides
-OPENAI_MODEL=gpt-5.4-mini
+OPENAI_MODEL=gpt-4o
 OPENAI_VISION_MODEL=
 OPENAI_CHAT_MODEL=
 OPENAI_ADMIN_MODEL=
@@ -62,7 +64,15 @@ SLACK_WEBHOOK_URL=
 ALERT_WEBHOOK_URL=
 
 # Admin dashboard access
-ADMIN_PASSWORD=changeme
+ADMIN_PASSWORD=<set-a-strong-password>
+
+# Public rescue contact shown in guidance responses
+DAR_PHONE_NUMBER=<public-contact-number>
+
+# Feature flags
+STRICT_LOCATION_GATE=true
+# Temporary QA value; change to 25 for strict Dharamsala-only enforcement
+DHARAMSALA_REGION_RADIUS_KM=1000
 
 # Server config (defaults shown)
 HOST=0.0.0.0
@@ -71,6 +81,23 @@ PORT=8000
 # Optional persistent paths (helpful for Docker/EC2)
 DB_PATH=
 STORAGE_DIR=
+
+# Optional local Chroma RAG
+RAG_VECTOR_BACKEND=chroma
+CHROMA_PERSIST_DIR=
+CHROMA_COLLECTION_NAME=dar-rag
+CHROMA_HNSW_SPACE=cosine
+CHROMA_HNSW_CONSTRUCTION_EF=200
+CHROMA_HNSW_SEARCH_EF=100
+CHROMA_HNSW_M=16
+RAG_EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+
+# Optional Pinecone hybrid RAG
+PINECONE_API_KEY=
+PINECONE_INDEX_NAME=dar-rag-hybrid
+PINECONE_NAMESPACE=dharamsala-animal-rescue
+RAG_DENSE_DIMENSION=384
+RAG_HYBRID_ALPHA=0.65
 ```
 
 ## Running the App
@@ -82,6 +109,89 @@ python3 scripts/ingest_docs.py
 ```
 
 This populates the knowledge base used by the chat assistant. Re-run whenever files in `rag_docs/` are updated.
+
+To refresh the core DAR project pages and their relevant child pages:
+
+```bash
+python3 scripts/scrape_dar_site.py --scope projects --delay 10
+python3 scripts/ingest_docs.py --chroma --clear-chroma
+```
+
+The project-scoped crawl follows links inside the page content for three levels,
+skips donation/newsletter noise, and writes its coverage report to
+`reports/projects_scrape_manifest.json`. Use the default site scope only when a
+broader crawl is intentionally needed.
+
+To ingest additional local PDFs into the same Chroma collection:
+
+```bash
+python3 scripts/ingest_docs.py --chroma --clear-chroma \
+  --doc "/path/to/file.pdf"
+```
+
+For image-only PDFs on macOS, install the optional OCR helpers and add `--ocr-pdfs`:
+
+```bash
+pip install PyMuPDF ocrmac
+```
+
+This uses Apple Vision locally and lets scanned PDFs be chunked and embedded too.
+
+The default vector path uses local Chroma with sentence-transformer dense embeddings persisted under `chroma_db/`. If Chroma is unavailable or empty, the app falls back to the local SQLite/BM25 retrieval path. Pinecone remains available with `RAG_VECTOR_BACKEND=pinecone` and `python3 scripts/ingest_docs.py --pinecone --clear-pinecone-namespace`.
+
+`STRICT_LOCATION_GATE=true` requires either photo EXIF GPS or shared browser location inside the Dharamsala service area before image triage runs. Set it to `false` to temporarily restore the older self-confirmation flow for image uploads with no verified coordinates.
+
+`DHARAMSALA_REGION_RADIUS_KM=1000` temporarily broadens the accepted service
+area for QA. Change it to `25` and restart the application when strict
+Dharamsala-region enforcement is required.
+
+For image reports, the API and chat UI include a location-verification audit
+showing each available GPS source, detected coordinates, distance from the
+Dharamsala center, allowed radius, selected source, and final decision. The
+server emits the same information as a `location_gate_decision` log line.
+
+For the EC2 Docker deployment, follow location-gate decisions with:
+
+```bash
+docker logs -f gaia-chatbot 2>&1 | grep location_gate_decision
+```
+
+## Twilio WhatsApp Sandbox
+
+The WhatsApp webhook is:
+
+```text
+http://<ec2-public-ip>/v1/integrations/twilio/whatsapp
+```
+
+In Twilio Console, open **Messaging > Try it out > Send a WhatsApp message >
+Sandbox settings**. Set **When a message comes in** to the webhook URL above,
+choose `POST`, and save it. Twilio needs a public URL; an EC2 instance ID such
+as `i-...` is not a valid webhook address.
+
+Text messages use the normal RAG chat workflow. For a photo report, first share
+a WhatsApp location pin and then send the photo. The app stores the latest
+location for that pseudonymous WhatsApp sender because WhatsApp may remove
+photo EXIF metadata.
+
+Set these environment variables on the server:
+
+```env
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_VALIDATE_SIGNATURES=false
+TWILIO_WEBHOOK_BASE_URL=http://<ec2-public-ip>
+WHATSAPP_DEMO_LOCATION_FALLBACK=false
+WHATSAPP_DEMO_LAT=32.2196
+WHATSAPP_DEMO_LNG=76.3234
+```
+
+Once the public webhook URL and credentials are stable, set
+`TWILIO_VALIDATE_SIGNATURES=true`.
+
+For demos, `WHATSAPP_DEMO_LOCATION_FALLBACK=true` lets WhatsApp image reports
+proceed even when WhatsApp strips photo EXIF GPS metadata. Disable it before
+strict production intake.
 
 **2. Start the server:**
 
@@ -116,7 +226,7 @@ At a minimum, the instance needs:
 - A **public IPv4 or Elastic IP**
 - A **security group allowing inbound HTTP (80)** from `0.0.0.0/0`
 - Docker installed
-- A populated `.env` with your OpenAI key and admin password
+- A populated `.env` with your OpenAI key, admin password, and public rescue contact number
 
 Once deployed, the app can be shared at `http://<ec2-public-ip>/` or a domain pointed at that IP.
 
@@ -183,8 +293,10 @@ Key settings in `config.py`:
 |---------|---------|-------------|
 | `ESCALATION_SEVERITY_THRESHOLD` | `7` | Score (1–10) at or above which alerts fire |
 | `SIMILARITY_PHASH_THRESHOLD` | `10` | Hamming distance for near-duplicate images |
-| `MAX_IMAGE_SIZE_MB` | `10` | Maximum upload size |
-| `ALLOWED_IMAGE_TYPES` | JPEG, PNG, WebP, GIF | Accepted MIME types |
+| `MAX_IMAGE_SIZE_MB` | `100` | Maximum original upload size |
+| `VISION_IMAGE_MAX_DIMENSION` | `2048` | Longest side sent to the vision model |
+| `ALLOWED_IMAGE_TYPES` | JPEG, PNG, WebP, GIF, HEIC, HEIF | Accepted MIME types |
+| `WHATSAPP_DEMO_LOCATION_FALLBACK` | `false` | Demo-only fallback location for WhatsApp photos with stripped EXIF |
 
 ## Further Documentation
 

@@ -52,7 +52,10 @@ if (!sessionId) {
 }
 
 let selectedFile = null;
+let selectedFileCanPreview = true;
 let pendingToken = null;
+let userLocation = null;
+var MAX_IMAGE_SIZE_MB = 100;
 
 // Open chat button
 var openChatBtn = document.getElementById("openChatBtn");
@@ -85,6 +88,7 @@ var fileInput = document.getElementById("fileInput");
 var sendBtn = document.getElementById("sendBtn");
 var cameraBtn = document.getElementById("cameraBtn");
 var removeBtn = document.getElementById("removeBtn");
+var locationBtn = document.getElementById("locationBtn");
 var vetMapBtn = document.getElementById("vetMapBtn");
 var rescueMapBtn = document.getElementById("rescueMapBtn");
 
@@ -99,6 +103,8 @@ cameraBtn.addEventListener("click", function () {
 removeBtn.addEventListener("click", removeImage);
 
 fileInput.addEventListener("change", handleFileSelect);
+
+locationBtn.addEventListener("click", requestLocation);
 
 vetMapBtn.addEventListener("click", function () {
     openGoogleMapsSearch("veterinarian");
@@ -125,29 +131,41 @@ messageInput.addEventListener("input", function () {
 function handleFileSelect(e) {
     var file = e.target.files[0];
     if (!file) return;
-    if (!file.type.startsWith("image/")) {
-        alert("Please select an image file.");
+    var isHeic = /\.(heic|heif)$/i.test(file.name);
+    if (!file.type.startsWith("image/") && !isHeic) {
+        alert("Please select a JPEG, PNG, WebP, GIF, HEIC, or HEIF image.");
         return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-        alert("Image must be under 10MB.");
+    if (file.size > MAX_IMAGE_SIZE_MB * 1024 * 1024) {
+        alert("Image must be under " + MAX_IMAGE_SIZE_MB + " MB.");
         return;
     }
     selectedFile = file;
+    selectedFileCanPreview = !isHeic;
+    fileNameSpan.textContent = file.name;
+    uploadPreview.classList.add("active");
+
+    if (!selectedFileCanPreview) {
+        previewImg.removeAttribute("src");
+        previewImg.style.display = "none";
+        return;
+    }
+
+    previewImg.style.display = "";
     var reader = new FileReader();
     reader.onload = function (ev) {
         previewImg.src = ev.target.result;
-        fileNameSpan.textContent = file.name;
-        uploadPreview.classList.add("active");
     };
     reader.readAsDataURL(file);
 }
 
 function removeImage() {
     selectedFile = null;
+    selectedFileCanPreview = true;
     uploadPreview.classList.remove("active");
     fileInput.value = "";
     previewImg.src = "";
+    previewImg.style.display = "";
     fileNameSpan.textContent = "";
 }
 
@@ -156,6 +174,12 @@ function removeImage() {
 function requestLocation() {
     if (!navigator.geolocation) {
         alert("Geolocation is not supported by your browser.");
+        return;
+    }
+    if (!window.isSecureContext) {
+        alert(
+            "Browser location sharing requires HTTPS. On this public EC2 link, upload a GPS-tagged photo or use the app from an HTTPS domain."
+        );
         return;
     }
     locationBtn.disabled = true;
@@ -173,7 +197,7 @@ function requestLocation() {
             locationBtn.disabled = false;
         },
         function (err) {
-            alert("Unable to get location: " + err.message + "\nYou can describe the location in your message.");
+            alert("Unable to get location: " + err.message + "\nYou can upload a GPS-tagged photo or describe the location in your message.");
             locationBtn.disabled = false;
         }
     );
@@ -190,7 +214,7 @@ function sendMessage() {
         addMessage("user", text);
     }
     if (selectedFile) {
-        addImageMessage("user", previewImg.src, selectedFile.name);
+        addImageMessage("user", selectedFileCanPreview ? previewImg.src : "", selectedFile.name);
     }
 
     // Clear input
@@ -221,7 +245,8 @@ function sendMessage() {
             showTyping(false);
             addMessage(
                 "assistant",
-                "Sorry, something went wrong. Please try again or contact rescue services directly if this is urgent."
+                err.userMessage ||
+                    "Sorry, something went wrong. Please try again or contact rescue services directly if this is urgent."
             );
             console.error(err);
         });
@@ -234,10 +259,12 @@ function sendImageTriage(file, context) {
     formData.append("image", file);
     formData.append("context", context || "");
     formData.append("session_id", sessionId);
-    return fetch("/v1/triage/image", { method: "POST", body: formData }).then(function (res) {
-        if (!res.ok) throw new Error("Triage request failed: " + res.status);
-        return res.json();
-    });
+    if (userLocation) {
+        formData.append("lat", userLocation.lat);
+        formData.append("lng", userLocation.lng);
+        formData.append("location_source", "browser");
+    }
+    return fetch("/v1/triage/image", { method: "POST", body: formData }).then(parseApiResponse);
 }
 
 function sendChatQuery(message) {
@@ -251,10 +278,7 @@ function sendChatQuery(message) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-    }).then(function (res) {
-        if (!res.ok) throw new Error("Chat request failed: " + res.status);
-        return res.json();
-    });
+    }).then(parseApiResponse);
 }
 
 // --- Chat rendering ---
@@ -273,10 +297,13 @@ function addMessage(role, text) {
 function addImageMessage(role, src, name) {
     var div = document.createElement("div");
     div.className = "message " + role;
+    var imageContent = src
+        ? '<img class="image-preview" src="' + escapeAttr(src) + '" alt="' + escapeAttr(name) + '">'
+        : '<span class="image-file-label">&#128247; ' + escapeHtml(name) + "</span>";
     div.innerHTML =
         '<div class="message-avatar">&#128100;</div>' +
         '<div class="message-bubble">' +
-        '<img class="image-preview" src="' + escapeAttr(src) + '" alt="' + escapeAttr(name) + '">' +
+        imageContent +
         "</div>";
     chatMessages.appendChild(div);
     scrollToBottom();
@@ -287,6 +314,10 @@ function addAssistantResponse(data) {
     div.className = "message assistant";
 
     var content = renderMarkdown(data.response || "No response received.");
+
+    if (data.location_verification) {
+        content += renderLocationVerification(data.location_verification);
+    }
 
     // Triage severity badge
     if (data.triage && data.triage.severity) {
@@ -305,15 +336,16 @@ function addAssistantResponse(data) {
             data.incident_id.substring(0, 8) + "...</div>";
     }
 
-    // Location confirmation buttons
+    // Location confirmation buttons only appear when STRICT_LOCATION_GATE=false.
     if (data.location_confirmed_needed && data.pending_token) {
         pendingToken = data.pending_token;
         content +=
-            '<div style="margin-top:12px;display:flex;gap:8px;">' +
+            '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">' +
             '<button class="btn btn-primary confirm-yes-btn">Yes, this case is in the Dharamsala region</button>' +
             '<button class="btn confirm-no-btn" style="background:#eee;color:#333;">No, this is elsewhere</button>' +
             '</div>';
     }
+
     if (Array.isArray(data.resource_links) && data.resource_links.length) {
         content += '<div class="resource-links">';
         content += data.resource_links
@@ -333,7 +365,6 @@ function addAssistantResponse(data) {
         '<div class="message-avatar">&#128054;</div>' +
         '<div class="message-bubble">' + content + "</div>";
 
-    // Attach confirm button handlers after DOM insertion
     if (data.location_confirmed_needed && data.pending_token) {
         div.querySelector(".confirm-yes-btn").addEventListener("click", function () {
             removeConfirmButtons(div);
@@ -377,17 +408,108 @@ function removeConfirmButtons(div) {
     }
 }
 
+function renderLocationVerification(verification) {
+    var isRejected = verification.decision === "rejected";
+    var candidates = Array.isArray(verification.candidates) ? verification.candidates : [];
+    var reasonLabels = {
+        accepted_in_region_exif: "Accepted using in-region photo EXIF GPS",
+        accepted_reporter_location_fallback_after_outside_exif: "Accepted using reporter location because photo EXIF was outside",
+        accepted_in_region_reporter_location: "Accepted using in-region reporter location",
+        rejected_all_verified_locations_outside: "Rejected because every verified location was outside",
+        rejected_no_verified_location: "Rejected because no verified location was available",
+    };
+    var details = '<details class="location-audit"' + (isRejected ? " open" : "") + ">";
+    details +=
+        '<summary><span>Location check details</span><span class="location-decision ' +
+        (isRejected ? "rejected" : "accepted") + '">' +
+        escapeHtml(isRejected ? "Rejected" : "Accepted") +
+        "</span></summary>";
+    details +=
+        '<div class="location-audit-reason">' +
+        escapeHtml(reasonLabels[verification.resolution_reason] || verification.resolution_reason || "Location checked") +
+        "</div>";
+
+    if (candidates.length) {
+        details += '<div class="location-candidates">';
+        candidates.forEach(function (candidate) {
+            var source = (candidate.source || "provided").toUpperCase();
+            var state = candidate.in_jurisdiction ? "inside service area" : "outside service area";
+            var selected = candidate.selected ? " &bull; used for decision" : "";
+            details +=
+                '<div class="location-candidate">' +
+                "<strong>" + escapeHtml(source) + "</strong>: " +
+                escapeHtml(formatCoordinate(candidate.lat, candidate.lng)) +
+                " &bull; " + escapeHtml(formatDistance(candidate.distance_km)) +
+                " from center &bull; " + escapeHtml(state) + selected +
+                "</div>";
+        });
+        details += "</div>";
+    } else {
+        details += '<div class="location-candidate">No EXIF GPS or shared browser coordinates were available.</div>';
+    }
+
+    details +=
+        '<div class="location-radius">Allowed service radius: ' +
+        escapeHtml(formatDistance(verification.allowed_radius_km)) +
+        "</div></details>";
+    return details;
+}
+
+function formatCoordinate(lat, lng) {
+    if (typeof lat !== "number" || typeof lng !== "number") return "unknown coordinates";
+    var latRef = lat < 0 ? "S" : "N";
+    var lngRef = lng < 0 ? "W" : "E";
+    return Math.abs(lat).toFixed(6) + " " + latRef + ", " + Math.abs(lng).toFixed(6) + " " + lngRef;
+}
+
+function formatDistance(value) {
+    return typeof value === "number" ? value.toFixed(1) + " km" : "unknown distance";
+}
+
 function sendConfirm(token) {
     var formData = new FormData();
     formData.append("pending_token", token);
     formData.append("session_id", sessionId);
-    return fetch("/v1/triage/confirm", { method: "POST", body: formData }).then(function (res) {
-        if (!res.ok) throw new Error("Confirm request failed: " + res.status);
-        return res.json();
-    });
+    return fetch("/v1/triage/confirm", { method: "POST", body: formData }).then(parseApiResponse);
 }
 
 // --- Helpers ---
+
+function parseApiResponse(res) {
+    return res.text().then(function (text) {
+        var data = null;
+        if (text) {
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                data = null;
+            }
+        }
+
+        if (!res.ok) {
+            var err = new Error("Request failed: " + res.status);
+            err.userMessage = getApiErrorMessage(res, data);
+            throw err;
+        }
+
+        return data || {};
+    });
+}
+
+function getApiErrorMessage(res, data) {
+    if (res.status === 413) {
+        return "That photo is too large to upload. Please choose an image under " + MAX_IMAGE_SIZE_MB + " MB or reduce the photo size and try again.";
+    }
+
+    if (data && data.detail) {
+        if (typeof data.detail === "string") return data.detail;
+        if (Array.isArray(data.detail) && data.detail.length && data.detail[0].msg) {
+            return data.detail[0].msg;
+        }
+    }
+
+    return "Sorry, something went wrong. Please try again or contact rescue services directly if this is urgent.";
+}
 
 function renderMarkdown(text) {
     if (!text) return "";

@@ -1,0 +1,156 @@
+{
+  "generated_at": "2026-06-05T20:34:55.182898+00:00",
+  "base_url": "https://dharamsalaanimalrescue.org/projects",
+  "content_links_only": true,
+  "max_depth": 3,
+  "max_pages": 40,
+  "min_words": 80,
+  "excluded_path_parts": [
+    "/author/",
+    "/category/",
+    "/cart",
+    "/checkout",
+    "/donate",
+    "/newsletter",
+    "/privacy",
+    "/shop",
+    "/sponsor",
+    "/subscribe",
+    "/thank-you"
+  ],
+  "excluded_exact_paths": [
+    "/",
+    "/about"
+  ],
+  "visited_count": 14,
+  "saved_count": 14,
+  "queue_remaining": 0,
+  "pages": [
+    {
+      "url": "https://dharamsalaanimalrescue.org/projects",
+      "title": "What we do",
+      "depth": 0,
+      "discovered_from": null,
+      "word_count": 157,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/projects.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/dog-population-management-plan-in-dharamsala",
+      "title": "Dog Population Management in Dharamsala",
+      "depth": 1,
+      "discovered_from": "https://dharamsalaanimalrescue.org/projects",
+      "word_count": 538,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/dog-population-management-plan-in-dharamsala.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/projects/abcar-project",
+      "title": "ABC/AR \u2013 Animal Birth Control-Anti Rabies",
+      "depth": 1,
+      "discovered_from": "https://dharamsalaanimalrescue.org/projects",
+      "word_count": 343,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/projects__abcar-project.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/adopt",
+      "title": "Adopt a Desi Dog",
+      "depth": 1,
+      "discovered_from": "https://dharamsalaanimalrescue.org/projects",
+      "word_count": 204,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/adopt.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/rabies",
+      "title": "Educate - Vaccinate - Eradicate",
+      "depth": 1,
+      "discovered_from": "https://dharamsalaanimalrescue.org/projects",
+      "word_count": 270,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/rabies.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/projects/street-animal-rescue",
+      "title": "Street Animal Rescue",
+      "depth": 1,
+      "discovered_from": "https://dharamsalaanimalrescue.org/projects",
+      "word_count": 177,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/projects__street-animal-rescue.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/projects/humane-education",
+      "title": "We feel that education is the way to a better future",
+      "depth": 1,
+      "discovered_from": "https://dharamsalaanimalrescue.org/projects",
+      "word_count": 481,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/projects__humane-education.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/street-animal-feeding",
+      "title": "Dharamsala Animal Rescue Supports Street Feeders for Dog Population Management",
+      "depth": 2,
+      "discovered_from": "https://dharamsalaanimalrescue.org/dog-population-management-plan-in-dharamsala",
+      "word_count": 449,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/street-animal-feeding.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/karuna-rural-village-program",
+      "title": "Karuna Rural Village Program - Dharamsala Animal Rescue",
+      "depth": 2,
+      "discovered_from": "https://dharamsalaanimalrescue.org/dog-population-management-plan-in-dharamsala",
+      "word_count": 517,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/karuna-rural-village-program.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/suraj-says-take-rabies-quiz",
+      "title": "Test Your Rabies Knowledge | Dharamsala Animal Rescue",
+      "depth": 2,
+      "discovered_from": "https://dharamsalaanimalrescue.org/projects/abcar-project",
+      "word_count": 951,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/suraj-says-take-rabies-quiz.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/adopt-molly",
+      "title": "Adopt Molly - Dharamsala Animal Rescue",
+      "depth": 2,
+      "discovered_from": "https://dharamsalaanimalrescue.org/adopt",
+      "word_count": 203,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/adopt-molly.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/adopt-rosa",
+      "title": "Adopt Rosa - Dharamsala Animal Rescue",
+      "depth": 2,
+      "discovered_from": "https://dharamsalaanimalrescue.org/adopt",
+      "word_count": 251,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/adopt-rosa.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/10-day-vaccination-camp-scheduled-for-world-rabies-day",
+      "title": "10-Day Vaccination Camp Scheduled for 2021 WORLD RABIES DAY",
+      "depth": 2,
+      "discovered_from": "https://dharamsalaanimalrescue.org/rabies",
+      "word_count": 730,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/10-day-vaccination-camp-scheduled-for-world-rabies-day.md"
+    },
+    {
+      "url": "https://dharamsalaanimalrescue.org/how-communities-play-the-main-role-in-making-dharamsala-rabies-free",
+      "title": "How communities play the main role in making Dharamsala rabies-free",
+      "depth": 3,
+      "discovered_from": "https://dharamsalaanimalrescue.org/karuna-rural-village-program",
+      "word_count": 668,
+      "status": "saved",
+      "output_file": "rag_docs/scraped/how-communities-play-the-main-role-in-making-dharamsala-rabies-free.md"
+    }
+  ]
+}

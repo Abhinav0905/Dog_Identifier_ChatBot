@@ -22,6 +22,8 @@ class LocationSource(str, Enum):
     EXIF = "exif"
     BROWSER = "browser"
     MANUAL = "manual"
+    WHATSAPP = "whatsapp"
+    WHATSAPP_DEMO = "whatsapp_demo"
     UNKNOWN = "unknown"
 
 
@@ -84,11 +86,13 @@ class ChatResponse(BaseModel):
     escalation_triggered: bool = False
     # None = location unknown; True = verified in region; False = outside jurisdiction
     in_jurisdiction: Optional[bool] = None
-    # None = not applicable; True = API is waiting for user to confirm case is in Dharamsala
+    # Only returned when STRICT_LOCATION_GATE=false and API is waiting for user confirmation.
     location_confirmed_needed: Optional[bool] = None
-    # Returned when location_confirmed_needed=True; pass to /v1/triage/confirm
+    # Pass to /v1/triage/confirm when location_confirmed_needed=True.
     pending_token: Optional[str] = None
     resource_links: list[ResourceLink] = Field(default_factory=list)
+    # Audit details explaining which verified coordinate the jurisdiction gate used.
+    location_verification: Optional[dict] = None
 
 
 class AdminQueryResponse(BaseModel):

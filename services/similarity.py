@@ -10,6 +10,7 @@ import imagehash
 from typing import Optional
 import database as db
 from config import SIMILARITY_PHASH_THRESHOLD
+from services.image_processing import register_heif_support
 
 
 def compute_sha256(image_bytes: bytes) -> str:
@@ -17,6 +18,7 @@ def compute_sha256(image_bytes: bytes) -> str:
 
 
 def compute_phash(image_bytes: bytes) -> str:
+    register_heif_support()
     img = Image.open(io.BytesIO(image_bytes))
     return str(imagehash.phash(img))
 
@@ -48,14 +50,14 @@ def check_similar_images(phash_str: str, exclude_id: str = None) -> list[dict]:
             continue
         try:
             stored_hash = imagehash.hex_to_hash(record["image_phash"])
-            distance = current_hash - stored_hash
+            distance = int(current_hash - stored_hash)
             if distance <= SIMILARITY_PHASH_THRESHOLD:
                 similarity_score = max(0, 1.0 - (distance / 64.0))
                 similar.append({
                     "incident_id": record["incident_id"],
                     "match_type": "perceptual",
                     "distance": distance,
-                    "score": round(similarity_score, 3),
+                    "score": float(round(similarity_score, 3)),
                 })
         except Exception:
             continue

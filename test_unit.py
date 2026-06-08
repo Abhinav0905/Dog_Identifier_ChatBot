@@ -182,6 +182,38 @@ class TestLocation(unittest.TestCase):
         result = self.location.extract_exif_location(b"not an image at all")
         self.assertIsNone(result)
 
+    def test_extract_exif_with_gps(self):
+        buf = io.BytesIO()
+        img = Image.new("RGB", (10, 10), color="red")
+        exif = Image.Exif()
+        exif[34853] = {
+            1: "N",
+            2: (32.0, 13.0, 10.6),
+            3: "E",
+            4: (76.0, 19.0, 24.2),
+        }
+        img.save(buf, format="JPEG", exif=exif)
+
+        result = self.location.extract_exif_location(buf.getvalue())
+
+        self.assertIsNotNone(result)
+        self.assertAlmostEqual(result["lat"], 32.2196, places=3)
+        self.assertAlmostEqual(result["lng"], 76.3234, places=3)
+        self.assertEqual(result["source"], "exif")
+
+    def test_is_in_dharamsala_region(self):
+        self.assertTrue(self.location.is_in_dharamsala_region(32.2196, 76.3234))
+        self.assertTrue(self.location.is_in_dharamsala_region(26.847518, 75.782463))
+        self.assertFalse(self.location.is_in_dharamsala_region(37.6914, -121.9225))
+
+    def test_jurisdiction_details_explain_expanded_qa_radius(self):
+        details = self.location.build_jurisdiction_details(26.847518, 75.782463, "exif")
+
+        self.assertTrue(details["in_jurisdiction"])
+        self.assertEqual(details["source"], "exif")
+        self.assertAlmostEqual(details["distance_km"], 599.6, places=1)
+        self.assertEqual(details["allowed_radius_km"], 1000.0)
+
     # --- truncate_precision ---
 
     def test_truncate_precision_default(self):
@@ -206,7 +238,85 @@ class TestLocation(unittest.TestCase):
 
 
 # ============================================================
-# 3. TestSimilarity
+# 3. TestImageProcessing
+# ============================================================
+
+class TestImageProcessing(unittest.TestCase):
+    """Tests upload validation, HEIC support, and vision-safe resizing."""
+
+    def setUp(self):
+        from services import image_processing
+        self.image_processing = image_processing
+
+    def _make_image_bytes(self, image_format="JPEG", size=(100, 100), exif=None):
+        buf = io.BytesIO()
+        save_kwargs = {"format": image_format}
+        if exif is not None:
+            save_kwargs["exif"] = exif
+        Image.new("RGB", size, color="orange").save(buf, **save_kwargs)
+        return buf.getvalue()
+
+    def test_validate_jpeg_upload(self):
+        raw = self._make_image_bytes()
+        media_type = self.image_processing.validate_upload(raw, "image/jpeg", "dog.jpg")
+        self.assertEqual(media_type, "image/jpeg")
+
+    def test_infer_heic_from_filename(self):
+        media_type = self.image_processing.normalize_media_type(
+            "application/octet-stream",
+            "camera-photo.HEIC",
+        )
+        self.assertEqual(media_type, "image/heic")
+
+    def test_normalize_heic_sequence_mime(self):
+        media_type = self.image_processing.normalize_media_type(
+            "image/heic-sequence",
+            "camera-photo.heic",
+        )
+        self.assertEqual(media_type, "image/heic")
+
+    def test_reject_invalid_image_bytes(self):
+        with self.assertRaises(self.image_processing.ImageProcessingError):
+            self.image_processing.validate_upload(b"not an image", "image/jpeg", "dog.jpg")
+
+    def test_prepare_large_image_for_vision(self):
+        raw = self._make_image_bytes(size=(4000, 3000))
+        prepared, media_type = self.image_processing.prepare_for_vision(raw, "image/jpeg")
+        with Image.open(io.BytesIO(prepared)) as image:
+            self.assertEqual(image.format, "JPEG")
+            self.assertLessEqual(max(image.size), 2048)
+        self.assertEqual(media_type, "image/jpeg")
+
+    @unittest.skipUnless(
+        __import__("importlib").util.find_spec("pillow_heif"),
+        "pillow-heif not installed",
+    )
+    def test_heic_preserves_gps_for_location_gate(self):
+        from pillow_heif import register_heif_opener
+        from services import location
+
+        register_heif_opener()
+        exif = Image.Exif()
+        exif[34853] = {
+            1: "N",
+            2: (32.0, 14.0, 31.92),
+            3: "E",
+            4: (76.0, 19.0, 17.4),
+        }
+        raw = self._make_image_bytes(image_format="HEIF", size=(600, 400), exif=exif)
+
+        media_type = self.image_processing.validate_upload(raw, "image/heic", "dog.heic")
+        loc = location.extract_exif_location(raw)
+        prepared, prepared_type = self.image_processing.prepare_for_vision(raw, media_type)
+
+        self.assertEqual(media_type, "image/heic")
+        self.assertEqual(prepared_type, "image/jpeg")
+        self.assertTrue(prepared)
+        self.assertTrue(location.is_in_dharamsala_region(loc["lat"], loc["lng"]))
+
+
+# ============================================================
+# 4. TestSimilarity
 # ============================================================
 
 class TestSimilarity(unittest.TestCase):
@@ -288,6 +398,8 @@ class TestSimilarity(unittest.TestCase):
         result = self.similarity.check_similar_images("base_hash")
         self.assertEqual(len(result), 1)
         self.assertEqual(result[0]["incident_id"], "inc-1")
+        self.assertIsInstance(result[0]["distance"], int)
+        self.assertIsInstance(result[0]["score"], float)
         # score = 1 - 2/64 ≈ 0.969
         self.assertGreater(result[0]["score"], 0.9)
 
@@ -339,7 +451,7 @@ class TestSimilarity(unittest.TestCase):
 
 
 # ============================================================
-# 4. TestTriage
+# 5. TestTriage
 # ============================================================
 
 class TestTriage(unittest.TestCase):
@@ -795,7 +907,7 @@ class TestModels(unittest.TestCase):
             self.assertEqual(self.models.SeverityLevel(val).value, val)
 
     def test_location_source_enum(self):
-        for val in ["exif", "browser", "manual", "unknown"]:
+        for val in ["exif", "browser", "manual", "whatsapp", "whatsapp_demo", "unknown"]:
             self.assertEqual(self.models.LocationSource(val).value, val)
 
 
@@ -816,9 +928,112 @@ class TestAppHelpers(unittest.TestCase):
         self.assertIn("google.com/maps/search", links[0]["url"])
         self.assertIn("veterinarian", links[0]["url"])
 
+    def test_build_resource_links_includes_dar_for_in_region_location(self):
+        links = self.app._build_resource_links({"lat": 32.2196, "lng": 76.3234})
+
+        self.assertEqual(links[0]["label"], "Contact Dharamsala Animal Rescue")
+        self.assertEqual(links[0]["url"], self.app.config.DAR_CONTACT_URL)
+        self.assertEqual(len(links), 3)
+
+    def test_build_resource_links_omits_dar_for_outside_location(self):
+        links = self.app._build_resource_links({"lat": 37.6914, "lng": -121.9225})
+
+        self.assertEqual(len(links), 2)
+        self.assertNotIn("Dharamsala Animal Rescue", links[0]["label"])
+
     def test_query_needs_local_services(self):
         self.assertTrue(self.app._query_needs_local_services("Can you find a vet near me?"))
         self.assertFalse(self.app._query_needs_local_services("hello there"))
+
+    def test_resolve_whatsapp_media_location_uses_existing_pin(self):
+        lat, lng, source = self.app._resolve_whatsapp_media_location(32.2196, 76.3234)
+
+        self.assertEqual((lat, lng, source), (32.2196, 76.3234, "whatsapp"))
+
+    def test_resolve_whatsapp_media_location_can_use_demo_fallback(self):
+        with patch.object(self.app.config, "WHATSAPP_DEMO_LOCATION_FALLBACK", True), \
+             patch.object(self.app.config, "WHATSAPP_DEMO_LAT", 32.2196), \
+             patch.object(self.app.config, "WHATSAPP_DEMO_LNG", 76.3234):
+            lat, lng, source = self.app._resolve_whatsapp_media_location(None, None)
+
+        self.assertEqual((lat, lng, source), (32.2196, 76.3234, "whatsapp_demo"))
+
+    def test_resolve_upload_location_falls_back_when_exif_is_outside(self):
+        exif_loc = {"lat": 37.6914, "lng": -121.9225, "source": "exif", "accuracy": None}
+        with patch.object(self.app.location, "extract_exif_location", return_value=exif_loc):
+            loc, lat, lng, source = self.app._resolve_upload_location(
+                b"image",
+                32.2196,
+                76.3234,
+                "browser",
+            )
+
+        self.assertEqual(lat, 32.2196)
+        self.assertEqual(lng, 76.3234)
+        self.assertEqual(source, "browser")
+        self.assertTrue(loc["in_jurisdiction"])
+        self.assertEqual(
+            loc["resolution_reason"],
+            "accepted_reporter_location_fallback_after_outside_exif",
+        )
+        self.assertEqual(len(loc["candidates"]), 2)
+        self.assertFalse(loc["candidates"][0]["selected"])
+        self.assertTrue(loc["candidates"][1]["selected"])
+
+    def test_resolve_upload_location_prefers_in_region_exif(self):
+        exif_loc = {"lat": 32.2196, "lng": 76.3234, "source": "exif", "accuracy": None}
+        with patch.object(self.app.location, "extract_exif_location", return_value=exif_loc):
+            loc, lat, lng, source = self.app._resolve_upload_location(
+                b"image",
+                37.6914,
+                -121.9225,
+                "browser",
+            )
+
+        self.assertEqual((lat, lng, source), (32.2196, 76.3234, "exif"))
+        self.assertEqual(loc["resolution_reason"], "accepted_in_region_exif")
+        self.assertTrue(loc["in_jurisdiction"])
+
+    def test_resolve_upload_location_uses_form_without_exif(self):
+        with patch.object(self.app.location, "extract_exif_location", return_value=None):
+            loc, lat, lng, source = self.app._resolve_upload_location(
+                b"image",
+                32.2196,
+                76.3234,
+                "browser",
+            )
+
+        self.assertEqual(lat, 32.2196)
+        self.assertEqual(lng, 76.3234)
+        self.assertEqual(source, "browser")
+        self.assertEqual(loc["decision"], "accepted")
+        self.assertEqual(loc["resolution_reason"], "accepted_in_region_reporter_location")
+
+    def test_location_required_response_is_strict(self):
+        response = self.app._build_location_required_response()
+        self.assertIn("Location verification required", response)
+        self.assertIn("GPS metadata", response)
+        self.assertIn("shared browser location", response)
+
+    def test_out_of_region_location_response_is_strict(self):
+        response = self.app._build_out_of_region_location_response(
+            self.app.location.build_jurisdiction_details(37.6914, -121.9225, "exif")
+        )
+        self.assertIn("Outside Dharamsala Animal Rescue's service area", response)
+        self.assertIn("verified exif location", response)
+        self.assertIn("cannot be assessed or logged", response)
+        self.assertIn("37.691400 N, 121.922500 W", response)
+        self.assertIn("1000.0 km", response)
+
+    def test_location_gate_decision_is_logged(self):
+        verification = self.app.location.build_jurisdiction_details(37.6914, -121.9225, "exif")
+        with patch.object(self.app.logger, "info") as log_info:
+            self.app._log_location_gate_decision("session-1", "dog.jpg", verification)
+
+        self.assertTrue(log_info.called)
+        logged_payload = log_info.call_args.args[1]
+        self.assertIn('"event": "location_gate_decision"', logged_payload)
+        self.assertIn('"allowed_radius_km": 1000.0', logged_payload)
 
 
 # ============================================================

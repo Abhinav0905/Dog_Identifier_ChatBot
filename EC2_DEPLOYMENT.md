@@ -101,6 +101,25 @@ Health check:
 http://<elastic-ip>/health
 ```
 
+## Nginx proxy notes
+
+If Nginx is proxying to the Docker container, set the upload body limit above the app's 30 MB image limit:
+
+```nginx
+location / {
+    client_max_body_size 35M;
+    client_body_buffer_size 1M;
+    proxy_pass http://127.0.0.1:8000;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+Browser location sharing also requires a secure origin. On a plain `http://<elastic-ip>/` link, Chrome will block the geolocation API. Use an HTTPS domain for browser-location fallback, or test strict image reports with photos that contain EXIF GPS.
+
 ## Updating after code changes
 
 ```bash
