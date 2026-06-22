@@ -1,5 +1,31 @@
 # Dharamsala Animal Rescue Chatbot
 
+An AI-powered chatbot and vision-analysis tool for animal rescue center / NGO
+workflows. The app helps a rescue organization collect street-animal reports,
+analyze uploaded animal photos, check whether the case is inside the supported
+service area, and give practical next steps to the person reporting the case.
+
+The project is designed around animal welfare and field rescue operations:
+photos can be assessed for visible distress, injuries, or urgent rescue signals;
+text chat can answer rescue-related questions; and high-severity reports can be
+logged and escalated for follow-up.
+
+## Working Demo
+
+[![Watch the working app demo](https://img.youtube.com/vi/_7xBCLXIK7U/hqdefault.jpg)](https://youtu.be/_7xBCLXIK7U)
+
+Watch the working video of the app: https://youtu.be/_7xBCLXIK7U
+
+## What This App Does
+
+This app supports an animal rescue NGO by combining:
+
+- **Vision analysis**: Reviews uploaded animal photos and estimates rescue urgency
+- **Location-aware intake**: Uses photo GPS or browser location to confirm the report is in the Dharamsala service area
+- **Rescue guidance**: Gives safe, community-first instructions for injured, sick, lost, or vulnerable animals
+- **Incident tracking**: Stores report details, duplicate checks, severity scores, and alert status
+- **NGO escalation support**: Can notify rescue staff when a case appears high severity
+
 ## Features
 
 - **Image triage**: Upload a photo and get an AI-powered distress severity assessment (1–10 scale)
