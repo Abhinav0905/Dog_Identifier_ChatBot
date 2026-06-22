@@ -106,6 +106,34 @@ def validate_upload(image_bytes: bytes, media_type: str | None, filename: str | 
 
 def prepare_for_vision(image_bytes: bytes, media_type: str) -> tuple[bytes, str]:
     """Convert any accepted upload to a resized, orientation-correct JPEG."""
+    return _convert_to_jpeg(
+        image_bytes,
+        media_type,
+        max_dimension=config.VISION_IMAGE_MAX_DIMENSION,
+        quality=config.VISION_IMAGE_JPEG_QUALITY,
+        error_message="The uploaded image could not be prepared for assessment.",
+    )
+
+
+def prepare_preview(image_bytes: bytes, media_type: str) -> tuple[bytes, str]:
+    """Convert any accepted upload to a browser-displayable JPEG preview."""
+    return _convert_to_jpeg(
+        image_bytes,
+        media_type,
+        max_dimension=min(config.VISION_IMAGE_MAX_DIMENSION, 1200),
+        quality=min(config.VISION_IMAGE_JPEG_QUALITY, 85),
+        error_message="The uploaded image could not be prepared for preview.",
+    )
+
+
+def _convert_to_jpeg(
+    image_bytes: bytes,
+    media_type: str,
+    *,
+    max_dimension: int,
+    quality: int,
+    error_message: str,
+) -> tuple[bytes, str]:
     if media_type in {"image/heic", "image/heif"} and not register_heif_support():
         raise ImageProcessingError("HEIC/HEIF support is not installed on the server.")
 
@@ -115,7 +143,7 @@ def prepare_for_vision(image_bytes: bytes, media_type: str) -> tuple[bytes, str]
             uploaded.seek(0)
             image = ImageOps.exif_transpose(uploaded)
             image.thumbnail(
-                (config.VISION_IMAGE_MAX_DIMENSION, config.VISION_IMAGE_MAX_DIMENSION),
+                (max_dimension, max_dimension),
                 Image.Resampling.LANCZOS,
             )
             image = _flatten_to_rgb(image)
@@ -124,11 +152,11 @@ def prepare_for_vision(image_bytes: bytes, media_type: str) -> tuple[bytes, str]
             image.save(
                 output,
                 format="JPEG",
-                quality=config.VISION_IMAGE_JPEG_QUALITY,
+                quality=quality,
                 optimize=True,
             )
     except (UnidentifiedImageError, OSError, ValueError) as exc:
-        raise ImageProcessingError("The uploaded image could not be prepared for assessment.") from exc
+        raise ImageProcessingError(error_message) from exc
 
     return output.getvalue(), "image/jpeg"
 

@@ -17,9 +17,9 @@
             "<p>पहले स्थानीय संदर्भ जानें, फिर तय करें कि कुत्ते को बाहरी मदद की ज़रूरत है या नहीं।</p>" +
             "<p>मैं इन चीज़ों में आपकी मदद कर सकता हूँ:</p>" +
             "<ul>" +
-            "<li><strong>आवारा कुत्ते की रिपोर्ट करें</strong> – फ़ोटो अपलोड करें और जानें कि क्या स्थानीय लोग पहले से कुत्ते को जानते या खिलाते हैं</li>" +
+            "<li><strong>आवारा कुत्ते की फ़ोटो देखें</strong> – फ़ोटो अपलोड करें और जानें कि क्या कुत्ता स्वस्थ दिख रहा है या मदद चाहिए</li>" +
             "<li><strong>सामुदायिक सवाल</strong> – फीडर, मालिक, NGO नसबंदी और टीकाकरण के बारे में पूछें</li>" +
-            "<li><strong>पास की मदद</strong> – लोकेशन शेयर करें और पास के पशु चिकित्सक या बचाव केंद्र खोलें</li>" +
+            "<li><strong>फ़ोटो आकलन</strong> – फ़ोटो से समझें कि जानवर स्वस्थ दिख रहा है या मदद चाहिए</li>" +
             "</ul>" +
             "<p>आज मैं आपकी कैसे सहायता कर सकता हूँ?</p>" +
             "</div>";
@@ -31,9 +31,9 @@
             "<p>Start with local context, then decide whether the dog needs outside help.</p>" +
             "<p>Examples of what I can help you with:</p>" +
             "<ul>" +
-            "<li><strong>Report a stray dog</strong> - Upload a photo and I'll help you check whether locals already know or feed the dog</li>" +
+            "<li><strong>Check a stray dog photo</strong> - Upload a photo and I'll help you see whether the animal looks healthy or needs help</li>" +
             "<li><strong>Community questions</strong> - Ask about feeders, owners, NGO sterilization, and vaccination efforts</li>" +
-            "<li><strong>Nearby support</strong> - Share location and open Google Maps searches for vets or animal help</li>" +
+            "<li><strong>Photo assessment</strong> - Check whether the animal looks healthy or needs help</li>" +
             "</ul>" +
             "<p>How can I help you today?</p>" +
             "</div>";
@@ -53,6 +53,8 @@ if (!sessionId) {
 
 let selectedFile = null;
 let selectedFileCanPreview = true;
+let selectedPreviewSrc = "";
+let selectedPreviewPromise = Promise.resolve("");
 let pendingToken = null;
 let userLocation = null;
 var MAX_IMAGE_SIZE_MB = 100;
@@ -107,7 +109,7 @@ fileInput.addEventListener("change", handleFileSelect);
 locationBtn.addEventListener("click", requestLocation);
 
 vetMapBtn.addEventListener("click", function () {
-    openGoogleMapsSearch("veterinarian");
+    openGoogleMapsSearch("animal rescue NGO");
 });
 
 rescueMapBtn.addEventListener("click", function () {
@@ -142,26 +144,60 @@ function handleFileSelect(e) {
     }
     selectedFile = file;
     selectedFileCanPreview = !isHeic;
+    selectedPreviewSrc = "";
+    selectedPreviewPromise = Promise.resolve("");
     fileNameSpan.textContent = file.name;
     uploadPreview.classList.add("active");
 
     if (!selectedFileCanPreview) {
         previewImg.removeAttribute("src");
         previewImg.style.display = "none";
+        fileNameSpan.textContent = file.name + " (converting preview...)";
+        selectedPreviewPromise = requestImagePreview(file)
+            .then(function (previewSrc) {
+                if (selectedFile !== file) {
+                    return previewSrc;
+                }
+                selectedPreviewSrc = previewSrc;
+                selectedFileCanPreview = true;
+                previewImg.src = previewSrc;
+                previewImg.style.display = "";
+                fileNameSpan.textContent = file.name;
+                return previewSrc;
+            })
+            .catch(function (err) {
+                if (selectedFile === file) {
+                    fileNameSpan.textContent = file.name + " (preview unavailable, upload still works)";
+                }
+                console.error(err);
+                return "";
+            });
         return;
     }
 
     previewImg.style.display = "";
     var reader = new FileReader();
-    reader.onload = function (ev) {
-        previewImg.src = ev.target.result;
-    };
+    selectedPreviewPromise = new Promise(function (resolve) {
+        reader.onload = function (ev) {
+            var previewSrc = ev.target.result || "";
+            if (selectedFile === file) {
+                selectedPreviewSrc = previewSrc;
+                previewImg.src = previewSrc;
+            }
+            resolve(previewSrc);
+        };
+        reader.onerror = function () {
+            resolve("");
+        };
+    });
     reader.readAsDataURL(file);
 }
 
 function removeImage() {
     selectedFile = null;
     selectedFileCanPreview = true;
+    selectedPreviewSrc = "";
+    selectedPreviewPromise = Promise.resolve("");
     uploadPreview.classList.remove("active");
     fileInput.value = "";
     previewImg.src = "";
@@ -209,29 +245,30 @@ function sendMessage() {
     var text = messageInput.value.trim();
     if (!text && !selectedFile) return;
 
-    // Show user message in chat
+    var fileToSend = selectedFile;
+    var fileNameToSend = fileToSend ? fileToSend.name : "";
+    var previewPromise = selectedPreviewPromise || Promise.resolve(selectedPreviewSrc || "");
+
     if (text) {
         addMessage("user", text);
     }
-    if (selectedFile) {
-        addImageMessage("user", selectedFileCanPreview ? previewImg.src : "", selectedFile.name);
-    }
 
-    // Clear input
     messageInput.value = "";
     messageInput.style.height = "auto";
     showTyping(true);
+    sendBtn.disabled = true;
 
-    // Capture file reference before clearing
-    var fileToSend = selectedFile;
-
-    // Clear file selection immediately so UI updates
-    removeImage();
-
-    // Send request
     var promise;
     if (fileToSend) {
-        promise = sendImageTriage(fileToSend, text);
+        removeImage();
+        promise = previewPromise
+            .catch(function () {
+                return "";
+            })
+            .then(function (previewSrc) {
+                addImageMessage("user", previewSrc || "", fileNameToSend);
+                return sendImageTriage(fileToSend, text);
+            });
     } else {
         promise = sendChatQuery(text);
     }
@@ -239,10 +276,12 @@ function sendMessage() {
     promise
         .then(function (data) {
             showTyping(false);
+            sendBtn.disabled = false;
             addAssistantResponse(data);
         })
         .catch(function (err) {
             showTyping(false);
+            sendBtn.disabled = false;
             addMessage(
                 "assistant",
                 err.userMessage ||
@@ -265,6 +304,30 @@ function sendImageTriage(file, context) {
         formData.append("location_source", "browser");
     }
     return fetch("/v1/triage/image", { method: "POST", body: formData }).then(parseApiResponse);
+}
+
+function requestImagePreview(file) {
+    var formData = new FormData();
+    formData.append("image", file);
+    return fetch("/v1/image/preview", { method: "POST", body: formData }).then(function (res) {
+        if (!res.ok) {
+            throw new Error("Could not create image preview: " + res.status);
+        }
+        return res.blob();
+    }).then(function (blob) {
+        return blobToDataUrl(blob);
+    });
+}
+
+function blobToDataUrl(blob) {
+    return new Promise(function (resolve, reject) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            resolve(reader.result || "");
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+    });
 }
 
 function sendChatQuery(message) {
@@ -319,23 +382,6 @@ function addAssistantResponse(data) {
         content += renderLocationVerification(data.location_verification);
     }
 
-    // Triage severity badge
-    if (data.triage && data.triage.severity) {
-        var sev = data.triage.severity;
-        content +=
-            '<div><span class="triage-badge ' + sev + '">' +
-            sev + " severity (" + data.triage.severity_score +
-            "/10) &bull; " + Math.round(data.triage.confidence * 100) +
-            "% confidence</span></div>";
-    }
-
-    // Case ID
-    if (data.incident_id) {
-        content +=
-            '<div style="margin-top:8px;font-size:11px;color:#999;">Case ID: ' +
-            data.incident_id.substring(0, 8) + "...</div>";
-    }
-
     // Location confirmation buttons only appear when STRICT_LOCATION_GATE=false.
     if (data.location_confirmed_needed && data.pending_token) {
         pendingToken = data.pending_token;
@@ -344,21 +390,6 @@ function addAssistantResponse(data) {
             '<button class="btn btn-primary confirm-yes-btn">Yes, this case is in the Dharamsala region</button>' +
             '<button class="btn confirm-no-btn" style="background:#eee;color:#333;">No, this is elsewhere</button>' +
             '</div>';
-    }
-
-    if (Array.isArray(data.resource_links) && data.resource_links.length) {
-        content += '<div class="resource-links">';
-        content += data.resource_links
-            .map(function (link) {
-                return (
-                    '<a class="resource-link" href="' + escapeAttr(link.url) +
-                    '" target="_blank" rel="noopener noreferrer">' +
-                    escapeHtml(link.label) +
-                    "</a>"
-                );
-            })
-            .join("");
-        content += "</div>";
     }
 
     div.innerHTML =
@@ -388,11 +419,7 @@ function addAssistantResponse(data) {
             addMessage(
                 "assistant",
                 "Understood. Dharamsala Animal Rescue only tracks cases within the Dharamsala region.\n\n" +
-                "Please contact a local animal rescue organisation or veterinary service in your area. " +
-                "You can reach out to:\n" +
-                "- Your nearest SPCA or animal welfare society\n" +
-                "- A local veterinary clinic\n" +
-                "- Local municipal animal control services"
+                "Please contact a local animal rescue organisation, animal welfare NGO, or local nonprofit in your area."
             );
         });
     }
@@ -596,7 +623,7 @@ function escapeHtml(str) {
 }
 
 function updateMapActions() {
-    mapActions.classList.toggle("active", !!userLocation);
+    mapActions.classList.remove("active");
 }
 
 function openGoogleMapsSearch(query) {

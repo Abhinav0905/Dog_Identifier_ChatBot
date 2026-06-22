@@ -71,7 +71,7 @@ def check_input(text: str) -> GuardrailResult:
         if re.search(pattern, lower):
             return GuardrailResult(
                 False,
-                "I can't assist with that request. If you're witnessing animal abuse, please contact local authorities or animal welfare organizations immediately.",
+                "I can't assist with that request. If you're witnessing animal abuse, contact a local animal welfare NGO or animal rescue organisation for guidance.",
                 "harmful",
             )
 
@@ -82,7 +82,7 @@ def check_input(text: str) -> GuardrailResult:
             if re.search(pattern, lower):
                 return GuardrailResult(
                     False,
-                    "I'm the Dharamsala Animal Rescue assistant. I can help with reporting stray animals in distress, dog bite guidance, and rescue-related questions. How can I help with an animal rescue concern?",
+                    "I'm the Dharamsala Animal Rescue assistant. I can help with stray animal distress, dog bite guidance, and rescue-related questions. How can I help with an animal rescue concern?",
                     "off_topic",
                 )
 
@@ -91,6 +91,19 @@ def check_input(text: str) -> GuardrailResult:
 
 def sanitize_response(response: str) -> str:
     """Post-process AI response to enforce safety constraints."""
+    replacements = [
+        (r"\banimal control\b", "local animal rescue organisation"),
+        (r"\blocal authorities\b", "local animal welfare NGO"),
+        (r"\bauthorities\b", "local animal welfare NGO"),
+        (r"\bmunicipal animal services?\b", "local animal rescue organisation or animal welfare NGO"),
+        (r"\bmunicipal animal control services?\b", "local animal rescue organisation or animal welfare NGO"),
+        (r"\bSPCA\b", "local animal welfare NGO"),
+        (r"\bGoogle Maps links?\b", "nearby help"),
+        (r"\bGoogle Maps\b", "nearby help"),
+    ]
+    for pattern, replacement in replacements:
+        response = re.sub(pattern, replacement, response, flags=re.IGNORECASE)
+
     # Ensure no diagnostic language slips through
     diagnostic_phrases = [
         "I diagnose", "the diagnosis is", "this dog has", "it is definitely",
@@ -98,6 +111,6 @@ def sanitize_response(response: str) -> str:
     ]
     for phrase in diagnostic_phrases:
         if phrase.lower() in response.lower():
-            response += "\n\n**Note:** This is not a veterinary diagnosis. Please consult a qualified veterinarian for medical assessment."
+            response += "\n\n**Note:** This is not a veterinary diagnosis. Please contact a local animal rescue organisation or animal welfare NGO for guidance if you are worried."
             break
     return response

@@ -6,7 +6,7 @@
 - **Smartphone photo support**: Accepts HEIC/HEIF and high-resolution uploads, then creates a vision-safe JPEG copy for assessment
 - **Community-first guidance**: Starts with local questions about feeders, owners, and ongoing NGO sterilization/vaccination work
 - **Text chat**: Ask rescue questions, get guidance on dog bites, incident reporting, and more
-- **Google Maps quick links**: Open nearby vets or animal-help searches after sharing location
+- **Google Maps quick links**: Open nearby animal rescue/NGO help searches after sharing location
 - **Duplicate detection**: Prevents redundant reports using perceptual image hashing
 - **Location tracking**: Extracts GPS from image EXIF data or browser geolocation
 - **Strict jurisdiction gate**: Image reports are assessed only when EXIF GPS or shared browser location verifies the case is within the Dharamsala service area
@@ -71,7 +71,9 @@ DAR_PHONE_NUMBER=<public-contact-number>
 
 # Feature flags
 STRICT_LOCATION_GATE=true
-# Temporary QA value; change to 25 for strict Dharamsala-only enforcement
+# Buffer around Deb's service-area route checkpoints, in km.
+DHARAMSALA_SERVICE_POINT_RADIUS_KM=3
+# Legacy fallback radius setting; route polygon/checkpoints are the active gate.
 DHARAMSALA_REGION_RADIUS_KM=1000
 
 # Server config (defaults shown)
@@ -139,16 +141,17 @@ This uses Apple Vision locally and lets scanned PDFs be chunked and embedded too
 
 The default vector path uses local Chroma with sentence-transformer dense embeddings persisted under `chroma_db/`. If Chroma is unavailable or empty, the app falls back to the local SQLite/BM25 retrieval path. Pinecone remains available with `RAG_VECTOR_BACKEND=pinecone` and `python3 scripts/ingest_docs.py --pinecone --clear-pinecone-namespace`.
 
-`STRICT_LOCATION_GATE=true` requires either photo EXIF GPS or shared browser location inside the Dharamsala service area before image triage runs. Set it to `false` to temporarily restore the older self-confirmation flow for image uploads with no verified coordinates.
+`STRICT_LOCATION_GATE=true` requires either photo EXIF GPS or shared browser location inside the Dharamsala service area before image triage runs.
 
-`DHARAMSALA_REGION_RADIUS_KM=1000` temporarily broadens the accepted service
-area for QA. Change it to `25` and restart the application when strict
-Dharamsala-region enforcement is required.
+The active service-area gate is Deb's route-map loop plus a small buffer around
+the named checkpoints in `services/location.py`: DAR/Rakkar, Kharota, Khanyara,
+Gamru Village Road, Chakban Gharoh, Gaggal, Chakban Banwala, Yol, and Chamunda
+Devi Temple. Tune the checkpoint buffer with
+`DHARAMSALA_SERVICE_POINT_RADIUS_KM`; the default is `3`.
 
-For image reports, the API and chat UI include a location-verification audit
-showing each available GPS source, detected coordinates, distance from the
-Dharamsala center, allowed radius, selected source, and final decision. The
-server emits the same information as a `location_gate_decision` log line.
+For image reports, the server emits a `location_gate_decision` log line showing
+each available GPS source, detected coordinates, nearest service-area checkpoint,
+selected source, and final decision.
 
 For the EC2 Docker deployment, follow location-gate decisions with:
 

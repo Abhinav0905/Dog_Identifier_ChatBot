@@ -10,7 +10,6 @@ import logging
 from types import SimpleNamespace
 from pathlib import Path
 from datetime import datetime, timezone
-from urllib.parse import quote_plus
 
 from fastapi import BackgroundTasks, FastAPI, UploadFile, File, Form, HTTPException, Query, Request
 from fastapi.staticfiles import StaticFiles
@@ -58,7 +57,10 @@ def startup():
     logger.info("Database initialized at %s", config.DB_PATH)
     logger.info("Storage directory: %s", config.STORAGE_DIR)
     logger.info("OpenAI API key configured: %s", bool(config.OPENAI_API_KEY))
-    logger.info("Dharamsala service-area radius: %.1f km", config.DHARAMSALA_REGION_RADIUS_KM)
+    logger.info(
+        "Dharamsala service-area mode: Deb route polygon + %.1f km checkpoint buffer",
+        location.DHARAMSALA_REGION_RADIUS_KM,
+    )
 
 
 # --- Language detection ---
@@ -96,6 +98,26 @@ async def serve_admin():
 
 # --- Public APIs ---
 
+@app.post("/v1/image/preview", response_class=Response)
+async def image_preview(image: UploadFile = File(...)):
+    """Return a browser-displayable JPEG preview for supported uploads."""
+    image_bytes = await image.read()
+    if len(image_bytes) > config.MAX_IMAGE_SIZE_MB * 1024 * 1024:
+        raise HTTPException(400, f"Image exceeds {config.MAX_IMAGE_SIZE_MB}MB limit")
+
+    try:
+        media_type = image_processing.validate_upload(image_bytes, image.content_type, image.filename)
+        preview_bytes, preview_media_type = image_processing.prepare_preview(image_bytes, media_type)
+    except image_processing.ImageProcessingError as exc:
+        raise HTTPException(400, str(exc)) from exc
+
+    return Response(
+        content=preview_bytes,
+        media_type=preview_media_type,
+        headers={"Cache-Control": "no-store"},
+    )
+
+
 @app.post("/v1/triage/image")
 async def triage_image(
     request: Request,
@@ -127,53 +149,59 @@ async def triage_image(
         if not guard.allowed:
             return ChatResponse(response=guard.reason)
 
-    # Step 1: Resolve location. Either in-region EXIF or browser GPS may pass.
+    # Resolve location early, but only use it for routing animals that appear
+    # to need rescue help. Healthy-looking photos should still get an answer.
     loc, lat, lng, loc_source = _resolve_upload_location(image_bytes, lat, lng, location_source)
     location_verification = loc or _missing_location_verification()
     _log_location_gate_decision(session_id, image.filename, location_verification)
 
-    # Step 2: Determine jurisdiction.
-    # Strict mode requires EXIF/browser coordinates. Soft mode keeps the older
-    # self-confirmation fallback when no coordinates are available.
-    if lat is None or lng is None:
-        if not config.STRICT_LOCATION_GATE:
-            return _defer_triage_for_location_confirmation(
-                image_bytes=image_bytes,
-                image=image,
-                media_type=media_type,
-                context=context,
-                session_id=session_id,
-            )
-        response_text = _build_location_required_response()
+    lang = _detect_language(request.headers.get("accept-language", ""), context)
+    triage_result = triage.analyze_image(image_bytes, media_type, context, lang)
+    needs_rescue = triage.needs_rescue_help(triage_result)
+    triage_data = _triage_response_payload(triage_result)
+
+    if not needs_rescue:
+        response_text = _build_image_assessment_response(
+            triage_result,
+            needs_rescue=False,
+            in_region=None,
+        )
+        response_text = guardrails.sanitize_response(response_text)
         db.save_chat_message(session_id, "user", f"[Image uploaded: {image.filename}] {context}")
         db.save_chat_message(session_id, "assistant", response_text)
         return ChatResponse(
             response=response_text,
+            triage=triage_data,
             in_jurisdiction=None,
-            location_verification=location_verification,
+        )
+
+    # An animal that appears injured, sick, immobile, or in danger needs a
+    # verified location before we route it to Dharamsala Animal Rescue.
+    if lat is None or lng is None:
+        response_text = _build_location_required_response(triage_result)
+        response_text = guardrails.sanitize_response(response_text)
+        db.save_chat_message(session_id, "user", f"[Image uploaded: {image.filename}] {context}")
+        db.save_chat_message(session_id, "assistant", response_text)
+        return ChatResponse(
+            response=response_text,
+            triage=triage_data,
+            in_jurisdiction=None,
         )
 
     in_region = location.is_in_dharamsala_region(lat, lng)
     if not in_region:
-        if config.STRICT_LOCATION_GATE:
-            response_text = _build_out_of_region_location_response(loc)
-        else:
-            lang = _detect_language(request.headers.get("accept-language", ""), context)
-            triage_result = triage.analyze_image(image_bytes, media_type, context, lang)
-            response_text = _build_out_of_region_response(triage_result)
+        response_text = _build_out_of_region_response(triage_result)
+        response_text = guardrails.sanitize_response(response_text)
         db.save_chat_message(session_id, "user", f"[Image uploaded: {image.filename}] {context}")
         db.save_chat_message(session_id, "assistant", response_text)
         return ChatResponse(
             response=response_text,
+            triage=triage_data,
             in_jurisdiction=False,
-            location_verification=location_verification,
         )
 
-    # Step 3: Run vision triage — jurisdiction is verified
-    lang = _detect_language(request.headers.get("accept-language", ""), context)
-    triage_result = triage.analyze_image(image_bytes, media_type, context, lang)
-
-    # Steps 4–8: Incident creation and alerting only for verified in-jurisdiction cases
+    # Incident creation and alerting stay internal. The user-facing response
+    # intentionally does not expose a case ID or external links.
     sha256 = similarity.compute_sha256(image_bytes)
     phash = similarity.compute_phash(image_bytes)
     blob_filename = f"{sha256}_{image.filename}"
@@ -227,39 +255,21 @@ async def triage_image(
         )
         escalation_triggered = True
 
-    triage_result["recommended_actions"] = triage.enrich_recommended_actions(triage_result, lang)
-    response_text = _build_triage_response(triage_result, sim_result, loc, incident_id)
+    response_text = _build_image_assessment_response(
+        triage_result,
+        needs_rescue=True,
+        in_region=True,
+    )
     response_text = guardrails.sanitize_response(response_text)
 
     db.save_chat_message(session_id, "user", f"[Image uploaded: {image.filename}] {context}")
     db.save_chat_message(session_id, "assistant", response_text)
 
-    triage_data = None
-    if not triage_result.get("is_fallback"):
-        triage_data = {
-            "severity": triage_result["severity"],
-            "severity_score": triage_result["severity_score"],
-            "confidence": triage_result["confidence"],
-            "indicators": triage_result["indicators"],
-            "recommended_actions": triage_result["recommended_actions"],
-            "escalation_needed": triage_result.get("escalation_needed", False),
-            "triage_summary": triage_result["triage_summary"],
-        }
-
     return ChatResponse(
         response=response_text,
-        incident_id=incident_id,
         triage=triage_data,
-        similarity={
-            "is_exact_duplicate": sim_result["is_exact_duplicate"],
-            "exact_match_id": sim_result.get("exact_match_id"),
-            "similar_incidents": sim_result.get("similar_incidents", []),
-            "message": sim_result.get("message", ""),
-        },
         escalation_triggered=escalation_triggered,
         in_jurisdiction=True,
-        resource_links=_build_resource_links(loc),
-        location_verification=location_verification,
     )
 
 
@@ -280,22 +290,13 @@ async def chat_query(http_request: Request, request: ChatQueryRequest):
 
     # Generate response
     response_text = triage.generate_chat_response(request.message, history, session_id, lang)
-    resource_links = []
-    location_context = _request_location_dict(request)
-    if _query_needs_local_services(request.message):
-        resource_links = _build_resource_links(location_context)
-        if not resource_links:
-            response_text += (
-                "\n\nShare your location in the app and I can give you one-tap Google Maps links "
-                "for nearby vets and animal help."
-            )
     response_text = guardrails.sanitize_response(response_text)
 
     # Persist
     db.save_chat_message(session_id, "user", request.message)
     db.save_chat_message(session_id, "assistant", response_text)
 
-    return ChatResponse(response=response_text, resource_links=resource_links)
+    return ChatResponse(response=response_text)
 
 
 @app.post("/v1/location/update")
@@ -400,36 +401,21 @@ async def triage_confirm(
 
     del _pending_triage[pending_token]
 
-    triage_result["recommended_actions"] = triage.enrich_recommended_actions(triage_result, lang)
-    response_text = _build_triage_response(triage_result, sim_result, loc, incident_id)
+    response_text = _build_image_assessment_response(
+        triage_result,
+        needs_rescue=triage.needs_rescue_help(triage_result),
+        in_region=True,
+    )
     response_text = guardrails.sanitize_response(response_text)
     db.save_chat_message(session_id, "assistant", response_text)
 
-    triage_data = None
-    if not triage_result.get("is_fallback"):
-        triage_data = {
-            "severity": triage_result["severity"],
-            "severity_score": triage_result["severity_score"],
-            "confidence": triage_result["confidence"],
-            "indicators": triage_result["indicators"],
-            "recommended_actions": triage_result["recommended_actions"],
-            "escalation_needed": triage_result.get("escalation_needed", False),
-            "triage_summary": triage_result["triage_summary"],
-        }
+    triage_data = _triage_response_payload(triage_result)
 
     return ChatResponse(
         response=response_text,
-        incident_id=incident_id,
         triage=triage_data,
-        similarity={
-            "is_exact_duplicate": sim_result["is_exact_duplicate"],
-            "exact_match_id": sim_result.get("exact_match_id"),
-            "similar_incidents": sim_result.get("similar_incidents", []),
-            "message": sim_result.get("message", ""),
-        },
         escalation_triggered=escalation_triggered,
         in_jurisdiction=True,
-        resource_links=_build_resource_links(loc),
     )
 
 
@@ -676,7 +662,12 @@ async def health():
         "version": "1.0.0-prototype",
         "ai_configured": bool(config.OPENAI_API_KEY),
         "strict_location_gate": config.STRICT_LOCATION_GATE,
-        "service_area_radius_km": config.DHARAMSALA_REGION_RADIUS_KM,
+        "service_area_mode": "deb_route_polygon",
+        "service_area_radius_km": location.DHARAMSALA_REGION_RADIUS_KM,
+        "service_area_checkpoints": [
+            {"name": point["name"], "lat": point["lat"], "lng": point["lng"]}
+            for point in location.SERVICE_AREA_CHECKPOINTS
+        ],
         "max_image_size_mb": config.MAX_IMAGE_SIZE_MB,
         "heic_supported": image_processing.heif_support_available(),
         "twilio_whatsapp_configured": bool(config.TWILIO_ACCOUNT_SID and config.TWILIO_AUTH_TOKEN),
@@ -687,78 +678,105 @@ async def health():
 
 # --- Helpers ---
 
-def _build_triage_response(triage_result: dict, sim_result: dict, loc: dict | None, incident_id: str | None = None) -> str:
-    """Build a youth-friendly response combining triage, similarity, and case info."""
-    parts = []
-    is_fallback = triage_result.get("is_fallback", False)
+def _triage_response_payload(triage_result: dict) -> dict | None:
+    """Return optional structured triage data for the UI badge."""
+    if triage_result.get("is_fallback"):
+        return None
+    severity = triage_result.get("severity")
+    score = triage_result.get("severity_score")
+    confidence = triage_result.get("confidence")
+    if severity not in {"low", "moderate", "high", "critical"}:
+        return None
+    if score is None or confidence is None:
+        return None
+    return {
+        "severity": severity,
+        "severity_score": score,
+        "confidence": confidence,
+        "indicators": triage_result.get("indicators", []),
+        "recommended_actions": [],
+        "escalation_needed": triage_result.get("escalation_needed", False),
+        "triage_summary": triage_result.get("triage_summary", ""),
+    }
 
-    if is_fallback:
-        # Minimal response when AI assessment is unavailable
-        parts.append(triage_result["triage_summary"])
 
-        if triage_result["recommended_actions"]:
-            parts.append("\n**Recommended next steps:**")
-            for i, action in enumerate(triage_result["recommended_actions"][:5], 1):
-                parts.append(f"{i}. {action}")
+def _dar_phone_sentence() -> str:
+    phone = config.DAR_PHONE_NUMBER or "+91 98828 58631"
+    return f"Please contact Dharamsala Animal Rescue at {phone}."
 
-        # Similarity info still relevant
-        if sim_result.get("message"):
-            parts.append(f"\n*{sim_result['message']}*")
 
-        return "\n".join(parts)
+def _build_image_assessment_response(
+    triage_result: dict,
+    *,
+    needs_rescue: bool,
+    in_region: bool | None,
+) -> str:
+    """Build the simplified Web UI photo response.
 
-    severity = triage_result["severity"]
-    score = triage_result["severity_score"]
+    The product rule is deliberately small:
+    healthy-looking animal -> simple observation advice;
+    unhealthy animal in Dharamsala -> DAR phone;
+    unhealthy animal outside Dharamsala -> local rescue/NGO/nonprofit.
+    """
+    if triage_result.get("is_fallback"):
+        return (
+            "**Photo assessment unavailable**\n\n"
+            "I could not assess this photo clearly. Please upload a clearer photo or describe what you see. "
+            "If the animal looks injured, sick, unable to move, or in pain, contact a local animal rescue "
+            "organisation, animal welfare NGO, or local nonprofit."
+        )
 
-    # Severity header
-    if severity == "critical":
-        parts.append("**URGENT - Immediate Help Needed**")
-    elif severity == "high":
-        parts.append("**High Priority - This Animal Needs Help Soon**")
-    elif severity == "moderate":
-        parts.append("**Moderate Concern Detected**")
+    summary = (triage_result.get("triage_summary") or "I assessed the photo.").strip()
+    indicators = [item for item in (triage_result.get("indicators") or []) if item]
+    parts: list[str] = []
+
+    if needs_rescue:
+        parts.append("**Animal may need help**")
     else:
-        parts.append("**Assessment Complete**")
+        parts.append("**Animal appears healthy**")
 
-    # Triage summary
-    parts.append(f"\n{triage_result['triage_summary']}")
+    parts.append(f"\n{summary}")
 
-    # Indicators
-    if triage_result["indicators"]:
-        parts.append("\n**What we noticed:**")
-        for indicator in triage_result["indicators"][:5]:
+    if indicators:
+        parts.append("\n**What I noticed:**")
+        for indicator in indicators[:3]:
             parts.append(f"- {indicator}")
 
-    # Recommended actions
-    if triage_result["recommended_actions"]:
-        parts.append("\n**Recommended next steps:**")
-        for i, action in enumerate(triage_result["recommended_actions"][:5], 1):
-            parts.append(f"{i}. {action}")
-
-    # Similarity info
-    if sim_result.get("message"):
-        parts.append(f"\n*{sim_result['message']}*")
-
-    # Location prompt
-    if not loc:
-        parts.append("\n**Can you share the location?** This helps us avoid duplicate reports and suggest nearby vets or animal help. You can share your location using the button below or describe the nearest landmark.")
+    if not needs_rescue:
+        parts.append(
+            "\nFrom this photo, I do not see clear signs that the animal needs rescue help right now. "
+            "Keep watching calmly and ask nearby people whether they know or feed the animal. "
+            "If it starts limping, bleeding, cannot move, vomits repeatedly, or looks in pain, contact "
+            "a local animal rescue organisation, animal welfare NGO, or local nonprofit."
+        )
+    elif in_region is True:
+        parts.append(
+            "\nThis animal appears to need help and the verified location is within the Dharamsala service area. "
+            f"{_dar_phone_sentence()}"
+        )
+    elif in_region is False:
+        parts.append(
+            "\nThis animal appears to need help, but the verified location is outside Dharamsala Animal Rescue's "
+            "service area. Please contact a local animal rescue organisation, animal welfare NGO, or local nonprofit "
+            "in that area."
+        )
     else:
-        parts.append("\n**Nearby help:** I've added quick Google Maps links below in case you want to check for nearby vets or animal rescue support.")
-
-    # Escalation note
-    if triage_result.get("escalation_needed"):
-        parts.append("\n*This report has been flagged as urgent and sent to our rescue coordination team.*")
-
-    # Confidence note
-    confidence = triage_result["confidence"]
-    if confidence < 0.5:
-        parts.append(f"\n*Note: Our assessment confidence is {confidence:.0%}. Please provide additional details or a clearer photo if possible.*")
-
-    # Case reference
-    if incident_id:
-        parts.append(f"\n*Case reference: {incident_id[:8].upper()}*")
+        parts.append(
+            "\nThis animal appears to need help, but I could not verify whether it is in the Dharamsala service area. "
+            "Please upload a GPS-tagged photo or share your location in the app. If this is outside Dharamsala, "
+            "contact a local animal rescue organisation, animal welfare NGO, or local nonprofit."
+        )
 
     return "\n".join(parts)
+
+
+def _build_triage_response(triage_result: dict, sim_result: dict, loc: dict | None, incident_id: str | None = None) -> str:
+    """Compatibility wrapper for older call sites."""
+    return _build_image_assessment_response(
+        triage_result,
+        needs_rescue=triage.needs_rescue_help(triage_result),
+        in_region=bool(loc),
+    )
 
 
 def _require_admin_password(candidate: str) -> None:
@@ -942,6 +960,7 @@ def _missing_location_verification() -> dict:
         "decision": "rejected",
         "resolution_reason": "rejected_no_verified_location",
         "allowed_radius_km": location.DHARAMSALA_REGION_RADIUS_KM,
+        "service_area_match": None,
         "candidates": [],
     }
 
@@ -1000,35 +1019,24 @@ def _defer_triage_for_location_confirmation(
     )
 
 
-def _build_location_required_response() -> str:
+def _build_location_required_response(triage_result: dict | None = None) -> str:
+    summary = ""
+    if triage_result and not triage_result.get("is_fallback"):
+        summary = f"{triage_result.get('triage_summary', '').strip()}\n\n"
     return (
         "**Location verification required**\n\n"
-        "To assess and log an image report, Dharamsala Animal Rescue needs a verified location. "
-        "Please either upload a photo that contains GPS metadata from the camera, or use the location "
-        "button in the app and upload the photo again.\n\n"
-        "Reports are accepted only when the verified photo location or shared browser location is within "
-        "the Dharamsala service area."
+        f"{summary}"
+        "This animal appears to need help, but I could not verify whether the photo is within the "
+        "Dharamsala service area. Please upload a GPS-tagged photo or share your location in the app. "
+        "If this is outside Dharamsala, contact a local animal rescue organisation, animal welfare NGO, or local nonprofit."
     )
 
 
 def _build_out_of_region_location_response(loc: dict | None) -> str:
-    source = (loc or {}).get("source", "provided")
-    details = ""
-    if loc and loc.get("lat") is not None and loc.get("lng") is not None:
-        coordinate_label = _format_coordinate_pair(loc["lat"], loc["lng"])
-        details = (
-            f"\n\nDetected coordinates: **{coordinate_label}** "
-            f"from {source}. They are **{loc.get('distance_km', 0):.1f} km** from the "
-            f"Dharamsala service-area center; the allowed radius is "
-            f"**{loc.get('allowed_radius_km', location.DHARAMSALA_REGION_RADIUS_KM):.1f} km**."
-        )
     return (
         "**Outside Dharamsala Animal Rescue's service area**\n\n"
-        f"The verified {source} location for this image report is outside our Dharamsala service area, "
-        "so this photo cannot be assessed or logged by Dharamsala Animal Rescue."
-        f"{details}\n\n"
-        "Please contact a local animal rescue organisation, SPCA/animal welfare society, municipal animal "
-        "service, or nearby veterinary clinic in that area."
+        "The verified location is outside the Dharamsala service area. Please contact a local animal "
+        "rescue organisation, animal welfare NGO, or local nonprofit in that area."
     )
 
 
@@ -1039,44 +1047,11 @@ def _format_coordinate_pair(lat: float, lng: float) -> str:
 
 
 def _build_out_of_region_response(triage_result: dict) -> str:
-    """Build a response for cases whose coordinates fall outside the Dharamsala jurisdiction.
-
-    Triage feedback is included so the user gets useful guidance, but no records are created.
-    """
-    parts = []
-    severity = triage_result.get("severity", "unknown")
-    is_fallback = triage_result.get("is_fallback", False)
-
-    if not is_fallback:
-        if severity == "critical":
-            parts.append("**URGENT - This Animal Needs Immediate Help**")
-        elif severity == "high":
-            parts.append("**High Priority - This Animal Needs Help Soon**")
-        elif severity == "moderate":
-            parts.append("**Moderate Concern Detected**")
-        else:
-            parts.append("**Assessment Complete**")
-
-        parts.append(f"\n{triage_result['triage_summary']}")
-
-        if triage_result.get("recommended_actions"):
-            parts.append("\n**Recommended next steps:**")
-            for i, action in enumerate(triage_result["recommended_actions"][:5], 1):
-                parts.append(f"{i}. {action}")
-
-    parts.append(
-        "\n---\n"
-        "**Outside Dharamsala Animal Rescue's service area**\n\n"
-        "Based on the location detected in your photo, this case appears to be outside our "
-        "operational area. Dharamsala Animal Rescue only tracks cases within the Dharamsala region.\n\n"
-        "Please contact a local animal rescue organisation or veterinary service in your area. "
-        "You can reach out to:\n"
-        "- Your nearest SPCA or animal welfare society\n"
-        "- A local veterinary clinic\n"
-        "- Local municipal animal control services"
+    return _build_image_assessment_response(
+        triage_result,
+        needs_rescue=True,
+        in_region=False,
     )
-
-    return "\n".join(parts)
 
 
 def _request_location_dict(request: ChatQueryRequest) -> dict | None:
@@ -1090,38 +1065,11 @@ def _request_location_dict(request: ChatQueryRequest) -> dict | None:
 
 
 def _build_google_maps_links(loc: dict | None) -> list[dict]:
-    if not loc:
-        return []
-
-    lat = loc.get("lat")
-    lng = loc.get("lng")
-    if lat is None or lng is None:
-        return []
-
-    nearby = f"{lat:.4f},{lng:.4f}"
-    return [
-        {
-            "label": "Find nearby vets",
-            "url": f"https://www.google.com/maps/search/?api=1&query={quote_plus(f'veterinarian near {nearby}')}",
-        },
-        {
-            "label": "Find animal help nearby",
-            "url": f"https://www.google.com/maps/search/?api=1&query={quote_plus(f'animal rescue NGO near {nearby}')}",
-        },
-    ]
+    return []
 
 
 def _build_resource_links(loc: dict | None) -> list[dict]:
-    links: list[dict] = []
-    if _location_is_in_dharamsala_service_area(loc):
-        links.append(
-            {
-                "label": "Contact Dharamsala Animal Rescue",
-                "url": config.DAR_CONTACT_URL,
-            }
-        )
-    links.extend(_build_google_maps_links(loc))
-    return links
+    return []
 
 
 def _location_is_in_dharamsala_service_area(loc: dict | None) -> bool:
@@ -1140,22 +1088,7 @@ def _location_is_in_dharamsala_service_area(loc: dict | None) -> bool:
 
 
 def _query_needs_local_services(message: str) -> bool:
-    lower = message.lower()
-    return any(
-        phrase in lower
-        for phrase in (
-            "near me",
-            "nearby",
-            "google maps",
-            "map",
-            "vet",
-            "veterinarian",
-            "clinic",
-            "ngo",
-            "animal help",
-            "animal hospital",
-        )
-    )
+    return False
 
 
 if __name__ == "__main__":

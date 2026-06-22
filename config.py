@@ -56,6 +56,7 @@ WHATSAPP_DEMO_LNG = float(os.getenv("WHATSAPP_DEMO_LNG", "76.3234"))
 # Feature flags
 STRICT_LOCATION_GATE = _env_bool("STRICT_LOCATION_GATE", True)
 DHARAMSALA_REGION_RADIUS_KM = float(os.getenv("DHARAMSALA_REGION_RADIUS_KM", "1000"))
+DHARAMSALA_SERVICE_POINT_RADIUS_KM = float(os.getenv("DHARAMSALA_SERVICE_POINT_RADIUS_KM", "3"))
 
 # RAG / Pinecone configuration
 RAG_VECTOR_BACKEND = os.getenv("RAG_VECTOR_BACKEND", "chroma").lower()

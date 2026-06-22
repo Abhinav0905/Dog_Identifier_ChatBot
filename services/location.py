@@ -17,12 +17,76 @@ logger = logging.getLogger(__name__)
 # ---------------------------------------------------------------------------
 # Dharamsala jurisdiction definition
 # ---------------------------------------------------------------------------
-# Centre: Dharamsala town (32.2196° N, 76.3234° E)
-# Radius is environment-configurable. It is temporarily broad for QA and
-# should be reduced before strict production enforcement.
-DHARAMSALA_CENTER_LAT: float = 32.2196
-DHARAMSALA_CENTER_LNG: float = 76.3234
-DHARAMSALA_REGION_RADIUS_KM: float = config.DHARAMSALA_REGION_RADIUS_KM
+# Deb's shared route map is represented as:
+# 1. a polygon around the loop shown in the map, and
+# 2. a small buffer around named checkpoints so village-center geocoding
+#    remains tolerant of ordinary GPS drift.
+#
+# Coordinates are decimal degrees. The route starts/ends at the DAR/Rakkar
+# area and follows the named map stops clockwise around the service loop.
+DHARAMSALA_CENTER_LAT: float = 32.1971
+DHARAMSALA_CENTER_LNG: float = 76.3901
+DHARAMSALA_REGION_RADIUS_KM: float = config.DHARAMSALA_SERVICE_POINT_RADIUS_KM
+
+SERVICE_AREA_CHECKPOINTS: tuple[dict, ...] = (
+    {
+        "name": "Dharamsala Animal Rescue / Slate Godam Road, Rakkar",
+        "lat": 32.197100,
+        "lng": 76.390100,
+    },
+    {
+        "name": "Kharota",
+        "lat": 32.214342,
+        "lng": 76.379741,
+    },
+    {
+        "name": "Khanyara",
+        "lat": 32.212326,
+        "lng": 76.367079,
+    },
+    {
+        "name": "Gamru Village Road",
+        "lat": 32.224931,
+        "lng": 76.330061,
+    },
+    {
+        "name": "Chakban Gharoh",
+        "lat": 32.231183,
+        "lng": 76.278244,
+    },
+    {
+        "name": "Gaggal",
+        "lat": 32.152293,
+        "lng": 76.270266,
+    },
+    {
+        "name": "Chakban Banwala",
+        "lat": 32.169574,
+        "lng": 76.301985,
+    },
+    {
+        "name": "Yol",
+        "lat": 32.181542,
+        "lng": 76.373371,
+    },
+    {
+        "name": "Chamunda Devi Temple, Padar",
+        "lat": 32.148737,
+        "lng": 76.417314,
+    },
+)
+
+SERVICE_AREA_POLYGON: tuple[tuple[float, float], ...] = (
+    (32.197100, 76.390100),  # DAR / Slate Godam Road, Rakkar
+    (32.214342, 76.379741),  # Kharota
+    (32.212326, 76.367079),  # Khanyara
+    (32.224931, 76.330061),  # Gamru Village Road
+    (32.231183, 76.278244),  # Chakban Gharoh
+    (32.152293, 76.270266),  # Gaggal
+    (32.169574, 76.301985),  # Chakban Banwala
+    (32.181542, 76.373371),  # Yol
+    (32.148737, 76.417314),  # Chamunda Devi Temple, Padar
+)
 
 
 def _get_gps_info(exif_data: dict) -> dict:
@@ -113,23 +177,70 @@ def haversine_distance(lat1: float, lng1: float, lat2: float, lng2: float) -> fl
     return R * 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
 
 
+def _point_in_polygon(lat: float, lng: float, polygon: tuple[tuple[float, float], ...]) -> bool:
+    """Return True when a coordinate is inside a lat/lng polygon."""
+    inside = False
+    x = lng
+    y = lat
+    j = len(polygon) - 1
+    for i, (lat_i, lng_i) in enumerate(polygon):
+        lat_j, lng_j = polygon[j]
+        xi = lng_i
+        yi = lat_i
+        xj = lng_j
+        yj = lat_j
+        intersects = ((yi > y) != (yj > y)) and (
+            x < (xj - xi) * (y - yi) / ((yj - yi) or 1e-12) + xi
+        )
+        if intersects:
+            inside = not inside
+        j = i
+    return inside
+
+
+def nearest_service_area_checkpoint(lat: float, lng: float) -> dict:
+    """Return the nearest named point from Deb's Dharamsala route map."""
+    nearest = min(
+        SERVICE_AREA_CHECKPOINTS,
+        key=lambda point: haversine_distance(lat, lng, point["lat"], point["lng"]),
+    )
+    distance_km = haversine_distance(lat, lng, nearest["lat"], nearest["lng"])
+    return {
+        "name": nearest["name"],
+        "lat": nearest["lat"],
+        "lng": nearest["lng"],
+        "distance_km": round(distance_km, 1),
+    }
+
+
+def _service_area_match(lat: float, lng: float) -> str | None:
+    if _point_in_polygon(lat, lng, SERVICE_AREA_POLYGON):
+        return "deb_route_polygon"
+    nearest = nearest_service_area_checkpoint(lat, lng)
+    if nearest["distance_km"] <= DHARAMSALA_REGION_RADIUS_KM:
+        return "checkpoint_radius"
+    return None
+
+
 def is_in_dharamsala_region(lat: float, lng: float) -> bool:
     """Return True if the coordinate falls within the Dharamsala Animal Rescue jurisdiction."""
-    return (
-        haversine_distance(lat, lng, DHARAMSALA_CENTER_LAT, DHARAMSALA_CENTER_LNG)
-        <= DHARAMSALA_REGION_RADIUS_KM
-    )
+    return _service_area_match(lat, lng) is not None
 
 
 def build_jurisdiction_details(lat: float, lng: float, source: str) -> dict:
     """Build an auditable service-area decision for one verified coordinate."""
-    distance_km = haversine_distance(lat, lng, DHARAMSALA_CENTER_LAT, DHARAMSALA_CENTER_LNG)
-    in_jurisdiction = distance_km <= DHARAMSALA_REGION_RADIUS_KM
+    nearest = nearest_service_area_checkpoint(lat, lng)
+    service_area_match = _service_area_match(lat, lng)
+    in_jurisdiction = service_area_match is not None
     return {
         "source": source,
         "lat": round(lat, 6),
         "lng": round(lng, 6),
-        "distance_km": round(distance_km, 1),
+        "distance_km": nearest["distance_km"],
         "allowed_radius_km": DHARAMSALA_REGION_RADIUS_KM,
         "in_jurisdiction": in_jurisdiction,
+        "service_area_match": service_area_match or "outside_deb_route",
+        "nearest_service_area": nearest["name"],
+        "nearest_service_area_lat": nearest["lat"],
+        "nearest_service_area_lng": nearest["lng"],
     }

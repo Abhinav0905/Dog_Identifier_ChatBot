@@ -23,7 +23,7 @@ client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
 # Number of times to retry a vision call on transient errors before giving up
 VISION_MAX_ATTEMPTS = 2
-VISION_SYSTEM_PROMPT = """You are a veterinary triage assistant for Dharamsala Animal Rescue.
+VISION_SYSTEM_PROMPT = """You are an animal welfare photo triage assistant for Dharamsala Animal Rescue.
 You analyze images of stray dogs to assess their condition and urgency level.
 
 IMPORTANT RULES:
@@ -31,12 +31,13 @@ IMPORTANT RULES:
 - Use youth-friendly, clear language.
 - Be compassionate but factual.
 - Never claim certainty about medical conditions.
-- Always recommend professional veterinary assessment for anything beyond minor concerns.
+- For animal welfare concerns beyond minor issues, recommend a local animal rescue organisation, animal welfare NGO, or trained rescuer.
+- Do not mention animal control, local authorities, municipal animal services, SPCA, police, Google Maps, or external websites.
 - Recommended actions must follow a community-first workflow:
   1. First ask people nearby whether the dog has a feeder or owner.
   2. Ask whether local NGOs or community groups are already vaccinating and sterilizing dogs in the area.
   3. Do NOT recommend NGO pickup only because the dog looks a little thin.
-  4. Recommend NGO or veterinary escalation when the dog appears injured, sick, immobile, or in immediate danger.
+  4. Recommend animal rescue/NGO escalation when the dog appears injured, sick, immobile, or in immediate danger.
   5. Do not automatically tell people to keep their distance. Only recommend extra distance if the dog appears fearful, aggressive, or in severe pain. If the dog seems calm and locals say it is friendly, it is acceptable to suggest a slow, careful approach.
 
 Analyze the image and respond with ONLY a valid JSON object (no markdown, no extra text):
@@ -62,19 +63,20 @@ Your job is to give the person 3–5 simple things they can do right now to help
 
 RULES:
 - Be youth-friendly, compassionate, and concise.
-- Provide immediate safety guidance for dog bites (wash wound, seek medical attention, report).
+- Provide immediate safety guidance for dog bites: wash the wound and seek medical attention promptly.
 - Never provide veterinary diagnoses or prescribe treatment.
+- Do not mention animal control, local authorities, municipal animal services, SPCA, police, Google Maps, or external websites.
 - For stray dog welfare questions, start with community questions before escalation:
   1. Ask whether people nearby know the dog, feed the dog, or say it has an owner.
   2. Ask whether local NGOs or community groups are already vaccinating and sterilizing dogs in that area.
   3. If the dog only looks thin but is otherwise alert, suggest feeding, water, and monitoring rather than assuming an NGO pickup will happen.
-  4. If the dog appears injured, sick, immobile, or in immediate danger, recommend a local NGO or veterinarian.
-  5. In urban areas, feeders may be able to take the dog to a local veterinarian. In rural areas, the animal husbandry department may be the only public option, though support may be limited.
+  4. If the dog appears injured, sick, immobile, or in immediate danger, recommend a local animal rescue organisation, animal welfare NGO, or local nonprofit.
+  5. In rural areas, the animal husbandry department may be the only public option, though support may be limited.
   6. Do not automatically say "keep your distance." Say that a calm, slow approach can be okay if locals say the dog is friendly. Recommend extra space only if the dog seems fearful, aggressive, or badly injured.
-- Stay on topic: animal rescue, stray animal welfare, dog bite safety, reporting incidents.
+- Stay on topic: animal rescue, stray animal welfare, dog bite safety, and animal safety.
 - If asked about non-rescue topics, politely redirect to your purpose.
 - If unsure about a situation's severity, err on the side of caution and recommend professional help.
-- If a user asks for nearby vets or animal help, tell them to share location so the app can open Google Maps searches for nearby services."""
+- If a user asks for help outside Dharamsala, suggest a local animal rescue organisation, animal welfare NGO, or local nonprofit."""
 
 CHAT_SYSTEM_PROMPT = """You are a friendly helper for Dharamsala Animal Rescue. You help people
 with questions about stray dogs and animal rescue in the Dharamsala area.
@@ -83,7 +85,9 @@ RULES:
 - Use simple, clear words and short sentences. Write at a level anyone can easily understand.
 - Be warm, calm, and encouraging - the person may be worried about an animal.
 - Never give a medical diagnosis or suggest any medicine or treatment.
-- Do NOT tell users to call a helpline or share their location — our rescue team handles that.
+- Do NOT tell users to call a helpline, share their location, or open external links.
+- Do NOT mention animal control, local authorities, municipal animal services, SPCA, police, Google Maps, or external websites.
+- For India-specific animal help, prefer "local animal rescue organisation", "animal welfare NGO", or "local nonprofit".
 - Only answer questions about animal rescue, stray dogs, dog bites, and animal safety.
 - If someone asks about something else, kindly explain what you can help with instead.
 - If you are not sure how serious a situation is, describe what signs to look for and suggest the person stay nearby and keep watching the dog from a safe distance.
@@ -91,20 +95,36 @@ RULES:
 If someone has been bitten by a dog, always tell them to:
 1. Wash the bite right away with soap and water for at least 10 minutes
 2. See a doctor as soon as possible
-3. Report it so the dog can be checked
-4. Watch the wound for any signs of infection"""
+3. Watch the wound for any signs of infection"""
 
 
 def _dar_contact_phrase() -> str:
     if DAR_PHONE_NUMBER:
-        return f"contact Dharamsala Animal Rescue on {DAR_PHONE_NUMBER} or a local veterinarian"
-    return "contact Dharamsala Animal Rescue or a local veterinarian"
+        return f"contact Dharamsala Animal Rescue on {DAR_PHONE_NUMBER}"
+    return "contact Dharamsala Animal Rescue"
 
 PROFESSIONAL_HELP_KEYWORDS = (
     "injur", "bleed", "wound", "fracture", "broken", "limp", "pain",
     "sick", "ill", "infection", "mange", "vomit", "immobile", "collapsed",
     "unable", "distress",
 )
+
+
+def needs_rescue_help(triage_result: dict) -> bool:
+    """Return True when the photo looks unhealthy enough to route for help."""
+    if triage_result.get("is_fallback"):
+        return False
+
+    severity = (triage_result.get("severity") or "").lower()
+    score = triage_result.get("severity_score")
+    if severity in {"moderate", "high", "critical"}:
+        return True
+    try:
+        if score is not None and int(score) >= 4:
+            return True
+    except (TypeError, ValueError):
+        pass
+    return _needs_professional_help(triage_result)
 
 TRIAGE_RESPONSE_SCHEMA = {
     "type": "object",
@@ -269,7 +289,7 @@ def _fallback_triage(error: str = "") -> dict:
             "Ask whether local NGOs or community groups are already vaccinating or sterilizing dogs in this area.",
             f"If the dog appears injured, sick, immobile, or in immediate danger, {_dar_contact_phrase()}.",
             "If the dog is only thin but alert, ask locals or feeders to provide food, water, and monitor it.",
-            "Only keep extra distance if the dog seems fearful, aggressive, or in severe pain.",
+            "If this is outside Dharamsala, contact a local animal rescue organisation, animal welfare NGO, or local nonprofit.",
         ],
         "triage_summary": "Automated image assessment is currently unavailable. Please describe what you see, and start by asking nearby people whether the dog already has a feeder or owner.",
         "escalation_needed": False,
@@ -391,14 +411,14 @@ def _fallback_chat_response(message: str) -> str:
             "1. **Wash the wound** with soap and running water for at least 10 minutes — do this right away.\n"
             "2. **Put a clean bandage** over the wound if you have one.\n"
             "3. **Seek medical attention as soon as you can** — a doctor will check if you need any treatment.\n"
-            "4. **Report it** so the dog can be found and checked.\n\n"
+            "4. **Do not wait for symptoms** before getting medical advice.\n\n"
             "This is general guidance. Please see a doctor promptly."
         )
     if any(w in lower for w in ["vet near me", "nearby vet", "near me", "google maps", "maps", "clinic nearby"]):
         return (
-            "If you share your location in the app, I can give you one-tap Google Maps links for nearby vets "
-            "and animal help. You can also ask people nearby whether they already use a local feeder, clinic, "
-            "or NGO for dogs in that area."
+            "If you are in Dharamsala and the animal is sick, injured, unable to move, or in pain, contact "
+            f"{_dar_contact_phrase()}. If you are outside Dharamsala, contact a local animal rescue organisation, "
+            "animal welfare NGO, or local nonprofit."
         )
     if any(w in lower for w in ["injured", "hurt", "bleeding", "broken"]):
         return (
@@ -407,14 +427,14 @@ def _fallback_chat_response(message: str) -> str:
             "2. **Ask whether local NGOs are already vaccinating or sterilizing dogs nearby** so you do not duplicate an existing effort.\n"
             f"3. **If the dog appears injured, sick, immobile, or unsafe, {_dar_contact_phrase()}.**\n"
             "4. **If locals say the dog is friendly, you can approach slowly and calmly.** Keep more distance only if the dog seems fearful, aggressive, or in severe pain.\n"
-            "5. **In towns, feeders may take the dog to a local veterinarian. In rural areas, the department of animal husbandry may be the only public option.**\n\n"
+            "5. **If this is outside Dharamsala, contact a local animal rescue organisation, animal welfare NGO, or local nonprofit.**\n\n"
             "You can upload a photo of the animal for a condition assessment."
         )
     return (
         "Hello! I'm the Dharamsala Animal Rescue assistant. Examples of questions I can help you with:\n\n"
-        "- **Reporting a stray dog** and figuring out whether locals already feed or know the dog\n"
+        "- **Checking a stray dog's condition** from a photo\n"
         "- **Dog bite first aid** guidance\n"
-        "- **Nearby help** like opening Google Maps searches for vets once you share location\n\n"
+        "- **What to do next** if an animal looks sick or injured\n\n"
         "How can I help you today?"
     )
 
@@ -430,7 +450,7 @@ def _faq_guidance_response(message: str) -> str | None:
         return (
             "**About the cow, dog bite, and milk:**\n\n"
             "1. Drinking milk from a cow that was bitten by a dog does not mean you will die.\n"
-            "2. The cow still needs a veterinarian or animal husbandry officer, especially if there is a wound.\n"
+            "2. The cow still needs an animal husbandry officer or local animal welfare professional, especially if there is a wound.\n"
             "3. If dog saliva touched your broken skin, eyes, mouth, or an open cut, ask a doctor about rabies PEP.\n"
             "4. Do not ignore the cow's wound. A bite can become infected."
         )
@@ -447,8 +467,7 @@ def _faq_guidance_response(message: str) -> str | None:
             "1. Wash the bite with soap and running water for at least 10 minutes right now.\n"
             "2. Seek medical attention the same day. A doctor can decide if you need rabies PEP or other care.\n"
             "3. Cover the wound with a clean cloth or bandage.\n"
-            "4. Report the incident with the dog's location and description so the dog can be monitored.\n"
-            "5. A dog can look normal and still need observation after a bite, so do not wait for symptoms."
+            "4. A dog can look normal and a bite can still be risky, so do not wait for symptoms."
         )
 
     if has_any("signs of rabies", "rabies in dogs"):
@@ -458,7 +477,7 @@ def _faq_guidance_response(message: str) -> str | None:
             "- Excessive drooling or foaming at the mouth.\n"
             "- Trouble swallowing, staggering, disorientation, or weakness.\n"
             "- Unprovoked aggression or later-stage paralysis.\n\n"
-            "Do not approach a dog showing these signs. Report the exact location and keep people away."
+            "Do not approach a dog showing these signs. Keep people away and contact a local animal rescue organisation, animal welfare NGO, or local nonprofit."
         )
 
     if has_any("chasing me", "growling", "aggressive", "following me"):
@@ -468,19 +487,19 @@ def _faq_guidance_response(message: str) -> str | None:
             "2. Stop or slow down, turn slightly sideways, and keep your hands close to your body.\n"
             "3. Back away slowly toward people, a doorway, or a safe place.\n"
             "4. Put a bag, bicycle, or other object between you and the dog if needed.\n"
-            "5. If the dog keeps chasing or has bitten someone, report the location and behaviour."
+            "5. If you are bitten, wash the wound with soap and water for at least 10 minutes and see a doctor the same day."
         )
 
     if has_any("give up my dog", "moving cities", "leave my dog", "don't have time", "don’t have time", "pet anymore", "adopt my dog", "new home", "cannot afford treatment", "can you take it"):
         return (
             "**If you cannot keep your pet:**\n\n"
-            "Please do not abandon the dog. First ask family, friends, neighbours, and trusted adopters; share clear photos, vaccination/sterilisation details, and temperament. DAR may guide or share adoption options, but it may not be able to take healthy owned pets. If your dog is sick and cost is the issue, ask a veterinarian or rescue group about low-cost treatment options before surrendering."
+            "Please do not abandon the dog. First ask family, friends, neighbours, and trusted adopters; share clear photos, vaccination/sterilisation details, and temperament. DAR may guide or share adoption options, but it may not be able to take healthy owned pets. If your dog is sick and cost is the issue, ask a local animal rescue organisation or animal welfare NGO about low-cost treatment options before surrendering."
         )
 
     if has_any("can i touch", "touch it"):
         return (
             "**Do not touch with bare hands:**\n\n"
-            "If a dog is bleeding or injured, it may bite from pain or fear. Keep people away, note the exact location, and report it. If you are trained and the dog is calm, use gloves or a clean cloth; otherwise wait for a trained rescuer or veterinarian."
+            "If a dog is bleeding or injured, it may bite from pain or fear. Keep people away. If you are trained and the dog is calm, use gloves or a clean cloth; otherwise wait for a trained rescuer."
         )
 
     if has_any("sick dog", "very sick", "bleeding", "maggots", "wound", "not moving", "still breathing", "vomiting continuously", "ticks all over", "pregnant", "about to give birth"):
@@ -489,14 +508,14 @@ def _faq_guidance_response(message: str) -> str | None:
             "1. Keep a safe distance, especially if the dog is in pain, scared, bleeding, or not moving.\n"
             "2. Note the exact location, landmark, colour/size of the dog, and what you can see.\n"
             "3. Ask nearby people if the dog has a feeder or owner and whether an NGO is already helping there.\n"
-            "4. Report it with a photo if you can. A bleeding wound, maggots, collapse, repeated vomiting, or heavy tick infestation needs veterinary assessment.\n"
+            "4. Upload a photo if you can. A bleeding wound, maggots, collapse, repeated vomiting, or heavy tick infestation needs urgent rescue assessment.\n"
             "5. Do not give human medicine or pour chemicals on wounds/ticks. Move the dog only if it is in immediate danger and you can do it safely."
         )
 
     if has_any("human medicines", "human medicine", "give medicine", "paracetamol", "ibuprofen"):
         return (
             "**Do not give human medicines to a dog.**\n\n"
-            "Many human medicines can poison dogs or hide serious symptoms. Contact a veterinarian or rescue team with the dog's weight, symptoms, and location."
+            "Many human medicines can poison dogs or hide serious symptoms. Contact a local animal rescue organisation, animal welfare NGO, or trained rescuer with the dog's weight, symptoms, and location."
         )
 
     if has_any("stuck", "drain", "building"):
@@ -504,7 +523,7 @@ def _faq_guidance_response(message: str) -> str | None:
             "**Dog stuck somewhere:**\n\n"
             "1. Do not climb into unsafe drains, construction sites, or buildings yourself.\n"
             "2. Share the exact location, photos, and what the dog is stuck in.\n"
-            "3. Contact local animal rescue support; for dangerous places, municipal/fire services may also be needed.\n"
+            "3. Contact a local animal rescue organisation, animal welfare NGO, or local nonprofit for help.\n"
             "4. Keep people from crowding the dog while help is arranged."
         )
 
@@ -513,15 +532,15 @@ def _faq_guidance_response(message: str) -> str | None:
             "**Mother dog and puppies:**\n\n"
             "1. Do not move puppies if the mother is nearby and they are safe. Separating them can harm them.\n"
             "2. Give the mother food and clean water from a little distance if she is calm.\n"
-            "3. If puppies are truly abandoned, cold, injured, or crying for a long time, they need urgent warmth and veterinary/rescue guidance.\n"
-            "4. Do not feed very young puppies biscuits or regular cow's milk. Ask a vet/rescuer about puppy milk replacer and feeding frequency."
+            "3. If puppies are truly abandoned, cold, injured, or crying for a long time, they need urgent warmth and rescue guidance.\n"
+            "4. Do not feed very young puppies biscuits or regular cow's milk. Ask a trained rescuer or animal welfare NGO about puppy milk replacer and feeding frequency."
         )
 
     if has_any("healthy dogs", "remove street dogs", "relocate", "shift them", "take them away", "move all street dogs", "pick up all street dogs", "removed permanently", "to shelters"):
         return (
             "**About removing healthy street dogs:**\n\n"
             "DAR generally cannot pick up or permanently relocate healthy street dogs. The safer long-term approach is vaccination, sterilisation, and returning dogs to their own area. Removing dogs often creates a vacant territory where unvaccinated dogs can move in.\n\n"
-            "Report dogs that are injured, sick, suspected rabid, or repeatedly aggressive so they can be assessed."
+            "For dogs that are injured, sick, suspected rabid, or repeatedly aggressive, contact a local animal rescue organisation, animal welfare NGO, or local nonprofit for guidance."
         )
 
     if has_any("bark", "nuisance", "scared of dogs", "kids are scared", "pooping", "feeding dogs", "neighbors feed", "rules for feeding", "stop them"):
@@ -531,26 +550,26 @@ def _faq_guidance_response(message: str) -> str | None:
             "2. Work with feeders/residents on fixed feeding spots away from gates, schools, and busy paths.\n"
             "3. Keep feeding areas clean and remove leftover food.\n"
             "4. Prioritise sterilisation and rabies vaccination for the local dogs.\n"
-            "5. If a specific dog is aggressive or has bitten someone, report details so it can be assessed."
+            "5. If a specific dog bites someone, the person should wash the wound and see a doctor the same day."
         )
 
     if has_any("how long", "how soon", "come immediately", "urgent", "delay", "hasn't anyone arrived", "already called"):
         return (
             "**About rescue timing:**\n\n"
             "Rescue time depends on exact location, traffic, current rescue load, and how severe the case is. Critical cases are prioritised, but a team may still be delayed.\n\n"
-            "Please stay nearby only if it is safe, keep your phone reachable, send a clear landmark/photo, and update the team if the animal moves or gets worse. If there is immediate danger to people or the animal is trapped somewhere unsafe, local emergency/municipal help may also be needed."
+            "Please stay nearby only if it is safe, keep your phone reachable, and send a clear landmark/photo. If the animal moves or gets worse, update the rescue group helping you."
         )
 
     if has_any("i am in", "near me", "vets near", "who can help", "location"):
         return (
             "**Finding nearby help:**\n\n"
-            "Share the exact location or nearest landmark in the app. If location sharing is enabled, the app can show Google Maps links for nearby vets and animal-help options. If you are outside the Dharamsala region, contact the nearest local animal rescue group, veterinary clinic, SPCA, or municipal animal service."
+            "If you are in Dharamsala and the animal is sick, injured, unable to move, or in pain, contact Dharamsala Animal Rescue. If you are outside Dharamsala, contact a local animal rescue organisation, animal welfare NGO, or local nonprofit."
         )
 
     if has_any("animal cruelty", "someone is harming", "harming dogs", "abuse"):
         return (
-            "**Report animal cruelty safely:**\n\n"
-            "Do not put yourself in danger or confront a violent person alone. Note the location, time, photos/videos if safe, vehicle numbers if relevant, and witness details. Report it to local police/authorities and an animal welfare organisation."
+            "**Animal cruelty safety:**\n\n"
+            "Do not put yourself in danger or confront a violent person alone. If it is safe, note the location, time, photos/videos, vehicle numbers if relevant, and witness details. Contact a local animal welfare NGO or animal rescue organisation for guidance."
         )
 
     if has_any("what is dar doing", "dogs are still on streets", "why don't you pick"):
@@ -584,12 +603,12 @@ def apply_local_workflow_guidance(triage_result: dict, user_context: str = "") -
         actions.extend(
             [
                 "If the dog is only thin but alert and mobile, ask locals or feeders to provide food, water, and monitor it rather than assuming an NGO pickup will happen.",
-                "In urban areas, feeders may be able to take the dog to a local veterinarian. In rural areas, the department of animal husbandry may be the only public option.",
+                "If this is outside Dharamsala, contact a local animal rescue organisation, animal welfare NGO, or local nonprofit if the dog gets worse.",
             ]
         )
 
     if severity in {"high", "critical"} and not needs_professional_help:
-        actions.append("If the dog worsens, becomes immobile, or looks obviously sick or injured, escalate to a local NGO or veterinarian quickly.")
+        actions.append("If the dog worsens, becomes immobile, or looks obviously sick or injured, escalate to a local animal rescue organisation or animal welfare NGO quickly.")
     else:
         actions.append("Only keep extra distance if the dog seems fearful, aggressive, or in severe pain. A calm, slow approach can be okay if locals say the dog is friendly.")
 
@@ -616,11 +635,4 @@ def _needs_professional_help(triage_result: dict) -> bool:
 
 def _normalize_triage_summary(summary: str, needs_professional_help: bool, user_context: str = "") -> str:
     text = (summary or "We could not confidently assess the dog's condition from the image.").strip()
-    lower = text.lower()
-    if "feeder" in lower or "owner" in lower:
-        return text
-
-    if needs_professional_help:
-        return text + " Ask nearby people for feeder or owner context while you arrange help."
-
-    return text + " Start with community questions before escalating, especially if the dog looks thin but still alert."
+    return text

@@ -131,6 +131,15 @@ class TestGuardrails(unittest.TestCase):
         result = self.guardrails.sanitize_response(response)
         self.assertEqual(result, response)
 
+    def test_sanitize_response_removes_non_india_terms(self):
+        response = "Report this to animal control, local authorities, SPCA, or Google Maps."
+        result = self.guardrails.sanitize_response(response)
+        lowered = result.lower()
+        self.assertNotIn("animal control", lowered)
+        self.assertNotIn("local authorities", lowered)
+        self.assertNotIn("spca", lowered)
+        self.assertNotIn("google maps", lowered)
+
 
 # ============================================================
 # 2. TestLocation
@@ -202,17 +211,27 @@ class TestLocation(unittest.TestCase):
         self.assertEqual(result["source"], "exif")
 
     def test_is_in_dharamsala_region(self):
-        self.assertTrue(self.location.is_in_dharamsala_region(32.2196, 76.3234))
-        self.assertTrue(self.location.is_in_dharamsala_region(26.847518, 75.782463))
+        self.assertTrue(self.location.is_in_dharamsala_region(32.1971, 76.3901))
+        self.assertTrue(self.location.is_in_dharamsala_region(32.212326, 76.367079))
+        self.assertTrue(self.location.is_in_dharamsala_region(32.169574, 76.301985))
+        self.assertTrue(self.location.is_in_dharamsala_region(32.1900, 76.3500))
+        self.assertFalse(self.location.is_in_dharamsala_region(26.847518, 75.782463))
         self.assertFalse(self.location.is_in_dharamsala_region(37.6914, -121.9225))
 
-    def test_jurisdiction_details_explain_expanded_qa_radius(self):
-        details = self.location.build_jurisdiction_details(26.847518, 75.782463, "exif")
+    def test_jurisdiction_details_explain_deb_route_area(self):
+        details = self.location.build_jurisdiction_details(32.1900, 76.3500, "exif")
 
         self.assertTrue(details["in_jurisdiction"])
         self.assertEqual(details["source"], "exif")
-        self.assertAlmostEqual(details["distance_km"], 599.6, places=1)
-        self.assertEqual(details["allowed_radius_km"], 1000.0)
+        self.assertEqual(details["service_area_match"], "deb_route_polygon")
+        self.assertIn("nearest_service_area", details)
+        self.assertEqual(details["allowed_radius_km"], 3.0)
+
+    def test_jurisdiction_details_reject_outside_deb_route_area(self):
+        details = self.location.build_jurisdiction_details(26.847518, 75.782463, "exif")
+
+        self.assertFalse(details["in_jurisdiction"])
+        self.assertEqual(details["service_area_match"], "outside_deb_route")
 
     # --- truncate_precision ---
 
@@ -285,6 +304,14 @@ class TestImageProcessing(unittest.TestCase):
         with Image.open(io.BytesIO(prepared)) as image:
             self.assertEqual(image.format, "JPEG")
             self.assertLessEqual(max(image.size), 2048)
+        self.assertEqual(media_type, "image/jpeg")
+
+    def test_prepare_preview_converts_to_browser_jpeg(self):
+        raw = self._make_image_bytes(image_format="PNG", size=(2400, 1600))
+        prepared, media_type = self.image_processing.prepare_preview(raw, "image/png")
+        with Image.open(io.BytesIO(prepared)) as image:
+            self.assertEqual(image.format, "JPEG")
+            self.assertLessEqual(max(image.size), 1200)
         self.assertEqual(media_type, "image/jpeg")
 
     @unittest.skipUnless(
@@ -562,6 +589,22 @@ class TestTriage(unittest.TestCase):
         self.assertIn("owner", actions)
         self.assertIn("vaccinating", actions)
         self.assertIn("sterilizing", actions)
+
+    def test_needs_rescue_help_for_moderate_photo(self):
+        self.assertTrue(self.triage.needs_rescue_help({
+            "severity": "moderate",
+            "severity_score": 4,
+            "triage_summary": "Dog looks unwell.",
+            "indicators": [],
+        }))
+
+    def test_needs_rescue_help_false_for_low_photo(self):
+        self.assertFalse(self.triage.needs_rescue_help({
+            "severity": "low",
+            "severity_score": 2,
+            "triage_summary": "Dog looks relaxed.",
+            "indicators": [],
+        }))
 
     def test_fallback_chat_default(self):
         result = self.triage._fallback_chat_response("hello there")
@@ -924,25 +967,20 @@ class TestAppHelpers(unittest.TestCase):
 
     def test_build_google_maps_links(self):
         links = self.app._build_google_maps_links({"lat": 32.219, "lng": 76.3234})
-        self.assertEqual(len(links), 2)
-        self.assertIn("google.com/maps/search", links[0]["url"])
-        self.assertIn("veterinarian", links[0]["url"])
+        self.assertEqual(links, [])
 
     def test_build_resource_links_includes_dar_for_in_region_location(self):
         links = self.app._build_resource_links({"lat": 32.2196, "lng": 76.3234})
 
-        self.assertEqual(links[0]["label"], "Contact Dharamsala Animal Rescue")
-        self.assertEqual(links[0]["url"], self.app.config.DAR_CONTACT_URL)
-        self.assertEqual(len(links), 3)
+        self.assertEqual(links, [])
 
     def test_build_resource_links_omits_dar_for_outside_location(self):
         links = self.app._build_resource_links({"lat": 37.6914, "lng": -121.9225})
 
-        self.assertEqual(len(links), 2)
-        self.assertNotIn("Dharamsala Animal Rescue", links[0]["label"])
+        self.assertEqual(links, [])
 
     def test_query_needs_local_services(self):
-        self.assertTrue(self.app._query_needs_local_services("Can you find a vet near me?"))
+        self.assertFalse(self.app._query_needs_local_services("Can you find a vet near me?"))
         self.assertFalse(self.app._query_needs_local_services("hello there"))
 
     def test_resolve_whatsapp_media_location_uses_existing_pin(self):
@@ -1012,18 +1050,20 @@ class TestAppHelpers(unittest.TestCase):
     def test_location_required_response_is_strict(self):
         response = self.app._build_location_required_response()
         self.assertIn("Location verification required", response)
-        self.assertIn("GPS metadata", response)
-        self.assertIn("shared browser location", response)
+        self.assertIn("GPS-tagged photo", response)
+        self.assertIn("share your location", response)
+        self.assertNotIn("Case", response)
+        self.assertNotIn("Google Maps", response)
 
     def test_out_of_region_location_response_is_strict(self):
         response = self.app._build_out_of_region_location_response(
             self.app.location.build_jurisdiction_details(37.6914, -121.9225, "exif")
         )
         self.assertIn("Outside Dharamsala Animal Rescue's service area", response)
-        self.assertIn("verified exif location", response)
-        self.assertIn("cannot be assessed or logged", response)
-        self.assertIn("37.691400 N, 121.922500 W", response)
-        self.assertIn("1000.0 km", response)
+        self.assertIn("local animal rescue organisation", response)
+        self.assertNotIn("municipal", response.lower())
+        self.assertNotIn("SPCA", response)
+        self.assertNotIn("Case", response)
 
     def test_location_gate_decision_is_logged(self):
         verification = self.app.location.build_jurisdiction_details(37.6914, -121.9225, "exif")
@@ -1033,7 +1073,8 @@ class TestAppHelpers(unittest.TestCase):
         self.assertTrue(log_info.called)
         logged_payload = log_info.call_args.args[1]
         self.assertIn('"event": "location_gate_decision"', logged_payload)
-        self.assertIn('"allowed_radius_km": 1000.0', logged_payload)
+        self.assertIn('"allowed_radius_km": 3.0', logged_payload)
+        self.assertIn('"service_area_match": "outside_deb_route"', logged_payload)
 
 
 # ============================================================
