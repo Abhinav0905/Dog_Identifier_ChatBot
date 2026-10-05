@@ -8,12 +8,17 @@ collection on disk, so the app can retrieve knowledge without a hosted vector DB
 from __future__ import annotations
 
 import logging
+import math
+import time
+import threading
 from functools import lru_cache
 from typing import Iterable
 
 import config
 
 logger = logging.getLogger(__name__)
+_warmed_embedder = None
+_warm_lock = threading.Lock()
 
 
 def is_available() -> bool:
@@ -55,7 +60,26 @@ def _hnsw_metadata() -> dict:
 def _embedder():
     from sentence_transformers import SentenceTransformer
 
-    return SentenceTransformer(config.RAG_EMBEDDING_MODEL)
+    return _warmed_embedder or SentenceTransformer(config.RAG_EMBEDDING_MODEL)
+
+
+def warm_up() -> bool:
+    """Prepare serving from locally cached weights without downloading in a request."""
+    global _warmed_embedder
+    from services import web_operations
+    with _warm_lock:
+        if _embedder.cache_info().currsize:
+            return True
+        try:
+            from sentence_transformers import SentenceTransformer
+            _warmed_embedder = SentenceTransformer(config.RAG_EMBEDDING_MODEL, local_files_only=True)
+            _embedder()
+            web_operations.record_event("rag:warmup", "ok")
+            return True
+        except Exception as exc:
+            web_operations.record_event("rag:warmup", "error", error_type=type(exc).__name__)
+            logger.warning("Local embeddings unavailable; SQLite retrieval remains available (%s)", type(exc).__name__)
+            return False
 
 
 def clear_collection() -> None:
@@ -100,7 +124,13 @@ def upsert_chunks(chunks: list[dict], batch_size: int = 64) -> int:
     return stored
 
 
-def retrieve(query: str, k: int = 3) -> list[dict]:
+def retrieve(query: str, k: int = 3, deadline: float | None = None) -> list[dict]:
+    from services.rag import MIN_RELEVANCE
+
+    # Cold local model loading may download weights and exceed an HTTP budget.
+    # A request with a deadline can use the SQLite lexical fallback instead.
+    if deadline is not None and (_embedder.cache_info().currsize == 0 or deadline - time.monotonic() < 3):
+        return []
     if not is_available():
         return []
 
@@ -124,6 +154,9 @@ def retrieve(query: str, k: int = 3) -> list[dict]:
     chunks = []
     for document, metadata, distance in zip(documents, metadatas, distances):
         metadata = metadata or {}
+        score = 1.0 - float(distance)
+        if not math.isfinite(score) or score < MIN_RELEVANCE:
+            continue
         chunks.append(
             {
                 "title": metadata.get("title", "Dharamsala Animal Rescue"),
@@ -131,7 +164,9 @@ def retrieve(query: str, k: int = 3) -> list[dict]:
                 "doc_file": metadata.get("doc_file", ""),
                 "chunk_index": metadata.get("chunk_index", 0),
                 "source_url": metadata.get("source_url", ""),
-                "score": 1.0 - float(distance),
+                "score": score,
+                "relevance_score": score,
+                "retrieval_backend": "chroma",
             }
         )
     return chunks

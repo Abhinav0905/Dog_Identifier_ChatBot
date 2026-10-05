@@ -3,28 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dharamsala Animal Rescue</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Ask Dorjee</title>
+    <link rel="stylesheet" href="/static/style.css?v=15">
 </head>
 <body>
     <div class="header">
-        <span class="header-icon">&#128062;</span>
-        <div>
-            <h1>Dharamsala Animal Rescue</h1>
-            <div class="subtitle">Community-First Rescue Assistant</div>
+        <div class="header-brand">
+            <h1>Ask Dorjee</h1>
+            <div class="subtitle">Your trusted guide to India's street dogs.</div>
         </div>
-        <div class="header-right">
-            <a href="/admin.html">Admin</a>
-            <a href="/health">Status</a>
-        </div>
+        <a class="header-home-link" href="https://dharamsalaanimalrescue.org/" target="_blank" rel="noopener">
+            <span>Back to</span>
+            <img src="/static/assets/dar-logo.png" alt="Dharamsala Animal Rescue">
+        </a>
     </div>
 
     <div class="landing">
-        <button class="open-chat-btn" id="openChatBtn">Start Chat</button>
+        <div class="dorjee-intro">
+            <img
+                class="dorjee-portrait"
+                src="/static/assets/ask-dorjee.png"
+                alt="Dorjee saying, Hi! I'm Dorjee."
+            >
+            <button class="open-chat-btn" id="openChatBtn">Start Chat</button>
+        </div>
     </div>
 
     <div class="chat-container hidden">
         <div class="chat-toolbar">
+            <div class="conversation-tools">
+                <span class="conversation-status" id="conversationStatus" role="status" aria-live="polite">
+                    Starting conversation&hellip;
+                </span>
+                <button class="new-chat-btn" id="newChatBtn" type="button" disabled>New chat</button>
+            </div>
             <button class="minimize-btn" id="minimizeBtn" title="Minimize chat">&#8722;</button>
         </div>
         <div class="chat-messages" id="chatMessages">
@@ -58,16 +70,21 @@
                 </button>
 
                 <input type="file" id="fileInput" class="file-input" accept="image/*,.heic,.heif">
-                <textarea id="messageInput" placeholder="Describe the situation or ask a rescue question..." rows="1"></textarea>
-                <button class="btn btn-primary" id="sendBtn">Send</button>
+                <textarea id="messageInput" placeholder="Describe the situation or ask about community dogs..." rows="1" disabled></textarea>
+                <button class="btn btn-primary" id="sendBtn" disabled>Send</button>
             </div>
         </div>
 
-        <div class="status-bar">
-            Prototype v1.0 &mdash; Not a substitute for professional veterinary care
+        <div class="status-bar" role="note">
+            Ask Dorjee is powered by AI and may make mistakes. Please verify important information.
         </div>
+
     </div>
 
-    <script src="/static/app.js?v=15"></script>
+    <footer class="site-footer">
+        <span>[Powered by <a href="https://gaia-ai.org/" target="_blank" rel="noopener">Gaia-ai.org</a> | In memory of Kimberly Iyer]</span>
+    </footer>
+
+    <script src="/static/app.js?v=25"></script>
 </body>
 </html>

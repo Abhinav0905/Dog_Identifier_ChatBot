@@ -15,6 +15,7 @@ from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 
 import config
+import database as db
 
 logger = logging.getLogger(__name__)
 
@@ -148,7 +149,41 @@ def send_whatsapp_message(*, to: str, from_: str, text: str) -> str:
         from_=from_,
         body=_whatsapp_text(text),
     )
+    if not message.sid:
+        raise RuntimeError("Messaging provider returned no message ID")
     return message.sid
+
+
+def retry_pending_whatsapp_replies(limit: int = 10) -> dict[str, int]:
+    """Retry persisted replies, including work interrupted by a process restart.
+
+    A provider-accepted message SID is success here, not handset delivery. The
+    queue caps attempts at three and retains failures for operational review.
+    """
+    result = {"attempted": 0, "completed": 0, "failed": 0}
+    if not config.TWILIO_ACCOUNT_SID or not config.TWILIO_AUTH_TOKEN:
+        return result
+    for message in db.claim_pending_whatsapp_replies(limit):
+        result["attempted"] += 1
+        try:
+            outbound_sid = send_whatsapp_message(
+                to=message["reply_to"], from_=message["reply_from"], text=message["reply_text"],
+            )
+            if not outbound_sid:
+                raise RuntimeError("Messaging provider returned no message ID")
+            db.finish_whatsapp_message(
+                message["message_sid"], message["lease_token"], succeeded=True,
+                outbound_sid=outbound_sid,
+            )
+            result["completed"] += 1
+        except Exception as exc:
+            db.finish_whatsapp_message(
+                message["message_sid"], message["lease_token"], succeeded=False,
+                error_code=type(exc).__name__,
+            )
+            result["failed"] += 1
+            logger.warning("Queued WhatsApp reply failed (%s)", type(exc).__name__)
+    return result
 
 
 def _whatsapp_text(text: str) -> str:

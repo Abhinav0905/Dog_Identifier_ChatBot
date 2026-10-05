@@ -1,0 +1,25 @@
+{
+  "document": "dog_behaviour.md",
+  "state_dir": "/private/var/folders/38/5zhj7jdx6q11jzsf6xz6sxj40000gn/T/gaia-local-validation-06slr7vg",
+  "sqlite_chunks_before": 156,
+  "sqlite_chunks_after": 156,
+  "chroma_vectors_before": 156,
+  "chroma_vectors_after": 156,
+  "document_sqlite_chunks": 2,
+  "document_chroma_vectors": 2,
+  "obsolete_document_vectors_removed": 2,
+  "new_document_ids": [
+    "dar-8b417f36dcac891e60f88728",
+    "dar-d8f906ad2377d19a140c9d17"
+  ],
+  "local_embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "collection_metadata": {
+    "hnsw:M": 16,
+    "hnsw:search_ef": 100,
+    "hnsw:construction_ef": 200,
+    "hnsw:space": "cosine"
+  },
+  "unsafe_old_phrases_absent": true,
+  "corrected_guidance_present": true,
+  "source_database_and_chroma_unchanged": true
+}

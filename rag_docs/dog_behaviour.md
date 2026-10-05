@@ -44,11 +44,11 @@ If you observe these signs, **do not run**. Running triggers prey drive and can 
 ## How to Approach a Stray Dog Safely
 
 1. Move slowly and calmly — stop and let the dog notice you before you approach.
-2. Crouch down to appear smaller and less threatening.
+2. Keep a safe distance. Do not crouch close or bring your face near an unfamiliar dog's face.
 3. Turn your body slightly sideways rather than facing the dog head-on.
 4. Avoid direct eye contact — let your gaze be soft rather than fixed.
-5. Extend the back of your hand low for the dog to sniff if it chooses to approach.
-6. Allow the dog to come to you — do not reach out over its head.
+5. Keep your hands to yourself. Do not extend a hand, touch, or hand-feed a frightened unfamiliar dog.
+6. Let the dog choose its distance — do not reach over its head or block its escape route.
 7. If the dog retreats or shows discomfort, do not follow.
 
 ## Getting a Scared Dog to Trust You
@@ -56,10 +56,10 @@ If you observe these signs, **do not run**. Running triggers prey drive and can 
 Building trust with a traumatised or fearful street dog takes time and patience.
 
 - Consistency is key — visit the same location at the same time if possible.
-- Offer food at a distance first; gradually move the offering closer over multiple visits.
+- Do not use food to lure a frightened dog closer or hand-feed it. Ask an experienced caregiver or behaviour professional to help plan any trust-building work.
 - Never force interaction.
 - Avoid sudden movements, loud voices, or direct approaches.
-- Sit or crouch nearby and let the dog observe you at a distance.
+- Remain at a safe distance without crouching close, following, or blocking the dog's escape route.
 - Progress at the dog's pace — a dog that chooses to approach you has already made a significant breakthrough.
 
 ## When a Dog Jumps on You

@@ -24,11 +24,18 @@ STRICT RULES:
              triage_severity_score, triage_confidence, triage_summary, distress_flags,
              lat, lng, location_source, similar_incident_id, similarity_score, status
 
-  alerts: alert_id, incident_id, alert_channel, trigger_reason, sent_at, ack_status, ack_by, ack_at
+  alerts: alert_id, incident_id, alert_channel, trigger_reason, attempted_at,
+          delivered_at, delivery_status, delivery_details, ack_status, ack_by, ack_at
+
+  triage_events: event_id, incident_id, model_version, latency_ms, created_at
 
 - Use SQLite date functions (date(), datetime(), julianday()) for time-based queries.
 - Limit results to 100 rows maximum.
 - Use appropriate GROUP BY, COUNT, AVG aggregations for summary queries.
+- An alert is sent only when delivery_status = 'delivered'. Unknown historical
+  status, console logging, failed delivery, and missing configuration are not sent.
+- delivered_at is delivery time; attempted_at records an attempt. Delivery is
+  separate from acknowledgement and does not establish that a rescue was accepted.
 
 Respond with ONLY a valid JSON object:
 {
@@ -47,7 +54,7 @@ NL_TO_SQL_SCHEMA = {
 }
 
 # Allowed table names for validation
-ALLOWED_TABLES = {"incidents", "alerts", "triage_events"}
+ALLOWED_TABLES = db.ADMIN_ANALYTICS_TABLES
 
 
 def process_nl_query(nl_query: str, admin_user: str = "admin") -> dict:
@@ -164,7 +171,7 @@ def _fallback_nl_to_sql(nl_query: str) -> tuple[str, str]:
 
     if "alert" in lower:
         return (
-            "SELECT a.alert_id, a.incident_id, a.alert_channel, a.trigger_reason, a.sent_at, a.ack_status FROM alerts a ORDER BY a.sent_at DESC LIMIT 50",
+            "SELECT a.alert_id, a.incident_id, a.alert_channel, a.trigger_reason, a.attempted_at, a.delivered_at, a.delivery_status, a.ack_status FROM alerts a ORDER BY a.sent_at DESC LIMIT 50",
             "Recent alerts",
         )
 

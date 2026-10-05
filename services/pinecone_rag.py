@@ -12,6 +12,7 @@ import hashlib
 import logging
 import math
 import re
+import time
 from collections import Counter
 from functools import lru_cache
 from typing import Iterable
@@ -111,12 +112,15 @@ def upsert_chunks(chunks: list[dict], batch_size: int = 64) -> int:
     return stored
 
 
-def retrieve(query: str, k: int = 3) -> list[dict]:
+def retrieve(query: str, k: int = 3, deadline: float | None = None) -> list[dict]:
+    from services.rag import MIN_RELEVANCE
+
     if not is_configured():
+        return []
+    if deadline is not None and (_embedder.cache_info().currsize == 0 or deadline - time.monotonic() < 3):
         return []
 
     try:
-        ensure_index()
         dense = _encode_dense([query])[0]
         sparse = encode_sparse(query)
         dense, sparse = hybrid_score_norm(dense, sparse, config.RAG_HYBRID_ALPHA)
@@ -127,6 +131,7 @@ def retrieve(query: str, k: int = 3) -> list[dict]:
             sparse_vector=sparse,
             include_metadata=True,
             include_values=False,
+            timeout=max(0.1, min(5.0, deadline - time.monotonic())) if deadline else 5.0,
         )
     except Exception as exc:  # noqa: BLE001 - Pinecone should not break chat
         logger.warning("Pinecone hybrid retrieval failed: %s", exc)
@@ -135,6 +140,9 @@ def retrieve(query: str, k: int = 3) -> list[dict]:
     chunks = []
     for match in getattr(results, "matches", []) or []:
         metadata = match.get("metadata", {}) if isinstance(match, dict) else (match.metadata or {})
+        score = float((match.get("score") if isinstance(match, dict) else match.score) or 0.0)
+        if not math.isfinite(score) or score < MIN_RELEVANCE:
+            continue
         chunks.append(
             {
                 "title": metadata.get("title", "Dharamsala Animal Rescue"),
@@ -142,7 +150,9 @@ def retrieve(query: str, k: int = 3) -> list[dict]:
                 "doc_file": metadata.get("doc_file", ""),
                 "chunk_index": metadata.get("chunk_index", 0),
                 "source_url": metadata.get("source_url", ""),
-                "score": match.get("score") if isinstance(match, dict) else match.score,
+                "score": score,
+                "relevance_score": min(1.0, score),
+                "retrieval_backend": "pinecone_hybrid",
             }
         )
     return chunks

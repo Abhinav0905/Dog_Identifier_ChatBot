@@ -1,0 +1,44 @@
+{
+  "scope": "Local isolated preview at http://127.0.0.1:8765; not production",
+  "date": "2026-10-04",
+  "browser": "Chrome via computer-use integration",
+  "live_model_replays": 1,
+  "replayed_case_id": "C02",
+  "observed_answer": "+91-044-25381366",
+  "checks": [
+    {
+      "check": "India-wide welcome and enabled web input",
+      "result": "pass"
+    },
+    {
+      "check": "Named clinical institution with number-only answer and separate source card",
+      "result": "pass"
+    },
+    {
+      "check": "Reload and Start Chat restore the same response and sources",
+      "result": "pass"
+    },
+    {
+      "check": "New chat clears the prior answer",
+      "result": "pass"
+    },
+    {
+      "check": "Authenticated test admin dashboard shows failed delivery, zero delivered alerts, and report still new",
+      "result": "pass"
+    },
+    {
+      "check": "Updated status panel exposes notification channel not configured",
+      "result": "pass"
+    }
+  ],
+  "screenshots": [
+    "browser-number-only.jpg",
+    "browser-operations.jpg"
+  ],
+  "limitations": [
+    "Preview process started before the final backend wording changes; browser checks establish rendered UI and persistence, not a complete retest of the final backend.",
+    "The final backend is exercised separately by the recorded FastAPI acceptance cases.",
+    "Admin data and password were synthetic test fixtures; external notifications were disabled.",
+    "No public proxy, HTTPS, production credentials, or actual operator handoff was tested."
+  ]
+}

@@ -14,13 +14,21 @@ import sys
 import json
 import os
 import time
+import http.cookiejar
 import urllib.request
 import urllib.parse
 from pathlib import Path
 
+from dotenv import load_dotenv
+
+load_dotenv(Path(__file__).parent / ".env")
+
 BASE_URL = os.getenv("TEST_BASE_URL", "http://localhost:8000")
 ADMIN_PASSWORD = os.getenv("TEST_ADMIN_PASSWORD") or os.getenv("ADMIN_PASSWORD", "")
 EXAMPLE_IMAGES_DIR = Path(__file__).parent / "example_images"
+COOKIE_JAR = http.cookiejar.CookieJar()
+HTTP = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(COOKIE_JAR))
+CONVERSATIONS: dict[str, str] = {}
 
 # Track results
 passed = 0
@@ -47,7 +55,7 @@ def api_get(path: str, params: dict = None) -> tuple[int, dict]:
         url += "?" + urllib.parse.urlencode(params)
     try:
         req = urllib.request.Request(url)
-        with urllib.request.urlopen(req, timeout=30) as resp:
+        with HTTP.open(req, timeout=30) as resp:
             return resp.status, json.loads(resp.read())
     except urllib.error.HTTPError as e:
         body = e.read()
@@ -57,11 +65,12 @@ def api_get(path: str, params: dict = None) -> tuple[int, dict]:
 
 
 def api_post_json(path: str, body: dict) -> tuple[int, dict]:
+    body = _owned_request_body(path, body)
     url = BASE_URL + path
     data = json.dumps(body).encode("utf-8")
     req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
     try:
-        with urllib.request.urlopen(req, timeout=60) as resp:
+        with HTTP.open(req, timeout=60) as resp:
             return resp.status, json.loads(resp.read())
     except urllib.error.HTTPError as e:
         body = e.read()
@@ -73,6 +82,7 @@ def api_post_json(path: str, body: dict) -> tuple[int, dict]:
 def api_post_multipart(path: str, fields: dict, files: dict) -> tuple[int, dict]:
     """POST multipart/form-data with file uploads."""
     import io
+    fields = _owned_request_body(path, fields)
     boundary = "----DharamsalaTestBoundary"
     body = io.BytesIO()
 
@@ -97,13 +107,40 @@ def api_post_multipart(path: str, fields: dict, files: dict) -> tuple[int, dict]
         headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
     )
     try:
-        with urllib.request.urlopen(req, timeout=120) as resp:
+        with HTTP.open(req, timeout=120) as resp:
             return resp.status, json.loads(resp.read())
     except urllib.error.HTTPError as e:
         body = e.read()
         return e.code, json.loads(body) if body else {}
     except Exception as e:
         return 0, {"error": str(e)}
+
+
+def _owned_request_body(path: str, body: dict) -> dict:
+    """Replace readable test labels with server-owned browser conversation IDs."""
+    prepared = dict(body)
+    label = str(prepared.get("session_id") or "").strip()
+    if label and path in {"/v1/chat/query", "/v1/triage/image", "/v1/triage/confirm"}:
+        prepared["session_id"] = _conversation_id(label)
+    return prepared
+
+
+def _conversation_id(label: str) -> str:
+    if label in CONVERSATIONS:
+        return CONVERSATIONS[label]
+    request = urllib.request.Request(
+        BASE_URL + "/v1/conversations",
+        data=b"{}",
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    with HTTP.open(request, timeout=30) as response:
+        payload = json.loads(response.read())
+    conversation_id = str(payload.get("conversation_id") or "")
+    if not conversation_id:
+        raise RuntimeError("conversation API did not return conversation_id")
+    CONVERSATIONS[label] = conversation_id
+    return conversation_id
 
 
 # ============================================================
@@ -133,16 +170,41 @@ def test_chat_dog_bite():
 
 
 def test_chat_injured_dog():
-    """T03: Injured dog report returns rescue guidance."""
+    """T03: A local rescue request must provide a verifiable India location."""
     code, data = api_post_json("/v1/chat/query", {
         "message": "I found an injured stray dog bleeding near the market",
         "session_id": "systest-chat-2",
     })
     resp = (data.get("response") or "").lower()
-    if code == 200 and ("feeder" in resp or "owner" in resp or "veterinar" in resp or "contact" in resp):
-        log("PASS", "T03 Injured dog guidance")
+    if code == 200 and "verify that the dog is in india" in resp:
+        log("PASS", "T03 Injured dog request requires India location")
     else:
-        log("FAIL", "T03 Injured dog guidance", f"status={code}, response snippet: {resp[:100]}")
+        log(
+            "FAIL",
+            "T03 Injured dog request requires India location",
+            f"status={code}, response snippet: {resp[:140]}",
+        )
+
+
+def test_chat_ranchi_live_ngo_lookup():
+    """T03b: The reported Ranchi case runs verified local NGO web research."""
+    code, data = api_post_json("/v1/chat/query", {
+        "message": "I can see a distress dog in Ranchi. What do i do?",
+        "session_id": "systest-chat-ranchi",
+    })
+    resp = (data.get("response") or "").lower()
+    completed_search = (
+        "verified animal-rescue options" in resp
+        or "could not verify a dog-rescue ngo with an official source" in resp
+    )
+    if code == 200 and completed_search:
+        log("PASS", "T03b Ranchi case runs verified NGO search")
+    else:
+        log(
+            "FAIL",
+            "T03b Ranchi case runs verified NGO search",
+            f"status={code}, response snippet: {resp[:180]}",
+        )
 
 
 def test_chat_general_greeting():
@@ -221,7 +283,7 @@ def _load_example_image(name: str) -> tuple[bytes, str]:
 
 
 def test_triage_image_dog1():
-    """T09: Image triage with dog_1.png returns structured result."""
+    """T09: Image triage returns the simplified user-facing assessment."""
     img_bytes, ctype = _load_example_image("dog_1.png")
     code, data = api_post_multipart(
         "/v1/triage/image",
@@ -234,27 +296,15 @@ def test_triage_image_dog1():
         },
         files={"image": ("dog_1.png", img_bytes, ctype)},
     )
-    if code == 200 and data.get("incident_id"):
-        triage = data.get("triage")
-        if triage:
-            has_severity = triage.get("severity") in ("low", "moderate", "high", "critical")
-            has_score = 1 <= (triage.get("severity_score") or 0) <= 10
-            has_confidence = 0 <= (triage.get("confidence") or -1) <= 1
-            if has_severity and has_score and has_confidence:
-                log("PASS", f"T09 Image triage dog_1.png (severity={triage['severity']}, score={triage['severity_score']})")
-            else:
-                log("FAIL", "T09 Image triage dog_1.png", f"Invalid triage fields: {triage}")
-        elif data.get("response") and len(data.get("resource_links", [])) >= 2:
-            log("PASS", "T09 Image triage dog_1.png (fallback mode with map links)")
-        else:
-            log("FAIL", "T09 Image triage dog_1.png", f"Unexpected fallback response: keys={list(data.keys())}")
+    if code == 200 and data.get("response") and not data.get("incident_id"):
+        log("PASS", "T09 Image triage dog_1.png (private case ID, simplified response)")
     else:
         log("FAIL", "T09 Image triage dog_1.png", f"status={code}, keys={list(data.keys())}")
     return data
 
 
 def test_triage_image_dog2():
-    """T10: Image triage with dog_2.png returns structured result."""
+    """T10: Image triage with dog_2.png returns a user-facing assessment."""
     img_bytes, ctype = _load_example_image("dog_2.png")
     code, data = api_post_multipart(
         "/v1/triage/image",
@@ -267,18 +317,15 @@ def test_triage_image_dog2():
         },
         files={"image": ("dog_2.png", img_bytes, ctype)},
     )
-    if code == 200 and data.get("incident_id") and (data.get("triage") or data.get("response")):
-        if data.get("triage"):
-            log("PASS", f"T10 Image triage dog_2.png (severity={data['triage']['severity']})")
-        else:
-            log("PASS", "T10 Image triage dog_2.png (fallback mode)")
+    if code == 200 and data.get("response") and not data.get("incident_id"):
+        log("PASS", "T10 Image triage dog_2.png")
     else:
         log("FAIL", "T10 Image triage dog_2.png", f"status={code}")
     return data
 
 
 def test_triage_image_dog3():
-    """T11: Image triage with dog_3.png returns structured result."""
+    """T11: Image triage with dog_3.png returns a user-facing assessment."""
     img_bytes, ctype = _load_example_image("dog_3.png")
     code, data = api_post_multipart(
         "/v1/triage/image",
@@ -291,11 +338,8 @@ def test_triage_image_dog3():
         },
         files={"image": ("dog_3.png", img_bytes, ctype)},
     )
-    if code == 200 and data.get("incident_id") and (data.get("triage") or data.get("response")):
-        if data.get("triage"):
-            log("PASS", f"T11 Image triage dog_3.png (severity={data['triage']['severity']})")
-        else:
-            log("PASS", "T11 Image triage dog_3.png (fallback mode)")
+    if code == 200 and data.get("response") and not data.get("incident_id"):
+        log("PASS", "T11 Image triage dog_3.png")
     else:
         log("FAIL", "T11 Image triage dog_3.png", f"status={code}")
     return data
@@ -304,7 +348,7 @@ def test_triage_image_dog3():
 # --- Duplicate Detection ---
 
 def test_duplicate_detection():
-    """T12: Uploading the same image twice triggers duplicate detection."""
+    """T12: Re-upload succeeds while duplicate details remain internal."""
     img_bytes, ctype = _load_example_image("dog_1.png")
 
     # Second upload of dog_1.png (first was in T09)
@@ -319,11 +363,10 @@ def test_duplicate_detection():
         },
         files={"image": ("dog_1.png", img_bytes, ctype)},
     )
-    sim = data.get("similarity", {})
-    if code == 200 and sim.get("is_exact_duplicate") is True and sim.get("exact_match_id"):
-        log("PASS", f"T12 Exact duplicate detected (matched {sim['exact_match_id'][:8]}...)")
+    if code == 200 and data.get("response") and not data.get("similarity"):
+        log("PASS", "T12 Duplicate upload handled without exposing case details")
     else:
-        log("FAIL", "T12 Exact duplicate detection", f"similarity={sim}")
+        log("FAIL", "T12 Duplicate upload handling", f"status={code}, body={data}")
 
 
 def test_near_duplicate_detection():
@@ -340,11 +383,8 @@ def test_near_duplicate_detection():
         },
         files={"image": ("dog_2.png", img_bytes, ctype)},
     )
-    sim = data.get("similarity", {})
-    # dog_2 was already uploaded in T10, so it WILL be an exact duplicate of that
-    # But it should NOT be an exact duplicate of dog_1
-    if code == 200:
-        log("PASS", f"T13 Similarity check completed (exact_dup={sim.get('is_exact_duplicate')}, similar_count={len(sim.get('similar_incidents', []))})")
+    if code == 200 and data.get("response") and not data.get("similarity"):
+        log("PASS", "T13 Re-upload completed with private similarity details")
     else:
         log("FAIL", "T13 Similarity check", f"status={code}")
 
@@ -373,7 +413,7 @@ def test_triage_requires_verified_location():
 
 
 def test_triage_rejects_out_of_region_location():
-    """T13b: Browser/user coordinates outside Dharamsala are rejected before assessment."""
+    """T13b: Browser/user coordinates outside India are rejected before assessment."""
     img_bytes, ctype = _load_example_image("dog_2.png")
     code, data = api_post_multipart(
         "/v1/triage/image",
@@ -394,9 +434,21 @@ def test_triage_rejects_out_of_region_location():
         and verification.get("resolution_reason") == "rejected_all_verified_locations_outside"
         and verification.get("distance_km")
     ):
-        log("PASS", "T13b Strict gate rejects out-of-region browser location")
+        log("PASS", "T13b India-only gate rejects outside-India browser location")
     else:
-        log("FAIL", "T13b Strict gate rejects out-of-region browser location", f"status={code}, body={data}")
+        log("FAIL", "T13b India-only gate rejects outside-India browser location", f"status={code}, body={data}")
+
+
+def latest_internal_incident_id() -> str | None:
+    """Get a private incident ID through the authenticated admin API for tests."""
+    code, data = api_get(
+        "/v1/admin/incidents",
+        {"admin_password": ADMIN_PASSWORD, "limit": "50"},
+    )
+    if code != 200:
+        return None
+    incidents = data.get("incidents") or []
+    return str(incidents[0].get("incident_id")) if incidents else None
 
 
 # --- Incident Retrieval ---
@@ -586,6 +638,7 @@ def main():
     test_health()
     test_chat_dog_bite()
     test_chat_injured_dog()
+    test_chat_ranchi_live_ngo_lookup()
     test_chat_general_greeting()
     print()
 
@@ -609,8 +662,9 @@ def main():
     test_triage_rejects_out_of_region_location()
     print()
 
-    # Use an incident ID from triage tests
-    incident_id = (triage1 or {}).get("incident_id")
+    # User responses intentionally hide case IDs. Administrative endpoint tests
+    # retrieve one through the authenticated API instead.
+    incident_id = latest_internal_incident_id()
 
     print("--- Incident Retrieval ---")
     if incident_id:
@@ -621,7 +675,7 @@ def main():
     print()
 
     print("--- Location Update ---")
-    incident_id_for_loc = (triage3 or {}).get("incident_id")
+    incident_id_for_loc = incident_id
     if incident_id_for_loc:
         test_location_update(incident_id_for_loc)
     else:

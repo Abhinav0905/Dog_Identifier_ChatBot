@@ -5,3 +5,6 @@
 chroma_db/
 storage/*
 dharamsala.db
+dharamsala.db-shm
+dharamsala.db-wal
+.deploy-backups/

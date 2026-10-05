@@ -1,0 +1,232 @@
+{
+  "base_url": "http://127.0.0.1:8001",
+  "turns": [
+    {
+      "prompt": "What is the contact for the veterinary hospital at Madras Veterinary College in Chennai?",
+      "latency_seconds": 11.57,
+      "status_code": 200,
+      "response": {
+        "response": "Madras Veterinary College Teaching Hospital, Chennai: +91-044-25381366 [Source](<https://tanuvas.ac.in/contacts.php?utm_source=openai>).",
+        "incident_id": null,
+        "triage": null,
+        "similarity": null,
+        "escalation_triggered": false,
+        "in_jurisdiction": null,
+        "location_confirmed_needed": null,
+        "pending_token": null,
+        "resource_links": [
+          {
+            "label": "Source: tanuvas.ac.in",
+            "url": "https://tanuvas.ac.in/contacts.php?utm_source=openai",
+            "phone": "",
+            "address": "",
+            "opening_hours": ""
+          }
+        ],
+        "location_verification": null
+      }
+    },
+    {
+      "prompt": "Give me only its number.",
+      "latency_seconds": 8.55,
+      "status_code": 200,
+      "response": {
+        "response": "+91-044-25381366 [Source](<https://tanuvas.ac.in/contacts.php?utm_source=openai>)",
+        "incident_id": null,
+        "triage": null,
+        "similarity": null,
+        "escalation_triggered": false,
+        "in_jurisdiction": null,
+        "location_confirmed_needed": null,
+        "pending_token": null,
+        "resource_links": [
+          {
+            "label": "Source: tanuvas.ac.in",
+            "url": "https://tanuvas.ac.in/contacts.php?utm_source=openai",
+            "phone": "",
+            "address": "",
+            "opening_hours": ""
+          }
+        ],
+        "location_verification": null
+      }
+    },
+    {
+      "prompt": "Give me only the phone number for Example Fictional Veterinary College 9XQ in Chennai",
+      "latency_seconds": 14.55,
+      "status_code": 200,
+      "response": {
+        "response": "I can’t establish a published phone number for Example Fictional Veterinary College 9XQ in Chennai. [Source 1](<https://tanuvas.ac.in/contacts.php?utm_source=openai>)",
+        "incident_id": null,
+        "triage": null,
+        "similarity": null,
+        "escalation_triggered": false,
+        "in_jurisdiction": null,
+        "location_confirmed_needed": null,
+        "pending_token": null,
+        "resource_links": [
+          {
+            "label": "Source: tanuvas.ac.in",
+            "url": "https://tanuvas.ac.in/contacts.php?utm_source=openai",
+            "phone": "",
+            "address": "",
+            "opening_hours": ""
+          }
+        ],
+        "location_verification": null
+      }
+    }
+  ],
+  "conversation_id": "7e3627c8-87de-40b9-8240-ae595a4eefdd",
+  "history": {
+    "conversation_id": "7e3627c8-87de-40b9-8240-ae595a4eefdd",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is the contact for the veterinary hospital at Madras Veterinary College in Chennai?",
+        "created_at": "2026-09-17T16:48:22.321416+00:00",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Madras Veterinary College Teaching Hospital, Chennai: +91-044-25381366 [Source](<https://tanuvas.ac.in/contacts.php?utm_source=openai>).",
+        "created_at": "2026-09-17T16:48:22.324240+00:00",
+        "metadata": {
+          "resource_links": [
+            {
+              "label": "Source: tanuvas.ac.in",
+              "url": "https://tanuvas.ac.in/contacts.php?utm_source=openai"
+            }
+          ],
+          "text_action": "search",
+          "contextual_request": "contact details for the veterinary hospital at Madras Veterinary College in Chennai",
+          "routing_source": "model",
+          "awaiting_clarification": false,
+          "web_search_ran": true,
+          "result_kind": "search_answer",
+          "model_history_policy": "include"
+        }
+      },
+      {
+        "role": "user",
+        "content": "Give me only its number.",
+        "created_at": "2026-09-17T16:48:30.876209+00:00",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "+91-044-25381366 [Source](<https://tanuvas.ac.in/contacts.php?utm_source=openai>)",
+        "created_at": "2026-09-17T16:48:30.879401+00:00",
+        "metadata": {
+          "resource_links": [
+            {
+              "label": "Source: tanuvas.ac.in",
+              "url": "https://tanuvas.ac.in/contacts.php?utm_source=openai"
+            }
+          ],
+          "text_action": "search",
+          "contextual_request": "Give me only the phone number for the veterinary hospital at Madras Veterinary College in Chennai.",
+          "routing_source": "model",
+          "awaiting_clarification": false,
+          "web_search_ran": true,
+          "result_kind": "search_answer",
+          "model_history_policy": "include"
+        }
+      },
+      {
+        "role": "user",
+        "content": "Give me only the phone number for Example Fictional Veterinary College 9XQ in Chennai",
+        "created_at": "2026-09-17T16:48:45.404893+00:00",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "I can’t establish a published phone number for Example Fictional Veterinary College 9XQ in Chennai. [Source 1](<https://tanuvas.ac.in/contacts.php?utm_source=openai>)",
+        "created_at": "2026-09-17T16:48:45.411982+00:00",
+        "metadata": {
+          "resource_links": [
+            {
+              "label": "Source: tanuvas.ac.in",
+              "url": "https://tanuvas.ac.in/contacts.php?utm_source=openai"
+            }
+          ],
+          "text_action": "search",
+          "contextual_request": "Give me only the phone number for Example Fictional Veterinary College 9XQ in Chennai",
+          "routing_source": "model",
+          "awaiting_clarification": false,
+          "web_search_ran": true,
+          "result_kind": "search_answer",
+          "model_history_policy": "include"
+        }
+      }
+    ]
+  },
+  "standalone_fictional": {
+    "conversation_id": "6950039d-4f82-457b-a4c8-00556ff1c360",
+    "prompt": "Give me only the phone number for Example Fictional Veterinary College 9XQ in Chennai",
+    "latency_seconds": 10.29,
+    "status_code": 200,
+    "response": {
+      "response": "I could not establish the requested institution's phone number from the available sources.",
+      "incident_id": null,
+      "triage": null,
+      "similarity": null,
+      "escalation_triggered": false,
+      "in_jurisdiction": null,
+      "location_confirmed_needed": null,
+      "pending_token": null,
+      "resource_links": [],
+      "location_verification": null
+    },
+    "history": {
+      "conversation_id": "6950039d-4f82-457b-a4c8-00556ff1c360",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Give me only the phone number for Example Fictional Veterinary College 9XQ in Chennai",
+          "created_at": "2026-09-17T16:49:28.268296+00:00",
+          "metadata": {}
+        },
+        {
+          "role": "assistant",
+          "content": "I could not establish the requested institution's phone number from the available sources.",
+          "created_at": "2026-09-17T16:49:28.274108+00:00",
+          "metadata": {
+            "resource_links": [],
+            "text_action": "search",
+            "contextual_request": "Only the phone number for Example Fictional Veterinary College 9XQ in Chennai",
+            "routing_source": "model",
+            "awaiting_clarification": false,
+            "web_search_ran": true,
+            "result_kind": "contact_unconfirmed",
+            "model_history_policy": "include"
+          }
+        }
+      ]
+    }
+  },
+  "review": {
+    "hospital_contact": {
+      "result": "pass",
+      "official_source": "https://www.tanuvas.ac.in/contacts.php",
+      "hospital_number": "044-25381366",
+      "limitation": "Published contact verified against official page; phone was not called."
+    },
+    "phone_only_followup": {
+      "result": "pass",
+      "actual": "Published hospital number with compact supporting citation",
+      "fresh_search_recorded": true
+    },
+    "fictional_institution_followup": {
+      "result": "pass",
+      "actual": "No institution phone claimed; uncertainty stated",
+      "fresh_search_recorded": true
+    },
+    "fictional_institution_standalone": {
+      "result": "pass",
+      "actual": "Requested institution phone could not be established",
+      "fresh_search_recorded": true
+    },
+    "scope": "Four controlled local API examples with new cookie sessions; not proof of universal correctness."
+  }
+}

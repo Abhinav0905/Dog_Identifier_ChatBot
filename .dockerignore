@@ -10,3 +10,8 @@ __pycache__
 dharamsala.db
 storage
 .deploy-data
+.deploy-backups
+*.deploy-lock
+
+reports
+.pytest_cache

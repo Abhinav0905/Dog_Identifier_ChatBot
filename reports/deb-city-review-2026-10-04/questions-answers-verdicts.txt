@@ -1,0 +1,294 @@
+GAIA / ASK DORJEE — DEB-PATTERN LIVE QUESTION REVIEW
+13 distinct questions; 41 recorded attempts.
+Behavior: correct: 13, partial: 0, incorrect: 0, needs_review: 0
+Lookup fulfillment: fulfilled: 4, partial: 3, unfulfilled: 3, not_applicable: 3, needs_review: 0
+Requirements: met: 12, partial: 1, unmet: 0, needs_review: 0
+Overall: correct: 12, partial: 1, incorrect: 0, needs_review: 0
+Local web API with live models; production not tested; notifications disabled.
+Behavior, lookup coverage and requirement outcome are separate. A best-effort request can be met with partial lookup coverage. Overall combines behavior with judged requirement outcome; missing review data stays unjudged.
+Original combined judgments and every recorded answer are retained in the JSON.
+
+D01 — OVERALL PARTIAL
+BEHAVIOR: correct; LOOKUP: unfulfilled
+REQUIREMENTS: partial
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: partially_correct
+QUESTION: An injured community dog is in Indore, Madhya Pradesh. I cannot find a rescue NGO. Please find government veterinary hospitals, veterinary colleges or clinics that could help. Give useful local leads and distinguish treatment from rescue pickup.
+REASON: The final live attempt keeps Indore context, avoids unsupported contacts and does not equate lookup failure with absence of services, but it did not establish a specific local treatment lead. The lookup remains unfulfilled after source/model reliability failures.
+ANSWER (exact recorded text):
+I couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.
+
+For treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup.
+SOURCES:
+- None attached
+Elapsed: 37.837 seconds
+
+========================================================================
+
+D02 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: fulfilled
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: correct
+QUESTION: No, I mean the College of Veterinary Science and Animal Husbandry in Mhow, Madhya Pradesh. Give me only the college's phone number, not an NGO's number.
+REASON: Exact number-only Mhow college contact, with literal Mhow in the same actual source passage despite geocoder renaming the city. Correct general college contact; not asserted to be clinical reception.
+ANSWER (exact recorded text):
+07324-276622
+SOURCES:
+- College of Veterinary Science & Animal Husbandry, Mhow: published contact source: https://dial4college.com/college/college-of-veterinary-science-and-animal-husbandry-mhow
+Elapsed: 17.143 seconds
+
+========================================================================
+
+D03 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: fulfilled
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: correct
+QUESTION: This is a different dog in Ranchi, Jharkhand. The NGO cannot come. Where can the dog get veterinary treatment?
+REASON: Identifiable Ranchi pet-treatment options are supported by fetched sources; the Dean contact is labelled administrative, with no pickup/admission guarantee.
+ANSWER (exact recorded text):
+The sources identify these treatment options and institution leads:
+
+- Faculty of Veterinary Science & Animal Husbandry, Ranchi — Ranchi — the source describes treatment for pets or small animals. Administrative contact: 9431325526.
+
+- Pluto Pet Clinic — Hinoo, Ranchi — the source describes treatment for pets or small animals.
+
+A treatment listing alone does not establish rescue pickup or current availability.
+SOURCES:
+- Faculty of Veterinary Science & Animal Husbandry, Ranchi: source: https://www.bauranchi.org/dean-faculty-of-veterinary/
+- Pluto Pet Clinic: source: https://www.practo.com/ranchi/clinic/complete-dog-care-angara/veterinarian-ps-49
+Elapsed: 34.017 seconds
+
+========================================================================
+
+D04 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: unfulfilled
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: partially_correct
+QUESTION: Not the NGO. I specifically mean the Veterinary Clinical Complex at the College of Veterinary Science and Animal Husbandry, Birsa Agricultural University, Kanke, Ranchi. Only its clinical phone number, please.
+REASON: The exact BAU clinical unit and number-only constraint are respected. No office, faculty or other-provider number is substituted. The behavior meets the stated fallback requirement, while the requested clinical number remains unfulfilled.
+ANSWER (exact recorded text):
+I couldn't confirm this institution's clinical phone number from accessible sources.
+SOURCES:
+- None attached
+Elapsed: 34.928 seconds
+
+========================================================================
+
+D05 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: partial
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: correct
+QUESTION: New case: a community dog is injured in Coimbatore, Tamil Nadu. I do not know any local rescue group. Where can I get help?
+REASON: The answer retains a Coimbatore treatment centre, locality/postcode and the published general enquiry number, labels the number as non-clinical, gives a concrete call-to-confirm step and does not promise admission or pickup. Current dog admission remains a live operational unknown.
+ANSWER (exact recorded text):
+The sources identify these treatment options and institution leads:
+
+- Humane Animal Society (ABC and Rescue Centre) — Seeranaickenpalayam, Coimbatore 641007 TN — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed. Published contact: +91 93 66 12 72 15.
+
+- Veterinary University Training and Research Centre (VUTRC) — Coimbatore — institution listed; clinical treatment access is unconfirmed.
+
+Call the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.
+
+A treatment listing alone does not establish rescue pickup or current availability.
+SOURCES:
+- Humane Animal Society (ABC and Rescue Centre): source: https://hasindia.org/contact.html
+- Veterinary University Training and Research Centre (VUTRC): source: https://www.tanuvas.ac.in/contacts.php
+Elapsed: 32.331 seconds
+
+========================================================================
+
+D06 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: partial
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: partially_correct
+QUESTION: I already said Coimbatore, Tamil Nadu. If nobody can collect the dog, can I approach the government veterinary polyclinic there? Tell me the name or address you can establish, and what still needs confirmation. Please do not ask for my location again.
+REASON: Published Coimbatore polyclinic-campus office address and administrative/referral number retained; no repeated location question or promised pickup. Clinical admission and practical transport remain unresolved.
+ANSWER (exact recorded text):
+These institutions are listed in the sources, but clinical treatment access remains unconfirmed:
+
+- O/o Regional Joint Director — Veterinary Poly Clinic Campus, Townhall, Coimbatore -641 001 — administrative office and referral lead; ask which local facility provides treatment. Administrative contact: 0422-2381900.
+
+- Animal Husbandry Department — institution listed; clinical treatment access is unconfirmed.
+
+A treatment listing alone does not establish rescue pickup or current availability.
+SOURCES:
+- O/o Regional Joint Director: source: https://coimbatore.nic.in/animal-husbandry-department-2/
+Elapsed: 36.189 seconds
+
+========================================================================
+
+D07 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: unfulfilled
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: partially_correct
+QUESTION: Correction: this is now a dog in Bengaluru, Karnataka. I want the Veterinary Clinical Complex at Veterinary College, Hebbal, Bengaluru. Give only its clinical phone number. Keep the source separate, and do not substitute another organisation if the number cannot be verified.
+REASON: The exact Hebbal clinical unit, Bengaluru correction and phone-only constraint are respected. No office, faculty or previous-provider number is substituted. The behavior meets the stated fallback requirement, while the requested clinical number remains unfulfilled.
+ANSWER (exact recorded text):
+I couldn't confirm this institution's clinical phone number from accessible sources.
+SOURCES:
+- None attached
+Elapsed: 43.907 seconds
+
+========================================================================
+
+D08 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: fulfilled
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: correct
+QUESTION: This is another case in Shillong, Meghalaya. A community dog needs treatment and I cannot find an NGO. Is there a veterinary hospital or some other option?
+REASON: Named Shillong veterinary hospital and published clinical number supported by official evidence; dog admission and present availability appropriately unconfirmed.
+ANSWER (exact recorded text):
+The sources identify these treatment options and institution leads:
+
+- Veterinary Hospitals, Shillong — Shillong — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed. Clinical contact: 0364 - 2241244.
+
+A treatment listing alone does not establish rescue pickup or current availability.
+SOURCES:
+- Veterinary Hospitals, Shillong: source: https://megahvt.gov.in/citizen_charter.html
+- Veterinary Hospitals, Shillong: source: https://megahvt.gov.in/farm_managers.html
+Elapsed: 22.166 seconds
+
+========================================================================
+
+D09 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: partial
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: partially_correct
+QUESTION: For the first facility you just listed in Shillong, give its published address and clinical phone if those can be established. I already gave the city; please do not ask me for the city again or send the Bengaluru college details.
+REASON: Current Shillong clinical number retained and missing street/campus address acknowledged; request_satisfied is now false. No old-city leakage or repeated location question.
+ANSWER (exact recorded text):
+The sources identify these treatment options and institution leads:
+
+- Hospital:  (Shillong) — Shillong — the source describes veterinary treatment services. Clinical contact: 0364 - 2241244.
+
+A treatment listing alone does not establish rescue pickup or current availability.
+
+A published street or campus address remains unconfirmed.
+SOURCES:
+- Hospital:  (Shillong): source: https://megahvt.gov.in/hospitals.html
+- Hospital:  (Shillong): source: https://megahvt.gov.in/farm_managers.html
+Elapsed: 43.791 seconds
+
+========================================================================
+
+D10 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: not_applicable
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: correct
+QUESTION: I am being chased by a dog on my motobike every day in Jaipur. What can I do to stop it? These are street dogs living at a busy junction, and traffic is heavy.
+REASON: Answers the supplied chase case with traffic-first guidance and safely conditioned stopping; no unsolicited aversive methods or vaccination/sterilisation cure claim.
+ANSWER (exact recorded text):
+This is often a **territory/vehicle-chase habit**, not something you can reliably “fix” in the moment.
+
+What to do:
+
+- **Prioritise traffic safety.** Keep your riding **steady and predictable** through that junction. Do not make sudden moves because of the dog.
+- **Plan to avoid that exact trigger point** if you can: a different lane approach, slightly different timing, or a different route.
+- If there is a **safe place off the moving road** after the junction, stop there briefly. A **stationary motorbike can act as a barrier** once you are safely out of traffic.
+- **Do not try to feed from the bike** or lure the dog closer. Feeding is not a reliable way to stop chasing.
+- **Do not try to handle it alone.** Because this happens daily at a busy junction, report the spot to **Jaipur’s municipal ABC/anti-rabies / animal control or local veterinary public service** for assessment. Ask specifically for:
+  - **anti-rabies vaccination**
+  - **sterilisation/ABC status**
+  - **behaviour assessment at that junction**
+
+Helpful to note before reporting:
+- exact junction
+- time it happens
+- how many dogs
+- which direction they chase from
+- whether any dog has an **ear notch** (often shows sterilisation)
+
+If a bite, scratch breaking skin, or saliva to broken skin/eyes/mouth ever happens: **wash with soap and running water for 15 minutes and get medical care promptly.**
+SOURCES:
+- None attached
+Elapsed: 17.079 seconds
+
+========================================================================
+
+D11 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: not_applicable
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: correct
+QUESTION: If I slow down there, I am afraid a dog will bite me. I cannot safely stop in the traffic. What should I do on tomorrow's ride?
+REASON: Acknowledges fear without inventing an exposure, retains heavy-traffic riding context, and answers tomorrow planning concisely. Stopping is conditioned on leaving traffic safely. No repeated bite-care footer, duplicate traffic preface, aversive tactic or guaranteed cure. This live model answer was already compliant; raw and returned text match.
+ANSWER (exact recorded text):
+That fear makes sense. For tomorrow, the safest plan is **use a different route if you can**; if not, **do not stop in the moving traffic because of the dog** — go through the junction at a **steady, predictable speed**, leaving extra space ahead so you’re less likely to need a sudden brake. If the dog follows, **keep going to a safe place off the road and only stop there**. This chasing is often a **territorial/chase response** at that spot, so changing route or timing for a day or two is the most practical short-term step.
+SOURCES:
+- None attached
+Elapsed: 11.707 seconds
+
+========================================================================
+
+D12 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: not_applicable
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: correct
+QUESTION: I have ₹5,000 this month to help community dogs in India. How should I prioritise food, vaccination and sterilisation? Please do not invent package prices or promise that sterilisation will immediately stop chasing.
+REASON: Budget priorities depend on unmet welfare needs, current coverage, confirmed costs and recovery arrangements; no package prices or unconditional procedure quota/chasing cure.
+ANSWER (exact recorded text):
+Don’t use a fixed split. With ₹5,000, prioritise by **what the dogs already have** and **what you can fully complete safely**.
+
+**Best order to think about it:**
+1. **Basic care first**: if the dogs are thin, dehydrated, nursing puppies, or there is no regular feeder/water, keep **steady food and water** going first.  
+2. **Rabies vaccination next**: if food is already fairly stable and some dogs are **not vaccinated**, vaccination is usually the next strong priority for community health.  
+3. **Sterilisation after that**: do this when you can cover the **real local cost**, plus **transport and safe recovery**, not just the surgery itself.
+
+**Practical rule for ₹5,000:**
+- If there is a **free or subsidised** vaccination/sterilisation option nearby, use your money for the **gap costs**: transport, post-op food, recovery support, and feeding.
+- If there is **no subsidy**, don’t spread the money too thin. It is better to:
+  - fully support **one confirmed sterilisation/recovery**, **or**
+  - vaccinate the uncovered dogs you can afford, while keeping food support steady.
+
+**When sterilisation moves up the list:**
+- repeated litters
+- unsterilised females in an area with male dogs around
+- food support is already dependable
+- you have a confirmed plan for recovery
+
+**Important:** vaccination and sterilisation help health and population control, but they are **not a guaranteed fix for chasing behaviour**.
+
+So, in most cases: **stable food/water first if that’s missing, then rabies vaccination for uncovered dogs, then sterilisation once you can fund one complete case properly.**
+SOURCES:
+- None attached
+Elapsed: 20.615 seconds
+
+========================================================================
+
+D13 — OVERALL CORRECT
+BEHAVIOR: correct; LOOKUP: fulfilled
+REQUIREMENTS: met
+EVALUATION BASIS: explicit_behavior_verdict
+LEGACY COMBINED VERDICT: correct
+QUESTION: A community dog is bleeding heavily from its leg in Bhopal, Madhya Pradesh. The NGO cannot come. What should I do right now, and where can I seek veterinary treatment?
+REASON: Heavy bleeding is treated as an immediate emergency; safe continuous pressure, transport urgency and no human medicine are retained. The answer gives a Bhopal clinic with source-bound dog/cat treatment, full address and clinical emergency number, without promising pickup or current availability.
+ANSWER (exact recorded text):
+**Control the bleeding now and arrange immediate veterinary care.**
+
+1. Approach only if it is safe. Pain and fear can make a dog bite, so keep your face and hands away from its mouth.
+2. If you can reach the wound safely, apply firm, continuous, direct pressure with a clean cloth or gauze. Do not lift the cloth to check the wound.
+3. If blood soaks through, leave the first layer in place and add more clean layers on top while continuing pressure. Do not use a tourniquet unless a veterinary professional directs you.
+4. Blood that spurts, pools quickly, or keeps soaking through layers is an emergency. Pale gums, weakness, collapse, unresponsiveness, or difficulty breathing also require immediate veterinary care. Keep pressure on the wound during transport if possible.
+5. Keep the dog as still and calm as possible, and do not give human medicine or put powders or chemicals on the wound.
+
+The sources identify these treatment options and institution leads:
+
+- Pet Spectrum Veterinary Clinic & Surgery Center — A61 Sakshi Bunglow, Near Aura Mall, Gulmohar, Arera Colony, Bhopal, MP 462039 — the source describes treatment for pets or small animals. Clinical contact: +91 92013 11262.
+
+A treatment listing alone does not establish rescue pickup or current availability.
+SOURCES:
+- Pet Spectrum Veterinary Clinic & Surgery Center: source: https://www.petspectrumvet.com/
+Elapsed: 31.472 seconds
+
+========================================================================
+
