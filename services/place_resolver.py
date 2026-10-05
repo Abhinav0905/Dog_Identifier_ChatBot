@@ -21,6 +21,7 @@ import requests
 import config
 import database as db
 from services import location
+from services.prompts import PromptCatalog
 
 logger = logging.getLogger(__name__)
 
@@ -794,26 +795,7 @@ def _extract_place_with_model(message: str) -> PlaceReference:
     if not client:
         return PlaceReference(NONE, source="no_model")
 
-    prompt = f"""Extract the geographic location of the dog case or requested rescue service from
-the CURRENT message only. Do not infer a place from general words or prior conversation.
-
-Current message:
-{message}
-
-Rules:
-- named_place: a city, town, village, district, state, country, named locality, area,
-  neighbourhood, street, road, postal code, or address is stated.
-- near_me: the user refers only to their current area, such as "near me" or "where I am".
-- none: no geographic place is stated. Phrases such as "in pain", "in bad shape", and
-  "around community dogs" are not locations.
-- ambiguous: the message appears to name a place but it cannot be extracted reliably.
-- When both the user's home and the dog's location are mentioned, extract the dog's location.
-- Preserve useful state or country qualifiers, for example "Pune, Maharashtra".
-- Put address parts in components. Use area for a locality, neighbourhood, colony, or suburb.
-- Do not put the dog's condition or a request such as "needs help" in place or components.
-- Use empty strings for component fields that are not stated. Do not infer missing components.
-
-Return only the required JSON."""
+    prompt = PromptCatalog.place_extraction(message)
     try:
         response = client.responses.create(
             model=config.OPENAI_GEOGRAPHY_MODEL,

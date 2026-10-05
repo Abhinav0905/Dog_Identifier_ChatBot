@@ -48,6 +48,7 @@ from services import (
     request_limits,
     web_operations,
 )
+from services.prompts import PromptCatalog
 
 # Logging setup
 logging.basicConfig(
@@ -1133,6 +1134,7 @@ def health():
     return {
         **state,
         "version": "1.1.0-web-rc",
+        "prompt_catalog_version": PromptCatalog.VERSION,
         "india_only_scope": config.INDIA_ONLY_SCOPE_ENABLED,
         "india_boundary_loaded": location.india_boundary_available(),
         "location_required_for_assessment": False,

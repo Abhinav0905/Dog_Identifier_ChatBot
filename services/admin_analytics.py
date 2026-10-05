@@ -8,40 +8,13 @@ import logging
 from openai import OpenAI
 from config import OPENAI_API_KEY, OPENAI_ADMIN_MODEL
 import database as db
+from services.prompts import PromptCatalog
 
 logger = logging.getLogger("dharmasala.admin")
 
 client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
-NL_TO_SQL_SYSTEM = """You are a SQL query generator for the Dharamsala Animal Rescue incident database.
-You convert natural language questions into safe, read-only SQLite SELECT queries.
-
-STRICT RULES:
-- ONLY generate SELECT statements. Never INSERT, UPDATE, DELETE, DROP, ALTER, or any DDL/DML.
-- ONLY query these tables and columns:
-
-  incidents: incident_id, created_at, updated_at, reporter_session_id, triage_severity,
-             triage_severity_score, triage_confidence, triage_summary, distress_flags,
-             lat, lng, location_source, similar_incident_id, similarity_score, status
-
-  alerts: alert_id, incident_id, alert_channel, trigger_reason, attempted_at,
-          delivered_at, delivery_status, delivery_details, ack_status, ack_by, ack_at
-
-  triage_events: event_id, incident_id, model_version, latency_ms, created_at
-
-- Use SQLite date functions (date(), datetime(), julianday()) for time-based queries.
-- Limit results to 100 rows maximum.
-- Use appropriate GROUP BY, COUNT, AVG aggregations for summary queries.
-- An alert is sent only when delivery_status = 'delivered'. Unknown historical
-  status, console logging, failed delivery, and missing configuration are not sent.
-- delivered_at is delivery time; attempted_at records an attempt. Delivery is
-  separate from acknowledgement and does not establish that a rescue was accepted.
-
-Respond with ONLY a valid JSON object:
-{
-    "sql": "SELECT ...",
-    "explanation": "Brief explanation of what this query does"
-}"""
+NL_TO_SQL_SYSTEM = PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM
 
 NL_TO_SQL_SCHEMA = {
     "type": "object",

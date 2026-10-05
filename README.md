@@ -17,6 +17,10 @@ live web review with `.venv/bin/python scripts/run_india_web_acceptance.py`;
 controlled failures and previous attempts are recorded separately. This local
 review does not certify the public deployment or a real rescue-team handoff.
 
+For a prompt review or code walkthrough, start with
+[Ask Dorjee prompt and request flow](docs/ASK_DORJEE_PROMPT_FLOW.md). All runtime
+model instructions are centralized in `services/prompts.py` under `PromptCatalog`.
+
 ## Working Demo
 
 [![Watch the working app demo](https://img.youtube.com/vi/_7xBCLXIK7U/hqdefault.jpg)](https://youtu.be/_7xBCLXIK7U)
