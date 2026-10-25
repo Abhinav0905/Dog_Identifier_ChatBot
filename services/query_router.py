@@ -119,6 +119,7 @@ def plan_text_turn(
             }},
             store=False,
             max_output_tokens=700,
+            **({"reasoning": {"effort": "none"}} if config.OPENAI_QUERY_ROUTER_MODEL.startswith("gpt-5.6") else {}),
             timeout=min(config.OPENAI_ROUTING_TIMEOUT_SECONDS, max(0.1, deadline - time.monotonic())) if deadline else config.OPENAI_ROUTING_TIMEOUT_SECONDS,
         )
         value = json.loads(result.output_text or "")
@@ -620,6 +621,7 @@ def analyze_query(
                 }
             },
             max_output_tokens=350,
+            **({"reasoning": {"effort": "none"}} if config.OPENAI_QUERY_ROUTER_MODEL.startswith("gpt-5.6") else {}),
         )
         payload = json.loads((response.output_text or "").strip())
         model_analysis = _ground_model_location_fields(

@@ -4,13 +4,13 @@ Multi-provider AI client abstraction.
 Supports Anthropic (Claude) and OpenAI with a unified interface.
 Select the provider via the MODEL_PROVIDER environment variable:
   MODEL_PROVIDER=claude   (default) — uses claude-sonnet-4-5-20250929
-  MODEL_PROVIDER=openai             — uses gpt-4o
+  MODEL_PROVIDER=openai             — uses configured GPT-5.6 text/vision roles
 """
 
-from config import ANTHROPIC_API_KEY, OPENAI_API_KEY, MODEL_PROVIDER
+from config import ANTHROPIC_API_KEY, OPENAI_API_KEY, MODEL_PROVIDER, OPENAI_CHAT_MODEL, OPENAI_VISION_MODEL
 
 _ANTHROPIC_MODEL = "claude-sonnet-4-5-20250929"
-_OPENAI_MODEL = "gpt-4o"
+_OPENAI_MODEL = OPENAI_CHAT_MODEL
 _OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 
 
@@ -159,7 +159,8 @@ def _openai_chat(system_prompt: str, messages: list[dict], max_tokens: int) -> s
     oai_messages = [{"role": "system", "content": system_prompt}] + messages
     response = client.chat.completions.create(
         model=_OPENAI_MODEL,
-        max_tokens=max_tokens,
+        **({"max_completion_tokens": max_tokens, "reasoning_effort": "none"}
+           if _OPENAI_MODEL.startswith("gpt-5.6") else {"max_tokens": max_tokens}),
         messages=oai_messages,
     )
     return response.choices[0].message.content
@@ -176,8 +177,9 @@ def _openai_vision(
 
     client = OpenAI(api_key=OPENAI_API_KEY)
     response = client.chat.completions.create(
-        model=_OPENAI_MODEL,
-        max_tokens=max_tokens,
+        model=OPENAI_VISION_MODEL,
+        **({"max_completion_tokens": max_tokens, "reasoning_effort": "none"}
+           if OPENAI_VISION_MODEL.startswith("gpt-5.6") else {"max_tokens": max_tokens}),
         messages=[
             {"role": "system", "content": system_prompt},
             {

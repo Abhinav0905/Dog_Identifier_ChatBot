@@ -809,6 +809,7 @@ def _extract_place_with_model(message: str) -> PlaceReference:
                 }
             },
             max_output_tokens=220,
+            **({"reasoning": {"effort": "none"}} if config.OPENAI_GEOGRAPHY_MODEL.startswith("gpt-5.6") else {}),
         )
         payload = json.loads((response.output_text or "").strip())
         kind = str(payload.get("kind") or AMBIGUOUS)

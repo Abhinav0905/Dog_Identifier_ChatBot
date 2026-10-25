@@ -41,12 +41,12 @@ MODEL_PROVIDER = os.getenv("MODEL_PROVIDER", "openai").lower()
 if MODEL_PROVIDER == "claude":
     raise ValueError("MODEL_PROVIDER 'claude' is not supported.")
 OPENAI_API_KEY = _env_file_first("OPENAI_API_KEY", "")
-OPENAI_MODEL = _env_file_first("OPENAI_MODEL", "gpt-4o")
-OPENAI_VISION_MODEL = _env_file_first("OPENAI_VISION_MODEL", OPENAI_MODEL)
-OPENAI_CHAT_MODEL = _env_file_first("OPENAI_CHAT_MODEL", "gpt-5.4")
-OPENAI_ADMIN_MODEL = _env_file_first("OPENAI_ADMIN_MODEL", OPENAI_MODEL)
-OPENAI_WEB_SEARCH_MODEL = _env_file_first("OPENAI_WEB_SEARCH_MODEL", "gpt-5.4-mini")
-OPENAI_GEOGRAPHY_MODEL = _env_file_first("OPENAI_GEOGRAPHY_MODEL", "gpt-5.4-mini")
+OPENAI_MODEL = _env_file_first("OPENAI_MODEL", "gpt-5.6-sol")
+OPENAI_VISION_MODEL = _env_file_first("OPENAI_VISION_MODEL", "gpt-5.6-terra")
+OPENAI_CHAT_MODEL = _env_file_first("OPENAI_CHAT_MODEL", OPENAI_MODEL)
+OPENAI_ADMIN_MODEL = _env_file_first("OPENAI_ADMIN_MODEL", "gpt-5.6-terra")
+OPENAI_WEB_SEARCH_MODEL = _env_file_first("OPENAI_WEB_SEARCH_MODEL", "gpt-5.6-terra")
+OPENAI_GEOGRAPHY_MODEL = _env_file_first("OPENAI_GEOGRAPHY_MODEL", "gpt-5.6-terra")
 OPENAI_QUERY_ROUTER_MODEL = _env_file_first(
     "OPENAI_QUERY_ROUTER_MODEL",
     OPENAI_GEOGRAPHY_MODEL,

@@ -92,10 +92,13 @@ Edit `.env` and set the following:
 OPENAI_API_KEY=sk-your-openai-key-here
 
 # Optional model overrides
-OPENAI_MODEL=gpt-4o
-OPENAI_VISION_MODEL=
-OPENAI_CHAT_MODEL=gpt-5.4
-OPENAI_ADMIN_MODEL=
+OPENAI_MODEL=gpt-5.6-sol
+OPENAI_VISION_MODEL=gpt-5.6-terra
+OPENAI_CHAT_MODEL=gpt-5.6-sol
+OPENAI_ADMIN_MODEL=gpt-5.6-terra
+OPENAI_WEB_SEARCH_MODEL=gpt-5.6-terra
+OPENAI_GEOGRAPHY_MODEL=gpt-5.6-terra
+OPENAI_QUERY_ROUTER_MODEL=gpt-5.6-terra
 
 # Optional — unconfigured alerts are recorded as not_configured, not delivered
 SLACK_WEBHOOK_URL=

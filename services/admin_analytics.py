@@ -108,6 +108,7 @@ def _nl_to_sql(nl_query: str) -> tuple[str, str]:
                     "strict": True,
                 }
             },
+            **({"reasoning": {"effort": "none"}} if OPENAI_ADMIN_MODEL.startswith("gpt-5.6") else {}),
         )
         text = (response.output_text or "").strip()
         if not text:

@@ -583,6 +583,7 @@ def analyze_image(
                 store=False,
                 timeout=remaining,
                 max_output_tokens=900,
+                **({"reasoning": {"effort": "none"}} if OPENAI_VISION_MODEL.startswith("gpt-5.6") else {}),
             )
 
             latency_ms = int((time.time() - start_time) * 1000)
@@ -712,6 +713,7 @@ def enrich_recommended_actions(triage_result: dict, language: str = "en") -> lis
                 {"role": "user", "content": user_message},
             ],
             max_output_tokens=512,
+            **({"reasoning": {"effort": "none"}} if OPENAI_CHAT_MODEL.startswith("gpt-5.6") else {}),
         )
         raw = (response.output_text or "").strip()
         if raw.startswith("```"):
