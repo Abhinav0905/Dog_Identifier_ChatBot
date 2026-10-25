@@ -24,6 +24,19 @@ class TestContendedPublicFetch(unittest.TestCase):
             release.join(timeout=2)
 
 class TestSearchEvidence(unittest.TestCase):
+    def test_local_animal_husbandry_referral_is_visible_when_clinical_access_is_unknown(self):
+        name = "Directorate of Animal Husbandry and Veterinary Services"
+        row = name + " Harbour Road, Lakeside. Phone: 011-23456789."
+        self.fetch.return_value = web_search.PublicPageText(row, blocks=[row])
+        self.result(answer='Local referral only.', claims=[], request_satisfied=False, provider_claims=[{
+            'institution':name, 'location':'Harbour Road, Lakeside', 'service_type':'identity_only',
+            'source_url':self.url, 'evidence_quote':row,
+        }])
+        result=evidence.review_contact_answer('Where can an injured dog get treatment in Lakeside?', [], '', 'draft', [self.url], requested_institution='', requested_location_text='Lakeside')
+        self.assertIn('administrative office and referral lead',result.answer)
+        self.assertFalse(result.request_satisfied)
+        data=json.loads(self.client.responses.create.call_args.kwargs['input'][-1]['content'])
+        self.assertEqual(data['local_referral_passages'],[{'url':self.url,'text':row}])
     def test_many_urls_from_one_publisher_do_not_starve_independent_local_pages(self):
         primary = [f"https://offline.example/contact/{i}" for i in range(12)]
         local = "https://local-vet.example/services"

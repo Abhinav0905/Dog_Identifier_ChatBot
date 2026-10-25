@@ -164,6 +164,14 @@ def review_contact_answer(
             {"url": url, "identity_text": str(getattr(text, "identity_text", "")),
              "text": _source_context(text)} for url, text in sorted(pages.items(), key=source_priority, reverse=True)
         ],
+        "local_referral_passages": [
+            {"url": url, "text": str(block)}
+            for url, page in pages.items()
+            for block in (tuple(getattr(page, "blocks", ()) or ()) or (str(page),))
+            if locality and len(str(block)) <= 1800
+            and web_search._has_standalone_location_occurrence(str(block), locality)
+            and re.search(r"\b(?:animal\s+husbandry|veterinary\s+services|directorate|district\s+.*office)\b", str(block), re.I)
+        ][:8],
         "reply_language": "Hindi" if language == "hi" else "English",
     }
     try:
@@ -1084,7 +1092,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                 " — the source describes treatment for pets or small animals." if row["small_animal"] else " — the source describes veterinary treatment services.")
             if require_small_animal and not row["small_animal"]:
                 description += " कुत्तों या बिल्लियों का उपचार और प्रवेश अभी सुनिश्चित नहीं हैं।" if language == "hi" else " Dog or cat treatment and admission remain unconfirmed."
-        elif re.search(r"\b(?:office|director|o/o)\b", row["name"], re.I):
+        elif re.search(r"\b(?:office|director|directorate|o/o)\b", row["name"], re.I):
             description += " — प्रशासनिक कार्यालय; नज़दीकी इलाज की सुविधा का पता पूछें।" if language == "hi" else " — administrative office and referral lead; ask which local facility provides treatment."
         else:
             description += " — संस्था सूचीबद्ध है; इलाज की उपलब्धता सुनिश्चित नहीं हुई।" if language == "hi" else " — institution listed; clinical treatment access is unconfirmed."
@@ -1094,7 +1102,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             description += " स्रोत स्पष्ट रूप से बताता है कि पशु को लेने आने की सेवा नहीं है।" if language == "hi" else " The source explicitly states that rescue pickup is not provided."
         for phone_key, institution in phone_institutions.items():
             identity_matches = re.sub(r"^veterinary ", "", _entity_key(institution)) == re.sub(r"^veterinary ", "", key)
-            administrative_identity = bool(re.search(r"\b(?:office|director)\b", key))
+            administrative_identity = bool(re.search(r"\b(?:office|director|directorate)\b", key))
             shared_sources = set(phone_sources[phone_key]) & set(row["urls"])
             if not identity_matches:
                 def base_key(value: str) -> str:

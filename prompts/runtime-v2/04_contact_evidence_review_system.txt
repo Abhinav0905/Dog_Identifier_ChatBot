@@ -52,6 +52,14 @@ If a readable local listing establishes the hospital name and address but not it
 service, retain that useful local option as identity_only with its literal address and source.
 Do not discard such a listing in favour of a department-wide directory whose facility rows do
 not establish the requested city. A source-supported local lead is partial, not confirmed treatment.
+When local clinical evidence is insufficient, inspect local_referral_passages before returning
+no options. These are verbatim fetched passages containing the requested locality and a veterinary
+or Animal Husbandry office. If they establish a specific local administrative office, include it
+as identity_only with its literal address and any separately source-bound published contact.
+Clearly recommend asking that office for the local treating facility. This is an administrative
+referral, never a clinical line or a completed treatment lookup; request_satisfied remains false
+when treatment has not been established. Do not discard this usable referral just because no
+hospital admission or small-animal service could be confirmed. Never invent an office or number.
 For every named treatment provider or institution lead, include provider_claims. Copy the institution
 name literally from a contiguous fetched evidence_quote containing that entity. Include its literal
 source location in location, or an empty string when absent. clinical_treatment requires that same

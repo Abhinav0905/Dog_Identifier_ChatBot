@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "version": "srini-v2.5-2026-10-25",
+  "version": "srini-v2.6-2026-10-25",
   "files": {
     "01_text_router_system.txt": "88d7866e561bb597cd7ffa87af7800d19b3ea3ce75dad96fe0955d69fec8a95b",
     "02_care_system_english.txt": "3abaef964bb41a7853b7d356ae9581e1cf0be754cddd7536a57f3b6506ca76a1",
     "03_web_search_system_template_english.txt": "79e3778b7b80b45db35ccd1d5033b22c6fa393d5d7a084ca4d44ec025b86bec1",
-    "04_contact_evidence_review_system.txt": "7eeb542d4e7e89a9a0870918b4b01447d8b664bd35beeba1bba7185d305f190e",
+    "04_contact_evidence_review_system.txt": "67ff7bf991ed264e7acee3f01e8863b5d1b8d85727daa181d36bdedd1cfad8d2",
     "05_vision_system_english.txt": "38e189cf37e16dfc4afc97bc03e4a1cc2024a23a6cea707c389a119cb5fbb490",
     "06_enrichment_system_english.txt": "a55b02925bec687ed15c4364cb9c44613248c00d01e51998795115e6fd7fdfd6",
     "07_query_analysis_template.txt": "b60806cfc737ff7c11d6905785076110b16ada0fb7382fdc3377a9c6ef96eae1",

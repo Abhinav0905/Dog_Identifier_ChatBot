@@ -104,7 +104,7 @@ and `.env` remain managed by the deployment workflow.
 
 ## Verification
 
-`srini-v2.5-2026-10-25` separates address-only lookups from clinical-access
+`srini-v2.6-2026-10-25` separates address-only lookups from clinical-access
 verification. An address must still bind to the selected facility's own source
 row; a campus name, parent acronym or another campus's address is not guessed.
 Research history is limited to the current case, while the full transcript stays
@@ -116,6 +116,9 @@ leading citations so one inaccessible site cannot consume every source slot.
 The reviewer receives the literal requested locality and sees matching local
 page identities first; local identity/address leads remain explicitly partial
 when clinical service evidence is missing.
+Fetched passages identifying a local Animal Husbandry or veterinary administrative
+office are also highlighted for a clearly labelled referral when clinical evidence
+is insufficient. That referral remains partial and cannot establish treatment.
 
 Check `/health` for the version/hash, then run a real chat request and check its
 prompt headers and response. `test_prompt_store.py` covers integrity, activation,
