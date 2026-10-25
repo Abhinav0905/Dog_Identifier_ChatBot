@@ -11,5 +11,6 @@ aiofiles==24.1.0
 jinja2==3.1.5
 rank-bm25==0.2.2
 requests==2.32.3
+beautifulsoup4==4.12.3
 twilio==9.10.9
 pypdf==6.12.2
