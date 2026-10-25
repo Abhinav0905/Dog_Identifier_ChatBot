@@ -24,6 +24,60 @@ class TestContendedPublicFetch(unittest.TestCase):
             release.join(timeout=2)
 
 class TestSearchEvidence(unittest.TestCase):
+    def test_address_only_is_not_a_clinical_discovery_request(self):
+        name = "Madras Veterinary College Teaching Hospital"
+        source = "https://www.tanuvas.ac.in/dir_cli.php"
+        row = name + ", Vepery, Chennai"
+        self.fetch.return_value = web_search.PublicPageText(row, identity_text="TANUVAS Directorate of Clinics", blocks=[row], is_html=True)
+        self.result(answer="Vepery, Chennai", claims=[], urls=[source], provider_claims=[{
+            "institution": name, "location": "Vepery, Chennai", "service_type": "identity_only",
+            "source_url": source, "evidence_quote": row,
+        }])
+        result = evidence.review_contact_answer(
+            "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only.", [],
+            "Find the address of TANUVAS Madras Veterinary College Teaching Hospital. Address only.", "draft", [source],
+            requested_institution="TANUVAS " + name,
+        )
+        self.assertEqual(result.answer, "Vepery, Chennai")
+        self.assertTrue(result.request_satisfied)
+        data = json.loads(self.client.responses.create.call_args.kwargs['input'][-1]['content'])
+        self.assertFalse(data['clinical_discovery'])
+        self.assertTrue(data['address_only'])
+
+    def test_address_only_cannot_use_another_campus_or_infer_parent(self):
+        for identity, row, target in [
+            ("TANUVAS", "Other Veterinary College Teaching Hospital, Madhavaram, Chennai", "TANUVAS Madras Veterinary College Teaching Hospital"),
+            ("University", "Madras Veterinary College Teaching Hospital, Vepery, Chennai", "MOONLIGHT Madras Veterinary College Teaching Hospital"),
+            ("TANUVAS", "Madras Veterinary College Teaching Hospital. Other College, Madhavaram, Chennai", "TANUVAS Madras Veterinary College Teaching Hospital"),
+        ]:
+            with self.subTest(row=row, target=target):
+                source = "https://www.tanuvas.ac.in/dir_cli.php"
+                name = "Other Veterinary College Teaching Hospital" if row.startswith("Other") else "Madras Veterinary College Teaching Hospital"
+                page = web_search.PublicPageText(row, identity_text=identity, blocks=[row], is_html=True)
+                value = self.result(answer="invented address", claims=[], urls=[source], provider_claims=[{
+                    "institution": name, "location": "Madhavaram, Chennai" if "Madhavaram" in row else "Vepery, Chennai",
+                    "service_type": "identity_only", "source_url": source, "evidence_quote": row,
+                }])
+                result = evidence._validate_review(value, {source: page}, requested_institution=target, address_only=True)
+                self.assertFalse(result.request_satisfied)
+                self.assertNotIn("invented", result.answer)
+                self.assertNotIn("For treatment", result.answer)
+
+    def test_unreadable_address_returns_address_specific_failure(self):
+        self.fetch.return_value = None
+        result = evidence.review_contact_answer("Address only for Moonlight Hospital.", [], "Find the address", "draft", [self.url])
+        self.assertIn("address", result.answer)
+        self.assertNotIn("veterinary hospital or clinic", result.answer)
+        self.assertEqual(result.evidence_issue, "no_readable_sources")
+
+    def test_failed_source_is_not_fetched_again_in_same_turn(self):
+        self.fetch.return_value = None
+        cache = {}
+        self.assertEqual(evidence._fetch_sources([self.url], page_cache=cache), {})
+        self.assertIsNone(cache[self.url])
+        self.assertEqual(evidence._fetch_sources([self.url], page_cache=cache), {})
+        self.assertEqual(self.fetch.call_count, 1)
+
     def test_neighbourhood_origin_keeps_treatment_elsewhere_in_the_explicit_city(self):
         quote = "Harbour Veterinary Clinic, River Road, Lakeside treats dogs and cats."
         value = self.result(answer="Treatment option", claims=[], provider_claims=[{
@@ -703,11 +757,14 @@ Confirmed contact(s) listed on the college page:
                 review.assert_called_once()
                 self.assertEqual(review.call_args.kwargs["requested_institution"], expected)
 
-    def test_transient_fetch_failure_can_retry_but_success_is_cached(self):
+    def test_transient_fetch_failure_can_retry_in_a_new_turn_but_success_is_cached(self):
         self.fetch.side_effect = [None, self.quote]
         cache = {}
         self.assertEqual(evidence._fetch_sources([self.url], page_cache=cache), {})
-        self.assertNotIn(self.url, cache)
+        self.assertIsNone(cache[self.url])
+        # A failed URL is skipped only within this turn; the next request can
+        # recover from a temporary source/network failure with a fresh cache.
+        cache = {}
         self.assertEqual(evidence._fetch_sources([self.url], page_cache=cache), {self.url: self.quote})
         self.assertEqual(evidence._fetch_sources([self.url], page_cache=cache), {self.url: self.quote})
         self.assertEqual(self.fetch.call_count, 2)

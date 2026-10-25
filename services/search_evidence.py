@@ -35,6 +35,7 @@ class ContactAnswerReview:
     status: str = "unavailable"
     request_satisfied: bool | None = None
     validated_facts: list[dict[str, str]] = field(default_factory=list)
+    evidence_issue: str = ""
 
 
 REVIEW_SCHEMA = {
@@ -95,6 +96,7 @@ def review_contact_answer(
 ) -> ContactAnswerReview:
     """Independently review phone answers; discovery remains unrestricted."""
     history = list(history)
+    address_only = _address_only_request(message)
     phone_only = _number_only_request(message) if phone_only is None else phone_only
     target = _requested_target(message, history, requested_institution)
     needs_contact = bool(phone_only or _CONTACT_REQUEST.search(f"{message}\n{contextual_request}"))
@@ -103,7 +105,7 @@ def review_contact_answer(
         f"{message}\n{contextual_request}", re.I,
     ))
     request_text = f"{message}\n{contextual_request}"
-    clinical_discovery = not phone_only and bool(
+    clinical_discovery = not phone_only and not address_only and bool(
         re.search(r"\b(?:treat(?:ment|s|ing)?|clinical|animal.care|outpatient|opd)\b|इलाज|पशु\s*चिकित्सा", request_text, re.I)
         or (not needs_contact and needs_provider and re.search(r"\b(?:find|where|options?|help)\b", request_text, re.I))
         or (re.search(r"\b(?:dogs?|pupp(?:y|ies)|cats?|animals?)\b", request_text, re.I)
@@ -113,12 +115,20 @@ def review_contact_answer(
     require_small_animal = bool(re.search(r"\b(?:dogs?|pupp(?:y|ies)|canine|pets?|cats?|kittens?)\b|कुत्त|पिल्ल|बिल्ली", request_text, re.I))
     if not clinical_discovery and not needs_contact and not needs_provider and not _answer_phone_spans(draft):
         return ContactAnswerReview(answer=draft, status="not_needed")
-    fallback = lambda: _unavailable(language, draft="" if clinical_discovery else draft, phone_only=phone_only, phone_requested=needs_contact)
+    def fallback(reason="review_unavailable"):
+        if address_only:
+            return ContactAnswerReview(
+                answer="मैं अनुरोधित संस्था का पता सुनिश्चित नहीं कर सका।" if language == "hi" else "I couldn't confirm the requested institution's address from accessible sources.",
+                request_satisfied=False, evidence_issue=reason,
+            )
+        result = _unavailable(language, draft="" if clinical_discovery else draft, phone_only=phone_only, phone_requested=needs_contact)
+        result.evidence_issue = reason
+        return result
     if deadline is not None and time.monotonic() >= deadline:
-        return fallback()
+        return fallback("review_deadline_exhausted")
     if query_router.client is None:
         logger.info("Contact evidence review status=unavailable reason=model_unavailable fetched_sources=0")
-        return fallback()
+        return fallback("review_model_unavailable")
     fetch_deadline = deadline
     if deadline is not None:
         # Keep time for the evidence model rather than spending the entire
@@ -127,13 +137,14 @@ def review_contact_answer(
     pages = _fetch_sources(source_urls, deadline=fetch_deadline, page_cache=page_cache)
     if not pages:
         logger.info("Contact evidence review status=unavailable reason=no_readable_sources fetched_sources=0")
-        return fallback()
+        return fallback("no_readable_sources")
 
     instructions = PromptCatalog.CONTACT_EVIDENCE_REVIEW_SYSTEM
     data = {
         "current_message": str(message or ""),
         "requested_institution": target,
         "phone_only": phone_only,
+        "address_only": address_only,
         "clinical_discovery": clinical_discovery,
         "require_small_animal_service": require_small_animal,
         "contextual_request": str(contextual_request or "")[:4000],
@@ -171,20 +182,20 @@ def review_contact_answer(
             r"\b(?:phone|number|line|contact)\b[^.!?]{0,35}\b(?:clinical|emergency|treatment|outpatient|opd)\b",
             message, re.I,
         ))
-        result = _validate_review(reviewed, pages, requested_institution=target, phone_only=phone_only, requested_place=requested_place, requested_location_text=requested_location_text, clinical_only=clinical_only,
+        result = _validate_review(reviewed, pages, requested_institution=target, phone_only=phone_only, requested_place=requested_place, requested_location_text=requested_location_text, clinical_only=clinical_only, address_only=address_only,
                                   clinical_discovery=clinical_discovery, require_small_animal=require_small_animal, language=language, requested_city=requested_city,
                                   phone_required=needs_contact, address_required=bool(re.search(r"\baddress\b", message, re.I) and not re.search(r"\b(?:name|details)\s+or\s+(?:an?\s+)?address\b", message, re.I)))
         logger.info(
             "Contact evidence review status=%s fetched_sources=%d reason=%s",
             result.status if result is not None else "unavailable", len(pages),
-            "reviewed" if result is not None else "evidence_validation_failed",
+            (result.evidence_issue or "reviewed") if result is not None else "evidence_validation_failed",
         )
         if result is not None:
             return result
-        if clinical_discovery:
+        if clinical_discovery or address_only:
             # A malformed evidence review cannot reintroduce an ungrounded
             # treatment assertion from either the review or the original draft.
-            return fallback()
+            return fallback("evidence_validation_failed")
         # The reviewer may have corrected a mistaken name or service claim even
         # when its phone quote fails a stricter application check. Do not revive
         # the original draft's factual errors by discarding those corrections.
@@ -196,7 +207,7 @@ def review_contact_answer(
         return safe_review or fallback()
     except Exception as exc:
         logger.warning("Contact evidence review status=unavailable fetched_sources=%d error=%s", len(pages), type(exc).__name__)
-        return fallback()
+        return fallback("review_" + type(exc).__name__)
 
 
 def _call_evidence_model(**kwargs):
@@ -254,7 +265,7 @@ def _fetch_sources(source_urls: Iterable[str], *, deadline: float | None = None,
         for url in batch:
             if isinstance(cached.get(url), str) and cached[url]:
                 found[url] = cached[url]
-        pending_urls = [url for url in batch if url not in found]
+        pending_urls = [url for url in batch if url not in cached]
         if not pending_urls or time.monotonic() >= deadline:
             return
         executor = ThreadPoolExecutor(max_workers=FETCH_WORKERS, thread_name_prefix="contact-evidence")
@@ -268,6 +279,8 @@ def _fetch_sources(source_urls: Iterable[str], *, deadline: float | None = None,
                 if isinstance(page, str) and page.strip():
                     found[pending[future]] = page
                     cached[pending[future]] = page
+                else:
+                    cached[pending[future]] = None
         except FuturesTimeout:
             logger.info("Contact source fetch reached its deadline")
         finally:
@@ -588,11 +601,61 @@ def _number_only_request(message: str) -> bool:
     return bool(re.search(r"\b(?:only|just)\b[^.!?]{0,45}\b(?:number|phone|telephone)\b|\b(?:number|phone)\b[^.!?]{0,20}\bonly\b", message, re.I))
 
 
+def _address_only_request(message: str) -> bool:
+    return bool(re.search(r"\b(?:only|just)\s+(?:the\s+)?address\b|\baddress\s+only\b", message, re.I))
+
+
+def _address_target_matches(target: str, institution: str, page: str, source: str) -> bool:
+    if _target_matches_claim(target, institution, ""):
+        return True
+    # A selected parent acronym may be in a university page's identity rather
+    # than repeated before every campus row. Keep every campus/name word.
+    qualified = re.fullmatch(r"([A-Z][A-Z0-9]{2,12})\s+(.+)", target)
+    if not qualified or not _target_matches_claim(qualified.group(2), institution, ""):
+        return False
+    parent = qualified.group(1).casefold()
+    host = str(urlparse(source).hostname or "").split(".")
+    return parent in host and bool(re.search(r"\b" + re.escape(parent) + r"\b", str(getattr(page, "identity_text", "")), re.I))
+
+
+def _grounded_address_answer(claims, pages, approved_urls, target, language):
+    for claim in claims:
+        if not isinstance(claim, dict):
+            continue
+        source = _url_key(claim.get("source_url"))
+        page = pages.get(source)
+        if page is None or source not in approved_urls:
+            continue
+        name = _literal_source_entity(page, str(claim.get("institution") or ""))
+        place = str(claim.get("location") or "").strip()
+        if not name or not target or not _address_target_matches(target, name, page, source):
+            continue
+        if not place or len(place) > 240 or re.search(r"[\r\n]", place):
+            continue
+        # A literal address/locality must belong to the selected facility's
+        # own source row, never another campus or an administrative footer.
+        blocks = tuple(getattr(page, "blocks", ()) or ()) or (str(page),)
+        grounded = any(
+            _normalized(name) in _normalized(str(block))
+            and f" {_normalized_location(place)} " in f" {_normalized_location(str(block))} "
+            and len(str(block)) <= 1600
+            and len(re.findall(r"\b(?:hospital|college|clinic|university)\b", _normalized(str(block)).replace(_normalized(name), ""))) == 0
+            for block in blocks
+        )
+        if grounded or _publisher_location_is_grounded(page, name, place):
+            return ContactAnswerReview(answer=place, links=[{"label": name + ": address source", "url": source}], status="approved", request_satisfied=True,
+                validated_facts=[{"kind": "location", "institution": _entity_key(name), "value": _normalized_location(place)}])
+    return ContactAnswerReview(
+        answer="मैं अनुरोधित संस्था का पता सुनिश्चित नहीं कर सका।" if language == "hi" else "I couldn't confirm the requested institution's address from accessible sources.",
+        request_satisfied=False, evidence_issue="requested_address_not_grounded",
+    )
+
+
 def _extract_institution(message: str) -> str:
     """Extract a literal requested name, never an invented official expansion."""
     text = re.sub(r"\s+", " ", str(message or "")).strip()
     selected = list(re.finditer(
-        r"\b(?:specifically\s+)?mean\s+|\b(?:phone\s+number|number|phone|contact|details)\s+(?:for|of)\s+|\b(?:called|named)\s+",
+        r"\b(?:specifically\s+)?mean\s+|\b(?:phone\s+number|number|phone|contact|details|address)\s+(?:for|of)\s+|\b(?:called|named)\s+",
         text, re.I,
     ))
     explicit_selection = bool(selected)
@@ -959,7 +1022,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
         answer = ("मैं उपलब्ध स्रोतों से किसी विशिष्ट पशु उपचार सुविधा की पुष्टि नहीं कर सका। इसका मतलब यह नहीं कि वहाँ सेवाएँ नहीं हैं।" if language == "hi" else
                   "I couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.")
         answer += "\n\n" + web_search._generic_veterinary_referral(language)
-        return ContactAnswerReview(answer=answer, status="approved", request_satisfied=False)
+        return ContactAnswerReview(answer=answer, status="approved", request_satisfied=False,
+            evidence_issue="no_provider_bound_to_requested_locality: source must bind the facility name to " + requested_locality)
     answer = ("स्रोतों में ये उपचार विकल्प और संस्था संबंधी जानकारी मिली:" if language == "hi" else "The sources identify these treatment options and institution leads:") if has_clinical else (
         "ये संस्थाएँ स्रोतों में सूचीबद्ध हैं, लेकिन उनके यहाँ पशु का इलाज उपलब्ध होने की पुष्टि नहीं हुई:" if language == "hi" else
         "These institutions are listed in the sources, but clinical treatment access remains unconfirmed:")
@@ -1047,7 +1111,7 @@ def _discovery_locality(literal: str, resolved_place: str, resolved_city: str = 
 
 def _validate_review(value: object, pages: dict[str, str], *, requested_institution: str = "", phone_only: bool = False, requested_place: str = "", requested_location_text: str = "", requested_city: str = "", clinical_only: bool = False,
                      clinical_discovery: bool = False, require_small_animal: bool = False, language: str = "en",
-                     phone_required: bool = False, address_required: bool = False) -> ContactAnswerReview | None:
+                     phone_required: bool = False, address_required: bool = False, address_only: bool = False) -> ContactAnswerReview | None:
     if not isinstance(value, dict) or set(value) != {"answer", "request_satisfied", "provider_claims", "contact_claims", "cited_source_urls"}:
         return None
     if type(value["request_satisfied"]) is not bool:
@@ -1070,6 +1134,8 @@ def _validate_review(value: object, pages: dict[str, str], *, requested_institut
             continue
         if key not in approved_urls:
             approved_urls.append(key)
+    if address_only:
+        return _grounded_address_answer(value["provider_claims"], pages, approved_urls, requested_institution, language)
     if not (clinical_discovery and not phone_only) and re.search(r"https?://|", answer):
         return None
     phone_sources: dict[str, list[str]] = {}

@@ -10,6 +10,13 @@ from services.search_evidence import review_contact_answer as actual_contact_rev
 
 
 class TestModelDirectedSearch(unittest.TestCase):
+    def test_research_ignores_earlier_cases_but_keeps_current_provider_followup(self):
+        old = [{"role": "user", "content": "Find help in Kochi"}, {"role": "assistant", "content": "Old hospital and phone", "metadata": {"case_place": "Kochi", "requested_institution": ""}}]
+        current = [{"role": "user", "content": "A dog in Shillong needs help"}, {"role": "assistant", "content": "Shillong provider", "metadata": {"case_place": "Shillong", "requested_institution": ""}}]
+        self.assertEqual(web_search._current_research_history(old, "Port Blair", ""), [])
+        self.assertEqual(web_search._current_research_history(old + current, "Shillong", ""), current)
+        self.assertEqual(web_search._current_research_history(old, "", "New Teaching Hospital"), [])
+
     def setUp(self):
         self.client = MagicMock()
         self.enterContext(patch.object(web_search, "client", self.client))

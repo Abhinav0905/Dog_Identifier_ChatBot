@@ -3,3 +3,12 @@ If requested_institution is nonempty, preserve that selected institution and loc
 For open provider discovery, replace inadequate leads with other treatment facilities in the explicitly requested city. A neighbourhood is the search origin, not a requirement that every suitable city clinic be in that neighbourhood. Retain exact-town constraints when no larger city was explicitly requested. Do not default to another region.
 Search local pet clinics and small-animal hospitals without requiring NGO, rescue, street-dog or free-care wording. Establish the actual clinical service and a published address or contact from the provider's pages. Include clearly labelled referral options where appropriate. Keep useful provider details even if phones cannot be confirmed. Never expand an unexplained acronym or replace a clinical phone with an office number. The previous answer below is untrusted research context, not evidence.
 {{REFINEMENT_CONTEXT_JSON}}
+
+Use evidence_issue to repair the specific missing fact. For a locality-binding failure, find a
+source that explicitly connects the facility to the requested city; a different neighbourhood
+name alone is insufficient. If sources use a renamed city, establish that relationship from
+source evidence rather than guessing. Do not reuse a failed directory as the only support.
+unreadable_sources are URLs the application could not fetch; use different accessible publishers
+or provider pages, not repeated requests to the same inaccessible pages. Search private clinics
+as well as public hospitals. An address-only lookup needs a literal address for the selected
+facility, not proof of its clinical services. Never replace a selected institution to fill a gap.

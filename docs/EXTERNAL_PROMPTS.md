@@ -104,6 +104,15 @@ and `.env` remain managed by the deployment workflow.
 
 ## Verification
 
+`srini-v2.4-2026-10-25` separates address-only lookups from clinical-access
+verification. An address must still bind to the selected facility's own source
+row; a campus name, parent acronym or another campus's address is not guessed.
+Research history is limited to the current case, while the full transcript stays
+in storage. Failed source URLs are cached only for one research turn and passed
+to the adaptive retry, together with the specific evidence gap. A new chat turn
+can retry a temporarily unavailable source. Original v2.3 text is in
+`prompts/archive/`.
+
 Check `/health` for the version/hash, then run a real chat request and check its
 prompt headers and response. `test_prompt_store.py` covers integrity, activation,
 rollback, per-request pinning and template assembly. `scripts/run_prompt_v2_review.py`

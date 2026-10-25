@@ -575,6 +575,7 @@ def chat_query(
     searched = False
     result_kind = "care_answer"
     request_satisfied = None
+    evidence_issue = ""
     if config.INDIA_ONLY_SCOPE_ENABLED and outside_case:
         answer = region_scope.INDIA_ONLY_RESPONSE
         result_kind = "outside_india"
@@ -619,6 +620,7 @@ def chat_query(
         answer, links = result.response, result.resource_links
         searched, result_kind = result.searched, result.result_kind
         request_satisfied = getattr(result, "request_satisfied", None)
+        evidence_issue = getattr(result, "evidence_issue", "")
         if not effective_phone_only:
             # Contact review and search outages must not erase first aid for
             # explicit current injuries. Do this before any model fallback;
@@ -654,6 +656,7 @@ def chat_query(
         "web_search_ran": searched,
         "result_kind": result_kind,
         "request_satisfied": request_satisfied,
+        "evidence_issue": evidence_issue,
         "model_history_policy": triage.MODEL_HISTORY_INCLUDE,
         "requested_institution": turn.requested_institution,
         "requested_location_text": requested_location_text,

@@ -368,6 +368,7 @@ class SearchResult:
     # None means no adequacy review ran; it never implies success.
     request_satisfied: bool | None = None
     validated_facts: list[dict[str, str]] = field(default_factory=list)
+    evidence_issue: str = ""
 
 
 class PublicPageText(str):
@@ -456,6 +457,7 @@ def search_animal_question(
     if tool_choice not in {"required", "auto"}:
         raise ValueError("Animal-question search supports required or auto tool choice")
     history = list(history)
+    history = _current_research_history(history, resolved_place, requested_institution)
     deadline = min(deadline or float("inf"), time.monotonic() + config.DOG_WEB_SEARCH_TOTAL_TIMEOUT_SECONDS)
     context = {
         "contextual_request": str(contextual_request or "")[:4000],
@@ -519,6 +521,7 @@ def search_animal_question(
                 candidate.result_kind = "search_answer" if review.status == "approved" and getattr(review, "request_satisfied", None) is not False else "contact_unconfirmed"
                 candidate.request_satisfied = getattr(review, "request_satisfied", None)
                 candidate.validated_facts = getattr(review, "validated_facts", [])
+                candidate.evidence_issue = getattr(review, "evidence_issue", "")
         return candidate
 
     result = review_result(result)
@@ -530,8 +533,10 @@ def search_animal_question(
             "requested_institution": requested_institution,
             "case_place": resolved_place,
             "case_city": resolved_city,
-            "evidence_issue": result.response[:2500],
+            "evidence_issue": result.evidence_issue or result.response[:2500],
             "already_consulted_sources": result.research_sources[:12],
+            "unreadable_sources": [url for url, page in page_cache.items() if page is None][:12],
+            "readable_sources": [url for url, page in page_cache.items() if page][:12],
         }
         refined_messages = [*messages, {
             "role": "user",
@@ -601,6 +606,26 @@ def _provider_research_needs_refinement(message: str, contextual_request: str, r
         r"\b(?:could\s+not|couldn't|unable\s+to|cannot|can't)\s+(?:establish|find|confirm|verify)\b",
         result.response[:350], re.I,
     ))
+
+
+def _current_research_history(history: list[dict], place: str, institution: str | None) -> list[dict]:
+    """Keep the transcript in storage; research only the current case's tail."""
+    normalize = lambda value: re.sub(r"\s+", " ", str(value or "")).strip().casefold()
+    for index in range(len(history) - 1, -1, -1):
+        row = history[index]
+        if not isinstance(row, dict) or row.get("role") != "assistant":
+            continue
+        metadata = row.get("metadata") or {}
+        if not isinstance(metadata, dict):
+            continue
+        old_place, old_institution = metadata.get("case_place"), metadata.get("requested_institution")
+        different_place = place and old_place and normalize(place) != normalize(old_place)
+        different_institution = institution and "requested_institution" in metadata and normalize(institution) != normalize(old_institution)
+        if different_place or different_institution:
+            # The user row before the mismatched answer belongs to that old
+            # case too. Only turns after the answer can belong to this case.
+            return history[index + 1:]
+    return history
 
 
 def _animal_question_history(history: Iterable[dict]) -> list[dict[str, str]]:

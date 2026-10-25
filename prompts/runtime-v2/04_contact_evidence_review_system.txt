@@ -32,6 +32,13 @@ its source and institution label in a separate resource link. Never silently sub
 administrative number for a specifically requested clinical number.
 
 Return answer, request_satisfied, provider_claims, contact_claims, and cited_source_urls in the required JSON.
+When address_only is true, this is an address lookup, not a treatment-access assessment.
+Include an identity_only provider_claim with the source's literal facility name and one literal
+address/locality from that facility's own row in location. An established address does not require
+proof of treatment, admission or pickup. Answer with only the address. Do not substitute another
+campus, a university head office, or an administrative officer's address. Keep a source-supported
+short address rather than appending an inferred state or PIN code. If the address is not supported,
+briefly say that the requested address could not be confirmed; do not give generic treatment advice.
 Use the literal full institution name from the fetched page title or identity_text when available,
 instead of a shortened logo or branding word. Do not infer an alias or expand an acronym.
 Each provider_claim location must be one literal address or locality from that same source;
