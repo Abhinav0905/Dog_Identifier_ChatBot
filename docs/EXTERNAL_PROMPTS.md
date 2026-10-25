@@ -6,6 +6,9 @@ retained in `prompts/archive/03_web_search_system_template_srini_v2_original.txt
 Release v2.1 added a clarification to file 04 about
 literal full institution names, one branch address per claim and citation placement.
 The original file 04 is retained in `prompts/archive/04_contact_evidence_review_system_srini_v2_original.txt`.
+Release v2.3 also makes the refinement support template preserve an institution only
+when one was explicitly selected. Open discovery can seek stronger providers within
+the explicitly requested city; a neighbourhood does not exclude the rest of that city.
 Deb's full prompt (00), regression cases (10),
 README, changes and diff are reference material and are never used as system
 instructions. `support/` contains the existing language rules and ancillary
