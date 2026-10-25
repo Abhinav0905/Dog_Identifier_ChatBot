@@ -1,0 +1,47 @@
+{
+  "source_revision": "440951f",
+  "channel": "backend_candidate",
+  "one_conversation": true,
+  "cases": [
+    {
+      "case_id": "ADDRESS",
+      "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only.",
+      "response": "Vepery, Chennai",
+      "resource_links": [
+        {
+          "label": "Madras Veterinary College Teaching Hospital: address source",
+          "url": "https://www.tanuvas.ac.in/dir_cli.php",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "http_status": 200,
+      "elapsed_seconds": 10.56,
+      "prompt_version": "srini-v2.4-2026-10-25",
+      "metadata": {
+        "resource_links": [
+          {
+            "label": "Madras Veterinary College Teaching Hospital: address source",
+            "url": "https://www.tanuvas.ac.in/dir_cli.php"
+          }
+        ],
+        "text_action": "search",
+        "contextual_request": "Find the address of TANUVAS Madras Veterinary College Teaching Hospital. Address only.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "search_answer",
+        "request_satisfied": true,
+        "evidence_issue": "",
+        "model_history_policy": "include",
+        "requested_institution": "TANUVAS Madras Veterinary College Teaching Hospital",
+        "requested_location_text": "",
+        "case_place": "",
+        "phone_only": false,
+        "local_help": true,
+        "latency_ms": 10536
+      }
+    }
+  ]
+}

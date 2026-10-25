@@ -1,0 +1,38 @@
+[
+  {
+    "case_id": "BEFORE_PORT_BLAIR",
+    "question": "Who can treat an injured street dog in Port Blair?",
+    "answer": "🐶\nI couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.\nFor treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup."
+  },
+  {
+    "case_id": "BEFORE_ADDRESS",
+    "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only.",
+    "answer": "🐶\nI couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.\nFor treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup."
+  },
+  {
+    "case_id": "BEFORE_CARE",
+    "question": "How can I give community dogs water safely during hot afternoons in Nagpur?",
+    "answer": "🐶\nPlace wide, heavy bowls of fresh water in deep shade, away from traffic and hot pavement.\nSet them down before dogs approach, then step away; do not call, reach toward, or hand-offer water to unfamiliar dogs.\nUse several bowls to reduce crowding. Refill often and wash them daily.\nNever force a dog to drink. If one is staggering, vomiting, collapsing, or panting excessively, cool it gently with cool water and seek urgent veterinary care."
+  },
+  {
+    "case_id": "AFTER_ADDRESS",
+    "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only.",
+    "answer": "🐶\nVepery, Chennai\nMadras Veterinary College Teaching Hospital: address source",
+    "source_revision": "440951f",
+    "prompt_version": "srini-v2.4-2026-10-25"
+  },
+  {
+    "case_id": "AFTER_PORT_BLAIR",
+    "question": "Who can treat an injured street dog in Port Blair?",
+    "answer": "🐶\nI couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.\nFor treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup.",
+    "source_revision": "440951f",
+    "prompt_version": "srini-v2.4-2026-10-25"
+  },
+  {
+    "case_id": "AFTER_PATNA",
+    "question": "I found an injured street dog near Kankarbagh, Patna. Where can I take it for treatment?",
+    "answer": "🐶\nThe sources identify these treatment options and institution leads:\nAnimo Pet Care — East Boring Canal Rd, East Buddha Colony, Buddha Colony, Patna, Bihar 800001 — the source describes treatment for pets or small animals.\nKankarbagh Dog Hospital — B-112, near Panch Mandir, Housing Board Colony, Khasmahal, Kankarbagh, Patna, Bihar 800020. — institution listed; clinical treatment access is unconfirmed.\nA treatment listing alone does not establish rescue pickup or current availability.\nAnimo Pet Care: source\nKankarbagh Dog Hospital: source",
+    "source_revision": "440951f",
+    "prompt_version": "srini-v2.4-2026-10-25"
+  }
+]

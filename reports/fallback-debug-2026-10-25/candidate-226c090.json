@@ -1,0 +1,125 @@
+{
+  "source_revision": "226c090",
+  "channel": "backend_candidate",
+  "one_conversation": true,
+  "cases": [
+    {
+      "case_id": "ADDRESS",
+      "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only.",
+      "response": "I couldn't confirm the requested institution's address from accessible sources.",
+      "resource_links": [],
+      "http_status": 200,
+      "elapsed_seconds": 22.25,
+      "prompt_version": "srini-v2.4-2026-10-25",
+      "metadata": {
+        "resource_links": [],
+        "text_action": "search",
+        "contextual_request": "Find the address of TANUVAS Madras Veterinary College Teaching Hospital. Address only.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "contact_unconfirmed",
+        "request_satisfied": false,
+        "evidence_issue": "requested_address_not_grounded",
+        "model_history_policy": "include",
+        "requested_institution": "TANUVAS Madras Veterinary College Teaching Hospital",
+        "requested_location_text": "",
+        "case_place": "",
+        "phone_only": false,
+        "local_help": true,
+        "latency_ms": 22227
+      }
+    },
+    {
+      "case_id": "PORT_BLAIR",
+      "question": "Who can treat an injured street dog in Port Blair?",
+      "response": "These institutions are listed in the sources, but clinical treatment access remains unconfirmed:\n\n- Veterinary Hospital — Mp7M+774, Thomas Colony, Junglighat, Prem Nagar, Port Blair — institution listed; clinical treatment access is unconfirmed.\n\nA treatment listing alone does not establish rescue pickup or current availability.",
+      "resource_links": [
+        {
+          "label": "Veterinary Hospital: source",
+          "url": "https://magicpin.in/Port-Blair/Prem-Nagar/Healthcare/Veterinary-Hospital/store/1014412",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "http_status": 200,
+      "elapsed_seconds": 42.83,
+      "prompt_version": "srini-v2.4-2026-10-25",
+      "metadata": {
+        "resource_links": [
+          {
+            "label": "Veterinary Hospital: source",
+            "url": "https://magicpin.in/Port-Blair/Prem-Nagar/Healthcare/Veterinary-Hospital/store/1014412"
+          }
+        ],
+        "text_action": "search",
+        "contextual_request": "Find providers who can treat an injured street dog in Port Blair.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "contact_unconfirmed",
+        "request_satisfied": false,
+        "evidence_issue": "",
+        "model_history_policy": "include",
+        "requested_institution": "",
+        "requested_location_text": "Port Blair",
+        "case_place": "Port Blair, Port Blair Tehsil, Andaman and Nicobar Islands, India",
+        "phone_only": false,
+        "local_help": true,
+        "latency_ms": 42812
+      }
+    },
+    {
+      "case_id": "PATNA",
+      "question": "I found an injured street dog near Kankarbagh, Patna. Where can I take it for treatment?",
+      "response": "The sources identify these treatment options and institution leads:\n\n- Dog Hospital — Kankarbagh — the source describes treatment for pets or small animals.\n\n- Dog Hospital Kankarbagh — B-112, near Panch Mandir, Housing Board Colony, Khasmahal, Kankarbagh, Patna, Bihar 800020. — institution listed; clinical treatment access is unconfirmed. Published contact: +91 97982 19428.\n\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.\n\nA treatment listing alone does not establish rescue pickup or current availability.",
+      "resource_links": [
+        {
+          "label": "Dog Hospital: source",
+          "url": "https://doghospital.co.in/services.html",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        },
+        {
+          "label": "Dog Hospital Kankarbagh: source",
+          "url": "https://doghospital.co.in/contact",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "http_status": 200,
+      "elapsed_seconds": 21.01,
+      "prompt_version": "srini-v2.4-2026-10-25",
+      "metadata": {
+        "resource_links": [
+          {
+            "label": "Dog Hospital: source",
+            "url": "https://doghospital.co.in/services.html"
+          },
+          {
+            "label": "Dog Hospital Kankarbagh: source",
+            "url": "https://doghospital.co.in/contact"
+          }
+        ],
+        "text_action": "search",
+        "contextual_request": "Find places that can treat an injured street dog near Kankarbagh, Patna.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "search_answer",
+        "request_satisfied": true,
+        "evidence_issue": "",
+        "model_history_policy": "include",
+        "requested_institution": "",
+        "requested_location_text": "Kankarbagh, Patna",
+        "case_place": "kankarbagh main road, Patna, Bihar, India",
+        "phone_only": false,
+        "local_help": true,
+        "latency_ms": 20989
+      }
+    }
+  ]
+}

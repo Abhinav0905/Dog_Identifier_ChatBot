@@ -1,0 +1,24 @@
+The repeated text is inserted by the application's evidence-review fallback. It does not prove that every question failed at the model, or that local services do not exist.
+
+Confirmed fixes live on EC2: source 440951f, prompts srini-v2.4-2026-10-25.
+- Address requests were treated as clinical discovery when the router phrased their context as "Find the address...". Address-only lookups now use a separate evidence path and do not require treatment/admission proof.
+- The institution parser could include "What is the address of" in the selected name, overriding a correct router selection. Address-of/for prefixes are now recognized.
+- A literal fetched facility/address row could be ignored when the model proposed a longer address containing unsupported additions. The application can now return the selected facility's literal short address row without another model call. Another campus or administrative footer cannot supply the address.
+- Failed source URLs are skipped within one research turn; a fresh request may retry them. Adaptive research receives the specific evidence gap and unreadable source URLs.
+- Unrelated earlier cases are removed from research input when the requested case changes. The stored shared conversation is retained.
+
+Live UI results in the same conversation:
+- TANUVAS address-only: previously generic fallback; now "Vepery, Chennai" with the selected hospital's separate source card. It is a short published locality, without a claimed street number or PIN.
+- Nagpur water advice: worked before this fix; specific practical advice rather than a provider fallback.
+- Patna treatment: source-supported pet-treatment provider and address returned.
+- Port Blair: still returned the generic fallback after v2.4. This is a FAIL, not a completed lookup.
+
+Further candidates were tested but NOT activated on EC2:
+- Source 9ad4610 / v2.5: interleaved publishers after leading citations so one inaccessible site cannot consume every source slot, and made the literal locality requirement explicit to the reviewer. Port Blair still failed.
+- Source 6fb696c / v2.6: additionally highlighted fetched local Animal Husbandry/veterinary-office passages for a labelled administrative referral when clinical evidence is insufficient. Port Blair still failed. This candidate is available in GitHub and on localhost, but the public app remains on the tested v2.4 address fix.
+
+Validation: 180 focused checks passed for deployed source 440951f; 182 passed for candidate 6fb696c. Candidate backend tests and public UI observations are recorded separately. Passing these checks does not establish successful live provider discovery. The original 25 questions were not all rerun.
+
+Remaining work: trace the final retrieved pages and claim rejections for failing cities, then repair source acquisition and location/service binding with captured evidence. Prompt-only changes did not resolve Port Blair. Do not bypass institution/phone proof or invent dog admission, opening hours or rescue pickup to hide this failure.
+
+Phone-to-institution binding, network protections and India-only provider scope remain. No provider was called. Existing incident, alert, knowledge and image data were preserved. Original prompt text is retained in archives and Git history.
