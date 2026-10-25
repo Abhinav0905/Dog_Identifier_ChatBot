@@ -1,0 +1,92 @@
+{
+  "model_profile": {
+    "OPENAI_MODEL": "gpt-5.6-sol",
+    "OPENAI_CHAT_MODEL": "gpt-5.6-sol",
+    "OPENAI_VISION_MODEL": "gpt-5.6-terra",
+    "OPENAI_ADMIN_MODEL": "gpt-5.6-terra",
+    "OPENAI_WEB_SEARCH_MODEL": "gpt-5.6-terra",
+    "OPENAI_QUERY_ROUTER_MODEL": "gpt-5.6-terra",
+    "OPENAI_GEOGRAPHY_MODEL": "gpt-5.6-terra"
+  },
+  "checks": [
+    {
+      "role": "router",
+      "result": {
+        "action": "answer",
+        "source": "model"
+      },
+      "passed": true,
+      "elapsed_seconds": 1.92
+    },
+    {
+      "role": "query_analysis",
+      "result": {
+        "intent": "local_rescue_help",
+        "source": "model",
+        "place": "Kochi, Kerala"
+      },
+      "passed": true,
+      "elapsed_seconds": 1.43
+    },
+    {
+      "role": "place",
+      "result": {
+        "kind": "named_place",
+        "place": "Kochi, Kerala",
+        "source": "model"
+      },
+      "passed": true,
+      "elapsed_seconds": 1.35
+    },
+    {
+      "role": "admin_sql",
+      "result": [
+        "SELECT COUNT(*) AS total_incidents FROM incidents;",
+        "Counts all recorded incidents in the incidents table."
+      ],
+      "passed": true,
+      "elapsed_seconds": 1.06
+    },
+    {
+      "role": "vision",
+      "result": {
+        "severity": "low",
+        "severity_score": 1,
+        "confidence": 0.05,
+        "indicators": [
+          "The image is completely black, so no dog or health signs are visible.",
+          "The reporter confirms this test image cannot show the animal's condition."
+        ],
+        "recommended_actions": [
+          "Use a clear, well-lit photo from a safe distance if an assessment is needed.",
+          "If the dog appears injured, very weak, unable to walk, or unwell in person, contact a veterinarian promptly; a welfare group may help with safe transport."
+        ],
+        "triage_summary": "This image is too dark to see a dog or assess its health. A low score here does not mean the dog is healthy.",
+        "escalation_needed": false,
+        "latency_ms": 2341,
+        "model_version": "gpt-5.6-terra",
+        "raw_output": "{\"severity\":\"low\",\"severity_score\":1,\"confidence\":0.05,\"indicators\":[\"The image is completely black, so no dog or health signs are visible.\",\"The reporter confirms this test image cannot show the animal's condition.\"],\"recommended_actions\":[\"Use a clear, well-lit photo from a safe distance if an assessment is needed.\",\"If the dog appears injured, very weak, unable to walk, or unwell in person, contact a veterinarian promptly; a welfare group may help with safe transport.\"],\"triage_summary\":\"This image is too dark to see a dog or assess its health. A low score here does not mean the dog is healthy.\"}"
+      },
+      "passed": true,
+      "elapsed_seconds": 2.37
+    },
+    {
+      "role": "enrichment",
+      "result": [
+        "Please observe the animal in good light for limping, wounds, swelling, unusual breathing, weakness, or changes in eating and drinking.",
+        "If any symptoms are present or you remain concerned, kindly arrange a veterinary assessment; this dark image cannot rule out illness or injury.",
+        "If safe, take a new clear photo or short video in daylight from a comfortable distance, without restraining or frightening the animal."
+      ],
+      "passed": true,
+      "elapsed_seconds": 2.03
+    },
+    {
+      "role": "retained_text_adapter",
+      "result": "OK",
+      "passed": true,
+      "elapsed_seconds": 1.19
+    }
+  ],
+  "passed": true,
+  "prompt_version": "srini-v2-2026-10-25"
+}

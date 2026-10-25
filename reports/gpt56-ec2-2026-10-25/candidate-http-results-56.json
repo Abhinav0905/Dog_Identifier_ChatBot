@@ -1,0 +1,160 @@
+{
+  "checked_at": "2026-10-25T19:09:54.022604+00:00",
+  "base_url": "http://127.0.0.1:8002",
+  "mode": "candidate",
+  "health_before": {
+    "database": "ready",
+    "models": "not_observed",
+    "knowledge": {
+      "backend": "sqlite",
+      "status": "ready",
+      "sqlite_fallback_chunks": 156,
+      "chunks": 156
+    },
+    "model_probe_performed": false,
+    "outbound_messages_sent": false,
+    "model_observations": [],
+    "observation_window_minutes": 30,
+    "status": "degraded",
+    "alert_delivery_configured": false,
+    "alerts_needing_operator_attention": 0,
+    "version": "1.1.0-web-rc",
+    "prompt_catalog_version": "srini-v2-2026-10-25",
+    "prompt_package": {
+      "version": "srini-v2-2026-10-25",
+      "sha256": "250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12",
+      "status": "ready",
+      "source": "local_files",
+      "reload_error": null
+    },
+    "india_only_scope": true,
+    "india_boundary_loaded": true,
+    "location_required_for_assessment": false,
+    "location_required_for_local_report": true,
+    "max_image_size_mb": 100,
+    "heic_supported": true,
+    "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+    "timestamp": "2026-10-25T19:09:54.021198+00:00"
+  },
+  "cases": [
+    {
+      "case_id": "RIDER",
+      "question": "What should I do if a dog is chasing me on my motor bike?",
+      "http_status": 200,
+      "elapsed_seconds": 6.31,
+      "response": "Dogs may chase because of movement, engine noise, fear, or territory.\n\n- Keep a steady course and speed; do not race, swerve, or brake suddenly.\n- Slow down only when traffic conditions make it safe.\n- If possible, pull over safely away from moving traffic. Once fully stopped, keep the motorbike between you and the dog, stay calm, and give it space to leave.\n\nIf bitten or scratched, wash with soap and running water for at least 15 minutes and seek medical care promptly.",
+      "resource_links": [],
+      "prompt_version": "srini-v2-2026-10-25",
+      "prompt_sha256": "250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12",
+      "technical_pass": true,
+      "requirement_verdict": "PASS",
+      "judge_reason": "Retains motorbike and traffic context; avoids sudden braking, racing, confrontation and violence.",
+      "judge_type": "manual transcript review against the stated user requirements; no independent source audit of medical content"
+    },
+    {
+      "case_id": "FEAR",
+      "question": "He may bite me if I slow down. What should I do?",
+      "http_status": 200,
+      "elapsed_seconds": 6.75,
+      "response": "That fear is understandable. Don’t slow suddenly while the dog is beside you—maintain a steady, controlled speed and straight course, watching the road; racing can prolong the chase. Pull over only after you have reached a safe place away from moving traffic and the dog has fallen back.",
+      "resource_links": [],
+      "prompt_version": "srini-v2-2026-10-25",
+      "prompt_sha256": "250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12",
+      "technical_pass": true,
+      "requirement_verdict": "PASS",
+      "judge_reason": "Retains the motorbike context and answers the fear concern without unsafe sudden slowing.",
+      "judge_type": "manual transcript review against the stated user requirements; no independent source audit of medical content"
+    },
+    {
+      "case_id": "INDORE",
+      "question": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?",
+      "http_status": 200,
+      "elapsed_seconds": 54.57,
+      "response": "I couldn't fully confirm current service details from accessible sources. This does not mean services are unavailable.\n\nFor treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup.",
+      "resource_links": [],
+      "prompt_version": "srini-v2-2026-10-25",
+      "prompt_sha256": "250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12",
+      "technical_pass": true,
+      "requirement_verdict": "FAIL",
+      "judge_reason": "No supported Indore provider, address or clinical contact, and no immediate first-aid guidance for the deep wound. Honest uncertainty alone does not satisfy the request.",
+      "judge_type": "manual transcript review against the stated user requirements; no independent source audit of medical content"
+    }
+  ],
+  "cookies": [
+    {
+      "name": "askdorjee_guest",
+      "secure": false,
+      "http_only": true,
+      "same_site": "lax"
+    }
+  ],
+  "isolation_checks": {
+    "other_session_cannot_read_chat": true,
+    "invalid_admin_rejected": true
+  },
+  "health_after": {
+    "database": "ready",
+    "models": "recent_success",
+    "knowledge": {
+      "backend": "sqlite",
+      "status": "ready",
+      "sqlite_fallback_chunks": 156,
+      "chunks": 156
+    },
+    "model_probe_performed": false,
+    "outbound_messages_sent": false,
+    "model_observations": [
+      {
+        "component": "model:care",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T19:10:07.082632+00:00"
+      },
+      {
+        "component": "model:router",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T19:10:08.821511+00:00"
+      },
+      {
+        "component": "model:search",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T19:10:51.487309+00:00"
+      },
+      {
+        "component": "model:evidence",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T19:11:01.620300+00:00"
+      }
+    ],
+    "observation_window_minutes": 30,
+    "status": "ready",
+    "alert_delivery_configured": false,
+    "alerts_needing_operator_attention": 0,
+    "version": "1.1.0-web-rc",
+    "prompt_catalog_version": "srini-v2-2026-10-25",
+    "prompt_package": {
+      "version": "srini-v2-2026-10-25",
+      "sha256": "250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12",
+      "status": "ready",
+      "source": "local_files",
+      "reload_error": null
+    },
+    "india_only_scope": true,
+    "india_boundary_loaded": true,
+    "location_required_for_assessment": false,
+    "location_required_for_local_report": true,
+    "max_image_size_mb": 100,
+    "heic_supported": true,
+    "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+    "timestamp": "2026-10-25T19:11:01.723721+00:00"
+  },
+  "technical_pass": true,
+  "requirement_counts": {
+    "PASS": 2,
+    "FAIL": 1
+  },
+  "technical_pass_scope": "Transport, correct prompt version/hash, model execution, session isolation and invalid-admin rejection. This is separate from answer quality."
+}
