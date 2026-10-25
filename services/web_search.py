@@ -514,7 +514,7 @@ def search_animal_question(
             if review.status != "not_needed":
                 candidate.response = review.answer
                 candidate.resource_links = review.links
-                candidate.result_kind = "search_answer" if review.status == "approved" and review.request_satisfied is not False else "contact_unconfirmed"
+                candidate.result_kind = "search_answer" if review.status == "approved" and getattr(review, "request_satisfied", None) is not False else "contact_unconfirmed"
                 candidate.request_satisfied = getattr(review, "request_satisfied", None)
                 candidate.validated_facts = getattr(review, "validated_facts", [])
         return candidate
