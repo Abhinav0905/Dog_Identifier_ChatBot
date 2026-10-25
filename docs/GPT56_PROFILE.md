@@ -11,7 +11,7 @@ against both the local and production API account's model lists before rollout.
 | Text routing and compatibility query analysis | `gpt-5.6-terra` | none |
 | Place extraction | `gpt-5.6-terra` | none |
 | Web search | `gpt-5.6-terra` | low |
-| Contact evidence review | `gpt-5.6-terra` | low |
+| Contact evidence review | `gpt-5.6-terra` | none, with its own 20-second cap and the shared turn deadline |
 | Admin read-only SQL generation | `gpt-5.6-terra` | none |
 
 The retained Chat Completions text/vision adapter also uses the configured roles

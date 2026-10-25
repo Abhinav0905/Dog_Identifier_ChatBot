@@ -1,3 +1,7 @@
+## v2.1 - 25 October 2026
+
+File 04 adds a clarification to use the full literal publisher identity, one literal branch address per provider claim, branch-bound contacts, and structured citation fields. Its original v2 text is archived. No change to Deb's full reference, shared cultural policy, JSON schemas or placeholders. Runtime code separately fixes false competing-provider detection, bounded evidence-review timing and first-aid preservation.
+
 # Ask Dorjee prompts — v1 → v2 changes
 
 **Why:** DAR's testing (Deb Jarrett, Sep 2026) found answers "less compassionate" than her own

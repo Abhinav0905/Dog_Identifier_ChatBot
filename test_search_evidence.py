@@ -861,6 +861,48 @@ Confirmed contact(s) listed on the college page:
         return web_search.PublicPageText(name + " " + " ".join(blocks), identity_text=name,
                                          blocks=blocks, source_hostname=host, is_html=True)
 
+    def test_service_menus_and_own_branches_do_not_erase_local_treatment(self):
+        name = "Harbour Pet Hospital"
+        address = "River Road, Northbank, Lakeside 560001"
+        blocks = ["Emergency Care & Ambulance Mobile Veterinary Clinic Surgery & Intensive Care",
+                  "Mobile Veterinary Clinic", "Contact Branches",
+                  "Emergency cases can move into hospital evaluation.",
+                  "Home visit care with hospital-backed guidance",
+                  "We provide veterinary care for dogs and cats.",
+                  name + ", " + address, "Emergency phone: 080-22223333",
+                  name + ", Market Road, Southbank, Lakeside 560002", "Phone: 080-44445555"]
+        page = self._publisher_page(name, blocks, "harbourpet.example")
+        self.assertTrue(evidence._publisher_page_context(page, name))
+        claims = [{"institution": name, "phone": phone, "source_url": self.url,
+                   "evidence_quote": "", "matches_requested_entity": True}
+                  for phone in ["080-22223333", "080-44445555"]]
+        value = self.result(answer="Treatment details https://untrusted-answer.example/", claims=claims,
+                            provider_claims=[{"institution": name, "location": address,
+                                "service_type": "clinical_treatment", "source_url": self.url,
+                                "evidence_quote": "We provide veterinary care for dogs and cats."}])
+        result = evidence._validate_review(value, {self.url: page}, clinical_discovery=True,
+                                          requested_place="Lakeside", require_small_animal=True)
+        self.assertTrue(result.request_satisfied)
+        self.assertIn(address, result.answer)
+        self.assertIn("080-22223333", result.answer)
+        self.assertNotIn("080-44445555", result.answer)
+        self.assertNotIn("untrusted-answer", result.answer)
+
+    def test_mobile_service_heading_with_another_proper_name_still_blocks_aggregation(self):
+        name = "Harbour Veterinary Hospital"
+        page = self._publisher_page(name, ["Moonlight Mobile Veterinary Clinic", "We treat dogs"], "harbourvet.example")
+        self.assertFalse(evidence._publisher_page_context(page, name))
+
+    def test_injured_animal_where_to_take_it_always_gets_clinical_review(self):
+        self.result(claims=[], provider_claims=[])
+        result = evidence.review_contact_answer("I found an injured community dog in Kochi. Where can I take it?",
+            [], "", "A hospital may help.", [self.url], requested_institution="")
+        kwargs = self.client.responses.create.call_args.kwargs
+        self.assertTrue(json.loads(kwargs["input"][-1]["content"])["clinical_discovery"])
+        self.assertEqual(kwargs["timeout"], evidence.config.OPENAI_EVIDENCE_TIMEOUT_SECONDS)
+        self.assertEqual(kwargs["reasoning"], {"effort": "none"})
+        self.assertFalse(result.request_satisfied)
+
     def test_split_first_party_clinic_services_contact_and_address_survive(self):
         name = "Pet Spectrum Veterinary Clinic & Surgery Center"
         address = "A61 Sakshi Bunglow, Near Aura Mall, Gulmohar, Arera Colony, Bhopal, MP 462039"

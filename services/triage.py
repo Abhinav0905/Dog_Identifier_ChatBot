@@ -72,6 +72,12 @@ _BLEEDING_CASE_RE = re.compile(
     r"\b(?:bleed(?:ing|s|ed)?|blood\s+(?:loss|flow|coming|spurting)|ha?emorrhag(?:e|ing))\b",
     re.IGNORECASE,
 )
+_SERIOUS_WOUND_RE = re.compile(
+    r"\b(?:(?:deep|large|open|gaping|severe)\s+(?:wounds?|cuts?|lacerations?)|"
+    r"(?:wounds?|cuts?)\s+(?:is|are|looks?)\s+(?:deep|large|open|gaping)|"
+    r"exposed\s+(?:bone|muscle))\b",
+    re.IGNORECASE,
+)
 _VEHICLE_TRAUMA_RE = re.compile(
     r"(?:"
     r"\b(?:hit|struck|hurt|injured|run\s+over|knocked\s+down)\b.{0,50}"
@@ -323,6 +329,15 @@ def _safety_guidance_response(message: str) -> str | None:
         return _vehicle_trauma_safety_response()
     if _positive_symptom(_BLEEDING_CASE_RE, text):
         return _bleeding_safety_response()
+    if _positive_symptom(_SERIOUS_WOUND_RE, text):
+        return (
+            "A deep or open wound needs prompt veterinary care. Keep the dog calm and avoid handling "
+            "if it may bite. If you can do so safely, loosely cover the wound with clean gauze or cloth. "
+            "If it is bleeding, apply continuous direct pressure with a clean cloth; add layers if soaked "
+            "rather than lifting the first cloth. Do not press on or remove an embedded object, probe "
+            "the wound, apply powders or chemicals, or give human medicine. Arrange safe transport "
+            "and call ahead about treatment and admission."
+        )
     if _positive_symptom(_URGENT_CONDITION_RE, text):
         return (
             "This sounds worrying and needs urgent veterinary assessment. Keep the animal "
@@ -1019,6 +1034,7 @@ def urgent_caption_guidance(message: str, language: str = "en") -> str | None:
     actual_animal = _SAFETY_ANIMAL_RE.search(message) and (
         _positive_symptom(_URGENT_CONDITION_RE, message)
         or _positive_symptom(_BLEEDING_CASE_RE, message)
+        or _positive_symptom(_SERIOUS_WOUND_RE, message)
         or (_positive_symptom(_VEHICLE_TRAUMA_RE, message) and not _VEHICLE_PREVENTION_RE.search(message))
     )
     return immediate_safety_response(message, language=language) if actual_human or actual_animal else None

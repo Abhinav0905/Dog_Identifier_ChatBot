@@ -590,7 +590,7 @@ def chat_query(
     elif turn.action == query_router.TextAction.SEARCH or turn.routing_failed:
         # An actual safety response remains available even when both models are
         # down. No old NGO directory, cache, or guessed place is a fallback.
-        guidance = None
+        guidance = None if effective_phone_only else triage.urgent_caption_guidance(request.message, language)
         try:
             result = web_search.search_animal_question(
                 request.message,
@@ -618,16 +618,16 @@ def chat_query(
         answer, links = result.response, result.resource_links
         searched, result_kind = result.searched, result.result_kind
         request_satisfied = getattr(result, "request_satisfied", None)
-        if result_kind != "unavailable" and not effective_phone_only:
-            # A successful lookup does not replace first aid for an explicitly
-            # reported emergency. Ordinary discovery and feared future bites
-            # do not acquire an emergency checklist.
+        if not effective_phone_only:
+            # Contact review and search outages must not erase first aid for
+            # explicit current injuries. Do this before any model fallback;
+            # ordinary discovery and feared future bites remain unchanged.
             answer = _prepend_immediate_guidance(
-                triage.urgent_caption_guidance(request.message, language) or "", answer,
+                guidance or "", answer,
             )
         # Only a real condition receives immediate guidance. A general
         # provider lookup must never acquire a welcome/checklist prefix.
-        if result_kind == "unavailable" and (turn.needs_immediate_guidance or turn.routing_failed):
+        if result_kind == "unavailable" and not effective_phone_only and not guidance and (turn.needs_immediate_guidance or turn.routing_failed):
             answer = _prepend_immediate_guidance(
                 triage.generate_chat_response(
                     request.message, history, session_id, language,

@@ -55,6 +55,10 @@ OPENAI_ROUTING_TIMEOUT_SECONDS = max(
     5.0,
     min(30.0, float(os.getenv("OPENAI_ROUTING_TIMEOUT_SECONDS", "12"))),
 )
+OPENAI_EVIDENCE_TIMEOUT_SECONDS = max(
+    5.0,
+    min(30.0, float(os.getenv("OPENAI_EVIDENCE_TIMEOUT_SECONDS", "20"))),
+)
 OPENAI_VISION_TIMEOUT_SECONDS = max(
     15.0,
     min(90.0, float(os.getenv("OPENAI_VISION_TIMEOUT_SECONDS", "45"))),

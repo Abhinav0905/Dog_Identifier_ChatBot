@@ -1,7 +1,10 @@
 # Versioned prompt files on GitHub and EC2
 
-The current release is `prompts/runtime-v2/`. Files 01–09 are copied byte-for-byte
-from Srini's supplied package. Deb's full prompt (00), regression cases (10),
+The current release is `prompts/runtime-v2/`. Files 01–09 originated byte-for-byte
+from Srini's supplied package. Release v2.1 adds a clarification to file 04 about
+literal full institution names, one branch address per claim and citation placement.
+The original file 04 is retained in `prompts/archive/04_contact_evidence_review_system_srini_v2_original.txt`.
+Deb's full prompt (00), regression cases (10),
 README, changes and diff are reference material and are never used as system
 instructions. `support/` contains the existing language rules and ancillary
 templates that were not part of the nine supplied files.

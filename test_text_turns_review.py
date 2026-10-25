@@ -53,6 +53,19 @@ class TestTextTurnReview(unittest.TestCase):
         self.assertEqual(answer, "07324-276622")
         self.assertTrue(db.get_chat_history(self.session)[-1]["metadata"]["phone_only"])
 
+    def test_deep_wound_guidance_survives_all_provider_failure_modes(self):
+        question = "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?"
+        for kind in ["contact_unconfirmed", "unavailable", "search_answer"]:
+            with self.subTest(kind=kind), \
+                 patch.object(router, "plan_text_turn", return_value=fixtures.planned("search", question)), \
+                 patch.object(web_search, "search_animal_question", return_value=web_search.SearchResult(
+                     response="Local provider details remain unconfirmed.", result_kind=kind,
+                 )):
+                answer = self.post(question)
+            self.assertIn("prompt veterinary care", answer)
+            self.assertIn("Local provider details remain unconfirmed", answer)
+            self.assertLess(answer.index("prompt veterinary care"), answer.index("Local provider"))
+
     def test_stale_outside_location_does_not_block_new_general_web_question(self):
         db.save_session_case_location(self.session, {
             "scope": region_scope.OUTSIDE_INDIA,

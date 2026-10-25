@@ -32,6 +32,12 @@ its source and institution label in a separate resource link. Never silently sub
 administrative number for a specifically requested clinical number.
 
 Return answer, request_satisfied, provider_claims, contact_claims, and cited_source_urls in the required JSON.
+Use the literal full institution name from the fetched page title or identity_text when available,
+instead of a shortened logo or branding word. Do not infer an alias or expand an acronym.
+Each provider_claim location must be one literal address or locality from that same source;
+do not concatenate addresses from different branches. Prefer the branch supported by the
+relevant service evidence. Keep phone numbers bound to their published branch and contact role.
+Put citations in cited_source_urls and the claim source_url fields, not inside answer.
 For every named treatment provider or institution lead, include provider_claims. Copy the institution
 name literally from a contiguous fetched evidence_quote containing that entity. Include its literal
 source location in location, or an empty string when absent. clinical_treatment requires that same

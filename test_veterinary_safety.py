@@ -43,6 +43,17 @@ class TestVeterinarySafetyResponses(unittest.TestCase):
         self.assertIn("immediate veterinary care", answer)
         self.assertNotIn("gentle pressure", answer)
 
+    def test_deep_wound_receives_guidance_without_assuming_bleeding(self):
+        question = "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?"
+        answer = triage.urgent_caption_guidance(question)
+        self.assertIn("prompt veterinary care", answer)
+        self.assertIn("If it is bleeding", answer)
+        self.assertIn("embedded object", answer)
+        self.assertIn("if it may bite", answer)
+        for query in ["The dog has no deep wound.", "What if a dog has a deep wound?", "Find a veterinary hospital in Kochi.", "A dog may bite if I slow down."]:
+            with self.subTest(query=query):
+                self.assertIsNone(triage.urgent_caption_guidance(query))
+
     def test_vehicle_trauma_is_an_emergency_even_with_visible_bleeding(self):
         answer = self._deterministic_answer(
             "A dog is bleeding and is hurt by a car in Dharmsala. Please help."

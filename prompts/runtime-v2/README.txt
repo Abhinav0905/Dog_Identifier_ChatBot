@@ -1,3 +1,8 @@
+RELEASE v2.1 - 25 October 2026
+File 04 now clarifies full source names, branch-local addresses and citation placement.
+Its original Srini v2 wording is retained at prompts/archive/04_contact_evidence_review_system_srini_v2_original.txt.
+Other numbered prompts, including Deb's full verbatim reference, are unchanged.
+
 ASK DORJEE — RUNTIME PROMPT PACKAGE (v2, Oct 2026)
 
 Contents

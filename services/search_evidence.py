@@ -105,9 +105,12 @@ def review_contact_answer(
     clinical_discovery = not phone_only and bool(
         re.search(r"\b(?:treat(?:ment|s|ing)?|clinical|animal.care|outpatient|opd)\b|इलाज|पशु\s*चिकित्सा", request_text, re.I)
         or (not needs_contact and needs_provider and re.search(r"\b(?:find|where|options?|help)\b", request_text, re.I))
+        or (re.search(r"\b(?:dogs?|pupp(?:y|ies)|cats?|animals?)\b", request_text, re.I)
+            and re.search(r"\b(?:injured|wound(?:ed)?|bleeding|sick|hurt)\b", request_text, re.I)
+            and re.search(r"\b(?:where|who|take|find|help)\b", request_text, re.I))
     )
     require_small_animal = bool(re.search(r"\b(?:dogs?|pupp(?:y|ies)|canine|pets?|cats?|kittens?)\b|कुत्त|पिल्ल|बिल्ली", request_text, re.I))
-    if not needs_contact and not needs_provider and not _answer_phone_spans(draft):
+    if not clinical_discovery and not needs_contact and not needs_provider and not _answer_phone_spans(draft):
         return ContactAnswerReview(answer=draft, status="not_needed")
     fallback = lambda: _unavailable(language, draft="" if clinical_discovery else draft, phone_only=phone_only, phone_requested=needs_contact)
     if deadline is not None and time.monotonic() >= deadline:
@@ -136,12 +139,15 @@ def review_contact_answer(
         "recent_conversation": web_search._animal_question_history(history),
         "untrusted_draft": str(draft or "")[:8000],
         "fetched_sources": [
-            {"url": url, "text": _source_context(text)} for url, text in pages.items()
+            {"url": url, "identity_text": str(getattr(text, "identity_text", "")),
+             "text": _source_context(text)} for url, text in pages.items()
         ],
         "reply_language": "Hindi" if language == "hi" else "English",
     }
     try:
-        remaining = min(config.OPENAI_ROUTING_TIMEOUT_SECONDS, 12.0)
+        # Reviewing multiple fetched pages is a different workload from the
+        # short routing decision. Still share the whole turn's hard deadline.
+        remaining = config.OPENAI_EVIDENCE_TIMEOUT_SECONDS
         if deadline is not None:
             remaining = min(remaining, deadline - time.monotonic())
         if remaining <= 0:
@@ -155,7 +161,8 @@ def review_contact_answer(
             store=False,
             max_output_tokens=3600,
             timeout=remaining,
-            **({"reasoning": {"effort": "low"}} if config.OPENAI_QUERY_ROUTER_MODEL.startswith("gpt-5") else {}),
+            **({"reasoning": {"effort": "none" if config.OPENAI_QUERY_ROUTER_MODEL.startswith("gpt-5.6") else "low"}}
+               if config.OPENAI_QUERY_ROUTER_MODEL.startswith("gpt-5") else {}),
         )
         reviewed = json.loads(response.output_text or "")
         clinical_only = bool(re.search(
@@ -416,6 +423,9 @@ def _publisher_page_context(page: str, institution: str) -> bool:
     if not base:
         return False
     generic = {"the", "of", "and", "veterinary", "vet", "clinic", "hospital", "centre", "center", "surgery", "college", "science", "sciences", "animal", "husbandry", "society", "trust", "foundation"}
+    # Service/menu headings are not competing institution names. A proper
+    # name (e.g. Moonlight Mobile Veterinary Clinic) remains distinctive.
+    service_words = {"mobile", "ambulance", "emergency", "critical", "intensive", "care"}
     proper_words = [word for word in re.findall(r"\w+", base) if word not in generic]
     name_words = [word for word in re.findall(r"\w+", base) if word not in {"the", "of", "and"}]
     initialism = "".join(word[0] for word in name_words if word)
@@ -427,17 +437,17 @@ def _publisher_page_context(page: str, institution: str) -> bool:
     own_words = set(re.findall(r"\w+", _entity_key(name)))
     for block in getattr(page, "blocks", ()):
         clean = _without_address_landmarks(str(block))
-        if len(clean) < 150 and re.search(r"\b(?:(?:our\s+)?branches|other\s+(?:hospitals|clinics|providers)|partner\s+(?:hospitals|clinics))\b", clean, re.I):
+        if len(clean) < 150 and re.search(r"\b(?:other\s+(?:hospitals|clinics|providers)|partner\s+(?:hospitals|clinics))\b", clean, re.I):
             return False
         matches = list(provider_pattern.finditer(clean))
         if len(clean) < 200:
             # Directory rows do not always use title case. A compact heading
             # shaped like a provider name is checked case-insensitively too.
-            row = re.match(r"\s*(?:\d+[.)]?\s+)?((?:[\w&'.-]+\s+){1,6}(?:hospital|clinic|college|foundation|shelter))\b", clean, re.I)
+            row = re.match(r"\s*(?:\d+[.)]?\s+)?((?:[\w&'.-]+\s+){1,6}(?:hospital|clinic|college|foundation|shelter))\b(?=\s*(?:$|[,:(–—]|-\s))", clean, re.I)
             if row:
                 matches.append(row)
         for match in matches:
-            words = set(re.findall(r"\w+", _entity_key(match.group()))) - generic
+            words = set(re.findall(r"\w+", _entity_key(match.group()))) - generic - service_words
             if words and not words.issubset(own_words):
                 return False
     return True
@@ -482,6 +492,34 @@ def _publisher_location_is_grounded(page: str, institution: str, place: str) -> 
         return False
     wanted = f" {_normalized_location(place)} "
     return any(wanted in f" {_normalized_location(str(block))} " for block in getattr(page, "blocks", ()) if len(str(block)) <= 1600)
+
+
+def _publisher_branch_phones(page: str, institution: str, place: str) -> set[str] | None:
+    """For a multi-branch publisher, bind numbers to the displayed address.
+
+    None preserves ordinary single-facility contact validation. An empty set
+    means branch association was not established, so no phone is attached.
+    """
+    if not _publisher_page_context(page, institution) or not re.search(r"\bbranches\b", str(page), re.I):
+        return None
+    blocks = tuple(str(block) for block in getattr(page, "blocks", ()))
+    addresses = [i for i, block in enumerate(blocks) if len(block) <= 1600
+                 and _literal_source_entity(block, institution)
+                 and re.search(r"\b(?:road|street|lane|campus|nagar|sector|ward)\b|\b\d{6}\b", block, re.I)]
+    if len(addresses) < 2:
+        return None
+    wanted = _normalized_location(place)
+    phones = set()
+    for index in addresses:
+        if not wanted or f" {wanted} " not in f" {_normalized_location(blocks[index])} ":
+            continue
+        # Only the address row and its immediately following contact row;
+        # never cross the next facility/address to collect another branch.
+        section = [blocks[index]]
+        if index + 1 < len(blocks) and index + 1 not in addresses:
+            section.append(blocks[index + 1])
+        phones.update(key for _, _, key in _answer_phone_spans("\n".join(section)))
+    return phones
 
 def _provider_source_excerpt(page: str, institution: str, service: str, suggested: str) -> tuple[str, bool]:
     """Repair quote formatting from fetched blocks, not from model prose."""
@@ -952,6 +990,10 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                     for url in shared_sources
                 )
             if identity_matches and (not administrative_identity or shared_sources):
+                branch_sets = [bound for url in shared_sources
+                               if (bound := _publisher_branch_phones(pages[url], row["name"], row["place"])) is not None]
+                if branch_sets and not any(phone_key in bound for bound in branch_sets):
+                    continue
                 role = phone_roles.get(phone_key, "published contact")
                 label = ("प्रशासनिक संपर्क" if role == "administrative contact" else "चिकित्सा संपर्क" if role == "clinical contact" else "प्रकाशित संपर्क") if language == "hi" else role.capitalize()
                 description += " " + label + ": " + phone_displays[phone_key] + "."
@@ -1002,7 +1044,7 @@ def _validate_review(value: object, pages: dict[str, str], *, requested_institut
             continue
         if key not in approved_urls:
             approved_urls.append(key)
-    if re.search(r"https?://|", answer):
+    if not (clinical_discovery and not phone_only) and re.search(r"https?://|", answer):
         return None
     phone_sources: dict[str, list[str]] = {}
     phone_displays: dict[str, str] = {}
