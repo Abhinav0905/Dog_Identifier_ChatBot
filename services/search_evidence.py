@@ -144,6 +144,11 @@ def review_contact_answer(
             return direct_address
 
     instructions = PromptCatalog.CONTACT_EVIDENCE_REVIEW_SYSTEM
+    locality = _discovery_locality(requested_location_text, requested_place, requested_city)
+    def source_priority(item):
+        _, page = item
+        identity = str(getattr(page, "identity_text", ""))
+        return bool(locality and web_search._has_standalone_location_occurrence(identity, locality))
     data = {
         "current_message": str(message or ""),
         "requested_institution": target,
@@ -151,12 +156,13 @@ def review_contact_answer(
         "address_only": address_only,
         "clinical_discovery": clinical_discovery,
         "require_small_animal_service": require_small_animal,
+        "requested_locality": locality,
         "contextual_request": str(contextual_request or "")[:4000],
         "recent_conversation": web_search._animal_question_history(history),
         "untrusted_draft": str(draft or "")[:8000],
         "fetched_sources": [
             {"url": url, "identity_text": str(getattr(text, "identity_text", "")),
-             "text": _source_context(text)} for url, text in pages.items()
+             "text": _source_context(text)} for url, text in sorted(pages.items(), key=source_priority, reverse=True)
         ],
         "reply_language": "Hindi" if language == "hi" else "English",
     }
@@ -258,6 +264,18 @@ def _fetch_sources(source_urls: Iterable[str], *, deadline: float | None = None,
                 + int(urlparse(url).hostname in primary_hosts)
                 - 4 * bool(re.search(r"recruit|tender|admission|notification|counselling", path)))
     urls = urls[:4] + sorted(urls[4:], key=priority, reverse=True)
+    # Keep primary citations, then interleave publishers. Many URLs from one
+    # unreachable site must not push every independently readable local source
+    # beyond the bounded fetch cap. Preserve priority within each publisher.
+    groups: dict[str, list[str]] = {}
+    for url in urls[4:]:
+        groups.setdefault(str(urlparse(url).hostname or "").removeprefix("www."), []).append(url)
+    diverse = []
+    while any(groups.values()):
+        for group in groups.values():
+            if group:
+                diverse.append(group.pop(0))
+    urls = urls[:4] + diverse
     cached = page_cache if page_cache is not None else {}
     found: dict[str, str] = {}
     attempted: list[str] = []

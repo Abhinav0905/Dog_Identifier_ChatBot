@@ -45,6 +45,13 @@ Each provider_claim location must be one literal address or locality from that s
 do not concatenate addresses from different branches. Prefer the branch supported by the
 relevant service evidence. Keep phone numbers bound to their published branch and contact role.
 Put citations in cited_source_urls and the claim source_url fields, not inside answer.
+For open discovery, requested_locality is the application's location evidence requirement. Prefer
+fetched pages that explicitly bind a facility to that city in its own listing, address row or
+publisher context. Do not assume the application knows that a neighbourhood belongs to the city.
+If a readable local listing establishes the hospital name and address but not its treatment
+service, retain that useful local option as identity_only with its literal address and source.
+Do not discard such a listing in favour of a department-wide directory whose facility rows do
+not establish the requested city. A source-supported local lead is partial, not confirmed treatment.
 For every named treatment provider or institution lead, include provider_claims. Copy the institution
 name literally from a contiguous fetched evidence_quote containing that entity. Include its literal
 source location in location, or an empty string when absent. clinical_treatment requires that same

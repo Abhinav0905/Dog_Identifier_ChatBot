@@ -24,6 +24,18 @@ class TestContendedPublicFetch(unittest.TestCase):
             release.join(timeout=2)
 
 class TestSearchEvidence(unittest.TestCase):
+    def test_many_urls_from_one_publisher_do_not_starve_independent_local_pages(self):
+        primary = [f"https://offline.example/contact/{i}" for i in range(12)]
+        local = "https://local-vet.example/services"
+        seen = []
+        def fetch(url, **kwargs):
+            seen.append(url)
+            return None if 'offline.example' in url else 'Readable local facility source'
+        self.fetch.side_effect = fetch
+        pages = evidence._fetch_sources(primary + [local])
+        self.assertIn(local, seen)
+        self.assertIn(local, pages)
+        self.assertLessEqual(len(seen), evidence.MAX_SOURCES)
     def test_address_only_is_not_a_clinical_discovery_request(self):
         name = "Madras Veterinary College Teaching Hospital"
         source = "https://www.tanuvas.ac.in/dir_cli.php"
