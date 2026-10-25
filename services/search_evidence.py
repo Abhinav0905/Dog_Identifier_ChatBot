@@ -460,14 +460,17 @@ def _publisher_service_excerpt(page: str, institution: str, service: str) -> str
     # Each appended fact is an actual source block. The literal identity occurs
     # in this fetched page and the page's title/heading identifies that publisher.
     # No remote snippet, model paraphrase, or second provider supplies a fact.
+    generic_excerpt = ""
     for block in getattr(page, "blocks", ()):
         block = str(block)
         if not 10 <= len(block) <= 1400:
             continue
         excerpt = institution + "\n" + block
         if _provider_service_is_grounded(institution, service, excerpt, require_small_animal=False):
-            return excerpt
-    return ""
+            if service != "clinical_treatment" or _provider_service_is_grounded(institution, service, excerpt, require_small_animal=True):
+                return excerpt
+            generic_excerpt = generic_excerpt or excerpt
+    return generic_excerpt
 
 
 def _publisher_contact_excerpt(page: str, institution: str, phone: str) -> str:
@@ -539,14 +542,22 @@ def _provider_source_excerpt(page: str, institution: str, service: str, suggeste
                 candidates.append(("\n".join(blocks[index:index + 10]), False))
     for match in list(re.finditer(re.escape(name), full))[:20]:
         candidates.append((full[match.start():match.end() + 900], False))
+    generic_match = None
     for excerpt, same_block in candidates:
         if len(excerpt) <= 2400 and _provider_service_is_grounded(
             institution, service, excerpt, require_small_animal=False,
             allow_preceding=same_block, veterinary_context=bool(re.search(r"\bveterinary\s+hospitals?\b", str(page), re.I)),
         ):
-            return excerpt, same_block
+            if service != "clinical_treatment" or _provider_service_is_grounded(
+                institution, service, excerpt, require_small_animal=True, allow_preceding=same_block,
+            ):
+                return excerpt, same_block
+            generic_match = generic_match or (excerpt, same_block)
     if publisher_excerpt := _publisher_service_excerpt(page, institution, service):
-        return publisher_excerpt, False
+        if generic_match is None or _provider_service_is_grounded(institution, service, publisher_excerpt, require_small_animal=True):
+            return publisher_excerpt, False
+    if generic_match is not None:
+        return generic_match
     return next(((text, block) for text, block in candidates if len(text) <= 2400), ("", False))
 
 

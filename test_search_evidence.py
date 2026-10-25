@@ -926,6 +926,20 @@ Confirmed contact(s) listed on the college page:
         page = self._publisher_page(name, ["Moonlight Mobile Veterinary Clinic", "We treat dogs"], "harbourvet.example")
         self.assertFalse(evidence._publisher_page_context(page, name))
 
+    def test_explicit_companion_animal_service_is_not_hidden_by_generic_care_text(self):
+        name="Harbour Pet Hospital"
+        address="River Road, Lakeside 560001"
+        generic=name+" provides veterinary care."
+        blocks=[generic,"Our service helps pet families access veterinary care during illness or injury.",address]
+        page=self._publisher_page(name,blocks,"harbourpet.example")
+        value=self.result(answer="Treatment",claims=[],provider_claims=[{
+            "institution":name,"location":address,"service_type":"clinical_treatment",
+            "source_url":self.url,"evidence_quote":generic,
+        }])
+        result=evidence._validate_review(value,{self.url:page},clinical_discovery=True,require_small_animal=True)
+        self.assertIn("treatment for pets or small animals",result.answer)
+        self.assertNotIn("Dog or cat treatment",result.answer)
+
     def test_injured_animal_where_to_take_it_always_gets_clinical_review(self):
         self.result(claims=[], provider_claims=[])
         result = evidence.review_contact_answer("I found an injured community dog in Kochi. Where can I take it?",
