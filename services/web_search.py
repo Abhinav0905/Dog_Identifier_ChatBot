@@ -2451,13 +2451,17 @@ def _fetch_public_page_text(
     deadline: float | None = None,
     allow_public_redirects: bool = False,
 ) -> str | None:
-    if deadline is not None and time.monotonic() >= deadline:
+    queue_deadline = deadline if deadline is not None else time.monotonic() + config.DOG_WEB_PAGE_VERIFY_TIMEOUT_SECONDS
+    remaining = queue_deadline - time.monotonic()
+    if remaining <= 0:
         return None
-    if not PAGE_FETCH_SEMAPHORE.acquire(timeout=0.25):
-        logger.info("Official NGO page verification concurrency limit reached")
+    # A second search must wait for an occupied slot within its existing
+    # source-fetch deadline, rather than discard every URL after 250 ms.
+    if not PAGE_FETCH_SEMAPHORE.acquire(timeout=remaining):
+        logger.info("Public page fetch reached its deadline while waiting for a slot")
         return None
     try:
-        return _fetch_public_page_text_unlocked(url, deadline=deadline, allow_public_redirects=allow_public_redirects)
+        return _fetch_public_page_text_unlocked(url, deadline=queue_deadline, allow_public_redirects=allow_public_redirects)
     finally:
         PAGE_FETCH_SEMAPHORE.release()
 

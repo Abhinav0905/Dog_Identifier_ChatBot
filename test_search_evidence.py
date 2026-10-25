@@ -2,11 +2,26 @@
 
 import json
 import time
+import threading
 import unittest
 from unittest.mock import MagicMock, patch
 
 from services import query_router, search_evidence as evidence, web_search
 
+
+class TestContendedPublicFetch(unittest.TestCase):
+    def test_contended_fetch_waits_for_available_slot_within_deadline(self):
+        slots = threading.BoundedSemaphore(1)
+        slots.acquire()
+        release = threading.Timer(0.35, slots.release)
+        release.start()
+        try:
+            with patch.object(web_search, "PAGE_FETCH_SEMAPHORE", slots), \
+                 patch.object(web_search, "_fetch_public_page_text_unlocked", return_value="Readable clinic source"):
+                page = web_search._fetch_public_page_text("https://clinic.example/", deadline=time.monotonic() + 2)
+            self.assertEqual(page, "Readable clinic source")
+        finally:
+            release.join(timeout=2)
 
 class TestSearchEvidence(unittest.TestCase):
     def setUp(self):
