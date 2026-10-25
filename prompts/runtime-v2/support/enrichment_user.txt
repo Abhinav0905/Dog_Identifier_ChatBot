@@ -1,0 +1,5 @@
+Triage assessment:
+- Severity: {{SEVERITY}} ({{SEVERITY_SCORE}}/10)
+- Summary: {{SUMMARY}}
+- Observed indicators: {{INDICATORS}}
+- Original recommended actions: {{ACTIONS}}

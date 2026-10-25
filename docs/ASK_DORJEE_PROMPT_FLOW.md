@@ -1,10 +1,10 @@
 # Ask Dorjee prompt and request flow
 
-This document is the review guide for the current India-wide Ask Dorjee text and photo application. Runtime model instructions are centralized in [`services/prompts.py`](../services/prompts.py) as `PromptCatalog`. The routing, schemas, source checks, deterministic safety rules, and timeouts remain in their owning services.
+This document is the review guide for the current India-wide Ask Dorjee text and photo application. Runtime model instructions are text files under [`prompts/runtime-v2`](../prompts/runtime-v2), assembled by [`services/prompts.py`](../services/prompts.py) as `PromptCatalog`. The routing, schemas, source checks, deterministic safety rules, and timeouts remain in their owning services. See [prompt release management](EXTERNAL_PROMPTS.md) for GitHub review, EC2 activation and rollback.
 
 ## Suggested meeting walkthrough
 
-1. Open `services/prompts.py` and review `PromptCatalog.REVIEW_ORDER`.
+1. Open `prompts/runtime-v2/` and review files 01–09; `PromptCatalog.REVIEW_ORDER` maps their runtime order.
 2. Open `app.py` at `chat_query` to show the text request entry point.
 3. Follow the selected branch into `query_router`, `triage`, or `web_search`.
 4. For provider answers, finish at `search_evidence`; this is where source text is independently fetched and claims are accepted or rejected.

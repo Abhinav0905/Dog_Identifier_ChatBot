@@ -39,11 +39,19 @@ def _remaining_timeout(deadline: float | None, maximum: float) -> float:
 # Retries share the request's deadline rather than restarting the whole budget.
 VISION_MAX_ATTEMPTS = 2
 VISUAL_REVIEW_CONFIDENCE_FLOOR = 0.65
-VISION_SYSTEM_PROMPT = PromptCatalog.VISION_SYSTEM
+# Historical aliases used import-time snapshots; resolve them dynamically so a
+# prompt-only activation also reaches compatibility callers.
+# VISION_SYSTEM_PROMPT = PromptCatalog.VISION_SYSTEM
+# ENRICHMENT_SYSTEM_PROMPT = PromptCatalog.ENRICHMENT_SYSTEM
+# CHAT_SYSTEM_PROMPT = PromptCatalog.CARE_CHAT_SYSTEM
 
-ENRICHMENT_SYSTEM_PROMPT = PromptCatalog.ENRICHMENT_SYSTEM
 
-CHAT_SYSTEM_PROMPT = PromptCatalog.CARE_CHAT_SYSTEM
+def __getattr__(name):
+    aliases = {"VISION_SYSTEM_PROMPT": "VISION_SYSTEM", "ENRICHMENT_SYSTEM_PROMPT": "ENRICHMENT_SYSTEM",
+               "CHAT_SYSTEM_PROMPT": "CARE_CHAT_SYSTEM"}
+    if name in aliases:
+        return getattr(PromptCatalog, aliases[name])
+    raise AttributeError(name)
 
 
 def _dar_contact_phrase() -> str:

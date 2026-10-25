@@ -9,6 +9,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 ENV_FILE="${ENV_FILE:-${REPO_ROOT}/.env}"
 DATA_DIR="${DATA_DIR:-${REPO_ROOT}/.deploy-data}"
+PROMPT_RELEASES_DIR="${PROMPT_RELEASES_DIR:-}"
+PROMPT_MOUNT_ARGS=()
+if [[ -n "${PROMPT_RELEASES_DIR}" ]]; then
+    [[ "${PROMPT_RELEASES_DIR}" = /* && -f "${PROMPT_RELEASES_DIR}/current/manifest.json" ]] || {
+        echo "Activate a valid prompt release under an absolute PROMPT_RELEASES_DIR first" >&2; exit 1;
+    }
+    PROMPT_MOUNT_ARGS=(--mount "type=bind,src=${PROMPT_RELEASES_DIR},dst=/app/prompt-releases,readonly"
+                       -e PROMPT_PACKAGE_DIR=/app/prompt-releases/current)
+fi
 BACKUP_ROOT="${BACKUP_ROOT:-${REPO_ROOT}/.deploy-backups}"
 STARTUP_TIMEOUT_SECONDS="${STARTUP_TIMEOUT_SECONDS:-180}"
 RELEASE_ID="$(date -u +%Y%m%dT%H%M%SZ)-$$"
@@ -84,7 +93,7 @@ docker image inspect --format '{{.Id}}' "${IMAGE_NAME}" > "${BACKUP_DIR}/candida
 docker create --name "${CANDIDATE}" --restart unless-stopped --env-file "${ENV_FILE}" \
     -e DB_PATH=/app/data/dharmasala.db -e STORAGE_DIR=/app/data/storage \
     -e CHROMA_PERSIST_DIR=/app/data/chroma_db -e HF_HUB_CACHE=/app/data/model-cache/hub \
-    -p "${HOST_PORT}:8000" -v "${DATA_DIR}:/app/data" "${IMAGE_NAME}" >/dev/null
+    -p "${HOST_PORT}:8000" -v "${DATA_DIR}:/app/data" ${PROMPT_MOUNT_ARGS[@]+"${PROMPT_MOUNT_ARGS[@]}"} "${IMAGE_NAME}" >/dev/null
 CANDIDATE_CREATED=1
 if [[ "${OLD_EXISTS}" = 1 ]]; then
     docker stop --time 45 "${APP_NAME}" >/dev/null
@@ -146,6 +155,7 @@ if backend == "pinecone":
     knowledge_ok = knowledge.get("status") in {"not_observed", "recent_success"}
 ok = (state.get("database") == "ready" and knowledge_ok
       and state.get("models") in {"not_observed", "recent_success"}
+      and state.get("prompt_package", {}).get("status") == "ready"
       and state.get("india_only_scope") is True
       and state.get("india_boundary_loaded") is True)
 sys.exit(0 if ok else 1)

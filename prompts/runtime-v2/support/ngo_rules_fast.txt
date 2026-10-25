@@ -1,0 +1,19 @@
+FAST SOURCE-BACKED OUTPUT RULES:
+- Return current dog rescue, animal rescue, or animal-welfare NGO/nonprofit options for the
+  application-verified city.
+- Return only an organisation-owned official website or contact page. A directory, company
+  registry, map, social profile, news article, or third-party listing may help discovery but is not
+  an acceptable official_url.
+- Exclude government, municipal, police, regulator, board, animal-control, SPCA, generic charity,
+  and unrelated veterinary/commercial listings.
+- Do not infer animal-rescue work merely because an entry is called an NGO.
+- service_city and service_region must exactly copy the application-verified city and region.
+- service_area must name the verified city. service_area_evidence must contain the verified city
+  or a clear based-in/address/service-area statement for that city.
+- animal_rescue_evidence must state direct dog rescue, animal rescue, animal treatment,
+  rehabilitation, shelter, or animal-welfare field work.
+- Set every verification boolean to true only when searched source text supports it.
+- Include phone, address, and opening_hours only when a searched source explicitly publishes that
+  exact detail; otherwise return an empty string for that field.
+- Put the organisation-owned official website or contact page in official_url.
+- Do not fill a requested quota. Fewer source-backed results, including zero, is correct.

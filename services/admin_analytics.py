@@ -14,7 +14,14 @@ logger = logging.getLogger("dharmasala.admin")
 
 client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
-NL_TO_SQL_SYSTEM = PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM
+# Previous import-time snapshot retained for reference:
+# NL_TO_SQL_SYSTEM = PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM
+
+
+def __getattr__(name):
+    if name == "NL_TO_SQL_SYSTEM":
+        return PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM
+    raise AttributeError(name)
 
 NL_TO_SQL_SCHEMA = {
     "type": "object",
@@ -90,7 +97,7 @@ def _nl_to_sql(nl_query: str) -> tuple[str, str]:
         response = client.responses.create(
             model=OPENAI_ADMIN_MODEL,
             input=[
-                {"role": "system", "content": NL_TO_SQL_SYSTEM},
+                {"role": "system", "content": PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM},
                 {"role": "user", "content": nl_query},
             ],
             text={

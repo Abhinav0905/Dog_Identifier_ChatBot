@@ -1,0 +1,10 @@
+Discover possible non-governmental dog rescue and animal-welfare
+organizations serving {{CITY}}, {{REGION}}, India. Search with several distinct queries, including
+"{{CITY}} dog rescue NGO", "{{CITY}} animal care charity", "{{CITY}} treatment of stray animals", and
+"animal welfare nonprofit {{CITY}}". Look beyond names containing the word rescue: include a charity
+with broader programs when its own site has a current animal-care, stray-treatment, or veterinary
+program for the city. Locate a possible official organization website or relevant program page for
+each candidate. This is discovery only: do not make contact or service claims. Exclude government,
+municipal, police, regulator, directory, map, social-media-only, commercial, and SPCA results.
+possible_official_url must copy an exact URL opened in this search. Return no more than
+{{MAXIMUM_CANDIDATES}} candidates.

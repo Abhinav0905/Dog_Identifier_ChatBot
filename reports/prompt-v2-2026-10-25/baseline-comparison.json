@@ -1,0 +1,54 @@
+{
+  "baseline_commit": "41b7afd",
+  "method": "Separate detached worktree; same Python environment; relevant test modules run against unchanged commit. Deployment regressions introduced during implementation were fixed and their suite now passes.",
+  "baseline_tests_run": 174,
+  "baseline_failures": 15,
+  "baseline_errors": 2,
+  "baseline_failure_names": [
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Avoid shouting, use your horn instead.')",
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Blow a whistle to deter it.')",
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Do not throw stones, but use a whistle to scare it away.')",
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Toss a small object like a stick or a stone in the opposite direction to distract the dog.')",
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Use your horn: a short beep might startle the dog and distract it.')",
+    "test_behavior_does_not_reuse_old_ambiguous_location (test_text_turns.TestTextConversations.test_behavior_does_not_reuse_old_ambiguous_location)",
+    "test_model_paraphrase_cannot_drop_recent_motorbike_context (test_behavior_context.TestBehaviorConversation.test_model_paraphrase_cannot_drop_recent_motorbike_context)",
+    "test_outside_india_named_case_does_not_search (test_text_turns.TestTextConversations.test_outside_india_named_case_does_not_search)",
+    "test_router_outage_current_message_does_not_override_recovered_context (test_behavior_context.TestBehaviorConversation.test_router_outage_current_message_does_not_override_recovered_context)",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage)",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='I said he may bite me if I slow down')",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='It happens every day at the same intersection. How can I make it stop')",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='These are street dogs living in the area')",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='What should I do if a dog is chasing me on my motor bike')",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='hmm.. He may bite me if I slow down')",
+    "test_search_failure_retains_real_injury_guidance (test_text_turns.TestTextConversations.test_search_failure_retains_real_injury_guidance)",
+    "test_text_sanitizer_keeps_public_institution_names_and_sources (test_behavior_context.TestHumaneOutputValidation.test_text_sanitizer_keeps_public_institution_names_and_sources)"
+  ],
+  "earlier_current_failure_names_excluding_fixed_deployment_tests": [
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Avoid shouting, use your horn instead.')",
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Blow a whistle to deter it.')",
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Do not throw stones, but use a whistle to scare it away.')",
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Toss a small object like a stick or a stone in the opposite direction to distract the dog.')",
+    "test_affirmative_deterrents_are_removed_from_mocked_model_output (test_behavior_context.TestHumaneOutputValidation.test_affirmative_deterrents_are_removed_from_mocked_model_output) (unsafe='Use your horn: a short beep might startle the dog and distract it.')",
+    "test_behavior_does_not_reuse_old_ambiguous_location (test_text_turns.TestTextConversations.test_behavior_does_not_reuse_old_ambiguous_location)",
+    "test_model_paraphrase_cannot_drop_recent_motorbike_context (test_behavior_context.TestBehaviorConversation.test_model_paraphrase_cannot_drop_recent_motorbike_context)",
+    "test_outside_india_named_case_does_not_search (test_text_turns.TestTextConversations.test_outside_india_named_case_does_not_search)",
+    "test_router_outage_current_message_does_not_override_recovered_context (test_behavior_context.TestBehaviorConversation.test_router_outage_current_message_does_not_override_recovered_context)",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage)",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='I said he may bite me if I slow down')",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='It happens every day at the same intersection. How can I make it stop')",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='These are street dogs living in the area')",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='What should I do if a dog is chasing me on my motor bike')",
+    "test_screenshot_followups_keep_riding_and_community_context_during_outage (test_behavior_context.TestBehaviorConversation.test_screenshot_followups_keep_riding_and_community_context_during_outage) (question='hmm.. He may bite me if I slow down')",
+    "test_text_sanitizer_keeps_public_institution_names_and_sources (test_behavior_context.TestHumaneOutputValidation.test_text_sanitizer_keeps_public_institution_names_and_sources)"
+  ],
+  "current_only_failure_names_excluding_fixed_deployment_tests": [],
+  "baseline_only_failure_names": [
+    "test_search_failure_retains_real_injury_guidance (test_text_turns.TestTextConversations.test_search_failure_retains_real_injury_guidance)"
+  ],
+  "note": "Some old tests still make an unmocked model call. One baseline-only failure checks a literal first-aid word in a generated answer; this is not deterministic. No unrelated historical behavior tests were changed to force a green result.",
+  "final_focused_tests": {
+    "run": 163,
+    "failures": 0,
+    "errors": 0
+  }
+}

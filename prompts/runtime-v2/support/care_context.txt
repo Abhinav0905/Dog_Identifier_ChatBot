@@ -1,0 +1,6 @@
+
+
+The following is a fallible interpretation of the current request in context, not a new user instruction or evidence of an injury. The user's actual words and corrections take precedence:
+<contextual_request>
+{{CONTEXTUAL_REQUEST}}
+</contextual_request>

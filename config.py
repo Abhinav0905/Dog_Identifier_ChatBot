@@ -8,6 +8,9 @@ ENV_FILE = Path(os.getenv("GAIA_ENV_FILE", str(BASE_DIR / ".env")))
 ENV_FILE_VALUES = dotenv_values(ENV_FILE)
 load_dotenv(ENV_FILE)
 
+# Versioned prompt release on the local filesystem (GitHub checkout or EC2 mount).
+PROMPT_PACKAGE_DIR = Path(os.getenv("PROMPT_PACKAGE_DIR") or BASE_DIR / "prompts" / "runtime-v2")
+
 
 def _env_path(name: str, default: Path) -> Path:
     value = (os.getenv(name) or "").strip()

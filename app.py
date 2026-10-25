@@ -49,6 +49,7 @@ from services import (
     web_operations,
 )
 from services.prompts import PromptCatalog
+from services import prompt_store
 
 # Logging setup
 logging.basicConfig(
@@ -68,9 +69,28 @@ app = FastAPI(
 app.add_middleware(request_limits.RequestLimitsMiddleware)
 _delivery_retry_task = None
 
+
+@app.middleware("http")
+async def pin_prompt_release(request: Request, call_next):
+    if request.url.path not in {"/v1/chat/query", "/v1/triage/image", "/v1/admin/query"}:
+        return await call_next(request)
+    try:
+        bundle = await run_in_threadpool(prompt_store.current)
+    except prompt_store.PromptPackageError:
+        from starlette.responses import JSONResponse
+        return JSONResponse({"detail": "Prompt configuration is unavailable"}, status_code=503)
+    # ContextVars propagate into FastAPI's worker threads. Routing, care, search
+    # and evidence therefore use one version, even during a prompt-only update.
+    with prompt_store.pin(bundle):
+        response = await call_next(request)
+        response.headers["X-Prompt-Package-Version"] = bundle.version
+        response.headers["X-Prompt-Package-SHA256"] = bundle.digest
+        return response
+
 # Initialize database on startup
 @app.on_event("startup")
 def startup():
+    prompt_store.current()  # Reject an invalid first release before serving.
     db.init_db()
     request_limits.initialize()
     web_operations.initialize()
@@ -1131,10 +1151,12 @@ async def _process_twilio_whatsapp_media_background(
 @app.get("/health")
 def health():
     state = web_operations.readiness()
+    prompts = prompt_store.status()
     return {
         **state,
         "version": "1.1.0-web-rc",
-        "prompt_catalog_version": PromptCatalog.VERSION,
+        "prompt_catalog_version": prompts["version"],
+        "prompt_package": prompts,
         "india_only_scope": config.INDIA_ONLY_SCOPE_ENABLED,
         "india_boundary_loaded": location.india_boundary_available(),
         "location_required_for_assessment": False,

@@ -56,7 +56,8 @@ elif cmd == "exec":
     import io, urllib.request
     health = {"database": "ready", "knowledge": {"backend": "chroma", "status": "ready"},
               "models": os.environ.get("FAKE_MODEL_STATE", "not_observed"),
-              "india_only_scope": True, "india_boundary_loaded": True}
+              "india_only_scope": True, "india_boundary_loaded": True,
+              "prompt_package": {"status": "ready"}}
     urllib.request.urlopen = lambda *args, **kwargs: io.StringIO(json.dumps(health))
     try:
         exec(a[4], {})
@@ -95,7 +96,8 @@ class DeploymentFlowTests(unittest.TestCase):
         self.env = {**os.environ, "PATH": str(binary) + os.pathsep + os.environ["PATH"],
                     "FAKE_DOCKER_ROOT": str(self.root), "STARTUP_TIMEOUT_SECONDS": "10"}
         for key in ("APP_NAME", "IMAGE_NAME", "HOST_PORT", "ENV_FILE", "DATA_DIR", "BACKUP_ROOT",
-                    "CHROMA_SEED_DIR", "EMBEDDING_CACHE_SEED_DIR", "FAKE_CREATE_FAIL", "FAKE_MODEL_STATE"):
+                    "CHROMA_SEED_DIR", "EMBEDDING_CACHE_SEED_DIR", "FAKE_CREATE_FAIL", "FAKE_MODEL_STATE",
+                    "PROMPT_RELEASES_DIR"):
             self.env.pop(key, None)
 
     def run_deploy(self):
@@ -156,6 +158,17 @@ class DeploymentFlowTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertTrue(self.state()["containers"]["gaia-chatbot"]["running"])
         self.assertEqual((self.data / "chroma_db/source-fixture").read_text(), "persistent")
+
+    def test_optional_prompt_mount_is_read_only_and_overrides_package_path(self):
+        releases = self.root / "prompt-releases"
+        (releases / "current").mkdir(parents=True)
+        (releases / "current/manifest.json").write_text("{}")
+        self.env["PROMPT_RELEASES_DIR"] = str(releases)
+        result = self.run_deploy()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        create = next(call for call in self.state()["calls"] if call[0] == "create")
+        self.assertIn(f"type=bind,src={releases},dst=/app/prompt-releases,readonly", create)
+        self.assertIn("PROMPT_PACKAGE_DIR=/app/prompt-releases/current", create)
 
 
 if __name__ == "__main__":

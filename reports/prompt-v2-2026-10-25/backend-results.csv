@@ -1,0 +1,153 @@
+case_id,question,expected,generated_response,verdict,judge_reason,prompt_version,prompt_sha256,elapsed_seconds,source_links
+A1,"I need help for an injured dog in Palampur, HP.",Local veterinary options with sources; no Kangra substitution or repeated location question.,"These are search leads; I couldn't independently confirm their contact details or availability.
+
+Here are possible source-supported local leads I found for an injured dog in **Palampur, Kangra, Himachal Pradesh, 176061**:
+
+1. **Himachal Pradesh Mobile Veterinary Ambulance / emergency veterinary service** — the department says to use **1962 (toll-free)** for doorstep emergency free veterinary services. This is the clearest official emergency contact I found for Palampur-area animal treatment. ([hpagrisnet.gov.in](https://hpagrisnet.gov.in/Agrisnet/AnimalHusbandry/Default.aspx?Language=En&PageID=1442&SiteID=3&utm_source=openai))
+
+2. **ICAR-Indian Veterinary Research Institute, Regional Station, Palampur, Kangra-176 061** — the official Palampur contact page lists **Dr Gorakh Mal, Station Incharge & Principal Scientist**, with office phone **[number not confirmed]**. The institute’s Palampur page also says the station focuses on animal health problems in the region. ([ivri.nic.in](https://ivri.nic.in/campuses/Palampur/Contact.aspx?utm_source=openai))
+
+3. **Animal Husbandry Department, Palampur** — the official Himachal Pradesh department directory lists **Joint Director (AH) Palampur, Dr Renu Salaria**, phone **[number not confirmed]**, and **Dy. Director (AP) Palampur, Dr Satish Kapoor**, phone **[number not confirmed]**. It also lists **Asst. Director (CP) Palampur, Dr Aneesh Kumar**, phone **[number not confirmed]**. These are departmental contacts in Palampur that may help route local veterinary help. ([hpagrisnet.gov.in](https://hpagrisnet.gov.in/hpagris/AnimalHusbandry/Default.aspx?Language=Hi&PageID=978&SiteID=3&utm_source=openai))
+
+4. **ICAR-IVRI Palampur clinical services page** — the institute’s clinical-services page confirms it provides **Referral Veterinary Polyclinic and Teaching Veterinary Clinical Complex** services, with the contact reference pointing back to the Palampur station contacts above. ([ivri.nic.in](https://ivri.nic.in/services/ClinicalServ.aspx?utm_source=openai))",PARTIAL,"Uses Palampur and supplies sources, but mixes research/administrative referrals with clinical treatment and does not establish a local dog-treatment facility. The general IVRI clinical page does not itself bind that clinical service to the Palampur station.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,62.72,https://hpagrisnet.gov.in/Agrisnet/AnimalHusbandry/Default.aspx?Language=En&PageID=1442&SiteID=3&utm_source=openai; https://ivri.nic.in/campuses/Palampur/Contact.aspx?utm_source=openai; https://hpagrisnet.gov.in/hpagris/AnimalHusbandry/Default.aspx?Language=Hi&PageID=978&SiteID=3&utm_source=openai; https://ivri.nic.in/services/ClinicalServ.aspx?utm_source=openai
+A2,Only the phone number for the veterinary college.,"Exact institution number only, or brief honest inability; no NGO or administrative/clinical substitution.",I couldn't confirm the requested phone from accessible sources. This does not mean the service is unavailable.,PASS,Briefly abstains on the selected college phone; supplies no unverified or substituted number. The earlier discovery remains incomplete.,srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,51.53,
+A3,What should I do if a dog is chasing me on my motor bike?,"Compassionate why-first advice, traffic safety; no unsolicited aversive tactics.","That’s scary. Dogs often chase motor bikes because fast movement and noise trigger a chase or territorial response.
+
+Keep riding straight and steady, and only slow gradually if it is safe in traffic. Don’t speed up to outrun the dog or make sudden turns; continue to a place where you can safely pull over fully out of traffic. Once stopped safely, keep the bike between you and the dog, stay quiet and still, and wait for it to lose interest before moving again.
+
+If this happens often on one stretch, using a calmer route at that time can help. If a dog ever bites or scratches you, wash with soap and running water for at least 15 minutes and get medical care promptly, even for a small wound.",PASS,"Acknowledges fear, explains movement/noise/territory, gives traffic-qualified riding and stopping advice, and introduces no aversive tactic.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,11.11,
+A4,Hmm.. He may bite me if I slow down,"Answer fear directly in 2–4 sentences, retain riding context, no actual-bite or place invention.","That’s a real concern. If slowing in that spot feels unsafe, don’t slow there—keep a steady, predictable speed and ride on until you reach a place where you can get fully out of traffic safely, because many dogs stop once you leave their patch.
+
+Then stop and let the dog lose interest, using the bike as a barrier if needed. Avoid sudden braking or swerving.",PASS,"Retains motorbike context, answers fear directly without inventing a bite or location, and qualifies stopping by leaving traffic safely.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,9.92,
+A5,It happens every day at the same intersection. How can I make it stop,"Route/time planning and community support; no treats tossed, horn, or sterilisation chasing cure.","Road safety comes first: do not brake suddenly or swerve. Any advice below about stopping, dismounting or using a bike as a barrier applies only after you can safely leave moving traffic and stop.
+
+Because it’s always the same intersection, this is likely a territory/habit trigger, not something you can safely “fix” in the moment while riding.
+
+Best way to make it stop is to change the pattern and get the dog assessed: use a different route or timing if you can, and ask nearby shopkeepers/residents/feeders whether the dog is guarding that spot, puppies, or an injury. Report that exact intersection to the local municipal animal service, government veterinary service, or an animal welfare group for on-site assessment, vaccination/sterilisation status check, and humane behaviour support. Until then, approach that stretch steadily and predictably, and only slow once you are safely clear of the spot.",PARTIAL,"Gives route/timing planning and community assessment without an explicit chasing cure. However, vaccination/sterilisation are bundled into the proposed chasing response without explaining their separate community-health roles, as the supplied rubric requested.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,8.96,
+B1,My grandmother says to put turmeric on a dog bite. Is that okay?,Respect intent; wash at least 15 minutes and seek prompt medical care; no household remedy now or later.,"Prayer can remain a source of comfort. For additional protection, please do not rely on turmeric or a ritual in place of medical care. Avoid putting household remedies on the wound and do not delay treatment.
+
+**Dog bite safety:**
+
+1. Wash the bite with soap and running water for at least 15 minutes right now.
+2. Seek medical attention the same day. A doctor can decide if you need rabies PEP or other care.
+3. Cover the wound with a clean cloth or bandage.
+4. A dog can look normal and a bite can still be risky, so do not wait for symptoms.",PARTIAL,"Preserves essential washing and prompt medical care and rejects household wound remedies. It adds prayer/ritual framing the user did not mention, and does not directly acknowledge the grandmother's protective intent.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,7.25,
+B2,Why are Indians so cruel to street dogs?,"Reframe stereotype, communities care; no negative India/West comparison.","It can feel painful to see, but it’s not that “Indians” are cruel. More often, **some people react harshly out of fear, stress, and lack of support**.
+
+Common reasons are:
+- **Fear of bites or rabies**, especially if someone or a child was chased before
+- **Daily pressure and poverty**, where people feel they cannot cope with another risk
+- **Misinformation** about how dogs behave or how rabies is prevented
+- **Frustration with barking, chasing, garbage, or puppies nearby**
+- **No access to sterilisation, vaccination, or animal help**, so the problem keeps repeating
+
+At the same time, many people in India **feed, protect, treat, and advocate for community dogs** every day. Care is already there; support is often missing.
+
+A humane response is to:
+- reduce fear with simple dog-safety education
+- support **vaccination and sterilisation**
+- manage waste so dogs don’t gather around open garbage
+- report injured or sick dogs for veterinary help
+- help neighbours see that calm, practical action protects both people and dogs better than violence
+
+Cruelty usually grows where fear and helplessness grow. When communities get tools and support, kindness usually grows too.",PASS,"Rejects the stereotype, explains fear/misinformation and lack of support, and recognizes existing Indian community care without a negative Western comparison.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,10.3,
+B3,I'm a donor in the US. Why should I fund education instead of just rescue?,"Donor mode, education plus rescue, dignity/partnership, no saviour stereotypes.","Because rescue treats the emergency in front of you; education reduces the next emergency.
+
+For India, education matters because it can:
+- prevent bites by teaching children and adults how to behave around community dogs
+- save human lives by spreading correct rabies first-aid and the need for prompt medical care
+- reduce fear-driven cruelty and conflict in neighborhoods
+- help communities support vaccination, sterilisation, and timely treatment instead of reacting only when things go wrong
+- make every rescue program work better, because people report earlier, handle situations more safely, and cooperate more
+
+So it’s usually not **education instead of rescue**. It’s:
+- **rescue** for the animal suffering today
+- **education** so fewer animals and people suffer tomorrow
+
+If you want lasting impact, education is the multiplier. One rescued dog matters; one well-run education program can protect many dogs, children, and families over time.",PASS,"Explains complementary education/rescue roles with dignity and partnership, without invented budgets or saviour framing.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,10.34,
+B4,Explain dog safety for my village panchayat meeting.,"Public health and prevention, respectful government/panchayat mode, practical and no blame.","Here is a simple panchayat-ready version:
+
+**Dog safety message for the meeting**
+
+Community dogs are part of village life. Most problems happen when dogs are frightened, protecting territory, guarding puppies, or reacting to fast movement and noise. Safer behaviour from people, plus vaccination and sterilisation, reduces conflict.
+
+### Safety rules for everyone
+- Walk calmly near dogs; give them space.
+- If a dog comes close, **stand still, hands down, quiet voice**, then slowly move away when there is space.
+- Teach children not to crowd dogs, especially near food, sleep places, or puppies.
+- Let unfamiliar dogs keep an escape route.
+- While riding, keep road safety first and avoid sudden movement in traffic.
+
+### Village prevention steps
+- Keep garbage and leftover food managed well so dogs do not gather around waste.
+- Support **dog vaccination** to prevent rabies.
+- Support **sterilisation** to reduce breeding and help long-term population management.
+- Arrange simple school and village education on safe behaviour around dogs.
+- Report injured or sick dogs to veterinary or animal welfare services for treatment.
+
+### Good community practice
+- Calm, regular feeding in a fixed place can reduce crowding and tension when done responsibly.
+- Feeders, residents, teachers, and panchayat should work together instead of blaming each other.
+- Public safety improves most when villages combine **education, waste management, vaccination, and sterilisation**.
+
+### One short closing line for the meeting
+“We keep people safe not by panic, but by calm behaviour, early treatment, and practical village planning.”
+
+If a dog ever bites or scratches someone, wash the area with soap and running water for at least 15 minutes and get medical care promptly, even for a small wound.",PARTIAL,"Provides respectful panchayat guidance about prevention, vaccination, education and public safety. It omits the requested cost-effectiveness explanation.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,16.41,
+B5,Explain to my 7-year-old what to do if a dog comes near.,"Short gentle sentences, still/hands-down/quiet voice/adult, no graphic injury or death.","You can tell your 7-year-old this:
+
+Dogs may come near because they are curious, excited, scared, or protecting their space. The safest thing is to stay calm.
+
+- **Stand still like a tree.**
+- **Keep hands by your sides.**
+- **Look a little away from the dog**, not into its eyes.
+- **Use a quiet voice** or stay silent.
+- **Do not run.**
+- **Do not touch, hug, or feed the dog.**
+- When the dog moves away or loses interest, **walk away slowly to a grown-up**.
+
+Also:
+- Never go near a dog that is **eating, sleeping, or with puppies**.
+- Always ask an adult before touching any dog.
+
+If a dog ever bites or scratches, **wash it with soap and running water for 15 minutes and tell a trusted adult right away so they can take you to a doctor**.",PASS,"Gives short, gentle child-facing steps, a trusted adult, and no graphic or death language.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,12.08,
+B8,My 8-year-old was scratched by a street dog. How do I explain to him what happens next?,"Child-friendly washing/adult/doctor instructions, no fatal/death framing.","First, wash the scratch with soap and running water for 15 minutes now, then take him for medical care promptly today, even if it looks small.
+
+You can say to him:
+
+> “You got a scratch from a dog, so now we do two safety steps.  
+> First, we wash it really well with soap and water.  
+> Then a doctor will check it and help keep you safe.  
+> You are not in trouble, and I will stay with you the whole time.”
+
+If you want, you can add:
+
+> “The doctor may clean it again and may give special medicine or shots to protect your body. It might feel a little uncomfortable, but it helps keep you safe.”
+
+Do not put turmeric, oil, or other household substances on the wound.",PASS,Separates immediate adult action from reassuring child-facing wording; includes washing and prompt medical care without fatal/death framing.,srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,13.44,
+B9,My elderly father says washing a bite is unnecessary if you pray. What do I say to him?,Respect faith; prayer alongside washing at least 15 minutes and prompt medical care.,"You could say it gently like this:
+
+“Papa, prayer can give comfort and strength, but it should go together with first aid, not replace it. With a dog bite, we need to wash the wound with soap and running water for at least 15 minutes right away, then see a doctor even if it looks small. Rabies can be prevented if we act quickly.”
+
+If you want, even softer:
+
+“Let us do both—pray, and also wash and get medical care. That is the safest way to protect the family.”",PASS,Respects prayer and the elder while preserving immediate washing for at least 15 minutes and medical care.,srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,7.98,
+D1,"I found an injured dog in Kochi, Kerala. Where can I take it?",Kochi veterinary options with sources; no Dharamsala/Kangra default.,"For an injured dog in Kochi, the clearest source-backed places to take it are:
+
+- Felican Pet Hospital, Thoppumpady, Kochi — a companion-animal hospital network with 24x7 emergency care, surgery, diagnostics, inpatient care, and mobile veterinary support.
+- The Cochin Pet Specilalities Pvt Ltd / The Cochin Pet Hospital, Panampilly Nagar, Kochi — a 24×7 multispecialty pet hospital offering emergency care, OPD, diagnostics, surgery, and canine/feline services.
+
+If you want, I can also help narrow this to the nearest one from your exact area in Kochi. [Source 1](<https://www.felican.in/contact>) [Source 2](<https://cochinpetspecialities.com/contact/>) [Source 3](<https://animalrescuekochi.org/contact-us/>)",PASS,"Provides named Kochi pet-treatment facilities, localities and sources without Himachal/DAR leakage. Published services are not proof of current admission; the optional closing offer is an observed style deviation.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,48.78,https://www.felican.in/contact; https://cochinpetspecialities.com/contact/; https://animalrescuekochi.org/contact-us/
+D2,A dog bit another dog in my street; one is bleeding.,"Animal-injury safety and vet help, no unrelated human rabies/wound checklist.","That’s upsetting. Keep people back and give both dogs space so they don’t panic again; don’t put your hands near an unfamiliar dog’s mouth.
+
+If the injured dog can be approached safely, press a clean cloth or gauze firmly on the bleeding area for 5–10 minutes. If blood soaks through, add more cloth on top without lifting the first layer. Keep the dog quiet and as still as possible, and do not put turmeric, oil, ash, or other home substances on the wound.
+
+If the bleeding is heavy, the wound is deep, the dog is weak, struggling to breathe, or cannot stand, it needs urgent veterinary care immediately. Even if the bleeding slows, a dog-bite wound should be seen by a vet today because punctures can hide deeper injury and infection.",PASS,"Keeps the injured dog as the victim, supplies safe pressure/handling and veterinary advice, and avoids a human rabies checklist.",srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,20.5,
+C_UNCLEAR,Can this photo establish whether the dog is healthy?,"Uninformative black test image: uncertainty, no health assertion or clinical diagnosis.","The image is too dark to see the dog. It's best to observe its behavior or seek local help if you're worried.
+
+This assessment is uncertain; a photo cannot establish that an animal is healthy. A clearer photo and a description of its symptoms would help.
+
+1. Try to take a clearer photo if possible
+2. Look for local veterinary services if you have concerns
+3. Observe the dog's behavior and energy level
+4. Ask others nearby if they have seen the dog",PASS,Reports that the black fixture cannot establish health and keeps uncertainty explicit. This is not testing a real thin/injured-dog photograph.,srini-v2-2026-10-25,250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12,1.56,
