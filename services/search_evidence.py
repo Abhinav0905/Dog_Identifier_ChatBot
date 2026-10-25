@@ -138,6 +138,10 @@ def review_contact_answer(
     if not pages:
         logger.info("Contact evidence review status=unavailable reason=no_readable_sources fetched_sources=0")
         return fallback("no_readable_sources")
+    if address_only:
+        direct_address = _grounded_address_answer([], pages, list(pages), target, language)
+        if direct_address.request_satisfied:
+            return direct_address
 
     instructions = PromptCatalog.CONTACT_EVIDENCE_REVIEW_SYSTEM
     data = {
@@ -645,6 +649,28 @@ def _grounded_address_answer(claims, pages, approved_urls, target, language):
         if grounded or _publisher_location_is_grounded(page, name, place):
             return ContactAnswerReview(answer=place, links=[{"label": name + ": address source", "url": source}], status="approved", request_satisfied=True,
                 validated_facts=[{"kind": "location", "institution": _entity_key(name), "value": _normalized_location(place)}])
+    # Repair an overlong or inferred model address using an actual source row
+    # shaped as "Selected Facility, Locality, City". This requires no clinical
+    # evidence or model paraphrase, and never uses another campus's footer.
+    for source in approved_urls:
+        page = pages[source]
+        candidates = [target, re.sub(r"^[A-Z][A-Z0-9]{2,12}\s+", "", target)]
+        for candidate in candidates:
+            name = _literal_source_entity(page, candidate)
+            if not name or not _address_target_matches(target, name, page, source):
+                continue
+            for block in tuple(getattr(page, "blocks", ()) or ()) or (str(page),):
+                row = str(block).strip()
+                if not row.casefold().startswith(name.casefold() + ","):
+                    continue
+                place = row[len(name):].lstrip(", ").rstrip(" .")
+                if not 5 <= len(place) <= 240 or "," not in place:
+                    continue
+                if re.search(r"\b(?:hospital|college|clinic|university|phone|tel|email|treat\w*|services?|hours?|offers?|provides?|operates?)\b|@|https?://", place, re.I):
+                    continue
+                return ContactAnswerReview(answer=place, links=[{"label": name + ": address source", "url": source}],
+                    status="approved", request_satisfied=True,
+                    validated_facts=[{"kind": "location", "institution": _entity_key(name), "value": _normalized_location(place)}])
     return ContactAnswerReview(
         answer="मैं अनुरोधित संस्था का पता सुनिश्चित नहीं कर सका।" if language == "hi" else "I couldn't confirm the requested institution's address from accessible sources.",
         request_satisfied=False, evidence_issue="requested_address_not_grounded",

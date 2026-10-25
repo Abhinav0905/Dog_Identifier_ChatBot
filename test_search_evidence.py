@@ -40,9 +40,16 @@ class TestSearchEvidence(unittest.TestCase):
         )
         self.assertEqual(result.answer, "Vepery, Chennai")
         self.assertTrue(result.request_satisfied)
-        data = json.loads(self.client.responses.create.call_args.kwargs['input'][-1]['content'])
-        self.assertFalse(data['clinical_discovery'])
-        self.assertTrue(data['address_only'])
+        # A fetched literal facility/address row needs no second model call.
+        self.client.responses.create.assert_not_called()
+
+    def test_address_only_repairs_a_model_address_from_the_exact_source_row(self):
+        source = "https://www.tanuvas.ac.in/dir_cli.php"
+        name = "Madras Veterinary College Teaching Hospital"
+        page = web_search.PublicPageText(name + ", Vepery, Chennai", identity_text="TANUVAS", blocks=[name + ", Vepery, Chennai"], is_html=True)
+        result = evidence._grounded_address_answer([], {source: page}, [source], "TANUVAS " + name, "en")
+        self.assertEqual(result.answer, "Vepery, Chennai")
+        self.assertNotIn("600007", result.answer)
 
     def test_address_only_cannot_use_another_campus_or_infer_parent(self):
         for identity, row, target in [
