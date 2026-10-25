@@ -1,0 +1,26 @@
+{
+  "source_revision": "440951f",
+  "method": "Deterministic replay of deployed locality matching only, corroborated by saved UI-turn metadata. No model/backend answers substituted for UI replies.",
+  "observations": [
+    {
+      "literal_location": "Rampur in Uttar Pradesh",
+      "resolved_city": "Rampur",
+      "required_source_locality": "Rampur in Uttar Pradesh"
+    },
+    {
+      "literal_location": "Rampur, Uttar Pradesh",
+      "resolved_city": "Rampur",
+      "required_source_locality": "Rampur"
+    },
+    {
+      "literal_location": "Bilaspur in Chhattisgarh",
+      "resolved_city": "Bilaspur",
+      "required_source_locality": "Bilaspur in Chhattisgarh"
+    },
+    {
+      "literal_location": "Bilaspur, Chhattisgarh",
+      "resolved_city": "Bilaspur",
+      "required_source_locality": "Bilaspur"
+    }
+  ]
+}

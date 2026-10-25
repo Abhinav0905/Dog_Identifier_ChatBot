@@ -1,0 +1,63 @@
+ASK DORJEE — ORIGINAL 25 + 15 FAILURE VARIATIONS
+25 October 2026, public browser UI, source 440951f / prompt srini-v2.4-2026-10-25
+
+All 40 questions were submitted with the actual UI input and Send control in the same restored conversation. Exact rendered replies, displayed source links, screenshots and manual verdicts are in review.html / review.json. Read-only backend metadata confirms all 40 questions persisted in the same order. No code, prompt or deployment changes were made during this run.
+
+RESULTS
+Original 25: 14 PASS, 7 PARTIAL, 4 FAIL.
+New 15:      5 PASS, 6 PARTIAL, 4 FAIL.
+Combined:   19 PASS, 13 PARTIAL, 8 FAIL.
+The nine previously failed originals: 3 PASS, 2 PARTIAL, 4 FAIL.
+
+The original 25 baseline was 12 PASS, 4 PARTIAL, 9 FAIL. Current results show improvement, but incomplete lookups are still incomplete. Some cases now provide more useful details while remaining PARTIAL for another missing requirement.
+
+PASS for UI05/UI16/UI25 includes explicitly allowed withholding/refusal of unsupported numbers. No real clinical phone was found in those answers. V03 passes the requested no-NGO referral fallback; it does not establish treatment access.
+
+THE EIGHT HARD FAILURES
+- Ambiguous state selection: Rampur (UI13), Bilaspur (V07).
+- Clarified city/state still produces generic fallback: UI14, V08.
+- Full-postal-address wording falls into treatment fallback: V05.
+- Unrelated marketing emails are written: UI24, V13.
+- No actionable Port Blair provider survives: UI04.
+
+CONFIRMED CODE/TRACE DEFECTS
+1. Address output-mode detection is wording-sensitive.
+   UI06, "Address only", passes. V05, "Give only the full postal address, including the PIN code if verified", fails for the same hospital. A deterministic replay of the deployed _address_only_request function returns true for UI06 and false for V05. See format-routing-diagnostic.json.
+   Fix: carry a structured address-only/full-address output requirement independently of the research topic; do not depend on one narrow phrase regex. Keep selected-campus and source-proof checks.
+
+2. City/state clarification is matched as a literal phrase.
+   UI14 metadata requires the source locality "Rampur in Uttar Pradesh"; V08 requires "Bilaspur in Chhattisgarh". Normal source addresses are rejected. Deployed _discovery_locality returns the whole "city in state" phrase, while the comma-separated form returns just the city. See backend-diagnostics.json and locality-matching-diagnostic.json.
+   Fix: use structured, validated city/state components for source matching. Preserve an explicitly selected town or campus; do not broaden silently to a neighbouring city or district.
+
+OTHER REPEATED FAILURES AND FIX DIRECTIONS
+3. Ambiguity is resolved silently (UI13, V07).
+   Fix: ask which state/district, or explain the unresolved ambiguity, before committing to local providers. A geocoder's top result is not necessarily the intended place.
+
+4. Requested answer parts are missing.
+   Mumbai and Panaji cat answers omit handling/transport (UI18, V09). Shillong pickup repeats listings instead of answering tonight (UI12). Bhopal/Guwahati omit clear current-admission call instructions (UI07, UI17). Scooter-stick advice never directly rejects the mentioned action (V11). Kathmandu rejects foreign lookup but omits brief general emergency safety (UI15).
+   Fix: preserve each requested component through answer assembly: immediate care/handling, grounded provider facts, direct follow-up answer and necessary limits. Evidence review must not reduce the whole request to provider rows. Keep India-only provider lookup separate from general safety guidance.
+
+5. Scope enforcement differs between tasks/routes.
+   Marketing emails are fulfilled. V14 refuses restaurants but writes Python code.
+   Fix: classify the actual task, including mixed requests, and apply the scope decision consistently in the router and answer path. Animal-related keywords alone are insufficient.
+
+6. Provider evidence and completeness remain uneven.
+   Port Blair returns generic fallback. Indore lacks actionable details for the explicitly pet-treating clinic. Pune omits details available on the first-party clinic site; a secondary directory link needs entity-binding review. Ludhiana's informal selected unit name is unresolved. Gangtok keeps the new city but its directory mixes pharmacy and clinical-service descriptions.
+   Fix: record per-source fetch outcomes and per-claim rejection reasons; retain grounded useful facts; bind each service, address and phone to the same institution/branch. Distinguish clinical facilities, pharmacy/outlets and administrative referrals. Do not weaken phone proof, guess aliases or promise live admission/pickup to hide gaps.
+
+7. Language carry-over was observed, separately from content scores.
+   UI21 and UI23 answered in Hindi after an earlier Hindi request, although their current questions were English. No retrospective language requirement was added to those cases.
+   Fix direction: explicitly define how current-message language and a persisted language preference should interact, then test that policy.
+
+STARTING POINTS IN THE CODE
+- services/search_evidence.py: review_contact_answer, _address_only_request, _discovery_locality, _grounded_provider_answer.
+- services/query_router.py, services/region_scope.py, services/place_resolver.py: task/location intent and ambiguity.
+- app.py chat_query and services/triage.py: multi-part answer assembly, immediate guidance and outside-India safety boundary.
+- services/guardrails.py: preserve explicit humane rejection while keeping harmful guidance blocked; trace before/after text before attributing a missing answer to sanitisation.
+
+LIMITS AND TEST INTEGRITY
+Verdicts are manual requirement checks, not an independent clinical audit. Three selected sources were spot-checked separately and recorded as such; no provider was called. Published contacts do not confirm current service access.
+The old stones-related generic UI error did not recur. This does not establish that its earlier cause is fixed. One poisoning-question Send click left the input populated with no user bubble; after fresh UI inspection it was clicked again. Only one submission was accepted, and the final database check confirms exactly 40 persisted test turns.
+The UI displays only recent history. Every reply was saved before continuing; screenshots show the visible viewport and JSON retains the full rendered text. WhatsApp was outside this test run.
+
+Recommended fix order: structured output and city/state matching first; ambiguity and scope next; preserve multi-part answers; then improve provider evidence completeness and diagnostics. Validate fixes against the matching failures and wording variations before making a production-readiness claim.

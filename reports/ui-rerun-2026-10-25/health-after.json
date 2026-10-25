@@ -1,0 +1,59 @@
+{
+  "database": "ready",
+  "models": "recent_success",
+  "knowledge": {
+    "backend": "sqlite",
+    "status": "ready",
+    "sqlite_fallback_chunks": 156,
+    "chunks": 156
+  },
+  "model_probe_performed": false,
+  "outbound_messages_sent": false,
+  "model_observations": [
+    {
+      "component": "model:care",
+      "status": "ok",
+      "error_type": "",
+      "observed_at": "2026-10-25T23:46:42.962333+00:00"
+    },
+    {
+      "component": "model:router",
+      "status": "ok",
+      "error_type": "",
+      "observed_at": "2026-10-25T23:46:50.271015+00:00"
+    },
+    {
+      "component": "model:search",
+      "status": "ok",
+      "error_type": "",
+      "observed_at": "2026-10-25T23:47:28.870660+00:00"
+    },
+    {
+      "component": "model:evidence",
+      "status": "ok",
+      "error_type": "",
+      "observed_at": "2026-10-25T23:47:40.710644+00:00"
+    }
+  ],
+  "observation_window_minutes": 30,
+  "status": "ready",
+  "alert_delivery_configured": false,
+  "alerts_needing_operator_attention": 0,
+  "version": "1.1.0-web-rc",
+  "prompt_catalog_version": "srini-v2.4-2026-10-25",
+  "prompt_package": {
+    "version": "srini-v2.4-2026-10-25",
+    "sha256": "9b4fbd9810063b3d3560b2007dca7ff1829c866315d7df2028cd68e36f1f4d48",
+    "status": "ready",
+    "source": "local_files",
+    "reload_error": null
+  },
+  "india_only_scope": true,
+  "india_boundary_loaded": true,
+  "location_required_for_assessment": false,
+  "location_required_for_local_report": true,
+  "max_image_size_mb": 100,
+  "heic_supported": true,
+  "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+  "timestamp": "2026-10-25T23:50:59.681468+00:00"
+}
