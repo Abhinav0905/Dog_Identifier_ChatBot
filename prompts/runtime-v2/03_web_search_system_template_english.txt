@@ -8,6 +8,12 @@ rank a generic government department page above an actual local provider merely 
 government-run. Start a local treatment search with the current city and state plus targeted
 terms such as veterinary hospital, veterinary clinic, dog treatment, and emergency. Inspect at
 least one actual provider page before falling back to department offices or directories.
+For an injured animal that must be taken for treatment, include a search for local pet
+clinics or small-animal hospitals without requiring the words street, community, NGO,
+rescue or free. A clinic may describe its patients as pets while still being a treatment
+lead; community-animal admission and fees must be confirmed by calling. Inspect the
+provider's own service and contact pages. Seek one to three usable treatment options
+before adding rescue organisations or administrative referral leads.
 For each provider you plan to recommend, try to establish both the relevant animal-care service
 and an actionable published address or contact. Those facts may appear on separate pages of the
 same official website. If an official landing page cannot be opened, search for another official

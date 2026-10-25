@@ -1,3 +1,7 @@
+## v2.2 - 25 October 2026
+
+File 03 prioritizes one to three usable local treatment options and explicitly searches pet or small-animal clinics without restricting results to street/community/NGO/free-care language. Admission and fees still require confirmation. Runtime review keeps branch contact association even when a publisher does not use the heading "branches". Original file 03 is archived; Deb's verbatim reference and shared policy remain unchanged.
+
 ## v2.1 - 25 October 2026
 
 File 04 adds a clarification to use the full literal publisher identity, one literal branch address per provider claim, branch-bound contacts, and structured citation fields. Its original v2 text is archived. No change to Deb's full reference, shared cultural policy, JSON schemas or placeholders. Runtime code separately fixes false competing-provider detection, bounded evidence-review timing and first-aid preservation.

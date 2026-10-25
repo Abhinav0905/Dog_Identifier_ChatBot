@@ -1,7 +1,9 @@
 # Versioned prompt files on GitHub and EC2
 
 The current release is `prompts/runtime-v2/`. Files 01–09 originated byte-for-byte
-from Srini's supplied package. Release v2.1 adds a clarification to file 04 about
+from Srini's supplied package. Release v2.2 adds treatment-first pet-clinic research terms to file 03; its original is
+retained in `prompts/archive/03_web_search_system_template_srini_v2_original.txt`.
+Release v2.1 added a clarification to file 04 about
 literal full institution names, one branch address per claim and citation placement.
 The original file 04 is retained in `prompts/archive/04_contact_evidence_review_system_srini_v2_original.txt`.
 Deb's full prompt (00), regression cases (10),

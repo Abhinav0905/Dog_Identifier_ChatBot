@@ -1,3 +1,6 @@
+RELEASE v2.2 - 25 October 2026
+File 03 now explicitly includes pet/small-animal clinics in treatment searches, without requiring street-dog or NGO wording. Its original Srini v2 text is archived alongside the original file 04.
+
 RELEASE v2.1 - 25 October 2026
 File 04 now clarifies full source names, branch-local addresses and citation placement.
 Its original Srini v2 wording is retained at prompts/archive/04_contact_evidence_review_system_srini_v2_original.txt.

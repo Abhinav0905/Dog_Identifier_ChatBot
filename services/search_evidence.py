@@ -500,7 +500,7 @@ def _publisher_branch_phones(page: str, institution: str, place: str) -> set[str
     None preserves ordinary single-facility contact validation. An empty set
     means branch association was not established, so no phone is attached.
     """
-    if not _publisher_page_context(page, institution) or not re.search(r"\bbranches\b", str(page), re.I):
+    if not _publisher_page_context(page, institution):
         return None
     blocks = tuple(str(block) for block in getattr(page, "blocks", ()))
     addresses = [i for i, block in enumerate(blocks) if len(block) <= 1600
