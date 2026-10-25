@@ -1,0 +1,51 @@
+ASK DORJEE: WHY THE INDORE / KOCHI LOOKUPS FAILED
+
+This audit used current code, current EC2 logs, captured synthetic lookup stages and actual browser replies. It did not use old project memory.
+
+1. Neighbourhood incorrectly became a hard provider boundary.
+   The actual Indore request stored requested_location_text="Vijay Nagar, Indore" and resolved city Indore. The reviewer required the first comma-separated component, Vijay Nagar, in each provider passage. Valid clinics elsewhere in Indore were discarded. _discovery_locality now accepts the validated city when that city was explicitly included after the neighbourhood. Exact towns such as Mhow and explicitly selected institutions remain constrained. This is a generic rule, not an Indore provider list.
+   Files: app.py; services/web_search.py; services/search_evidence.py.
+
+2. First aid was promised separately but not delivered for a deep wound.
+   The research prompt intentionally delegated immediate first aid to application code. The emergency detector recognized bleeding/collapse/vehicle trauma but missed deep or open wounds. It also handled search outages differently from unconfirmed contact results. Deep/open wound guidance is now recognized and retained through all lookup outcomes, while phone-only requests retain their output constraint.
+   Files: services/triage.py; app.py.
+
+3. Useful first-party evidence was treated as conflicting-provider content.
+   "Mobile Veterinary Clinic", ordinary service prose and "Contact Branches" caused a publisher page to be rejected. Captured Kochi evidence already described a real pet hospital, address and service. The checker now distinguishes generic services and a provider's own branches from another named institution. Competing providers and unrelated campuses still fail validation. Branch phone association is kept with the displayed address.
+   File: services/search_evidence.py.
+
+4. Evidence review used a short routing timeout.
+   Logs showed an APITimeoutError during the original Kochi evidence review. Review now has a separate 20-second cap and GPT-5.6 reasoning=none, still clamped by the shared turn deadline. The bounded research budget allows a repair pass. This does not make unreadable websites accessible or certify admission.
+   Files: config.py; services/search_evidence.py.
+
+5. Concurrent lookups discarded source URLs after 250 milliseconds.
+   EC2 logs showed a burst of verification concurrency-limit messages and zero readable pages for one request while another occupied all four fetch slots. Fetches now queue within their existing deadline. The four-slot limit and network/SSRF protections remain. A regression test releases a busy slot after 350 ms and confirms the source is still read.
+   File: services/web_search.py.
+
+6. Institution-preservation rules over-constrained open discovery.
+   The old refinement instruction prohibited substituting organisations even when no institution had been requested. It now locks an explicitly selected institution, while open discovery can replace weak leads with better-supported clinics in the explicitly requested city. Research includes pet and small-animal clinics without requiring NGO, free-care or street-dog wording. Original prompt text is archived; Deb's full reference and shared cultural policy are unchanged.
+   Files: prompts/runtime-v2/03_web_search_system_template_english.txt; 04_contact_evidence_review_system.txt; support/web_refinement.txt.
+
+WHAT THE 25-QUESTION UI BASELINE SHOWED
+12 PASS, 4 PARTIAL, 9 FAIL. These results used source 85f389a, before the fixes above were activated. Raw displayed replies, expectations and per-case reasons are in review.json / review.html. Post-fix retests are labelled separately and must not be combined into a claim that all 25 now pass.
+
+REMAINING RELEASE CONCERNS
+- Address-only answers can be routed through treatment adequacy review and lose the actual address.
+- Rampur ambiguity is silently resolved to Uttar Pradesh.
+- The outside-India boundary blocks even brief general injury-safety guidance.
+- The care path answered an unrelated sales-email request.
+- One scooter follow-up displayed a generic UI error. Captured console output did not establish an application-side cause; extension warnings alone are not proof of the cause.
+- Provider completeness still depends on accessible, adequate source evidence. Published contacts do not establish current admission, free care or pickup.
+
+The changes improve specific proven failure paths. They are not a blanket production-readiness certification. No provider was called during these tests.
+
+FOLLOW-UP EVIDENCE DETAIL
+The first post-fix Kochi UI reply was deliberately marked PARTIAL because it retained a generic veterinary-service excerpt while overlooking explicit pet-care text elsewhere on that same first-party page. The final reviewer prefers the already fetched, entity-bound pet-care passage over a generic one. It does not infer dog care from an institution name or weaken another-provider/campus/phone checks. The intermediate partial remains in the report.
+
+FINAL UI RETESTS
+UI26 Indore PASS. UI27 Kochi PARTIAL (retained). UI28 Kochi PASS after preserving the explicit pet-care passage. The 25-case baseline remains 12 PASS / 4 PARTIAL / 9 FAIL.
+
+Ranchi's exact-number case passed the permitted refusal requirement; the clinical number itself remains unavailable. The UI still restores only recent displayed messages, so the exported report preserves the complete observed sequence. All test messages were submitted in the same owned conversation.
+
+PERSISTENCE CHECK
+All 25 distinct planned questions are persisted in conversation 95f381f3-cabd-4337-9b8d-bde5786c0652. It contains 29 matching requests, including two copies of the stones follow-up. The review judges 28 explicitly captured UI records; the extra persisted attempt is not separately judged and its cause has not been established.
