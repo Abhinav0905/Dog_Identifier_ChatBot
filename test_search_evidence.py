@@ -24,6 +24,24 @@ class TestContendedPublicFetch(unittest.TestCase):
             release.join(timeout=2)
 
 class TestSearchEvidence(unittest.TestCase):
+    def test_neighbourhood_origin_keeps_treatment_elsewhere_in_the_explicit_city(self):
+        quote = "Harbour Veterinary Clinic, River Road, Lakeside treats dogs and cats."
+        value = self.result(answer="Treatment option", claims=[], provider_claims=[{
+            "institution":"Harbour Veterinary Clinic", "location":"River Road, Lakeside",
+            "service_type":"clinical_treatment", "source_url":self.url,"evidence_quote":quote,
+        }])
+        result = evidence._validate_review(value,{self.url:quote},clinical_discovery=True,require_small_animal=True,
+            requested_location_text="Market Square, Lakeside", requested_place="Lakeside, District, India",requested_city="Lakeside")
+        self.assertTrue(result.request_satisfied)
+        self.assertIn("River Road, Lakeside",result.answer)
+        self.assertNotIn("Market Square",result.answer)
+        other = evidence._validate_review(value,{self.url:quote},clinical_discovery=True,require_small_animal=True,
+            requested_location_text="Other Town, State", requested_place="Lakeside, District, India",requested_city="Lakeside")
+        self.assertFalse(other.request_satisfied)
+
+    def test_geocoder_city_cannot_replace_a_literal_town_or_requested_institution(self):
+        self.assertEqual(evidence._discovery_locality("Mhow, Madhya Pradesh", "Dr. Ambedkar Nagar, Indore, India", "Dr. Ambedkar Nagar"), "Mhow")
+        self.assertEqual(evidence._discovery_locality("Andheri East, Mumbai", "Andheri East, Maharashtra, India", "Mumbai"), "Mumbai")
     def setUp(self):
         self.client = MagicMock()
         self.enterContext(patch.object(query_router, "client", self.client))

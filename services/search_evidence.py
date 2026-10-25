@@ -89,6 +89,7 @@ def review_contact_answer(
     phone_only: bool | None = None,
     deadline: float | None = None,
     requested_place: str = "",
+    requested_city: str = "",
     requested_location_text: str = "",
     page_cache: dict[str, str | None] | None = None,
 ) -> ContactAnswerReview:
@@ -171,7 +172,7 @@ def review_contact_answer(
             message, re.I,
         ))
         result = _validate_review(reviewed, pages, requested_institution=target, phone_only=phone_only, requested_place=requested_place, requested_location_text=requested_location_text, clinical_only=clinical_only,
-                                  clinical_discovery=clinical_discovery, require_small_animal=require_small_animal, language=language,
+                                  clinical_discovery=clinical_discovery, require_small_animal=require_small_animal, language=language, requested_city=requested_city,
                                   phone_required=needs_contact, address_required=bool(re.search(r"\baddress\b", message, re.I) and not re.search(r"\b(?:name|details)\s+or\s+(?:an?\s+)?address\b", message, re.I)))
         logger.info(
             "Contact evidence review status=%s fetched_sources=%d reason=%s",
@@ -1019,7 +1020,21 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
     return ContactAnswerReview(answer=answer, links=links, status="approved", request_satisfied=satisfied, validated_facts=facts)
 
 
-def _validate_review(value: object, pages: dict[str, str], *, requested_institution: str = "", phone_only: bool = False, requested_place: str = "", requested_location_text: str = "", clinical_only: bool = False,
+def _discovery_locality(literal: str, resolved_place: str, resolved_city: str = "") -> str:
+    """Permit the explicitly requested city, without inventing town aliases.
+
+    A neighbourhood followed by its validated city is a search origin, not an
+    exclusion of all other clinics in that city. A town plus state remains that
+    literal town, even if a geocoder renamed it or included a parent district.
+    """
+    parts = [part.strip() for part in literal.split(",") if part.strip()]
+    city = (resolved_city or resolved_place.split(",", 1)[0]).strip()
+    if city and any(_normalized_location(part) == _normalized_location(city) for part in parts[1:]):
+        return city
+    return parts[0] if parts else city
+
+
+def _validate_review(value: object, pages: dict[str, str], *, requested_institution: str = "", phone_only: bool = False, requested_place: str = "", requested_location_text: str = "", requested_city: str = "", clinical_only: bool = False,
                      clinical_discovery: bool = False, require_small_animal: bool = False, language: str = "en",
                      phone_required: bool = False, address_required: bool = False) -> ContactAnswerReview | None:
     if not isinstance(value, dict) or set(value) != {"answer", "request_satisfied", "provider_claims", "contact_claims", "cited_source_urls"}:
@@ -1111,7 +1126,7 @@ def _validate_review(value: object, pages: dict[str, str], *, requested_institut
     if clinical_discovery and not phone_only:
         return _grounded_provider_answer(
             value["provider_claims"], pages, approved_urls, requested_institution=requested_institution,
-            requested_locality=(requested_location_text or requested_place).split(",", 1)[0].strip(),
+            requested_locality=_discovery_locality(requested_location_text, requested_place, requested_city),
             require_small_animal=require_small_animal, language=language, phone_displays=phone_displays,
             phone_institutions=phone_institutions, phone_sources=phone_sources, phone_roles=phone_roles,
             request_satisfied=satisfied, phone_required=phone_required, address_required=address_required,

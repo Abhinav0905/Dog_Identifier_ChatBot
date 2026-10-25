@@ -442,6 +442,7 @@ def search_animal_question(
     contextual_request: str = "",
     resolved_place: str = "",
     resolved_country_code: str = "",
+    resolved_city: str = "",
     lat: float | None = None,
     lng: float | None = None,
     language: str = "en",
@@ -509,6 +510,7 @@ def search_animal_question(
                 phone_only=phone_only,
                 deadline=deadline,
                 requested_place=resolved_place,
+                requested_city=resolved_city,
                 page_cache=page_cache,
             )
             if review.status != "not_needed":

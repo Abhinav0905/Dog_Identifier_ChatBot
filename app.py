@@ -600,6 +600,7 @@ def chat_query(
                     region_scope.INDIA, region_scope.OUTSIDE_INDIA,
                 } else "",
                 resolved_country_code=scope.country_code,
+                resolved_city=scope.city,
                 lat=scope.lat,
                 lng=scope.lng,
                 language=language,
