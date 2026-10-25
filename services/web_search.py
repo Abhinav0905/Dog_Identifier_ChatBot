@@ -529,6 +529,7 @@ def search_animal_question(
             "original_request": message,
             "requested_institution": requested_institution,
             "case_place": resolved_place,
+            "case_city": resolved_city,
             "evidence_issue": result.response[:2500],
             "already_consulted_sources": result.research_sources[:12],
         }

@@ -1,3 +1,7 @@
+## v2.3 - 25 October 2026
+
+The adaptive research support prompt now distinguishes exact-institution requests from open city-level provider discovery. The earlier unconditional instruction not to substitute an organisation is retained only for an explicitly selected institution; open discovery can replace weak leads with other supported clinics in the requested city. Exact towns and named institutions remain constrained. Runtime code uses the validated city only when the user explicitly included it after a neighbourhood.
+
 ## v2.2 - 25 October 2026
 
 File 03 prioritizes one to three usable local treatment options and explicitly searches pet or small-animal clinics without restricting results to street/community/NGO/free-care language. Admission and fees still require confirmation. Runtime review keeps branch contact association even when a publisher does not use the heading "branches". Original file 03 is archived; Deb's verbatim reference and shared policy remain unchanged.

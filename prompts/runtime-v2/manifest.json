@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "version": "srini-v2.2-2026-10-25",
+  "version": "srini-v2.3-2026-10-25",
   "files": {
     "01_text_router_system.txt": "88d7866e561bb597cd7ffa87af7800d19b3ea3ce75dad96fe0955d69fec8a95b",
     "02_care_system_english.txt": "3abaef964bb41a7853b7d356ae9581e1cf0be754cddd7536a57f3b6506ca76a1",
@@ -28,6 +28,6 @@
     "support/prior_conversation.txt": "f04b1a42c8462d993e1b93620e3bab0d2c9fa48e0b3b6dd24702e3af97b3991e",
     "support/vision_reporter_context.txt": "0b9f40c4b9d2b15c038a7cd5796a4a3b3e40538d468d133aaa3e884e7b453d14",
     "support/vision_user.txt": "f24dd5ded5e36d9c8d3737761d9813c74da46ce95a01fa8574104f178a340f1a",
-    "support/web_refinement.txt": "5cdfca1c08b76d1004af650fe25b0cdba810adf9e8dee3ada9628facce793483"
+    "support/web_refinement.txt": "4bcf97eb8caa24d32012828f3a40011cc5aedb2a9dd00a81ca83d9352a101e77"
   }
 }

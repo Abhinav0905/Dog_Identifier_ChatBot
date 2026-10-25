@@ -1,3 +1,6 @@
+RELEASE v2.3 - 25 October 2026
+The research refinement template distinguishes a locked institution from open local discovery and permits other treatment facilities within an explicitly requested city. Exact-town and institution restrictions remain.
+
 RELEASE v2.2 - 25 October 2026
 File 03 now explicitly includes pet/small-animal clinics in treatment searches, without requiring street-dog or NGO wording. Its original Srini v2 text is archived alongside the original file 04.
 
