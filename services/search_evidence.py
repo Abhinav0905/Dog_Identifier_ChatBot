@@ -1087,13 +1087,14 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             # treatment role or facility identity is not an actionable lead.
             continue
         key = _entity_key(name)
-        row = providers.setdefault(key, {"name": name, "place": place, "services": set(), "urls": [], "small_animal": False, "livestock_only": False})
+        row = providers.setdefault(key, {"name": name, "place": place, "services": set(), "urls": [], "geography_urls": set(), "small_animal": False, "livestock_only": False})
         if place and not row["place"]:
             row["place"] = place
         if source not in row["urls"]:
             row["urls"].append(source)
         if locality_source and locality_source not in row["urls"]:
             row["urls"].append(locality_source)
+            row["geography_urls"].add(locality_source)
         if _provider_service_is_grounded(name, service, quote, require_small_animal=False, allow_preceding=same_block, veterinary_context=veterinary_context):
             row["services"].add(service)
             if service == "clinical_treatment":
@@ -1161,7 +1162,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
         answer += "\n\n- " + description
         for source in row["urls"]:
             if source not in {link["url"] for link in links}:
-                links.append({"label": f"{row['name']}: source", "url": source})
+                links.append({"label": (f"{row['place']}: location source" if source in row["geography_urls"] else f"{row['name']}: source"), "url": source})
     published_general = [phone_displays[fact["value"]] for fact in facts if fact["kind"] == "phone" and phone_roles.get(fact["value"]) != "clinical contact"]
     if published_general:
         answer += ("\n\nऊपर दिए गए सामान्य या प्रशासनिक संपर्क पर पूछें कि अभी किस इकाई में पशु का इलाज और प्रवेश हो सकता है; यह संपर्क अपने आप में चिकित्सा या पिकअप लाइन नहीं है।" if language == "hi" else
