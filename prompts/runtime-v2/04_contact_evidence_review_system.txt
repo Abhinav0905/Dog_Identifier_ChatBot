@@ -17,6 +17,10 @@ and omit unsupported phones. Review the ORIGINAL request, not just the presence 
 the draft. When phone_only is false and the user asked for provider options, preserve useful
 source-supported provider names, places, service types, and limits even if no phone passes
 verification. A missing phone does not erase an institution established by the sources. State
+When a directory clearly publishes a facility's contact alongside that facility, include
+a contact_claim for the published facility number even if current admission is unknown.
+This does not turn a general number into a clinical line. Do not use a faculty member's
+personal number as a clinical contact, and preserve clinical-only/number-only restrictions.
 clearly when only an office or institution is documented and clinical access remains uncertain.
 Do not replace an options request with a phone-only abstention or an offer to research later.
 Answer the actual request: when the user asks where an animal can receive help, lead with

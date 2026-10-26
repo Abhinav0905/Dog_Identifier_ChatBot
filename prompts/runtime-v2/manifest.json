@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "version": "srini-v2.7-2026-10-25",
+  "version": "srini-v2.8-2026-10-25",
   "files": {
     "01_text_router_system.txt": "392ee9f11c15365bf255a30ba483ac5cce0373c11486c186d347e29127afe2a7",
     "02_care_system_english.txt": "0e0ab13e1535f2bb48947f6687c97cfbed270389caefa829c99eb34c749fea08",
-    "03_web_search_system_template_english.txt": "79e3778b7b80b45db35ccd1d5033b22c6fa393d5d7a084ca4d44ec025b86bec1",
-    "04_contact_evidence_review_system.txt": "cddd45874db84eb3b2d9359595a93ede18d8acf75c4106e291c2a603cc1912f7",
+    "03_web_search_system_template_english.txt": "2cb3b654e19cc12a62c753835b22b1c16e02629bff7540cf17ba5d0cbce057b4",
+    "04_contact_evidence_review_system.txt": "708a52dd34690a0a66c28884e8a61c98195e1fe9c9ad8343207c97f73fceea69",
     "05_vision_system_english.txt": "38e189cf37e16dfc4afc97bc03e4a1cc2024a23a6cea707c389a119cb5fbb490",
     "06_enrichment_system_english.txt": "a55b02925bec687ed15c4364cb9c44613248c00d01e51998795115e6fd7fdfd6",
     "07_query_analysis_template.txt": "b60806cfc737ff7c11d6905785076110b16ada0fb7382fdc3377a9c6ef96eae1",

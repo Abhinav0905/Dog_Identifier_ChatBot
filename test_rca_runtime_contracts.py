@@ -97,6 +97,11 @@ class TestRcaEvidenceContracts(unittest.TestCase):
                 result=self.review(literal)
                 self.assertTrue(result.request_satisfied)
                 self.assertIn("River Animal Hospital",result.answer)
+        proof="https://map.example/facility"
+        pages={proof:"Address 12 Market Road, Riverside, Central Ward, Sample City, Kerala. Copy Direction Hours"}
+        self.assertEqual(evidence._locality_parent_source("Riverside","Sample City",pages,"Kerala"),proof)
+        self.assertEqual(evidence._locality_parent_source("Riverside","Sample City",pages,"Punjab"),"")
+        self.assertEqual(evidence._locality_parent_source("Riverside","Sample City",{proof:"Popular cities Riverside, Sample City"}),"")
 
     def test_same_named_city_in_wrong_state_is_rejected(self):
         result=self.review("Rampur in Uttar Pradesh",source_state="Himachal Pradesh")

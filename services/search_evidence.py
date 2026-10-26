@@ -266,6 +266,17 @@ def _fetch_sources(source_urls: Iterable[str], *, deadline: float | None = None,
                 + int(urlparse(url).hostname in primary_hosts)
                 - 4 * bool(re.search(r"recruit|tender|admission|notification|counselling", path)))
     urls = urls[:4] + sorted(urls[4:], key=priority, reverse=True)
+    # Inspect different publishers before spending every slot on one blocked
+    # host. Deferred same-host pages remain eligible when there are free slots.
+    diverse, deferred, host_counts = [], [], {}
+    for url in urls:
+        host = str(urlparse(url).hostname or "").removeprefix("www.")
+        if host_counts.get(host, 0) >= 3:
+            deferred.append(url)
+        else:
+            diverse.append(url)
+            host_counts[host] = host_counts.get(host, 0) + 1
+    urls = diverse + deferred
     cached = page_cache if page_cache is not None else {}
     found: dict[str, str] = {}
     attempted: list[str] = []
@@ -992,6 +1003,24 @@ def _provider_service_is_grounded(institution: str, service: str, quote: str, *,
     return False
 
 
+def _locality_parent_source(locality: str, city: str, pages: dict[str, str], region: str = "") -> str:
+    """A fetched address can establish a neighbourhood's city, not a phone alias.
+
+    Only a bounded Address-labelled passage with comma-separated geography is
+    accepted. Unrelated city lists, publisher headquarters and navigation do
+    not establish a provider's location. The supporting URL is cited separately.
+    """
+    if not locality or not city or _normalized_location(locality) == _normalized_location(city):
+        return ""
+    for source, page in pages.items():
+        for match in re.finditer(r"\baddress\b\s*:?", str(page), re.I):
+            passage = re.split(r"\b(?:copy\s+direction|hours|reviews|categories|popular\s+cities)\b", str(page)[match.end():match.end() + 350], maxsplit=1, flags=re.I)[0]
+            hierarchy = re.escape(locality) + r"\s*,\s*(?:[\w .'-]{1,60}\s*,\s*){0,3}" + re.escape(city) + r"\b"
+            if re.search(hierarchy, passage, re.I) and text_contract.locality_matches(city, passage, region):
+                return source
+    return ""
+
+
 def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls: list[str], *, requested_institution: str,
                               requested_locality: str,
                               require_small_animal: bool, language: str, phone_displays: dict[str, str],
@@ -1032,16 +1061,20 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             # district/state. This never adds a city absent from this passage.
             first = place.split(",", 1)[0].strip()
             place = first if first and f" {_normalized_location(first)} " in f" {_normalized_location(quote)} " else ""
+        locality_source = ""
         if (
             requested_locality
             and not requested_institution
             and not text_contract.locality_matches(requested_locality, f'{quote} {place}', requested_region)
         ):
-            web_operations.record_event("evidence:rejection", "empty", error_type="WrongStateOrLocality")
+            if text_contract.locality_matches("", f'{quote} {place}', requested_region):
+                locality_source = _locality_parent_source(place, requested_locality, pages, requested_region)
             # General discovery is tied to the current case locality.  An
             # identity-only result from another campus/city is not a useful
             # fallback merely because it appeared in the same search.
-            continue
+            if not locality_source:
+                web_operations.record_event("evidence:rejection", "empty", error_type="WrongStateOrLocality")
+                continue
         if (
             service == "identity_only"
             and not place
@@ -1059,6 +1092,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             row["place"] = place
         if source not in row["urls"]:
             row["urls"].append(source)
+        if locality_source and locality_source not in row["urls"]:
+            row["urls"].append(locality_source)
         if _provider_service_is_grounded(name, service, quote, require_small_animal=False, allow_preceding=same_block, veterinary_context=veterinary_context):
             row["services"].add(service)
             if service == "clinical_treatment":
