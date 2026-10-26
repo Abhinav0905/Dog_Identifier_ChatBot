@@ -113,7 +113,7 @@ class TestPromptReleases(unittest.TestCase):
 
     def test_reference_files_are_not_loaded(self):
         bundle = prompt_store.load_bundle(self.package)
-        self.assertEqual(len(bundle.texts), 27)
+        self.assertEqual(set(bundle.texts), prompt_store.REQUIRED_FILES)
         self.assertNotIn("00_Deb_DAR_Humane_Education_GPT_Full.txt", bundle.texts)
         self.assertNotIn("10_regression_test_cases.txt", bundle.texts)
 

@@ -65,7 +65,7 @@ def _dar_contact_phrase() -> str:
 # ordinary dog-welfare questions, while the cases below receive stable instructions
 # that can be regression tested word-for-word and never contain contact details.
 _SAFETY_ANIMAL_RE = re.compile(
-    r"\b(?:community\s+|street\s+|stray\s+)?(?:dog|dogs|puppy|puppies|animals?)\b",
+    r"\b(?:community\s+|street\s+|stray\s+)?(?:dog|dogs|puppy|puppies|cats?|kittens?|animals?)\b",
     re.IGNORECASE,
 )
 _BLEEDING_CASE_RE = re.compile(
@@ -1037,7 +1037,44 @@ def urgent_caption_guidance(message: str, language: str = "en") -> str | None:
         or _positive_symptom(_SERIOUS_WOUND_RE, message)
         or (_positive_symptom(_VEHICLE_TRAUMA_RE, message) and not _VEHICLE_PREVENTION_RE.search(message))
     )
-    return immediate_safety_response(message, language=language) if actual_human or actual_animal else None
+    answer = immediate_safety_response(message, language=language) if actual_human or actual_animal else None
+    if answer and language != "hi" and re.search(r"\b(?:cat|kitten)\b", message, re.I) and not re.search(r"\bdog\b", message, re.I):
+        answer = re.sub(r"\bdog\b", "cat", answer, flags=re.I)
+    return answer
+
+
+def search_care_guidance(message: str, language: str = "en") -> str | None:
+    """Compose requested handling with urgent guidance before provider review.
+
+    Handling principles checked against RSPCA emergency-cat and Cats Protection
+    first-aid guidance. These are server-owned safety responses, not model prompts.
+    """
+    urgent = urgent_caption_guidance(message, language)
+    cat = bool(re.search(r"\b(?:cats?|kittens?)\b|बिल्ली", message, re.I))
+    handling = bool(re.search(r"\b(?:mov(?:e|ing)|transport|hiding|frightened|under\s+a\s+(?:parked\s+)?car)\b|छिप|ले\s+जा|डरी", message, re.I))
+    if not (cat and handling):
+        return urgent
+    advice = (
+        "डरी या घायल बिल्ली को न दौड़ाएँ, न गाड़ी के नीचे हाथ डालें। चालक को गाड़ी न हिलाने दें और खुद यातायात से दूर रहें। "
+        "पशु चिकित्सक या प्रशिक्षित हैंडलर से मदद लें। सुरक्षित हो और बिल्ली छूने दे तभी तौलिये से शरीर को सहारा देकर "
+        "हवादार, सुरक्षित कैरियर में रखें; चेहरे या साँस को न ढकें और चोट पर दबाव न दें। जबरन पकड़ने की कोशिश न करें।"
+        if language == "hi" else
+        "Do not chase the frightened cat or reach under the car. Ask the driver not to move it and keep yourself out of traffic. "
+        "Call a veterinarian or trained animal handler for help with safe capture. Only if she tolerates handling and you can do it safely, "
+        "support her body with a towel and place her gently in a secure, ventilated carrier. Keep her face clear and avoid pressure on injuries. "
+        "A towel does not prevent bites or scratches; stop if she struggles and do not force a capture."
+    )
+    return "\n\n".join(part for part in (urgent, advice) if part)
+
+
+def provider_availability_guidance(message: str, language: str, facts: list[dict]) -> str:
+    """Published service evidence never certifies admission or dispatch now."""
+    pickup = bool(re.search(r"pick|लेने\s+आ", message, re.I))
+    if language == "hi":
+        return ("आज पशु को लेने आने की उपलब्धता सुनिश्चित नहीं है। बताए गए संपर्क पर स्थान और समय बताकर पिकअप तथा सुरक्षित परिवहन पूछें।"
+                if pickup else "अभी प्रवेश की गारंटी नहीं दी जा सकती। जाने से पहले सुविधा को फोन करके इस पशु का इलाज, प्रवेश और सही आपातकालीन स्थान पूछें।")
+    return ("Pickup tonight or at the requested time is not confirmed. Call the listed contact to ask whether they cover this location and can collect the animal; also ask about safe transport if pickup is unavailable."
+            if pickup else "Admission now or tonight cannot be guaranteed. Call before travelling to confirm they can treat and admit this animal and to check the correct emergency location.")
 
 
 def _human_exposure_answer_is_safe(answer: str) -> bool:
@@ -1425,6 +1462,7 @@ def generate_chat_response(
     language: str = "en",
     contextual_message: str = "",
     deadline: float | None = None,
+    care_only: bool = False,
 ) -> str:
     """Use the model for contextual, audience-aware care with bounded retrieval.
 
@@ -1455,6 +1493,9 @@ def generate_chat_response(
     )
 
     messages = _history_for_chat_model(history)
+    if care_only:
+        messages.append({"role": "developer", "content": PromptCatalog.search_care_only()})
+    messages.append({"role": "developer", "content": PromptCatalog.reply_language(language)})
     messages.append({"role": "user", "content": message})
 
     model_started = time.monotonic()

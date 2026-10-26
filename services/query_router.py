@@ -19,7 +19,7 @@ from typing import Any, Iterable, Mapping
 from openai import OpenAI
 
 import config
-from services import web_operations
+from services import web_operations, text_contract
 from services.prompts import PromptCatalog
 
 
@@ -32,6 +32,7 @@ class TextAction(str, Enum):
     ANSWER = "answer"
     SEARCH = "search"
     CLARIFY = "clarify"
+    OUT_OF_SCOPE = "out_of_scope"
 
 
 @dataclass(frozen=True)
@@ -46,6 +47,8 @@ class TextTurn:
     phone_only: bool = False
     local_help: bool = False
     new_case: bool = False
+    output_format: str = "text"
+    needs_care_guidance: bool = False
     source: str = "model"
 
     @property
@@ -66,11 +69,13 @@ TEXT_TURN_SCHEMA = {
         "phone_only": {"type": "boolean"},
         "local_help": {"type": "boolean"},
         "new_case": {"type": "boolean"},
+        "output_format": {"type": "string", "enum": ["text", "phone_only", "address_only"]},
+        "needs_care_guidance": {"type": "boolean"},
     },
     "required": [
         "action", "contextual_request", "location_kind", "location_text",
         "clarification_question", "needs_immediate_guidance",
-        "requested_institution", "phone_only", "local_help", "new_case",
+        "requested_institution", "phone_only", "local_help", "new_case", "output_format", "needs_care_guidance",
     ],
     "additionalProperties": False,
 }
@@ -88,6 +93,8 @@ def plan_text_turn(
     current = str(message or "").strip()
     history = list(history)
     fallback = _fallback_text_turn(current, history, case_location)
+    if text_contract.clearly_off_topic_task(current):
+        return TextTurn(action=TextAction.OUT_OF_SCOPE, contextual_request=current, source="scope_contract")
     if client is None or (deadline is not None and deadline <= time.monotonic()):
         return fallback
     recent = [
@@ -157,6 +164,8 @@ def plan_text_turn(
             phone_only=value.get("phone_only") is True,
             local_help=value.get("local_help") is True,
             new_case=value.get("new_case") is True,
+            output_format="address_only" if text_contract.address_only_request(current) else str(value.get("output_format") or ("phone_only" if value.get("phone_only") else "text")),
+            needs_care_guidance=value.get("needs_care_guidance") is True,
         )
     except Exception as exc:
         web_operations.record_event(

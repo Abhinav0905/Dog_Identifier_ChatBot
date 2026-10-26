@@ -441,6 +441,7 @@ def search_animal_question(
     history: Iterable[dict] = (),
     *,
     contextual_request: str = "",
+    output_format: str = "text",
     resolved_place: str = "",
     resolved_country_code: str = "",
     resolved_city: str = "",
@@ -466,6 +467,7 @@ def search_animal_question(
         "requested_institution": str(requested_institution or "")[:300],
         "requested_location_text": str(requested_location_text or "")[:500],
         "phone_only": phone_only,
+        "output_format": output_format,
     }
     if lat is not None and lng is not None and _coordinates_are_valid(lat, lng):
         context["shared_coordinates"] = {"latitude": float(lat), "longitude": float(lng)}
@@ -510,6 +512,7 @@ def search_animal_question(
                 requested_institution=requested_institution,
                 requested_location_text=requested_location_text,
                 phone_only=phone_only,
+                output_format=output_format,
                 deadline=deadline,
                 requested_place=resolved_place,
                 requested_city=resolved_city,
@@ -522,6 +525,8 @@ def search_animal_question(
                 candidate.request_satisfied = getattr(review, "request_satisfied", None)
                 candidate.validated_facts = getattr(review, "validated_facts", [])
                 candidate.evidence_issue = getattr(review, "evidence_issue", "")
+                if candidate.request_satisfied is False and not candidate.evidence_issue:
+                    candidate.evidence_issue = "requested_contact_or_service_unverified"
         return candidate
 
     result = review_result(result)
@@ -2485,11 +2490,18 @@ def _fetch_public_page_text(
         return None
     # A second search must wait for an occupied slot within its existing
     # source-fetch deadline, rather than discard every URL after 250 ms.
+    queued_at = time.monotonic()
     if not PAGE_FETCH_SEMAPHORE.acquire(timeout=remaining):
         logger.info("Public page fetch reached its deadline while waiting for a slot")
+        web_operations.record_event("fetch:queue", "timeout", error_type="FetchQueueDeadline")
         return None
+    started = time.monotonic()
+    web_operations.record_event("fetch:queue", "ok", round((started - queued_at) * 1000))
     try:
-        return _fetch_public_page_text_unlocked(url, deadline=queue_deadline, allow_public_redirects=allow_public_redirects)
+        page = _fetch_public_page_text_unlocked(url, deadline=queue_deadline, allow_public_redirects=allow_public_redirects)
+        web_operations.record_event("fetch:page", "ok" if page else "unavailable", round((time.monotonic() - started) * 1000),
+                                   "" if page else "UnreadableSource")
+        return page
     finally:
         PAGE_FETCH_SEMAPHORE.release()
 
@@ -2593,10 +2605,12 @@ def _fetch_public_page_text_unlocked(
                 current_url = urljoin(current_url, redirect)
                 continue
             if response.status != 200:
+                web_operations.record_event("fetch:http", "error", error_type="HTTP" + str(response.status))
                 return None
             content_type = str(response.headers.get("Content-Type") or "").lower()
             media_type = content_type.split(";", 1)[0].strip()
             if media_type not in {"text/html", "application/xhtml+xml", "text/plain", "application/pdf"}:
+                web_operations.record_event("fetch:media", "unavailable", error_type="UnsupportedMediaType")
                 return None
             max_bytes = config.DOG_WEB_PDF_VERIFY_MAX_BYTES if media_type == "application/pdf" else config.DOG_WEB_PAGE_VERIFY_MAX_BYTES
             content_encoding = str(response.headers.get("Content-Encoding") or "").lower()
@@ -2644,6 +2658,7 @@ def _fetch_public_page_text_unlocked(
                     return PublicPageText(text, source_hostname=hostname) if text.strip() else None
                 except Exception as exc:
                     logger.info("Public PDF text unavailable: %s", type(exc).__name__)
+                    web_operations.record_event("fetch:pdf", "error", error_type=type(exc).__name__)
                     return None
             charset_match = re.search(r"charset=([^;\s]+)", content_type)
             encoding = (

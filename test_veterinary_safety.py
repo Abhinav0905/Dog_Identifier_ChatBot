@@ -367,7 +367,8 @@ class TestHumaneBehaviourAndDonorPolicy(unittest.TestCase):
             )
         model_input = model_client.responses.create.call_args.kwargs["input"]
         self.assertEqual(model_input[-1], {"role": "user", "content": query})
-        self.assertEqual([entry["role"] for entry in model_input], ["system", "user"])
+        self.assertEqual([entry["role"] for entry in model_input], ["system", "developer", "user"])
+        self.assertIn("CURRENT turn in English", model_input[-2]["content"])
         self.assertGreater(model_input[0]["content"].index("FINAL RESPONSE CONTRACT"), model_input[0]["content"].index("Reference: give dogs space."))
         self.assertEqual(result, answer)
 

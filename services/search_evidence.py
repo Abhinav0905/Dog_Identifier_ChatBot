@@ -6,12 +6,14 @@ import json
 import logging
 import re
 import time
+import threading
+from contextvars import copy_context
 import unicodedata
 from typing import Iterable
 from urllib.parse import urldefrag, urlparse, parse_qsl, urlencode, urlunparse
 
 import config
-from services import query_router, web_search, web_operations
+from services import query_router, web_search, web_operations, text_contract
 from services.prompts import PromptCatalog
 
 
@@ -19,6 +21,8 @@ logger = logging.getLogger(__name__)
 FETCH_BUDGET_SECONDS = 12.0
 MAX_SOURCES = 12
 FETCH_WORKERS = 4
+_FETCH_EXECUTOR = ThreadPoolExecutor(max_workers=FETCH_WORKERS, thread_name_prefix="contact-evidence")
+_FETCH_CAPACITY = threading.BoundedSemaphore(MAX_SOURCES)
 _PHONE = re.compile(r"(?<!\w)\+?\d[\d \t().\-–—]{4,}\d(?!\w)")
 _CONTACT_REQUEST = re.compile(
     r"\b(?:phone|telephone|helpline)\b|\b(?:mobile|contact)\s+(?:number|details)\b|"
@@ -87,6 +91,7 @@ def review_contact_answer(
     language: str = "en",
     *,
     requested_institution: str | None = None,
+    output_format: str = "text",
     phone_only: bool | None = None,
     deadline: float | None = None,
     requested_place: str = "",
@@ -96,7 +101,7 @@ def review_contact_answer(
 ) -> ContactAnswerReview:
     """Independently review phone answers; discovery remains unrestricted."""
     history = list(history)
-    address_only = _address_only_request(message)
+    address_only = output_format == "address_only" or _address_only_request(message)
     phone_only = _number_only_request(message) if phone_only is None else phone_only
     target = _requested_target(message, history, requested_institution)
     needs_contact = bool(phone_only or _CONTACT_REQUEST.search(f"{message}\n{contextual_request}"))
@@ -116,6 +121,7 @@ def review_contact_answer(
     if not clinical_discovery and not needs_contact and not needs_provider and not _answer_phone_spans(draft):
         return ContactAnswerReview(answer=draft, status="not_needed")
     def fallback(reason="review_unavailable"):
+        web_operations.record_event("evidence:result", "fallback", error_type=re.sub(r"\W+", "_", reason)[:79])
         if address_only:
             return ContactAnswerReview(
                 answer="मैं अनुरोधित संस्था का पता सुनिश्चित नहीं कर सका।" if language == "hi" else "I couldn't confirm the requested institution's address from accessible sources.",
@@ -195,6 +201,8 @@ def review_contact_answer(
             (result.evidence_issue or "reviewed") if result is not None else "evidence_validation_failed",
         )
         if result is not None:
+            web_operations.record_event("evidence:result", "fallback" if result.request_satisfied is False else "ok",
+                                        error_type="NoGroundedProviderClaims" if result.evidence_issue == "no_grounded_provider_claims" else "")
             return result
         if clinical_discovery or address_only:
             # A malformed evidence review cannot reintroduce an ungrounded
@@ -272,8 +280,20 @@ def _fetch_sources(source_urls: Iterable[str], *, deadline: float | None = None,
         pending_urls = [url for url in batch if url not in cached]
         if not pending_urls or time.monotonic() >= deadline:
             return
-        executor = ThreadPoolExecutor(max_workers=FETCH_WORKERS, thread_name_prefix="contact-evidence")
-        pending = {executor.submit(web_search._fetch_public_page_text, url, deadline=deadline, allow_public_redirects=True): url for url in pending_urls}
+        # A shared bounded executor prevents expired batches from spawning a
+        # new group of workers while the preceding HTTP/parser calls finish.
+        pending = {}
+        for url in pending_urls:
+            if not _FETCH_CAPACITY.acquire(blocking=False):
+                web_operations.record_event("fetch:queue", "unavailable", error_type="FetchQueueFull")
+                break
+            try:
+                future = _FETCH_EXECUTOR.submit(copy_context().run, web_search._fetch_public_page_text, url, deadline=deadline, allow_public_redirects=True)
+            except Exception:
+                _FETCH_CAPACITY.release()
+                raise
+            future.add_done_callback(lambda _: _FETCH_CAPACITY.release())
+            pending[future] = url
         try:
             for future in as_completed(pending, timeout=max(0.001, deadline - time.monotonic())):
                 try:
@@ -288,7 +308,8 @@ def _fetch_sources(source_urls: Iterable[str], *, deadline: float | None = None,
         except FuturesTimeout:
             logger.info("Contact source fetch reached its deadline")
         finally:
-            executor.shutdown(wait=False, cancel_futures=True)
+            for future in pending:
+                future.cancel()
 
     # Reserve two source slots for a fetched publisher's own contact/service
     # pages. This is one hop, never an unbounded website crawl.
@@ -606,7 +627,7 @@ def _number_only_request(message: str) -> bool:
 
 
 def _address_only_request(message: str) -> bool:
-    return bool(re.search(r"\b(?:only|just)\s+(?:the\s+)?address\b|\baddress\s+only\b", message, re.I))
+    return text_contract.address_only_request(message)
 
 
 def _address_target_matches(target: str, institution: str, page: str, source: str) -> bool:
@@ -975,7 +996,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                               requested_locality: str,
                               require_small_animal: bool, language: str, phone_displays: dict[str, str],
                               phone_institutions: dict[str, str], phone_sources: dict[str, list[str]], phone_roles: dict[str, str],
-                              request_satisfied: bool = True, phone_required: bool = False, address_required: bool = False) -> ContactAnswerReview:
+                              request_satisfied: bool = True, phone_required: bool = False, address_required: bool = False,
+                              requested_region: str = "") -> ContactAnswerReview:
     """Render service claims only from entity-bound fetched evidence, not prose."""
     providers: dict[str, dict] = {}
     for claim in claims[:16]:
@@ -1013,9 +1035,9 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
         if (
             requested_locality
             and not requested_institution
-            and f" {_normalized_location(requested_locality)} "
-                not in f" {_normalized_location(f'{quote} {place}')} "
+            and not text_contract.locality_matches(requested_locality, f'{quote} {place}', requested_region)
         ):
+            web_operations.record_event("evidence:rejection", "empty", error_type="WrongStateOrLocality")
             # General discovery is tied to the current case locality.  An
             # identity-only result from another campus/city is not a useful
             # fallback merely because it appeared in the same search.
@@ -1049,7 +1071,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                   "I couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.")
         answer += "\n\n" + web_search._generic_veterinary_referral(language)
         return ContactAnswerReview(answer=answer, status="approved", request_satisfied=False,
-            evidence_issue="no_provider_bound_to_requested_locality: source must bind the facility name to " + requested_locality)
+            evidence_issue="no_grounded_provider_claims")
     answer = ("स्रोतों में ये उपचार विकल्प और संस्था संबंधी जानकारी मिली:" if language == "hi" else "The sources identify these treatment options and institution leads:") if has_clinical else (
         "ये संस्थाएँ स्रोतों में सूचीबद्ध हैं, लेकिन उनके यहाँ पशु का इलाज उपलब्ध होने की पुष्टि नहीं हुई:" if language == "hi" else
         "These institutions are listed in the sources, but clinical treatment access remains unconfirmed:")
@@ -1111,6 +1133,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                    "\n\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.")
     answer += ("\n\nइलाज की सुविधा सूचीबद्ध होने से पशु को लेने आने की बचाव सेवा या वर्तमान उपलब्धता की पुष्टि नहीं होती।" if language == "hi" else
                "\n\nA treatment listing alone does not establish rescue pickup or current availability.")
+    answer += (" जाने से पहले फोन करके इस पशु के इलाज, प्रवेश और सही आपातकालीन स्थान की पुष्टि करें।" if language == "hi" else
+               " Call before travelling to confirm treatment and admission for this animal and the correct emergency location.")
     has_phone = any(fact["kind"] == "phone" for fact in facts)
     has_address = any(re.search(r"\b(?:road|street|lane|campus|complex|nagar|sector|ward|opposite|near)\b|\b\d{6}\b", row["place"], re.I) for row in providers.values())
     satisfied = has_clinical and request_satisfied and (not phone_required or has_phone) and (not address_required or has_address)
@@ -1128,7 +1152,11 @@ def _discovery_locality(literal: str, resolved_place: str, resolved_city: str = 
     exclusion of all other clinics in that city. A town plus state remains that
     literal town, even if a geocoder renamed it or included a parent district.
     """
-    parts = [part.strip() for part in literal.split(",") if part.strip()]
+    # The linking word is grammar, not part of a city name. Keep the selected
+    # state separately for conflict checking rather than requiring this wording.
+    states = "|".join(re.escape(state) for state in sorted(query_router.INDIA_STATES, key=len, reverse=True))
+    canonical = re.sub(r"\s+in\s+(?=(?:" + states + r")\b)", ", ", literal, flags=re.I)
+    parts = [part.strip() for part in canonical.split(",") if part.strip()]
     city = (resolved_city or resolved_place.split(",", 1)[0]).strip()
     if city and any(_normalized_location(part) == _normalized_location(city) for part in parts[1:]):
         return city
@@ -1230,6 +1258,8 @@ def _validate_review(value: object, pages: dict[str, str], *, requested_institut
         return _grounded_provider_answer(
             value["provider_claims"], pages, approved_urls, requested_institution=requested_institution,
             requested_locality=_discovery_locality(requested_location_text, requested_place, requested_city),
+            requested_region=next((state for state in sorted(query_router.INDIA_STATES, key=len, reverse=True)
+                                   if re.search(r"\b" + re.escape(state) + r"\b", requested_location_text + " " + requested_place, re.I)), ""),
             require_small_animal=require_small_animal, language=language, phone_displays=phone_displays,
             phone_institutions=phone_institutions, phone_sources=phone_sources, phone_roles=phone_roles,
             request_satisfied=satisfied, phone_required=phone_required, address_required=address_required,

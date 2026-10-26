@@ -20,7 +20,7 @@ import requests
 
 import config
 import database as db
-from services import location
+from services import location, web_operations
 from services.prompts import PromptCatalog
 
 logger = logging.getLogger(__name__)
@@ -498,7 +498,7 @@ def resolve_named_place(
         )
 
     indian_hint = _valid_india_hint(hint_lat, hint_lng)
-    query_key = f"v10:{_primary_geocoder_provider()}:{_normalise_query(cleaned)}"
+    query_key = f"v11:{_primary_geocoder_provider()}:{_normalise_query(cleaned)}"
     cached = _get_cached_resolution(query_key)
     if cached:
         return cached
@@ -522,6 +522,8 @@ def resolve_named_place(
                 resolution = _resolution_from_geocoder(india_result, source=result_source)
                 if resolution.scope == INDIA:
                     if _needs_locality_qualification(cleaned, india_result):
+                        if india_result.get("_gaia_ambiguous_states"):
+                            return PlaceResolution(AMBIGUOUS, display_name=cleaned, source="small_locality_needs_parent")
                         hinted = _resolve_fuzzy_indian_place(
                             cleaned,
                             hint_lat=indian_hint[0] if indian_hint else None,
@@ -560,6 +562,8 @@ def resolve_named_place(
         if global_result:
             resolution = _resolution_from_geocoder(global_result, source=result_source)
             if resolution.scope == INDIA and _needs_locality_qualification(cleaned, global_result):
+                if global_result.get("_gaia_ambiguous_states"):
+                    return PlaceResolution(AMBIGUOUS, display_name=cleaned, source="small_locality_needs_parent")
                 hinted = _resolve_fuzzy_indian_place(
                     cleaned,
                     hint_lat=indian_hint[0] if indian_hint else None,
@@ -1203,7 +1207,7 @@ def _needs_locality_qualification(query: str, result: dict) -> bool:
     """Require context for a bare small locality instead of guessing silently."""
     tokens = _place_tokens(query)
     address_type = str(result.get("addresstype") or result.get("type") or "").lower()
-    return len(tokens) == 1 and address_type in SMALL_LOCALITY_ADDRESS_TYPES
+    return bool(result.get("_gaia_ambiguous_states")) or (len(tokens) == 1 and address_type in SMALL_LOCALITY_ADDRESS_TYPES)
 
 
 def _place_tokens(value: str) -> list[str]:
@@ -1809,6 +1813,7 @@ def _locationiq_autocomplete_search(place: str) -> list[dict]:
         "limit": 10,
         "accept-language": "en",
     }
+    started = time.monotonic()
     try:
         with _geocoder_slot(_geocoder_lock, _last_geocoder_request, 1.05):
             response = _bounded_geocoder_get(
@@ -1822,6 +1827,7 @@ def _locationiq_autocomplete_search(place: str) -> list[dict]:
             return []
         response.raise_for_status()
         payload = response.json()
+        web_operations.record_event("geocoder:" + provider, "ok", round((time.monotonic() - started) * 1000))
         return payload if isinstance(payload, list) else []
     except Exception as exc:  # noqa: BLE001 - unresolved places get clarification
         status_code = getattr(getattr(exc, "response", None), "status_code", None)
@@ -1965,12 +1971,27 @@ def _nominatim_request(
         payload = response.json()
         if not isinstance(payload, list) or not payload:
             return None
-        for candidate in payload:
-            if candidate_filter(candidate):
-                return candidate
+        candidates = [candidate for candidate in payload if isinstance(candidate, dict) and candidate_filter(candidate)]
+        if candidates:
+            first = dict(candidates[0])
+            # Only actual same-name settlement candidates establish ambiguity;
+            # duplicate districts/administrative rows do not count as new cities.
+            from services.query_router import INDIA_STATES
+            qualified_state = any(re.search(r"\b" + re.escape(state) + r"\b", place, re.I) for state in INDIA_STATES)
+            query_name = re.sub(r"[, ]+(?:India|Bharat)$", "", place, flags=re.I)
+            same_name = [candidate for candidate in candidates
+                         if _normalise_query(str(candidate.get("display_name") or "").split(",", 1)[0]) == _normalise_query(query_name)
+                         and str((candidate.get("address") or {}).get("country_code") or "").lower() == "in"]
+            states = {str((candidate.get("address") or {}).get("state") or "").casefold() for candidate in same_name}
+            states.discard("")
+            if len(states) > 1 and not qualified_state:
+                first["_gaia_ambiguous_states"] = sorted(states)
+            return first
         return None
     except Exception as exc:  # noqa: BLE001 - callers return a clarification instead
         status_code = getattr(getattr(exc, "response", None), "status_code", None)
+        web_operations.record_event("geocoder:" + provider, "timeout" if isinstance(exc, TimeoutError) or "timeout" in type(exc).__name__.lower() else "error",
+                                    round((time.monotonic() - started) * 1000), "HTTP" + str(status_code) if status_code else type(exc).__name__)
         logger.warning(
             "Place geocoding failed provider=%s place=%r country=%s status=%s error=%s",
             provider,

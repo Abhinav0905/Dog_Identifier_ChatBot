@@ -49,6 +49,14 @@ class _CatalogMeta(type):
 
 
 class PromptCatalog(metaclass=_CatalogMeta):
+    @staticmethod
+    def search_care_only() -> str:
+        return _support('search_care_only')
+
+    @staticmethod
+    def reply_language(language: str) -> str:
+        return _support('turn_language', REPLY_LANGUAGE='Hindi' if language == 'hi' else 'English')
+
     REVIEW_ORDER = (
         '01_text_router_system.txt', '07_query_analysis_template.txt',
         '08_place_extraction_template.txt', '02_care_system_english.txt',
