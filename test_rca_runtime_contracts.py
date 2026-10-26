@@ -29,6 +29,15 @@ class TestRcaConversationContracts(unittest.TestCase):
                 self.assertEqual(search.call_args.kwargs["resolved_place"], "")
                 self.assertEqual(search.call_args.kwargs["requested_location_text"], "")
                 self.assertEqual(search.call_args.kwargs["output_format"], "address_only")
+        question="Give me only the phone number for Sunshine Paws Rescue Centre, Udaipur."
+        turn=fixtures.planned("clarify",question,"Udaipur",requested_institution="Sunshine Paws Rescue Centre",phone_only=True,
+                             clarification_question="Which state is Udaipur in?")
+        with patch.object(query_router,"plan_text_turn",return_value=turn),patch.object(region_scope,"classify_text_scope",return_value=region_scope.ScopeDecision("ambiguous",place="Udaipur",explicit_location=True)), \
+             patch.object(web_search,"search_animal_question",return_value=web_search.SearchResult(response="I couldn't verify this institution's phone number.")) as search:
+            answer=self.post(question)
+            search.assert_called_once()
+            self.assertNotIn("Which state",answer)
+        self.assertFalse(text_contract.distinctive_institution("Veterinary Hospital Udaipur","Udaipur"))
 
     def test_mixed_cat_handling_survives_success_and_search_failure(self):
         message = "A frightened injured cat is hiding under a parked car in Panaji. How should I move her and where can she get treatment?"

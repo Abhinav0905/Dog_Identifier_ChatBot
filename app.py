@@ -567,6 +567,10 @@ def chat_query(
     output_format = ("address_only" if text_contract.address_only_request(request.message) else
                      "phone_only" if _number_only_request(request.message) or effective_phone_only else turn.output_format)
     effective_phone_only = output_format == "phone_only"
+    if (turn.action == query_router.TextAction.CLARIFY and output_format != "text"
+        and text_contract.distinctive_institution(turn.requested_institution, turn.location_text)
+        and query_router._asks_for_location(turn.clarification_question)):
+        turn = replace(turn, action=query_router.TextAction.SEARCH, clarification_question="")
     if turn.routing_failed:
         from services.search_evidence import _number_only_request
         effective_phone_only = _number_only_request(request.message)
@@ -764,7 +768,7 @@ def _text_turn_scope(
         return region_scope.ScopeDecision(region_scope.UNSPECIFIED, source="institution_lookup")
     if turn.location_kind in {resolver.NAMED_PLACE, resolver.NEAR_ME} or (case_location and case_location.get("scope") == region_scope.AMBIGUOUS):
         try:
-            return region_scope.classify_text_scope(
+            decision = region_scope.classify_text_scope(
                 request.message,
                 lat=request.lat,
                 lng=request.lng,
@@ -774,6 +778,13 @@ def _text_turn_scope(
                     turn.location_kind, turn.location_text, source="text_action_model",
                 ),
             )
+            if (decision.needs_clarification
+                and (turn.phone_only or turn.output_format in {"phone_only", "address_only"} or text_contract.address_only_request(request.message))
+                and text_contract.distinctive_institution(turn.requested_institution, turn.location_text)):
+                # Exact institution details can be researched without silently
+                # choosing a state. Outside-India decisions are never bypassed.
+                return region_scope.ScopeDecision(region_scope.UNSPECIFIED, source="institution_lookup")
+            return decision
         except Exception as exc:
             logger.warning("Text location context unavailable: %s", type(exc).__name__)
             return region_scope.ScopeDecision(

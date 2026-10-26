@@ -19,6 +19,13 @@ def explicit_new_institution(message: str, institution: str) -> bool:
     return bool(target and target in clean(message))
 
 
+def distinctive_institution(institution: str, location: str = "") -> bool:
+    generic = {"the", "a", "an", "of", "and", "in", "at", "for", "veterinary", "vet", "college", "hospital", "hospitals",
+               "clinic", "clinical", "teaching", "complex", "rescue", "centre", "center", "animal", "government", "public", "university"}
+    words = set(normalized_place(institution).split()) - set(normalized_place(location).split()) - generic
+    return any(len(word) > 2 and not word.isdigit() for word in words)
+
+
 def direct_availability_question(message: str) -> bool:
     return bool(re.search(
         r"\bpick\s+(?:it|him|her|them|the\s+(?:dog|cat|animal))\s+up\b|"
