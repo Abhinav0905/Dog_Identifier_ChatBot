@@ -1077,6 +1077,20 @@ def provider_availability_guidance(message: str, language: str, facts: list[dict
             if pickup else "Admission now or tonight cannot be guaranteed. Call before travelling to confirm they can treat and admit this animal and to check the correct emergency location.")
 
 
+def humane_deterrent_boundary(message: str, language: str = "en") -> str:
+    """Directly reject only the aversive objects the user actually proposes."""
+    if not re.search(r"\b(?:should|would|can|could)\s+(?:I|we|carrying|throwing|hitting|waving|using)\b", message, re.I):
+        return ""
+    if not re.search(r"\bdogs?\b", message, re.I):
+        return ""
+    sentences = []
+    if re.search(r"\bstones?\b", message, re.I):
+        sentences.append("कुत्ते पर पत्थर न फेंकें।" if language == "hi" else "No—do not throw stones at the dog.")
+    if re.search(r"\bsticks?\b", message, re.I):
+        sentences.append("कुत्ते को डंडे से न मारें और न उसकी ओर डंडा लहराएँ।" if language == "hi" else "Do not hit the dog or wave a stick at it; avoid threatening or startling it.")
+    return " ".join(sentences)
+
+
 def _human_exposure_answer_is_safe(answer: str) -> bool:
     """Check essential actions and reject delayed care or household wound remedies."""
     plain = re.sub(r"[*_`]+", "", str(answer or ""))

@@ -137,6 +137,9 @@ class TestRcaEvidenceContracts(unittest.TestCase):
         self.assertFalse(evidence._publisher_names_region(page,"Other State"))
 
     def test_emergency_species_coverage_and_no_hypothetical_alarm(self):
+        self.assertIn("Do not hit",triage.humane_deterrent_boundary("Dogs chase my scooter. Would carrying a stick and waving it help?"))
+        self.assertNotIn("stone",triage.humane_deterrent_boundary("Dogs chase my scooter. Would carrying a stick and waving it help?"))
+        self.assertEqual(triage.humane_deterrent_boundary("Dogs chase my scooter. What should I do?"),"")
         for animal in ("dog","cat","kitten"):
             self.assertTrue(triage.urgent_caption_guidance(f"A {animal} is bleeding heavily."))
         self.assertIsNone(triage.urgent_caption_guidance("What if a cat starts bleeding someday?"))

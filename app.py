@@ -684,6 +684,8 @@ def chat_query(
         )
 
     answer = guardrails.sanitize_text_response(answer)
+    if output_format == "text":
+        answer = _prepend_immediate_guidance(triage.humane_deterrent_boundary(request.message, language), answer)
     db.save_chat_message(session_id, "user", request.message)
     db.save_chat_message(session_id, "assistant", answer, metadata={
         "resource_links": links,
