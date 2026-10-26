@@ -542,6 +542,12 @@ def chat_query(
     session_id = _resolve_request_session(http_request, http_response, request.session_id)
     guard = guardrails.check_input(request.message)
     if not guard.allowed:
+        if guard.category != "empty":
+            db.save_chat_message(session_id, "user", request.message)
+            db.save_chat_message(session_id, "assistant", guard.reason, metadata={
+                "text_action": "refuse", "result_kind": "guardrail_refusal", "guardrail_category": guard.category,
+                "web_search_ran": False, "model_history_policy": "omit", "stage_trace": web_operations.current_turn_trace(),
+            })
         return ChatResponse(response=guard.reason)
 
     history = db.get_chat_history(session_id, limit=config.CONVERSATION_HISTORY_LIMIT)

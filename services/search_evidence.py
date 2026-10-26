@@ -627,6 +627,15 @@ def _phone_spans(text: str) -> list[tuple[int, int, str]]:
     for match in _PHONE.finditer(str(text or "")):
         raw = match.group().strip().rstrip(".")
         digits = re.sub(r"\D", "", raw)
+        if len(digits) > 15:
+            # Flattened directory columns may contain two complete numbers.
+            # Split only at written separators, never inside a digit sequence.
+            indian = r"(?<!\d)(?:\+?91[ .-]*)?(?:0[1-9]\d{1,4}[ .-]?\d{5,8}|[6-9]\d{9})(?!\d)"
+            for part in re.finditer(indian, raw):
+                key = _phone_key(part.group())
+                if len(key) == 10:
+                    spans.append((match.start() + part.start(), match.start() + part.end(), key))
+            continue
         if not 7 <= len(digits) <= 15 or re.fullmatch(r"\d{4}-\d{2}-\d{2}", raw):
             continue
         spans.append((match.start(), match.start() + len(raw), _phone_key(raw)))
@@ -1021,6 +1030,15 @@ def _locality_parent_source(locality: str, city: str, pages: dict[str, str], reg
     return ""
 
 
+def _publisher_names_region(page: str, region: str) -> bool:
+    """Identify a regional directory; this never verifies a facility's city."""
+    if not region:
+        return False
+    tokens = [token for token in _normalized_location(region).split() if token not in {"and", "islands", "union", "territory"}]
+    identity = _normalized_location(str(getattr(page, "identity_text", "")))
+    return bool(tokens) and all(re.search(r"\b" + re.escape(token) + r"\b", identity) for token in tokens)
+
+
 def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls: list[str], *, requested_institution: str,
                               requested_locality: str,
                               require_small_animal: bool, language: str, phone_displays: dict[str, str],
@@ -1062,6 +1080,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             first = place.split(",", 1)[0].strip()
             place = first if first and f" {_normalized_location(first)} " in f" {_normalized_location(quote)} " else ""
         locality_source = ""
+        regional_lead = False
         if (
             requested_locality
             and not requested_institution
@@ -1073,8 +1092,12 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             # identity-only result from another campus/city is not a useful
             # fallback merely because it appeared in the same search.
             if not locality_source:
-                web_operations.record_event("evidence:rejection", "empty", error_type="WrongStateOrLocality")
-                continue
+                regional_lead = (text_contract.locality_matches("", f'{quote} {place}', requested_region)
+                                 and _publisher_names_region(pages[source], requested_region)
+                                 and bool(re.search(r"\bveterinary\s+(?:hospital|clinic|polyclinic|dispensary)\b", name, re.I)))
+                if not regional_lead:
+                    web_operations.record_event("evidence:rejection", "empty", error_type="WrongStateOrLocality")
+                    continue
         if (
             service == "identity_only"
             and not place
@@ -1087,7 +1110,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             # treatment role or facility identity is not an actionable lead.
             continue
         key = _entity_key(name)
-        row = providers.setdefault(key, {"name": name, "place": place, "services": set(), "urls": [], "geography_urls": set(), "small_animal": False, "livestock_only": False})
+        row = providers.setdefault(key, {"name": name, "place": place, "services": set(), "urls": [], "geography_urls": set(), "regional_lead": regional_lead, "small_animal": False, "livestock_only": False})
+        row["regional_lead"] = row["regional_lead"] and regional_lead
         if place and not row["place"]:
             row["place"] = place
         if source not in row["urls"]:
@@ -1101,7 +1125,9 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                 small_animal = _provider_service_is_grounded(name, service, quote, require_small_animal=True, allow_preceding=same_block, veterinary_context=veterinary_context)
                 row["small_animal"] = row["small_animal"] or small_animal
                 row["livestock_only"] = row["livestock_only"] or (not small_animal and bool(re.search(r"\b(?:cattle|livestock|bovine|ruminants?|equine|horses?|poultry)\b", quote, re.I)))
-    has_clinical = any("clinical_treatment" in row["services"] and row["place"] and not (require_small_animal and row["livestock_only"] and not row["small_animal"]) for row in providers.values())
+    if any(not row["regional_lead"] for row in providers.values()):
+        providers = {key:row for key,row in providers.items() if not row["regional_lead"]}
+    has_clinical = any(not row["regional_lead"] and "clinical_treatment" in row["services"] and row["place"] and not (require_small_animal and row["livestock_only"] and not row["small_animal"]) for row in providers.values())
     if not providers:
         answer = ("मैं उपलब्ध स्रोतों से किसी विशिष्ट पशु उपचार सुविधा की पुष्टि नहीं कर सका। इसका मतलब यह नहीं कि वहाँ सेवाएँ नहीं हैं।" if language == "hi" else
                   "I couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.")
@@ -1119,6 +1145,9 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             facts.append({"kind": "location", "institution": key, "value": _normalized_location(row["place"])})
         facts.extend({"kind": "service", "institution": key, "value": service} for service in sorted(row["services"] - {"identity_only"}))
         description = row["name"] + (f" — {row['place']}" if row["place"] else "")
+        if row["regional_lead"]:
+            description += (f" — क्षेत्रीय सूची का संपर्क; {requested_locality} में स्थान सुनिश्चित नहीं है।" if language == "hi" else
+                            f" — regional directory lead; location in {requested_locality} is unconfirmed.")
         if "clinical_treatment" in row["services"]:
             description += (" — स्रोत में पालतू या छोटे पशुओं के उपचार का विवरण है।" if row["small_animal"] else " — स्रोत में पशु उपचार सेवाओं का विवरण है।") if language == "hi" else (
                 " — the source describes treatment for pets or small animals." if row["small_animal"] else " — the source describes veterinary treatment services.")
@@ -1178,7 +1207,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
         answer += "\n\nअनुरोधित फ़ोन नंबर सुनिश्चित नहीं हुआ।" if language == "hi" else "\n\nThe requested phone number remains unconfirmed."
     if address_required and not has_address:
         answer += "\n\nपूरा पता सुनिश्चित नहीं हुआ।" if language == "hi" else "\n\nA published street or campus address remains unconfirmed."
-    return ContactAnswerReview(answer=answer, links=links, status="approved", request_satisfied=satisfied, validated_facts=facts)
+    return ContactAnswerReview(answer=answer, links=links, status="approved", request_satisfied=satisfied, validated_facts=facts,
+                               evidence_issue="regional_leads_only" if providers and all(row["regional_lead"] for row in providers.values()) else "")
 
 
 def _discovery_locality(literal: str, resolved_place: str, resolved_city: str = "") -> str:

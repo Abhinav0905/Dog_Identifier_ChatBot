@@ -1,4 +1,4 @@
-RCA runtime contracts release (v2.7)
+RCA runtime contracts release (v2.8)
 
 Base: deployed source 440951f, prompts srini-v2.4-2026-10-25.
 
@@ -14,6 +14,12 @@ Changes:
 - Use current-message or explicitly requested language before browser locale/history.
 - Record correlated stage diagnostics without credentials; expose functional outcome
   aggregates separately from model readiness.
+- Preserve separately published adjacent phone numbers in directory rows.
+- Keep explicitly labelled regional directory leads as incomplete referrals when
+  a facility city cannot be proved; never present them as confirmed local treatment.
+- Bind a neighbourhood to its city only through fetched address evidence and label
+  that geographic source separately from facility contact evidence.
+- Refuse invented-contact requests early and retain their chat evidence.
 - Bound evidence fetching with a shared four-worker pool and bounded submission queue.
 
 All model prompt changes remain in prompts/runtime-v2 text files. The original Deb
