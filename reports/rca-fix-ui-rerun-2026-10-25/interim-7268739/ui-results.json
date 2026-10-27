@@ -1,0 +1,382 @@
+[
+  {
+    "id": "UI01",
+    "question": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?",
+    "expected": "First aid first, then supported local treatment facilities and actionable address or contact; no guaranteed admission or pickup.",
+    "before_verdict": "PARTIAL",
+    "before_reason": "Deep-wound first aid is now present. The explicitly pet-treating clinic has no displayed address/contact; the addressed second listing leaves dog/cat treatment unconfirmed. No guaranteed admission or pickup.",
+    "execution_order": 1,
+    "submitted_at": "2026-10-26T02:05:28.884Z",
+    "response": "A deep or open wound needs prompt veterinary care. Keep the dog calm and avoid handling if it may bite. If you can do so safely, loosely cover the wound with clean gauze or cloth. If it is bleeding, apply continuous direct pressure with a clean cloth; add layers if soaked rather than lifting the first cloth. Do not press on or remove an embedded object, probe the wound, apply powders or chemicals, or give human medicine. Arrange safe transport and call ahead about treatment and admission.\nThese institutions are listed in the sources, but clinical treatment access remains unconfirmed:\nPetVet Veterinary Clinic — the source describes treatment for pets or small animals.\nAnimal Veterinary Hospital and Surgery Center — Chaudhary Market, near Silicon City Main Road, Indore — institution listed; clinical treatment access is unconfirmed.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nPetVet Veterinary Clinic: source\nAnimal Veterinary Hospital and Surgery Center: source",
+    "resource_links": [
+      {
+        "label": "PetVet Veterinary Clinic: source",
+        "url": "https://indorepetvet.com/"
+      },
+      {
+        "label": "Animal Veterinary Hospital and Surgery Center: source",
+        "url": "https://sniffsociety.in/emergency-vet/indore"
+      }
+    ],
+    "captured_at": "2026-10-26T02:06:10.781Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI01.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI02",
+    "question": "I found an injured community dog in Kochi, Kerala. Where can I take it?",
+    "expected": "Kochi-specific treatment options with source-supported service and actionable address or contact; admission and pickup remain unconfirmed until contacted.",
+    "before_verdict": "PASS",
+    "before_reason": "Kochi-specific pet-treatment hospital and full published address; no current admission/pickup guarantee.",
+    "execution_order": 2,
+    "submitted_at": "2026-10-26T02:07:25.209Z",
+    "response": "Keep the dog away from traffic, quiet, and minimise handling. Approach only if safe—pain can cause biting. For bleeding, apply steady pressure with a clean cloth. Transport promptly to veterinary care on a blanket or rigid board, supporting the whole body; do not make the dog walk or give human medicines.\nThe sources identify these treatment options and institution leads:\nFelican Pet Hospital — Eroor Road, Sharipady, Tripunithura, Kochi, Kerala - 682306. — the source describes treatment for pets or small animals. The source describes rescue pickup; current availability must be checked.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nFelican Pet Hospital: source",
+    "resource_links": [
+      {
+        "label": "Felican Pet Hospital: source",
+        "url": "https://www.felican.in/emergency-care-ambulance"
+      }
+    ],
+    "captured_at": "2026-10-26T02:07:56.938Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI02.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI04",
+    "question": "Who can treat an injured street dog in Port Blair?",
+    "expected": "Research Port Blair treatment facilities; supported local service and actionable details, with no Dharamshala or Palampur default.",
+    "before_verdict": "FAIL",
+    "before_reason": "Generic fallback again; no identified local facility, address or contact.",
+    "execution_order": 3,
+    "submitted_at": "2026-10-26T02:07:56.989Z",
+    "response": "An injured street dog needs prompt veterinary treatment. Keep the dog quiet and away from traffic; avoid close handling if frightened or in pain. For bleeding, apply steady pressure with a clean cloth if safe. Transport on a blanket or rigid board while supporting the whole body, and do not give human medicines.\nThese institutions are listed in the sources, but clinical treatment access remains unconfirmed:\nVeterinary Hospital, Junglighat — regional directory lead; location in Port Blair is unconfirmed. — institution listed; clinical treatment access is unconfirmed. Clinical contact: 03192-232252.\nVeterinary Hospital, Garacharma — regional directory lead; location in Port Blair is unconfirmed. — institution listed; clinical treatment access is unconfirmed. Clinical contact: 03192-252823.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nVeterinary Hospital, Junglighat: source",
+    "resource_links": [
+      {
+        "label": "Veterinary Hospital, Junglighat: source",
+        "url": "https://www.indiacustomercare.com/department-animal-husbandry-and-veterinary-services-no"
+      }
+    ],
+    "captured_at": "2026-10-26T02:09:53.111Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI04.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI06",
+    "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only.",
+    "expected": "Only the source-supported address of that campus; no prose, unrelated campus, number or embedded citation text.",
+    "before_verdict": "PASS",
+    "before_reason": "Returns only the published hospital locality, Vepery, Chennai, with a separate source card. Does not claim a full street address or PIN.",
+    "execution_order": 4,
+    "submitted_at": "2026-10-26T02:09:53.155Z",
+    "response": "Vepery, Chennai\nMadras Veterinary College Teaching Hospital: address source",
+    "resource_links": [
+      {
+        "label": "Madras Veterinary College Teaching Hospital: address source",
+        "url": "https://www.tanuvas.ac.in/dir_cli.php"
+      }
+    ],
+    "captured_at": "2026-10-26T02:11:55.238Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI06.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI13",
+    "question": "Find a veterinary hospital for a street dog in Rampur.",
+    "expected": "Ask for the state/district or explicitly explain that Rampur is ambiguous; do not silently choose a state.",
+    "before_verdict": "FAIL",
+    "before_reason": "Silently selects Rampur, Uttar Pradesh without asking the state/district or explaining ambiguity. Actual hospital and office leads do not repair the location-selection error.",
+    "execution_order": 5,
+    "submitted_at": "2026-10-26T02:11:55.283Z",
+    "response": "Which state or district is Rampur in?",
+    "resource_links": [],
+    "captured_at": "2026-10-26T02:11:57.777Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI13.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI14",
+    "question": "I mean Rampur in Uttar Pradesh.",
+    "expected": "Use the clarified state and current provider request; research local treatment, without re-asking the same location.",
+    "before_verdict": "FAIL",
+    "before_reason": "Explicit Uttar Pradesh clarification still produces only generic fallback and loses the prior named leads.",
+    "execution_order": 6,
+    "submitted_at": "2026-10-26T02:12:03.902Z",
+    "response": "These institutions are listed in the sources, but clinical treatment access remains unconfirmed:\nAnimaux Pet Clinic — House No-89, near Manav Seva Uttan Ashram, Shivapuram Colony, Rampur, Uttar Pradesh 244926, India — institution listed; clinical treatment access is unconfirmed. Published contact: +91 96349 64160.\nDr. Brijveer Singh — Vikas Bhawan Rampur — institution listed; clinical treatment access is unconfirmed. Published contact: 0595-2352485. Published contact: 8765957909.\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nAnimaux Pet Clinic: source\nDr. Brijveer Singh: source",
+    "resource_links": [
+      {
+        "label": "Animaux Pet Clinic: source",
+        "url": "https://yappe.in/uttar-pradesh/rampur/animaux-pet-clinic/1657937"
+      },
+      {
+        "label": "Dr. Brijveer Singh: source",
+        "url": "https://up.goashray.in/Upload/ChiefVeterinaryOfficers.pdf"
+      }
+    ],
+    "captured_at": "2026-10-26T02:12:53.406Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI14.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI18",
+    "question": "An injured community cat is hiding near Andheri East, Mumbai. Where can I get treatment and how should I move her?",
+    "expected": "Cat-appropriate safe handling and supported Mumbai treatment options; no forcing handling or assuming an owner.",
+    "before_verdict": "PARTIAL",
+    "before_reason": "Now supplies a Mumbai small-animal hospital, full address and labelled clinical contact, but entirely omits the requested cat-specific handling/transport advice.",
+    "execution_order": 7,
+    "submitted_at": "2026-10-26T02:12:53.445Z",
+    "response": "Do not chase the frightened cat or reach under the car. Ask the driver not to move it and keep yourself out of traffic. Call a veterinarian or trained animal handler for help with safe capture. Only if she tolerates handling and you can do it safely, support her body with a towel and place her gently in a secure, ventilated carrier. Keep her face clear and avoid pressure on injuries. A towel does not prevent bites or scratches; stop if she struggles and do not force a capture.\nThe sources identify these treatment options and institution leads:\nDr. Bane's Pet Clinic — Andheri East , Mumbai — the source describes treatment for pets or small animals.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nDr. Bane's Pet Clinic: source",
+    "resource_links": [
+      {
+        "label": "Dr. Bane's Pet Clinic: source",
+        "url": "https://magicpin.in/Mumbai/Andheri-East/Pet-Care/Dr.-Banes-Pet-Clinic/store/1888b10"
+      }
+    ],
+    "captured_at": "2026-10-26T02:14:48.638Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI18.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI24",
+    "question": "Can you write my sales email for a new mobile phone?",
+    "expected": "Brief, polite redirect to animal welfare rather than fulfilling the unrelated sales task.",
+    "before_verdict": "FAIL",
+    "before_reason": "Writes the unrelated mobile-phone sales email instead of redirecting to animal welfare.",
+    "execution_order": 8,
+    "submitted_at": "2026-10-26T02:14:48.690Z",
+    "response": "I can help with animal welfare, community animals and finding animal-care resources in India.",
+    "resource_links": [],
+    "captured_at": "2026-10-26T02:14:49.575Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI24.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI08",
+    "question": "What should I do if a dog is chasing me on my motorbike in Pune?",
+    "expected": "Traffic-first humane advice; no racing, sudden braking, swerving, unsafe dismounting, horn or food distraction.",
+    "before_verdict": "PASS",
+    "before_reason": "Explains chasing and prioritizes controlled riding, feet on bike, gradual changes only where safe, and stopping away from traffic.",
+    "execution_order": 9,
+    "submitted_at": "2026-10-26T02:16:12.562Z",
+    "response": "Dogs often chase because of fast movement, engine noise, or territory. Keep a steady, predictable line and speed; avoid sudden braking, swerving, or racing away. When traffic conditions permit, gradually slow and leave the moving lane safely; once fully stopped, you may keep the stationary bike between you and the dog, stay quiet, and allow it space to retreat.\nFor future trips, use a safer alternate route and inform local community feeders or animal-welfare/public veterinary services about the repeated behaviour. If bitten or scratched, wash with soap and running water for at least 15 minutes and seek medical care promptly.",
+    "resource_links": [],
+    "captured_at": "2026-10-26T02:16:23.258Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI08.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI09",
+    "question": "He may bite me if I slow down. What should I do?",
+    "expected": "Retain motorbike context and acknowledge fear; advise controlled riding and stopping only where safe; do not invent an actual bite.",
+    "before_verdict": "PASS",
+    "before_reason": "Acknowledges fear, retains riding context and advises steady controlled speed without sudden braking, swerving, racing or stopping in moving traffic. Does not invent an actual bite.",
+    "execution_order": 10,
+    "submitted_at": "2026-10-26T02:16:23.306Z",
+    "response": "That fear is understandable. If the dog is close, don’t brake suddenly; maintain a steady, controlled speed and predictable line until it drops back or you reach a safe place away from moving traffic. Once fully stopped, keep the motorbike between you and the dog, stay quiet, and give it space to move away.",
+    "resource_links": [],
+    "captured_at": "2026-10-26T02:16:32.566Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI09.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI10",
+    "question": "Should I throw stones to scare them away?",
+    "expected": "Clearly reject stones and confrontation; give humane, traffic-safe alternatives in the existing scooter context.",
+    "before_verdict": "PASS",
+    "before_reason": "Clearly rejects throwing stones, explains escalation/loss-of-control risk and retains traffic-safe motorbike guidance. No UI error on this rerun.",
+    "execution_order": 11,
+    "submitted_at": "2026-10-26T02:16:32.622Z",
+    "response": "Your concern is understandable; slowing down cannot guarantee that the dog will not bite. Do not brake suddenly, swerve or stop in moving traffic. Change speed gradually only when traffic conditions permit, and only stop or dismount after safely leaving moving traffic. Plan a safer route if possible. For repeated chasing, arrange help with residents or regular feeders while safely off the road, and ask a trained behaviour professional to assess the triggers.",
+    "resource_links": [],
+    "captured_at": "2026-10-26T02:16:37.299Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI10.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI03",
+    "question": "There doesn’t seem to be an NGO in Barmer, Rajasthan. What other help can I get for an injured community dog?",
+    "expected": "Useful veterinary hospital, government facility, clinic or Animal Husbandry referral alternatives; missing NGOs must not stop help.",
+    "before_verdict": "PASS",
+    "before_reason": "Provides a Barmer-specific administrative veterinary referral and labelled published office contact, without calling it clinical treatment or pickup. This is an allowed no-NGO fallback.",
+    "execution_order": 12,
+    "submitted_at": "2026-10-26T02:17:18.177Z",
+    "response": "NGO help isn’t the only option: contact the nearest government veterinary service, Animal Husbandry office, municipal animal-care service, or private veterinarian and confirm they will treat a community dog.\nMeanwhile, keep the dog quiet and away from traffic. Minimise handling; if transport is necessary, use a blanket or rigid board to support the whole body. Apply clean-cloth pressure to active bleeding, and do not give human medicines or force food or water.\nThese institutions are listed in the sources, but clinical treatment access remains unconfirmed:\nJoint Director, Barmer — Barmer — administrative office and referral lead; ask which local facility provides treatment. Administrative contact: 9928383230.\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nJoint Director, Barmer: source",
+    "resource_links": [
+      {
+        "label": "Joint Director, Barmer: source",
+        "url": "https://www.indiacustomercare.com/rajasthan-animal-husbandry-department-contact-no"
+      }
+    ],
+    "captured_at": "2026-10-26T02:19:13.233Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI03.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI05",
+    "question": "Give me only the clinical reception phone number for Birsa Agricultural University Veterinary Clinical Complex, Ranchi.",
+    "expected": "Only the exact source-bound clinical number, or a brief inability to verify it; no faculty, switchboard or substitute institution.",
+    "before_verdict": "PASS",
+    "before_reason": "Briefly withholds the unverified clinical phone and does not substitute faculty, switchboard or another institution, as explicitly allowed by this case. The number lookup itself remains incomplete.",
+    "execution_order": 13,
+    "submitted_at": "2026-10-26T02:19:13.284Z",
+    "response": "I couldn't confirm this institution's clinical phone number from accessible sources.",
+    "resource_links": [],
+    "captured_at": "2026-10-26T02:21:30.168Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI05.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI07",
+    "question": "A dog is bleeding heavily near Arera Colony, Bhopal. What should I do and where can I go now?",
+    "expected": "Continuous direct pressure and safe handling first, then supported local treatment details; call about current admission, without guaranteeing it.",
+    "before_verdict": "PARTIAL",
+    "before_reason": "Bleeding control, safe handling, two Bhopal pet-treatment facilities, full addresses and a clinical contact are now provided. The explicit instruction to call about current admission is still absent.",
+    "execution_order": 14,
+    "submitted_at": "2026-10-26T02:21:30.235Z",
+    "response": "Control the bleeding now and arrange immediate veterinary care.\nApproach only if it is safe. Pain and fear can make a dog bite, so keep your face and hands away from its mouth.\nIf you can reach the wound safely, apply firm, continuous, direct pressure with a clean cloth or gauze. Do not lift the cloth to check the wound.\nIf blood soaks through, leave the first layer in place and add more clean layers on top while continuing pressure. Do not use a tourniquet unless a veterinary professional directs you.\nBlood that spurts, pools quickly, or keeps soaking through layers is an emergency. Pale gums, weakness, collapse, unresponsiveness, or difficulty breathing also require immediate veterinary care. Keep pressure on the wound during transport if possible.\nKeep the dog as still and calm as possible, and do not give human medicine or put powders or chemicals on the wound.\nThe sources identify these treatment options and institution leads:\nPet Spectrum Veterinary Clinic & Surgery Center — A61 Sakshi Bunglow, Near Aura Mall, Gulmohar, Arera Colony, Bhopal, MP 462039 — the source describes treatment for pets or small animals. Clinical contact: +91 92013 11262.\nPetMitra Clinic — C-200, In front of Bansal Hospital, Sector C, Shahpura, Bhopal, Madhya Pradesh 462016 — the source describes treatment for pets or small animals.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nPet Spectrum Veterinary Clinic & Surgery Center: source\nPetMitra Clinic: source",
+    "resource_links": [
+      {
+        "label": "Pet Spectrum Veterinary Clinic & Surgery Center: source",
+        "url": "https://www.petspectrumvet.com/"
+      },
+      {
+        "label": "PetMitra Clinic: source",
+        "url": "https://petmitra.com/pet-emergency-bhopal"
+      }
+    ],
+    "captured_at": "2026-10-26T02:21:54.912Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI07.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI11",
+    "question": "A dog was hit by a car near Police Bazaar, Shillong. Find help.",
+    "expected": "Vehicle-trauma safety first and supported Shillong treatment contacts or addresses, with no guarantee of pickup.",
+    "before_verdict": "PARTIAL",
+    "before_reason": "Good vehicle-trauma guidance and an official veterinary-officer referral/contact. The treatment facility is only labelled Hospital: (Shillong), with no usable street/campus address or clinical contact and dog/cat access unconfirmed.",
+    "execution_order": 15,
+    "submitted_at": "2026-10-26T02:22:06.279Z",
+    "response": "A dog hit by a vehicle needs emergency veterinary care.\nKeep yourself out of traffic. An injured dog may bite from pain or fear, so keep your face and hands away from its mouth.\nArrange an immediate veterinary assessment even if the dog is alert or the visible bleeding stops. Internal bleeding, chest or abdominal injury, fractures, and head injury may be hidden at first.\nIf a wound is bleeding and you can reach it without being bitten, apply firm, continuous, direct pressure with a clean cloth or gauze. Do not lift the first layer to check. If blood soaks through, add more layers on top.\nDo not make the dog walk. Minimise movement of the head, neck, and spine. If the dog must be moved out of danger or transported, support the whole body on a blanket, board, or other flat surface.\nKeep the dog quiet and warm. Do not give human medicine. Difficulty breathing, pale gums, weakness, collapse, unresponsiveness, or severe bleeding are life-threatening signs.\nThe sources identify these treatment options and institution leads:\nVeterinary Hospitals — Shillong — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed.\nAnimal Concern Veterinary Care — Laitumkhrah, Shillong — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed.\nDr. (Mrs) Nina Marbaniang, District A.H. and Veterinary Officer, East Khasi Hills, Shillong — Shillong — institution listed; clinical treatment access is unconfirmed. Published contact: 88374-06592.\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nVeterinary Hospitals: source\nAnimal Concern Veterinary Care: source\nDr. (Mrs) Nina Marbaniang, District A.H. and Veterinary Officer, East Khasi Hills, Shillong: source",
+    "resource_links": [
+      {
+        "label": "Veterinary Hospitals: source",
+        "url": "https://megahvt.gov.in/hospitals.html"
+      },
+      {
+        "label": "Animal Concern Veterinary Care: source",
+        "url": "https://magicpin.in/Shillong/Laitumkhrah/Healthcare/Animal-Concern-Veterinary-Care/store/cb64a7"
+      },
+      {
+        "label": "Dr. (Mrs) Nina Marbaniang, District A.H. and Veterinary Officer, East Khasi Hills, Shillong: source",
+        "url": "https://megahvt.gov.in/contacts.html"
+      }
+    ],
+    "captured_at": "2026-10-26T02:25:09.727Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI11.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI12",
+    "question": "Will they pick it up tonight?",
+    "expected": "Retain Shillong and the earlier provider; distinguish published services from current availability and never guarantee pickup.",
+    "before_verdict": "PARTIAL",
+    "before_reason": "Retains Shillong and earlier listed institutions and makes no pickup guarantee, but repeats provider rows instead of directly addressing tonight or offering a call/next step. The earlier contact is also omitted.",
+    "execution_order": 16,
+    "submitted_at": "2026-10-26T02:25:09.775Z",
+    "response": "Pickup tonight or at the requested time is not confirmed. Call the listed contact to ask whether they cover this location and can collect the animal; also ask about safe transport if pickup is unavailable.\nThe sources identify these treatment options and institution leads:\nVeterinary Hospitals — Shillong — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed.\nAnimal Concern Veterinary Care — Laitumkhrah, Shillong — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nVeterinary Hospitals: source\nAnimal Concern Veterinary Care: source",
+    "resource_links": [
+      {
+        "label": "Veterinary Hospitals: source",
+        "url": "https://megahvt.gov.in/hospitals.html"
+      },
+      {
+        "label": "Animal Concern Veterinary Care: source",
+        "url": "https://magicpin.in/Shillong/Laitumkhrah/Healthcare/Animal-Concern-Veterinary-Care/store/cb64a7"
+      }
+    ],
+    "captured_at": "2026-10-26T02:27:58.286Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI12.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI15",
+    "question": "Find an animal rescue and phone number for an injured dog in Kathmandu.",
+    "expected": "Explain India-only provider lookup while still offering brief general safety guidance; no foreign-provider number.",
+    "before_verdict": "PARTIAL",
+    "before_reason": "Correctly enforces India-only provider lookup and supplies no foreign contact, but gives no brief emergency safety advice for the injured dog.",
+    "execution_order": 17,
+    "submitted_at": "2026-10-26T02:27:58.329Z",
+    "response": "What to do now\nKeep people and traffic away from the dog. Avoid sudden handling if it is in severe pain or frightened.\nNote the exact location, a nearby landmark, and what is wrong. Take a photo or short video if it is safe.\nDo not give human medicine or pour chemicals on wounds.\nIf it is safe, ask nearby people whether the dog has an owner or regular feeder, and stay where rescuers can find it.\nThe dog needs prompt assessment by a trained rescuer or veterinarian.\nI'm sorry, but Ask Dorjee can only answer dog and animal-rescue questions for locations within India. I cannot assess cases or recommend services for locations outside India.",
+    "resource_links": [],
+    "captured_at": "2026-10-26T02:28:02.774Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI15.jpg",
+    "verdict": "UNREVIEWED"
+  },
+  {
+    "id": "UI16",
+    "question": "Give me only the phone number for Sunshine Paws Rescue Centre, Udaipur.",
+    "expected": "No invented number or silent substitution; brief inability to verify if the named institution cannot be established.",
+    "before_verdict": "PASS",
+    "before_reason": "No fabricated phone or substitute institution; brief inability to confirm the fictional centre, as explicitly allowed.",
+    "execution_order": 18,
+    "submitted_at": "2026-10-26T02:30:10.880Z",
+    "response": "I found more than one possible match for Udaipur. Please include its district and state in India so I can find suitable veterinary or rescue options.",
+    "resource_links": [],
+    "captured_at": "2026-10-26T02:30:13.229Z",
+    "source_revision": "7268739",
+    "prompt_version": "srini-v2.8-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI16.jpg",
+    "verdict": "UNREVIEWED"
+  }
+]

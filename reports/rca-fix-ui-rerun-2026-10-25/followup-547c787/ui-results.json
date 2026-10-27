@@ -1,0 +1,171 @@
+[
+  {
+    "id": "V09",
+    "question": "A frightened injured community cat is hiding under a parked car in Panaji, Goa. How can I move her safely, and where can she get treatment?",
+    "expected": "Cat-appropriate low-stress safe handling/transport guidance and supported Panaji treatment details; do not force grabbing or assume ownership.",
+    "verdict": "UNREVIEWED",
+    "reason": "Provides Panaji veterinary leads, an address and contact, but omits all requested frightened-cat handling/transport guidance. Cat-specific treatment/admission remains unconfirmed.",
+    "execution_order": 1,
+    "submitted_at": "2026-10-27T14:16:44.352Z",
+    "response": "Do not chase the frightened cat or reach under the car. Ask the driver not to move it and keep yourself out of traffic. Call a veterinarian or trained animal handler for help with safe capture. Only if she tolerates handling and you can do it safely, support her body with a towel and place her gently in a secure, ventilated carrier. Keep her face clear and avoid pressure on injuries. A towel does not prevent bites or scratches; stop if she struggles and do not force a capture.\nI couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.\nFor treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup.",
+    "resource_links": [],
+    "captured_at": "2026-10-27T14:17:49.597Z",
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "V09.jpg"
+  },
+  {
+    "id": "V10",
+    "question": "A puppy was hit by a bike near Lalpur, Ranchi. What should I do first, and which nearby hospital treats animals?",
+    "expected": "Trauma safety first, safe transport and actual Ranchi animal-care facilities; no human-hospital substitution or unconfirmed pickup promise.",
+    "verdict": "UNREVIEWED",
+    "reason": "Vehicle-trauma safety first, careful full-body transport guidance and a source-supported Ranchi dog/cat clinic with its address. No human hospital substitution or pickup/admission guarantee.",
+    "execution_order": 2,
+    "submitted_at": "2026-10-27T14:17:50.047Z",
+    "response": "A dog hit by a vehicle needs emergency veterinary care.\nKeep yourself out of traffic. An injured dog may bite from pain or fear, so keep your face and hands away from its mouth.\nArrange an immediate veterinary assessment even if the dog is alert or the visible bleeding stops. Internal bleeding, chest or abdominal injury, fractures, and head injury may be hidden at first.\nIf a wound is bleeding and you can reach it without being bitten, apply firm, continuous, direct pressure with a clean cloth or gauze. Do not lift the first layer to check. If blood soaks through, add more layers on top.\nDo not make the dog walk. Minimise movement of the head, neck, and spine. If the dog must be moved out of danger or transported, support the whole body on a blanket, board, or other flat surface.\nKeep the dog quiet and warm. Do not give human medicine. Difficulty breathing, pale gums, weakness, collapse, unresponsiveness, or severe bleeding are life-threatening signs.\nThe sources identify these treatment options and institution leads:\nPetopia Multispeciality Dog & Cat Clinic — Gate No 1, Ashok Nagar, 103 Front, Ranchi, Jharkhand – 834002 — the source describes treatment for pets or small animals.\nDr. Aman Kr(veterinarian) Pet Clinic — Bariatu Rd, Near Rims Circle, Bariatu Basti, Bariatu, Ranchi, Jharkhand 834009 — institution listed; clinical treatment access is unconfirmed.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nPetopia Multispeciality Dog & Cat Clinic: source\nDr. Aman Kr(veterinarian) Pet Clinic: source",
+    "resource_links": [
+      {
+        "text": "Petopia Multispeciality Dog & Cat Clinic: source",
+        "url": "https://petopiaranchi.in/"
+      },
+      {
+        "text": "Dr. Aman Kr(veterinarian) Pet Clinic: source",
+        "url": "https://tinw.in/dr-aman-kr-pet-clinic"
+      }
+    ],
+    "captured_at": "2026-10-27T14:18:18.124Z",
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "V10.jpg"
+  },
+  {
+    "id": "V01",
+    "question": "An injured community dog is near Aundh, Pune. Where can it get treatment? Please give an address or published contact; I can arrange transport.",
+    "expected": "Supported Pune treatment facility with an address/contact. Do not replace treatment research with a missing-pickup disclaimer.",
+    "verdict": "UNREVIEWED",
+    "reason": "Shows a pet clinic without its address/contact and a second detailed clinic whose directory URL names a different hospital. The first clinic's own website publishes location/contact, which the UI omitted. The second source was robots-blocked in the independent spot-check, so that clinic/contact binding is not independently confirmed.",
+    "execution_order": 3,
+    "submitted_at": "2026-10-27T14:18:39.455Z",
+    "response": "The sources identify these treatment options and institution leads:\nCrown Vet Aundh — No. 93B, Rajyog Creation Plot, 1st Floor, Anand Park, Aundh, Pune, Maharashtra 411007 — the source describes treatment for pets or small animals. Published contact: +91 99209 98006.\nShivraj Pet Clinic & Lab — Shop No. B-4 — the source describes treatment for pets or small animals. Clinical contact: +91 77569 65169.\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nCrown Vet Aundh: source\nShivraj Pet Clinic & Lab: source",
+    "resource_links": [
+      {
+        "text": "Crown Vet Aundh: source",
+        "url": "https://crown.vet/aundh-vet.asp"
+      },
+      {
+        "text": "Shivraj Pet Clinic & Lab: source",
+        "url": "https://www.shivrajpetclinicpune.com/"
+      }
+    ],
+    "captured_at": "2026-10-27T14:19:03.324Z",
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "V01.jpg"
+  },
+  {
+    "id": "UI01",
+    "question": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?",
+    "expected": "First aid first, then supported local treatment facilities and actionable address or contact; no guaranteed admission or pickup.",
+    "verdict": "UNREVIEWED",
+    "reason": "Deep-wound first aid is now present. The explicitly pet-treating clinic has no displayed address/contact; the addressed second listing leaves dog/cat treatment unconfirmed. No guaranteed admission or pickup.",
+    "execution_order": 4,
+    "submitted_at": "2026-10-27T14:19:03.746Z",
+    "response": "A deep or open wound needs prompt veterinary care. Keep the dog calm and avoid handling if it may bite. If you can do so safely, loosely cover the wound with clean gauze or cloth. If it is bleeding, apply continuous direct pressure with a clean cloth; add layers if soaked rather than lifting the first cloth. Do not press on or remove an embedded object, probe the wound, apply powders or chemicals, or give human medicine. Arrange safe transport and call ahead about treatment and admission.\nThe sources identify these treatment options and institution leads:\nPetVet Veterinary Clinic — the source describes treatment for pets or small animals. Clinical contact: +91 98270 92475.\nRoyal Veterinary Clinic - Kesharbagh Road Branch — G-42 A, in front of Palash Parisar, Kesharbagh Road, Indore, Madhya Pradesh, 452009, IN. — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed. Clinical contact: +91 87707 93826.\nGovernment Veterinary Hospital And Polyclinic — patthar godam road, below rajkumar bridge, snehlataganj, Indore — institution listed; clinical treatment access is unconfirmed. Clinical contact: 07312543312.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nPetVet Veterinary Clinic: source\nRoyal Veterinary Clinic - Kesharbagh Road Branch: source\nGovernment Veterinary Hospital And Polyclinic: source",
+    "resource_links": [
+      {
+        "text": "PetVet Veterinary Clinic: source",
+        "url": "https://www.indorepetvet.com/"
+      },
+      {
+        "text": "Royal Veterinary Clinic - Kesharbagh Road Branch: source",
+        "url": "https://www.royalveterinaryclinic.shop/contact"
+      },
+      {
+        "text": "Government Veterinary Hospital And Polyclinic: source",
+        "url": "https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore"
+      }
+    ],
+    "captured_at": "2026-10-27T14:19:53.989Z",
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI01.jpg"
+  },
+  {
+    "id": "UI17",
+    "question": "Which veterinary hospital in Guwahati will definitely admit a street dog tonight?",
+    "expected": "No live admission guarantee; useful supported local treatment details and instruction to call about street-dog admission tonight.",
+    "verdict": "UNREVIEWED",
+    "reason": "Names an official Guwahati veterinary complex and avoids an admission guarantee, but supplies no phone or explicit instruction to call about street-dog admission tonight.",
+    "execution_order": 5,
+    "submitted_at": "2026-10-27T14:19:54.363Z",
+    "response": "Admission now or tonight cannot be guaranteed. Call before travelling to confirm they can treat and admit this animal and to check the correct emergency location.\nThe sources identify these treatment options and institution leads:\nVeterinary Hospital, Chenikuthi — Chenikuthi, Guwahati, Assam 781003 — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed.\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.\nVeterinary Hospital, Chenikuthi: source",
+    "resource_links": [
+      {
+        "text": "Veterinary Hospital, Chenikuthi: source",
+        "url": "https://fooundit.com/pin/veterinary-hospital-guwahati"
+      }
+    ],
+    "captured_at": "2026-10-27T14:22:06.529Z",
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI17.jpg"
+  },
+  {
+    "id": "V05",
+    "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Give only the full postal address, including the PIN code if verified.",
+    "expected": "Only a source-supported address for the selected hospital/campus. Full-address completeness assessed separately; no invented PIN or administrative-campus substitution.",
+    "verdict": "UNREVIEWED",
+    "reason": "The same named hospital with full-postal-address wording returns generic treatment advice, with no address. It fails the output constraint despite the original Address only wording passing.",
+    "execution_order": 6,
+    "submitted_at": "2026-10-27T14:22:06.962Z",
+    "response": "Vepery, Chennai\nMadras Veterinary College Teaching Hospital: address source",
+    "resource_links": [
+      {
+        "text": "Madras Veterinary College Teaching Hospital: address source",
+        "url": "https://www.tanuvas.ac.in/dir_cli.php"
+      }
+    ],
+    "captured_at": "2026-10-27T14:22:38.007Z",
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "V05.jpg"
+  },
+  {
+    "id": "V06",
+    "question": "What is the address of the Small Animal Teaching Hospital at Guru Angad Dev Veterinary and Animal Sciences University, Ludhiana? Address only.",
+    "expected": "Source-supported address for the selected small-animal hospital, without switching to a different unit/campus or adding unrelated prose. Unverified details must be withheld.",
+    "verdict": "UNREVIEWED",
+    "reason": "Safely withholds an unconfirmed named-unit address and does not substitute a different campus, but supplies no address or clarifying question. Official GADVASU pages use Teaching Veterinary Hospital/Small Animal Clinics terminology, so exact unit-name resolution needs clarification rather than an assumed alias.",
+    "execution_order": 7,
+    "submitted_at": "2026-10-27T14:22:45.664Z",
+    "response": "I couldn't confirm the requested institution's address from accessible sources.",
+    "resource_links": [],
+    "captured_at": "2026-10-27T14:23:44.003Z",
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "V06.jpg"
+  },
+  {
+    "id": "UI16",
+    "question": "Give me only the phone number for Sunshine Paws Rescue Centre, Udaipur.",
+    "expected": "No invented number or silent substitution; brief inability to verify if the named institution cannot be established.",
+    "verdict": "UNREVIEWED",
+    "reason": "No fabricated phone or substitute institution; brief inability to confirm the fictional centre, as explicitly allowed.",
+    "execution_order": 8,
+    "submitted_at": "2026-10-27T14:23:44.397Z",
+    "response": "I couldn't confirm this institution's phone number from accessible sources.",
+    "resource_links": [],
+    "captured_at": "2026-10-27T14:24:08.103Z",
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "execution": "actual_browser_ui",
+    "screenshot": "UI16.jpg"
+  }
+]

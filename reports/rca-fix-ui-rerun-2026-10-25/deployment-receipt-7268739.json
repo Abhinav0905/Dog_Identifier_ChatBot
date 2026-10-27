@@ -1,0 +1,32 @@
+{
+  "source_revision": "7268739",
+  "prompt_version": "srini-v2.8-2026-10-25",
+  "prompt_sha256": "4134c1ee1afcbc855ebffc5c412ff9ae8794d911a146bcf76954e9bbbb08d2de",
+  "previous_source_revision": "440951f",
+  "previous_prompt_release": "/home/ec2-user/ask-dorjee-prompts/current.releases/srini-v2.4-2026-10-25-9b4fbd981006",
+  "prompt_release": "/home/ec2-user/ask-dorjee-prompts/current.releases/srini-v2.8-2026-10-25-4134c1ee1afc",
+  "backup_directory": "/home/ec2-user/backups/rca-7268739-20261026T020338Z",
+  "source_file_hashes_verified": 275,
+  "data_before": {
+    "counts": {
+      "incidents": 23,
+      "alerts": 5,
+      "rag_chunks": 156
+    },
+    "integrity": "ok",
+    "available_images": 23,
+    "image_references": 23
+  },
+  "data_after": {
+    "counts": {
+      "incidents": 23,
+      "alerts": 5,
+      "rag_chunks": 156
+    },
+    "integrity": "ok",
+    "available_images": 23,
+    "image_references": 23
+  },
+  "database_rewound": false,
+  "state": "deployed_local_ready_public_ui_retest_pending"
+}

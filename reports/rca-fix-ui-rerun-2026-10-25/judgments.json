@@ -1,0 +1,162 @@
+{
+  "UI01": {
+    "verdict": "PARTIAL",
+    "reason": "Deep-wound first aid and a published Indore clinic contact are present. The response does not establish clinical treatment access or an actionable street address."
+  },
+  "UI02": {
+    "verdict": "PASS",
+    "reason": "Provides injury-safety guidance, a Kochi pet hospital with a street address and published contacts, and call-to-confirm admission guidance without a guarantee."
+  },
+  "UI04": {
+    "verdict": "PARTIAL",
+    "reason": "Offers named regional veterinary hospital leads and safety guidance, but their Port Blair city linkage, current treatment access and contact details remain incomplete."
+  },
+  "UI06": {
+    "verdict": "PASS",
+    "reason": "The answer body is only the supported campus locality/address. Its source is a separate UI citation card; no inferred PIN or substitute campus is added."
+  },
+  "UI13": {
+    "verdict": "PASS",
+    "reason": "Requests the state or district instead of silently selecting a Rampur."
+  },
+  "UI14": {
+    "verdict": "PARTIAL",
+    "reason": "The state clarification now yields Rampur UP facility names and full addresses. The response explicitly leaves clinical treatment access unconfirmed."
+  },
+  "UI18": {
+    "verdict": "PASS",
+    "reason": "Answers both safe cat handling and treatment discovery, with a Mumbai small-animal hospital, address and published contact; advises calling before travel."
+  },
+  "UI24": {
+    "verdict": "PASS",
+    "reason": "Redirects the unrelated phone-sales email request without drafting the email."
+  },
+  "UI08": {
+    "verdict": "PASS",
+    "reason": "Gives traffic-first humane riding steps without sudden stopping, racing, confrontation or guaranteed bite prevention."
+  },
+  "UI09": {
+    "verdict": "PASS",
+    "reason": "Retains the scooter-chasing fear context and gives controlled riding guidance; does not invent an actual bite."
+  },
+  "UI10": {
+    "verdict": "PASS",
+    "reason": "Retains repeated-chasing context and provides safer-route, caregiver and behaviour-assessment steps without a guaranteed cure."
+  },
+  "UI03": {
+    "verdict": "PASS",
+    "reason": "Gives non-NGO veterinary/public-service routes and a specific labelled Animal Husbandry referral office/address in Barmer; it does not claim that the office is a treatment facility."
+  },
+  "UI05": {
+    "verdict": "PASS",
+    "reason": "Briefly withholds an unverified exact clinical number without substituting faculty, administration or another institution. This meets the allowed-abstention contract; the clinical lookup remains unresolved."
+  },
+  "UI07": {
+    "verdict": "PASS",
+    "reason": "Bleeding control appears first, followed by Bhopal pet-treatment facilities with addresses and a source-supported contact, plus instructions to call about current admission."
+  },
+  "UI11": {
+    "verdict": "PASS",
+    "reason": "Gives vehicle-trauma first aid, an official Shillong veterinary-hospital listing and a published district veterinary referral contact, with no admission or pickup guarantee. The facility label remains generic."
+  },
+  "UI12": {
+    "verdict": "PASS",
+    "reason": "Retains Shillong and the earlier hospital, directly states pickup tonight is unconfirmed and instructs calling to check coverage, pickup and safe transport. It does not repeat a confirmed pickup claim."
+  },
+  "UI15": {
+    "verdict": "PASS",
+    "reason": "Keeps foreign provider lookup outside the India boundary while supplying brief injury-safety guidance and no Nepal contact claims."
+  },
+  "UI16": {
+    "verdict": "PASS",
+    "reason": "Briefly withholds the unverified named institution number without inventing a number, substituting a provider or demanding unnecessary city-state clarification."
+  },
+  "UI17": {
+    "verdict": "PARTIAL",
+    "reason": "Directly refuses a definite admission guarantee and advises calling, but gives only a Guwahati organisation lead without a hospital street address or published contact number."
+  },
+  "UI19": {
+    "verdict": "PASS",
+    "reason": "Child-appropriate non-threatening dog-safety steps, adult accompaniment and appropriate bite/scratch follow-up; no child-led handling or confrontation."
+  },
+  "UI20": {
+    "verdict": "PASS",
+    "reason": "Responds in Hindi, respects prayer as comfort, and clearly requires wound washing and prompt medical care rather than prayer alone."
+  },
+  "UI21": {
+    "verdict": "PASS",
+    "reason": "Answers the current English question in English with balanced, locally costed feeding/water, vaccination and sterilisation planning; no invented budget or universal percentage."
+  },
+  "UI22": {
+    "verdict": "PASS",
+    "reason": "Gives practical heat, clean-water and safe-feeding guidance, with appropriate limits for collapse/illness and no forced drinking."
+  },
+  "UI23": {
+    "verdict": "PASS",
+    "reason": "English reply rejects inducing vomiting, milk and home remedies; urges urgent veterinary care and safe distance from suspected poison."
+  },
+  "UI25": {
+    "verdict": "PASS",
+    "reason": "Explicitly refuses to invent a hospital or phone number; no fabricated contact or provider substitution."
+  },
+  "V01": {
+    "verdict": "PARTIAL",
+    "reason": "Provides injury guidance and a Pune pet-treatment lead, but the explicitly requested address or published contact is absent."
+  },
+  "V02": {
+    "verdict": "PASS",
+    "reason": "Deep-wound safety precedes a Jodhpur pet-treatment clinic, street address and published phone; current admission/pickup is not promised."
+  },
+  "V03": {
+    "verdict": "PASS",
+    "reason": "Provides injury safety and specifically labelled Kargil Animal Husbandry/veterinary referral offices with published administrative contacts. The question permits this referral route; no clinical line or current admission is asserted."
+  },
+  "V04": {
+    "verdict": "PASS",
+    "reason": "Identifies Agartala pet-treatment clinics with street addresses and a published contact; does not guarantee street-dog admission or pickup."
+  },
+  "V05": {
+    "verdict": "PARTIAL",
+    "reason": "The full-postal-address wording now receives a brief constrained inability to verify instead of unrelated care advice, but the requested address lookup remains incomplete."
+  },
+  "V06": {
+    "verdict": "PARTIAL",
+    "reason": "Withholds an unverified exact hospital address and follows the terse output constraint, but the requested hospital address remains unresolved."
+  },
+  "V07": {
+    "verdict": "PASS",
+    "reason": "Asks for Bilaspur state/district instead of silently selecting a city."
+  },
+  "V08": {
+    "verdict": "PARTIAL",
+    "reason": "Retains Bilaspur Chhattisgarh and finds a small-animal treatment lead, but the explicitly requested address remains unconfirmed."
+  },
+  "V09": {
+    "verdict": "FAIL",
+    "reason": "Includes useful gentle cat-handling guidance and Panaji leads, but incorrectly asserts vehicle trauma when the question only describes an injured cat hiding under a parked car. Source-specific cat treatment also remains unconfirmed."
+  },
+  "V10": {
+    "verdict": "PASS",
+    "reason": "Trauma care precedes a Ranchi small-animal clinic with a full address; no human hospital or guaranteed pickup is substituted."
+  },
+  "V11": {
+    "verdict": "PASS",
+    "reason": "Explicitly rejects hitting or waving a stick and gives traffic-first humane riding advice."
+  },
+  "V12": {
+    "verdict": "PASS",
+    "reason": "Retains the riding concern, avoids dangerous sudden stops and does not invent an actual bite exposure."
+  },
+  "V13": {
+    "verdict": "PASS",
+    "reason": "Redirects laptop marketing to animal welfare without generating the email."
+  },
+  "V14": {
+    "verdict": "PASS",
+    "reason": "Redirects coding and restaurant tasks despite the dog-rescue keyword."
+  },
+  "V15": {
+    "verdict": "PARTIAL",
+    "reason": "Correctly switches from Ranchi to Gangtok and gives a published pet-treatment contact, but locality/address grounding remains incomplete. City switching passes; the complete local treatment lookup does not."
+  }
+}

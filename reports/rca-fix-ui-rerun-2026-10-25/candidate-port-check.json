@@ -1,0 +1,394 @@
+{
+  "source_revision": "16f40ab",
+  "channel": "private_candidate_backend",
+  "conversation_id": "2b1f7270-526a-4b97-b847-680d05f93a0d",
+  "cases": [
+    {
+      "id": "UI04",
+      "question": "Who can treat an injured street dog in Port Blair?",
+      "response": "An injured street dog needs prompt treatment by a veterinarian; a trained animal-rescue service may help with safe transport.\n\nKeep people and animals back, approach only if safe, and minimise handling. If there is heavy bleeding, breathing trouble, collapse, or major trauma, arrange urgent veterinary transport without offering food or water.\n\nThese institutions are listed in the sources, but clinical treatment access remains unconfirmed:\n\n- Veterinary Hospital, Junglighat — Junglighat — institution listed; clinical treatment access is unconfirmed. Clinical contact: 03192-232252.\n\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.",
+      "resource_links": [
+        {
+          "label": "Veterinary Hospital, Junglighat: source",
+          "url": "https://www.indiacustomercare.com/department-animal-husbandry-and-veterinary-services-no",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        },
+        {
+          "label": "Junglighat: location source",
+          "url": "https://magicpin.in/Port-Blair/Prem-Nagar/Healthcare/Veterinary-Hospital/store/1014412",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "answer_format": "text",
+      "elapsed_seconds": 54.42,
+      "metadata": {
+        "resource_links": [
+          {
+            "label": "Veterinary Hospital, Junglighat: source",
+            "url": "https://www.indiacustomercare.com/department-animal-husbandry-and-veterinary-services-no"
+          },
+          {
+            "label": "Junglighat: location source",
+            "url": "https://magicpin.in/Port-Blair/Prem-Nagar/Healthcare/Veterinary-Hospital/store/1014412"
+          }
+        ],
+        "text_action": "search",
+        "contextual_request": "Find veterinary treatment or animal rescue help for an injured street dog in Port Blair.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "contact_unconfirmed",
+        "request_satisfied": false,
+        "evidence_issue": "requested_contact_or_service_unverified",
+        "model_history_policy": "include",
+        "requested_institution": "",
+        "requested_location_text": "Port Blair",
+        "case_place": "Port Blair, Port Blair Tehsil, Andaman and Nicobar Islands, India",
+        "phone_only": false,
+        "local_help": true,
+        "output_format": "text",
+        "lookup_scope": "locationiq",
+        "needs_care_guidance": true,
+        "stage_trace": {
+          "id": "db64dd6339e0499f89d6c47d3006bc87",
+          "events": [
+            {
+              "component": "model:router",
+              "status": "ok",
+              "latency_ms": 2060,
+              "error_type": ""
+            },
+            {
+              "component": "rag:chroma",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "model:care",
+              "status": "ok",
+              "latency_ms": 3606,
+              "error_type": ""
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 10290,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1108,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1394,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 277,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3055,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3337,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3337,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 982,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 725,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:http",
+              "status": "error",
+              "latency_ms": 0,
+              "error_type": "HTTP403"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 903,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 4488,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1679,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3009,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "model:evidence",
+              "status": "ok",
+              "latency_ms": 9237,
+              "error_type": ""
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:result",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 9212,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 71,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 532,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 920,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3014,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3031,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3045,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1378,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1444,
+              "error_type": ""
+            },
+            {
+              "component": "model:evidence",
+              "status": "ok",
+              "latency_ms": 4478,
+              "error_type": ""
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:result",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": ""
+            }
+          ]
+        },
+        "validated_facts": [
+          {
+            "kind": "identity",
+            "institution": "veterinary hospital junglighat",
+            "value": "veterinary hospital junglighat"
+          },
+          {
+            "kind": "location",
+            "institution": "veterinary hospital junglighat",
+            "value": "junglighat"
+          },
+          {
+            "kind": "phone",
+            "institution": "veterinary hospital junglighat",
+            "value": "3192232252"
+          }
+        ],
+        "latency_ms": 54392
+      }
+    }
+  ]
+}
