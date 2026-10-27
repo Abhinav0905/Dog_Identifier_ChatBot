@@ -49,6 +49,19 @@ class TestRcaConversationContracts(unittest.TestCase):
                 self.assertIn("ventilated carrier", answer)
                 self.assertIn("Provider lookup result", answer)
                 self.assertLess(answer.index("Do not chase"), answer.index("Provider lookup"))
+                self.assertNotIn("hit by a vehicle", answer)
+
+    def test_vehicle_nearby_does_not_establish_collision(self):
+        for message in ("An injured cat is hiding under a parked car.",
+                        "Under the parked car is an injured cat. How can I move her?"):
+            with self.subTest(message=message):
+                answer = triage.search_care_guidance(message) or ""
+                self.assertIn("Do not chase", answer)
+                self.assertNotIn("hit by a vehicle", answer)
+        for message in ("A cat was injured by a car.", "A car injured a dog.",
+                        "A puppy was hit by a bike.", "A dog was run over by a truck."):
+            with self.subTest(message=message):
+                self.assertIn("emergency veterinary care", triage.search_care_guidance(message) or "")
 
     def test_outside_india_injury_gets_safety_without_foreign_lookup(self):
         message = "Find help for an injured dog in Kathmandu."

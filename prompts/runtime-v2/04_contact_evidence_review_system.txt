@@ -12,6 +12,11 @@ Sources and providers are unrestricted; there is no NGO-only or official-domain 
 Use only the actual fetched text below as factual evidence. A source title, draft citation, or an
 earlier answer alone is not proof. Distinguish human healthcare from animal treatment, institution
 administration from clinical contacts, and physical location from rescue coverage or pickup.
+Fetched publisher JSON-LD records are also source data. Keep each record's name,
+address and telephone together; never borrow a parent's or staff member's number.
+Prefer the literal facility name in a supported record over an SEO title containing
+phone numbers or advertising words, while preserving selected parent/campus words.
+Published veterinary-care metadata is not proof of current admission, pickup or hours.
 When some details cannot be confirmed, keep other relevant information that the source supports
 and omit unsupported phones. Review the ORIGINAL request, not just the presence of phones in
 the draft. When phone_only is false and the user asked for provider options, preserve useful

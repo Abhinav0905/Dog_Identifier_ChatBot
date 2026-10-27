@@ -2478,6 +2478,71 @@ def _all_attempted_page_fetches_failed(
     return bool(attempted) and all(value is None for value in attempted)
 
 
+def _structured_contact_blocks(soup) -> list[str]:
+    """Keep bounded publisher JSON-LD facts that HTML text extraction drops.
+
+    Each organization stays a separate record. Never execute scripts, fetch
+    linked @ids, merge faculty contacts, or infer live opening/admission status.
+    """
+    blocks = []
+    allowed = {"VeterinaryCare", "AnimalShelter", "Organization", "NGO", "LocalBusiness"}
+    def scalar(value, limit=240):
+        return re.sub(r"\s+", " ", value).strip()[:limit] if isinstance(value, str) else ""
+    for script in soup.find_all("script", attrs={"type": "application/ld+json"})[:16]:
+        raw = script.string or script.get_text()
+        if not raw or len(raw) > 100000:
+            continue
+        try:
+            value = json.loads(raw)
+        except (ValueError, TypeError, RecursionError):
+            continue
+        pending = list(value)[:40] if isinstance(value, list) else [value]
+        cursor = 0
+        while cursor < len(pending) and cursor < 40:
+            record = pending[cursor]
+            cursor += 1
+            if not isinstance(record, dict):
+                continue
+            graph = record.get("@graph")
+            if isinstance(graph, list):
+                pending.extend(graph[:max(0, 40 - len(pending))])
+            kind = record.get("@type", [])
+            kinds = {str(item).rsplit("/", 1)[-1] for item in (kind if isinstance(kind, list) else [kind])}
+            if "Person" in kinds or not kinds & allowed:
+                continue
+            name, description = scalar(record.get("name")), scalar(record.get("description"), 800)
+            if not name or not (kinds & {"VeterinaryCare", "AnimalShelter"} or re.search(r"\b(?:veterinar\w*|animals?|pets?|dogs?|cats?|rescue|shelter)\b", name + " " + description, re.I)):
+                continue
+            address = record.get("address")
+            if isinstance(address, dict):
+                country = address.get("addressCountry", "")
+                if isinstance(country, dict):country = country.get("name", "")
+                if scalar(country) and scalar(country).casefold() not in {"in", "india", "bharat", "भारत"}:
+                    continue
+                postal = address.get("postalCode", "")
+                if isinstance(postal, int) and not isinstance(postal, bool) and 100000 <= postal <= 999999:postal = str(postal)
+                address = ", ".join(part for part in [scalar(address.get(key), 160) for key in ("streetAddress", "addressLocality", "addressRegion")] + [scalar(postal), scalar(country, 80)] if part)
+            else:
+                address = scalar(address, 450)
+            phones = record.get("telephone", [])
+            if not isinstance(phones, list):phones = [phones]
+            phones = [scalar(phone, 80) for phone in phones[:4] if scalar(phone, 80)]
+            if not address and not phones:
+                continue
+            clinical_type = "VeterinaryCare" in kinds and not re.search(r"\b(?:research|teaching)\b|\b(?:no|not)\b.{0,35}\b(?:clinical|treatment|veterinary)\b", description, re.I)
+            # The words describe the explicitly published Schema.org type,
+            # rather than inferring veterinary care from a business's name.
+            body = name
+            if phones:
+                body += ". Telephone: " + "; ".join(phones) + "."
+            body += (" Veterinary care: " if clinical_type else " Published organization metadata: ") + description
+            if address:
+                body += " Address: " + address + "."
+            if body not in blocks:blocks.append(body)
+            if len(blocks) >= 12:return blocks
+    return blocks
+
+
 def _fetch_public_page_text(
     url: str,
     *,
@@ -2702,12 +2767,13 @@ def _fetch_public_page_text_unlocked(
                     page_links.append(linked_url)
                 if len(page_links) >= 200:
                     break
+            structured_blocks = _structured_contact_blocks(soup)
             for element in soup(
                 ["script", "style", "noscript", "svg", "iframe", "form", "template"]
             ):
                 element.decompose()
             block_tags = ("address", "p", "li", "tr", "dd", "dt", "div")
-            blocks: list[str] = []
+            blocks: list[str] = list(structured_blocks)
             seen_blocks: set[str] = set()
             for element in soup.find_all(block_tags):
                 if element.name == "div" and element.find(block_tags):
@@ -2723,7 +2789,7 @@ def _fetch_public_page_text_unlocked(
                 if len(blocks) >= 500:
                     break
             return PublicPageText(
-                soup.get_text(" ", strip=True)[:100_000],
+                ("\n\n".join(structured_blocks) + "\n\n" + soup.get_text(" ", strip=True))[:100_000],
                 identity_text=" ".join(part for part in identity_parts if part)[:2_000],
                 identity_blocks=identity_blocks,
                 blocks=blocks,

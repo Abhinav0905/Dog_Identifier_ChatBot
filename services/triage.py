@@ -80,10 +80,14 @@ _SERIOUS_WOUND_RE = re.compile(
 )
 _VEHICLE_TRAUMA_RE = re.compile(
     r"(?:"
-    r"\b(?:hit|struck|hurt|injured|run\s+over|knocked\s+down)\b.{0,50}"
+    r"\b(?:hit|struck|run\s+over|knocked\s+down)\b.{0,50}"
     r"\b(?:cars?|vehicles?|bikes?|motorbikes?|motorcycles?|trucks?|bus(?:es)?)\b"
+    r"|\b(?:hurt|injured)\s+by\s+(?:(?:a|an|the)\s+)?(?:moving\s+)?"
+    r"(?:cars?|vehicles?|bikes?|motorbikes?|motorcycles?|trucks?|bus(?:es)?)\b"
     r"|\b(?:cars?|vehicles?|bikes?|motorbikes?|motorcycles?|trucks?|bus(?:es)?)\b.{0,50}"
-    r"\b(?:hit|struck|hurt|injured|collision|crash|accident)\b"
+    r"\b(?:hit|struck|collision|crash|accident)\b"
+    r"|\b(?:cars?|vehicles?|bikes?|motorbikes?|motorcycles?|trucks?|bus(?:es)?)\s+"
+    r"(?:(?:has|had)\s+)?(?:hurt|injured)\b"
     r"|\b(?:road|traffic|vehicle)\s+(?:accidents?|collisions?|trauma|crashes?)\b"
     r")",
     re.IGNORECASE,
