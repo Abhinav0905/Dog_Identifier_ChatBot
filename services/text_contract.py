@@ -51,7 +51,13 @@ def normalized_place(value: str) -> str:
 
 def locality_matches(locality: str, text: str, selected_region: str = "") -> bool:
     """City evidence cannot override an explicitly different published state."""
-    if locality and f" {normalized_place(locality)} " not in f" {normalized_place(text)} ":
+    # Parenthetical alternatives supplied in the request are alternatives, not
+    # a single postal phrase that every source has to repeat verbatim.
+    alternatives = [locality]
+    alias = re.fullmatch(r"\s*([^()]+?)\s*\(([^()]+)\)\s*", locality)
+    if alias:
+        alternatives = [alias.group(1), re.sub(r"^(?:formerly|now|also known as)\s+", "", alias.group(2), flags=re.I)]
+    if locality and not any(f" {normalized_place(value)} " in f" {normalized_place(text)} " for value in alternatives):
         return False
     if selected_region:
         from services.query_router import INDIA_STATES
@@ -66,6 +72,6 @@ def locality_matches(locality: str, text: str, selected_region: str = "") -> boo
         aliases = {"cg": "chhattisgarh", "hp": "himachal pradesh", "up": "uttar pradesh",
                    "mp": "madhya pradesh", "uk": "uttarakhand"}
         for alias, state in aliases.items():
-            if re.search(r"(?:,|\bstate\s*:)\s*" + alias + r"\b", text, re.I) and wanted != state:
+            if re.search(r"(?:,|\bstate\s*:)\s*" + alias + r"(?=\s*(?:,|\d{6}\b|$))", text, re.I) and wanted != state:
                 return False
     return True

@@ -85,7 +85,7 @@ class TestRcaConversationContracts(unittest.TestCase):
     def test_pickup_followup_is_direct_and_retains_shillong(self):
         db.save_session_case_location(self.session, {"scope": "india", "place": "Shillong, Meghalaya, India"})
         with patch.object(query_router, "plan_text_turn", return_value=fixtures.planned("search", "Pickup for the injured Shillong dog", local_help=True)), \
-             patch.object(web_search, "search_animal_question", return_value=web_search.SearchResult(response="Earlier provider: 01234-567890", result_kind="search_answer")) as search:
+             patch.object(web_search, "search_animal_question", return_value=web_search.SearchResult(response="Earlier provider: 01234-567890", result_kind="search_answer", validated_facts=[{"kind":"phone","value":"01234567890"}])) as search:
             answer = self.post("Will they pick it up tonight?")
         self.assertIn("not confirmed", answer)
         self.assertIn("Call the listed contact", answer)
@@ -140,7 +140,8 @@ class TestRcaEvidenceContracts(unittest.TestCase):
             result=evidence.review_contact_answer("Give only the full postal address of TANUVAS "+name,[],"address lookup","draft",[source],requested_institution="TANUVAS "+name)
         self.assertEqual(result.answer,"Vepery, Chennai")
         self.assertNotIn("600",result.answer)
-        client.responses.create.assert_not_called()
+        self.assertFalse(result.request_satisfied)
+        client.responses.create.assert_called_once()
 
     def test_phone_only_still_rejects_a_different_institution(self):
         row="Bay Veterinary Hospital, Quayside 03192-232252 9531855752"

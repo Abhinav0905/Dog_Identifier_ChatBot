@@ -490,7 +490,7 @@ Confirmed contact(s) listed on the college page:
                 }])
                 result = evidence._validate_review(value, {self.url: quote}, clinical_discovery=True, require_small_animal=True)
                 self.assertFalse(result.request_satisfied)
-                self.assertTrue("clinical treatment access is unconfirmed" in result.answer or "Dog or cat treatment and admission remain unconfirmed" in result.answer)
+                self.assertTrue("clinical treatment access is unconfirmed" in result.answer or "Call ahead to confirm they can see this animal" in result.answer)
 
     def test_fabricated_service_quote_is_not_evidence_even_with_real_entity(self):
         source = "Harbour Veterinary College, Lakeside. Admissions office."
@@ -524,7 +524,7 @@ Confirmed contact(s) listed on the college page:
         result = evidence._validate_review(value, {self.url: quote}, clinical_discovery=True, require_small_animal=True)
         self.assertTrue(result.request_satisfied)
         self.assertIn("source describes veterinary treatment services", result.answer)
-        self.assertIn("Dog or cat treatment and admission remain unconfirmed", result.answer)
+        self.assertIn("Call ahead to confirm they can see this animal", result.answer)
 
     def test_unknown_pickup_is_not_proof_of_no_pickup(self):
         name = "Harbour Veterinary Hospital"
@@ -792,7 +792,7 @@ Confirmed contact(s) listed on the college page:
         self.assertIn(name, result.answer)
         self.assertIn("source describes veterinary treatment", result.answer)
         self.assertNotIn("source describes rescue pickup", result.answer)
-        self.assertIn("admission remain unconfirmed", result.answer)
+        self.assertIn("Call before travelling to confirm treatment and admission", result.answer)
 
     def test_actual_block_service_before_name_does_not_borrow_another_provider(self):
         text = "Moonlight Veterinary Hospital treats dogs. Harbour Veterinary College, Lakeside is a teaching institution."

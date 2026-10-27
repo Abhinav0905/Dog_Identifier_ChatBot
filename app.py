@@ -624,12 +624,14 @@ def chat_query(
                 request.message, history, contextual_message=turn.contextual_request,
                 language=language,
             )
-            answer = _prepend_immediate_guidance(guidance or "", answer)
+            answer = _prepend_immediate_guidance(guidance or triage.immediate_rescue_guidance(request.message, language), answer)
         result_kind = "clarification"
     elif turn.action == query_router.TextAction.SEARCH or turn.routing_failed:
         # An actual safety response remains available even when both models are
         # down. No old NGO directory, cache, or guessed place is a fallback.
         guidance = None if output_format != "text" else triage.search_care_guidance(request.message, language)
+        if not guidance and output_format == "text" and turn.needs_immediate_guidance:
+            guidance = triage.immediate_rescue_guidance(request.message, language)
         if not guidance and output_format == "text" and turn.needs_care_guidance:
             guidance = triage.generate_chat_response(
                 request.message, history, session_id, language,

@@ -105,9 +105,14 @@ def review_contact_answer(
     """Independently review phone answers; discovery remains unrestricted."""
     history = list(history)
     address_only = output_format == "address_only" or _address_only_request(message)
+    full_address_required = bool(re.search(r"\b(?:full|complete|postal|street)\s+(?:postal\s+)?address\b|पूरा\s*पता", message, re.I))
+    contact_or_address = bool(re.search(r"\baddress\s+or\s+(?:(?:a|an|the|published)\s+)*(?:phone|contact)|\b(?:phone|contact)(?:\s+number)?\s+or\s+(?:(?:a|an|the|published)\s+)*address\b", message, re.I))
     phone_only = _number_only_request(message) if phone_only is None else phone_only
     target = _requested_target(message, history, requested_institution)
     needs_contact = bool(phone_only or _CONTACT_REQUEST.search(f"{message}\n{contextual_request}"))
+    optional_contact = not phone_only and bool(re.search(
+        r"\b(?:phone|contact)(?:\s+number)?\s+(?:if\s+(?:available|published|verified)|when\s+available)\b|"
+        r"\bif\s+available[^.!?]{0,30}\b(?:phone|contact)\b", message, re.I))
     needs_provider = bool(re.search(
         r"\b(?:veterinar\w*|hospitals?|clinics?|colleges?|shelters?|rescue|treatment|local\s+help)\b",
         f"{message}\n{contextual_request}", re.I,
@@ -123,8 +128,12 @@ def review_contact_answer(
     require_small_animal = bool(re.search(r"\b(?:dogs?|pupp(?:y|ies)|canine|pets?|cats?|kittens?)\b|कुत्त|पिल्ल|बिल्ली", request_text, re.I))
     if not clinical_discovery and not needs_contact and not needs_provider and not _answer_phone_spans(draft):
         return ContactAnswerReview(answer=draft, status="not_needed")
+    direct_address = None
     def fallback(reason="review_unavailable"):
         web_operations.record_event("evidence:result", "fallback", error_type=re.sub(r"\W+", "_", reason)[:79])
+        if direct_address is not None and direct_address.validated_facts:
+            direct_address.evidence_issue = "full_address_not_grounded"
+            return direct_address
         if address_only:
             return ContactAnswerReview(
                 answer="मैं अनुरोधित संस्था का पता सुनिश्चित नहीं कर सका।" if language == "hi" else "I couldn't confirm the requested institution's address from accessible sources.",
@@ -148,7 +157,7 @@ def review_contact_answer(
         logger.info("Contact evidence review status=unavailable reason=no_readable_sources fetched_sources=0")
         return fallback("no_readable_sources")
     if address_only:
-        direct_address = _grounded_address_answer([], pages, list(pages), target, language)
+        direct_address = _grounded_address_answer([], pages, list(pages), target, language, full_address_required=full_address_required)
         if direct_address.request_satisfied:
             agent_trace.decision("evidence.direct_address", answer=direct_address.answer,
                                  request_satisfied=direct_address.request_satisfied, method="literal_source_row")
@@ -199,13 +208,17 @@ def review_contact_answer(
         ))
         result = _validate_review(reviewed, pages, requested_institution=target, phone_only=phone_only, requested_place=requested_place, requested_location_text=requested_location_text, clinical_only=clinical_only, address_only=address_only,
                                   clinical_discovery=clinical_discovery, require_small_animal=require_small_animal, language=language, requested_city=requested_city,
-                                  phone_required=needs_contact, address_required=bool(re.search(r"\baddress\b", message, re.I) and not re.search(r"\b(?:name|details)\s+or\s+(?:an?\s+)?address\b", message, re.I)))
+                                  phone_required=needs_contact and not contact_or_address and not optional_contact,
+                                  address_required=not contact_or_address and bool(re.search(r"\baddress\b", message, re.I) and not re.search(r"\b(?:name|details)\s+or\s+(?:an?\s+)?address\b", message, re.I)),
+                                  contact_or_address=contact_or_address, full_address_required=full_address_required)
         logger.info(
             "Contact evidence review status=%s fetched_sources=%d reason=%s",
             result.status if result is not None else "unavailable", len(pages),
             (result.evidence_issue or "reviewed") if result is not None else "evidence_validation_failed",
         )
         if result is not None:
+            if address_only and not result.validated_facts and direct_address is not None and direct_address.validated_facts:
+                return fallback("full_address_not_grounded")
             web_operations.record_event("evidence:result", "fallback" if result.request_satisfied is False else "ok",
                                         error_type="NoGroundedProviderClaims" if result.evidence_issue == "no_grounded_provider_claims" else "")
             return result
@@ -383,6 +396,11 @@ def _normalized_location(value: str) -> str:
     return re.sub(r"[^\w]+", " ", value).strip()
 
 
+def _literal_name_pattern(institution: str) -> str:
+    """Allow written separators, without dropping or substituting name words."""
+    words = re.findall(r"\w+", _normalized(institution))
+    return r"(?<!\w)" + r"[\W_]+".join(map(re.escape, words)) + r"(?!\w)" if words else r"(?!)"
+
 
 def _entity_key(value: str) -> str:
     value = _normalized_location(value)
@@ -553,6 +571,40 @@ def _publisher_location_is_grounded(page: str, institution: str, place: str) -> 
     return any(wanted in f" {_normalized_location(str(block))} " for block in getattr(page, "blocks", ()) if len(str(block)) <= 1600)
 
 
+def _provider_location_excerpt(page: str, institution: str, place: str) -> str:
+    """Bind an address independently of the paragraph that proves treatment.
+
+    A directory can have a service paragraph and an address row for the same
+    facility. Keep their evidence separate, without crossing a different
+    facility's name to obtain an address.
+    """
+    name, wanted = _normalized_location(institution), _normalized_location(place)
+    if not name or not wanted or len(place) > 240 or re.search(r"[\r\n]", place):
+        return ""
+    candidates = [str(block) for block in getattr(page, "blocks", ())]
+    full = _normalized_location(str(page))
+    for match in list(re.finditer(r"(?<!\w)" + re.escape(name) + r"(?!\w)", full))[:30]:
+        candidates.append(full[match.start():match.end() + 1600])
+    for candidate in candidates:
+        if len(candidate) > 2400:
+            continue
+        clean = _normalized_location(candidate)
+        start = clean.find(name)
+        address = clean.find(wanted, max(0, start + len(name)))
+        if start < 0 or address < 0:
+            continue
+        between = _without_address_landmarks(clean[start + len(name):address])
+        # A service heading may refer to its own hospital; another named
+        # hospital/college between identity and address is a different record.
+        between = re.sub(r"\b(?:its|our|the|this)\s+(?:(?:animal|veterinary|teaching)\s+){0,2}(?:hospital|clinic)\b", "", between)
+        if re.search(r"\b(?:hospital|clinic|college|university|institute|shelter)\b", between):
+            continue
+        return candidate
+    if _publisher_location_is_grounded(page, institution, place):
+        return institution + "\n" + next(str(block) for block in page.blocks if f" {wanted} " in f" {_normalized_location(str(block))} ")
+    return ""
+
+
 def _publisher_branch_phones(page: str, institution: str, place: str) -> set[str] | None:
     """For a multi-branch publisher, bind numbers to the displayed address.
 
@@ -669,7 +721,11 @@ def _address_target_matches(target: str, institution: str, page: str, source: st
     return parent in host and bool(re.search(r"\b" + re.escape(parent) + r"\b", str(getattr(page, "identity_text", "")), re.I))
 
 
-def _grounded_address_answer(claims, pages, approved_urls, target, language):
+def _has_actionable_address(place: str) -> bool:
+    return bool(re.search(r"\b(?:road|street|lane|campus|complex|nagar|sector|ward|opposite|near)\b|\b\d{6}\b|सड़क|मार्ग|नगर", place, re.I))
+
+
+def _grounded_address_answer(claims, pages, approved_urls, target, language, *, full_address_required=False):
     for claim in claims:
         if not isinstance(claim, dict):
             continue
@@ -693,8 +749,8 @@ def _grounded_address_answer(claims, pages, approved_urls, target, language):
             and len(re.findall(r"\b(?:hospital|college|clinic|university)\b", _normalized(str(block)).replace(_normalized(name), ""))) == 0
             for block in blocks
         )
-        if grounded or _publisher_location_is_grounded(page, name, place):
-            return ContactAnswerReview(answer=place, links=[{"label": name + ": address source", "url": source}], status="approved", request_satisfied=True,
+        if grounded or _provider_location_excerpt(page, name, place):
+            return ContactAnswerReview(answer=place, links=[{"label": name + ": address source", "url": source}], status="approved", request_satisfied=not full_address_required or _has_actionable_address(place),
                 validated_facts=[{"kind": "location", "institution": _entity_key(name), "value": _normalized_location(place)}])
     # Repair an overlong or inferred model address using an actual source row
     # shaped as "Selected Facility, Locality, City". This requires no clinical
@@ -716,7 +772,7 @@ def _grounded_address_answer(claims, pages, approved_urls, target, language):
                 if re.search(r"\b(?:hospital|college|clinic|university|phone|tel|email|treat\w*|services?|hours?|offers?|provides?|operates?)\b|@|https?://", place, re.I):
                     continue
                 return ContactAnswerReview(answer=place, links=[{"label": name + ": address source", "url": source}],
-                    status="approved", request_satisfied=True,
+                    status="approved", request_satisfied=not full_address_required or _has_actionable_address(place),
                     validated_facts=[{"kind": "location", "institution": _entity_key(name), "value": _normalized_location(place)}])
     return ContactAnswerReview(
         answer="मैं अनुरोधित संस्था का पता सुनिश्चित नहीं कर सका।" if language == "hi" else "I couldn't confirm the requested institution's address from accessible sources.",
@@ -845,11 +901,13 @@ def _claim_binds_institution(institution: str, phone: str, quote: str) -> bool:
             if key not in {_phone_key(v) for v in re.findall(r"(?<!\d)\d{3,6}(?!\d)", clause)}:
                 continue
         normalized = _normalized(clause)
-        if institution_key not in normalized:
+        name_match = re.search(_literal_name_pattern(institution_key), normalized)
+        if not name_match:
             if index == 0 or _normalized(clauses[index - 1]).rstrip(".:") != institution_key:
                 continue
             normalized = institution_key + " " + normalized
-        start = normalized.find(institution_key) + len(institution_key)
+            name_match = re.search(_literal_name_pattern(institution_key), normalized)
+        start = name_match.end()
         tail = normalized[start:]
         spans = _phone_spans(tail)
         positions = [left for left, _, value in spans if value == key]
@@ -938,7 +996,8 @@ def _source_bound_excerpt(page: str, institution: str, phone: str, suggested_quo
     # conservative publisher check can establish that identity without making
     # the exact parenthetical string a prerequisite for its contact block.
     publisher_excerpt = _publisher_contact_excerpt(page, institution, phone)
-    if not name or (name not in full_text and not publisher_excerpt):
+    name_pattern = _literal_name_pattern(institution)
+    if not name or (not re.search(name_pattern, full_text) and not publisher_excerpt):
         return ""
     candidates = []
     if suggested_quote and _normalized(suggested_quote) in full_text:
@@ -946,12 +1005,12 @@ def _source_bound_excerpt(page: str, institution: str, phone: str, suggested_quo
     # Actual paragraph/table-row blocks preserve useful boundaries on HTML pages.
     blocks = tuple(getattr(page, "blocks", ()) or ())
     for index, block in enumerate(blocks):
-        if name in _normalized(str(block)):
+        if re.search(name_pattern, _normalized(str(block))):
             candidates.append(str(block))
             if index + 1 < len(blocks):
                 candidates.append("\n".join(str(item) for item in blocks[index:index + 3]))
     # Text/PDF sources and flattened pages still have a bounded literal passage.
-    for match in list(re.finditer(re.escape(name), full_text))[:30]:
+    for match in list(re.finditer(name_pattern, full_text))[:30]:
         candidates.append(full_text[max(0, match.start() - 120):min(len(full_text), match.end() + 400)])
     valid = [excerpt for excerpt in candidates if len(excerpt) <= 2400 and _claim_binds_institution(institution, phone, excerpt)]
     if publisher_excerpt:
@@ -974,7 +1033,7 @@ def _provider_service_is_grounded(institution: str, service: str, quote: str, *,
     if service == "identity_only":
         return True
     if service == "clinical_treatment":
-        pattern = r"\b(?:treat(?:s|ments?|ing)?|clinical\s+(?:services?|care)|small[ -]animal\s+(?:services?|practice|clinic)|companion[ -]animal\s+practice|(?:outpatient|opd)\s+(?:services?|clinic)|diagnostic\s+(?:services?|facilities)|(?:emergency\s+)?veterinary\s+care|pet\s+healthcare|emergency\s+surgery)\b"
+        pattern = r"\b(?:treat(?:s|ments?|ing)?|clinical\s+(?:services?|care)|small[ -]animal\s+(?:services?|practice|clinic)|companion[ -]animal\s+practice|(?:outpatient|opd)\s+(?:services?|clinic)|diagnostic\s+(?:services?|facilities)|(?:emergency\s+)?veterinary\s+care|pet\s+healthcare|emergency\s+surgery|animal\s+hospital|veterinary\s+clinic)\b"
     elif service in {"rescue_pickup", "no_rescue_pickup"}:
         pattern = r"\b(?:(?:rescue|animal)\s+)?(?:pick[ -]?up|ambulance)\b"
     else:
@@ -1050,7 +1109,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                               require_small_animal: bool, language: str, phone_displays: dict[str, str],
                               phone_institutions: dict[str, str], phone_sources: dict[str, list[str]], phone_roles: dict[str, str],
                               request_satisfied: bool = True, phone_required: bool = False, address_required: bool = False,
-                              requested_region: str = "") -> ContactAnswerReview:
+                              requested_region: str = "", contact_or_address: bool = False) -> ContactAnswerReview:
     """Render service claims only from entity-bound fetched evidence, not prose."""
     providers: dict[str, dict] = {}
     for claim in claims[:16]:
@@ -1079,10 +1138,11 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
         if not _target_matches_claim(requested_institution, name, quote):
             agent_trace.decision("evidence.provider_rejected", reason="wrong_requested_institution", claim=claim, requested=requested_institution)
             continue
+        location_excerpt = _provider_location_excerpt(pages[source], name, place)
         if place and (
             not _normalized_location(place)
             or (f" {_normalized_location(place)} " not in f" {_normalized_location(quote)} "
-                and not _publisher_location_is_grounded(pages[source], name, place))
+                and not location_excerpt)
             or len(place) > 240 or re.search(r"[\r\n]", place)
         ):
             # Keep a literal locality when the model appended an unsupported
@@ -1090,6 +1150,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             first = place.split(",", 1)[0].strip()
             place = first if first and f" {_normalized_location(first)} " in f" {_normalized_location(quote)} " else ""
             agent_trace.decision("evidence.address_reduced", institution=name, requested_address=claim["location"], retained_address=place, quote=quote, source=source)
+        elif location_excerpt:
+            agent_trace.decision("evidence.address_accepted", institution=name, address=place, source=source, quote=location_excerpt)
         locality_source = ""
         regional_lead = False
         if (
@@ -1169,7 +1231,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             description += (" — स्रोत में पालतू या छोटे पशुओं के उपचार का विवरण है।" if row["small_animal"] else " — स्रोत में पशु उपचार सेवाओं का विवरण है।") if language == "hi" else (
                 " — the source describes treatment for pets or small animals." if row["small_animal"] else " — the source describes veterinary treatment services.")
             if require_small_animal and not row["small_animal"]:
-                description += " कुत्तों या बिल्लियों का उपचार और प्रवेश अभी सुनिश्चित नहीं हैं।" if language == "hi" else " Dog or cat treatment and admission remain unconfirmed."
+                description += " जाने से पहले पूछें कि इस पशु को देखा जा सकता है या नहीं।" if language == "hi" else " Call ahead to confirm they can see this animal."
         elif re.search(r"\b(?:office|director|o/o)\b", row["name"], re.I):
             description += " — प्रशासनिक कार्यालय; नज़दीकी इलाज की सुविधा का पता पूछें।" if language == "hi" else " — administrative office and referral lead; ask which local facility provides treatment."
         else:
@@ -1210,7 +1272,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             if source not in {link["url"] for link in links}:
                 links.append({"label": (f"{row['place']}: location source" if source in row["geography_urls"] else f"{row['name']}: source"), "url": source})
     published_general = [phone_displays[fact["value"]] for fact in facts if fact["kind"] == "phone" and phone_roles.get(fact["value"]) != "clinical contact"]
-    if published_general:
+    if published_general and not any(fact["kind"] == "phone" and phone_roles.get(fact["value"]) == "clinical contact" for fact in facts):
         answer += ("\n\nऊपर दिए गए सामान्य या प्रशासनिक संपर्क पर पूछें कि अभी किस इकाई में पशु का इलाज और प्रवेश हो सकता है; यह संपर्क अपने आप में चिकित्सा या पिकअप लाइन नहीं है।" if language == "hi" else
                    "\n\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.")
     answer += ("\n\nइलाज की सुविधा सूचीबद्ध होने से पशु को लेने आने की बचाव सेवा या वर्तमान उपलब्धता की पुष्टि नहीं होती।" if language == "hi" else
@@ -1218,8 +1280,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
     answer += (" जाने से पहले फोन करके इस पशु के इलाज, प्रवेश और सही आपातकालीन स्थान की पुष्टि करें।" if language == "hi" else
                " Call before travelling to confirm treatment and admission for this animal and the correct emergency location.")
     has_phone = any(fact["kind"] == "phone" for fact in facts)
-    has_address = any(re.search(r"\b(?:road|street|lane|campus|complex|nagar|sector|ward|opposite|near)\b|\b\d{6}\b", row["place"], re.I) for row in providers.values())
-    satisfied = has_clinical and request_satisfied and (not phone_required or has_phone) and (not address_required or has_address)
+    has_address = any(_has_actionable_address(row["place"]) for row in providers.values())
+    satisfied = has_clinical and request_satisfied and (not phone_required or has_phone) and (not address_required or has_address) and (not contact_or_address or has_phone or has_address)
     if phone_required and not has_phone:
         answer += "\n\nअनुरोधित फ़ोन नंबर सुनिश्चित नहीं हुआ।" if language == "hi" else "\n\nThe requested phone number remains unconfirmed."
     if address_required and not has_address:
@@ -1241,6 +1303,11 @@ def _discovery_locality(literal: str, resolved_place: str, resolved_city: str = 
     canonical = re.sub(r"\s+in\s+(?=(?:" + states + r")\b)", ", ", literal, flags=re.I)
     parts = [part.strip() for part in canonical.split(",") if part.strip()]
     city = (resolved_city or resolved_place.split(",", 1)[0]).strip()
+    # Use the separately resolved city for cross-script matching, while the
+    # validated state is still checked independently. Never replace a Latin
+    # town with its parent district just because a geocoder preferred it.
+    if city and parts and re.search(r"[^\x00-\x7f]", parts[0]) and re.fullmatch(r"[\x00-\x7f]+", city):
+        return city
     if city and any(_normalized_location(part) == _normalized_location(city) for part in parts[1:]):
         return city
     return parts[0] if parts else city
@@ -1249,7 +1316,8 @@ def _discovery_locality(literal: str, resolved_place: str, resolved_city: str = 
 @agent_trace.stage('evidence.validate')
 def _validate_review(value: object, pages: dict[str, str], *, requested_institution: str = "", phone_only: bool = False, requested_place: str = "", requested_location_text: str = "", requested_city: str = "", clinical_only: bool = False,
                      clinical_discovery: bool = False, require_small_animal: bool = False, language: str = "en",
-                     phone_required: bool = False, address_required: bool = False, address_only: bool = False) -> ContactAnswerReview | None:
+                     phone_required: bool = False, address_required: bool = False, address_only: bool = False,
+                     contact_or_address: bool = False, full_address_required: bool = False) -> ContactAnswerReview | None:
     if not isinstance(value, dict) or set(value) != {"answer", "request_satisfied", "provider_claims", "contact_claims", "cited_source_urls"}:
         return None
     if type(value["request_satisfied"]) is not bool:
@@ -1273,7 +1341,7 @@ def _validate_review(value: object, pages: dict[str, str], *, requested_institut
         if key not in approved_urls:
             approved_urls.append(key)
     if address_only:
-        return _grounded_address_answer(value["provider_claims"], pages, approved_urls, requested_institution, language)
+        return _grounded_address_answer(value["provider_claims"], pages, approved_urls, requested_institution, language, full_address_required=full_address_required)
     if not (clinical_discovery and not phone_only) and re.search(r"https?://|", answer):
         return None
     phone_sources: dict[str, list[str]] = {}
@@ -1349,7 +1417,7 @@ def _validate_review(value: object, pages: dict[str, str], *, requested_institut
                                    if re.search(r"\b" + re.escape(state) + r"\b", requested_location_text + " " + requested_place, re.I)), ""),
             require_small_animal=require_small_animal, language=language, phone_displays=phone_displays,
             phone_institutions=phone_institutions, phone_sources=phone_sources, phone_roles=phone_roles,
-            request_satisfied=satisfied, phone_required=phone_required, address_required=address_required,
+            request_satisfied=satisfied, phone_required=phone_required, address_required=address_required, contact_or_address=contact_or_address,
         )
 
     output_phones = _answer_phone_spans(answer)

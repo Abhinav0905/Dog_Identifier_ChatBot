@@ -1076,11 +1076,14 @@ def search_care_guidance(message: str, language: str = "en") -> str | None:
 def provider_availability_guidance(message: str, language: str, facts: list[dict]) -> str:
     """Published service evidence never certifies admission or dispatch now."""
     pickup = bool(re.search(r"pick|लेने\s+आ", message, re.I))
+    has_phone = any(fact.get("kind") == "phone" for fact in facts)
     if language == "hi":
-        return ("आज पशु को लेने आने की उपलब्धता सुनिश्चित नहीं है। बताए गए संपर्क पर स्थान और समय बताकर पिकअप तथा सुरक्षित परिवहन पूछें।"
-                if pickup else "अभी प्रवेश की गारंटी नहीं दी जा सकती। जाने से पहले सुविधा को फोन करके इस पशु का इलाज, प्रवेश और सही आपातकालीन स्थान पूछें।")
-    return ("Pickup tonight or at the requested time is not confirmed. Call the listed contact to ask whether they cover this location and can collect the animal; also ask about safe transport if pickup is unavailable."
-            if pickup else "Admission now or tonight cannot be guaranteed. Call before travelling to confirm they can treat and admit this animal and to check the correct emergency location.")
+        contact = "बताए गए संपर्क पर" if has_phone else "संबंधित सुविधा से सीधे"
+        return (f"पशु को लेने आने की वर्तमान उपलब्धता सुनिश्चित नहीं है। {contact} स्थान और समय बताकर पिकअप तथा सुरक्षित परिवहन पूछें।"
+                if pickup else "अभी प्रवेश की पुष्टि नहीं हुई है। जाने से पहले सुविधा से इस पशु के इलाज, प्रवेश और सही स्थान की पुष्टि करें।")
+    contact = "Call the listed contact" if has_phone else "Contact the facility directly"
+    return (f"Pickup at the requested time is not confirmed. {contact} to ask whether they cover this location and can collect the animal; also ask about safe transport if pickup is unavailable."
+            if pickup else "Current admission is not confirmed. Contact the facility before travelling to confirm they can see this animal and to check the correct location.")
 
 
 def humane_deterrent_boundary(message: str, language: str = "en") -> str:
@@ -1556,9 +1559,13 @@ def immediate_rescue_guidance(message: str, language: str = "en") -> str:
     Provider discovery is intentionally separate so a web-search failure can never
     suppress the safety answer the user asked for.
     """
-    del message  # The router has already established a current distressed-animal case.
+    # The router has established a current distressed-animal case. Keep the
+    # existing safe response, but do not turn a kitten or unspecified animal
+    # into a dog while discovery or location clarification is in progress.
+    cat = bool(re.search(r"\b(?:cats?|kittens?)\b|बिल्ली", message, re.I))
+    dog = bool(re.search(r"\b(?:dogs?|pupp(?:y|ies))\b|कुत्त|पिल्ल", message, re.I))
     if language == "hi":
-        return (
+        answer = (
             "**अभी क्या करें**\n\n"
             "1. लोगों और वाहनों को कुत्ते से दूर रखें। अगर वह दर्द में या डरा हुआ है, तो उसे अचानक न छुएं।\n"
             "2. सही जगह, पास का लैंडमार्क और कुत्ते की हालत लिखें। सुरक्षित हो तो फोटो या छोटा वीडियो लें।\n"
@@ -1566,7 +1573,8 @@ def immediate_rescue_guidance(message: str, language: str = "en") -> str:
             "4. सुरक्षित हो तो पास के लोगों से उसके मालिक या नियमित देखभाल करने वाले के बारे में पूछें।\n"
             "5. कुत्ते को प्रशिक्षित बचावकर्मी या पशु चिकित्सक से जल्द जांच की जरूरत है।"
         )
-    return (
+        return answer.replace("कुत्ते", "बिल्ली" if cat else "पशु") if not dog else answer
+    answer = (
         "**What to do now**\n\n"
         "1. Keep people and traffic away from the dog. Avoid sudden handling if it is in severe pain or frightened.\n"
         "2. Note the exact location, a nearby landmark, and what is wrong. Take a photo or short video if it is safe.\n"
@@ -1574,6 +1582,7 @@ def immediate_rescue_guidance(message: str, language: str = "en") -> str:
         "4. If it is safe, ask nearby people whether the dog has an owner or regular feeder, and stay where rescuers can find it.\n"
         "5. The dog needs prompt assessment by a trained rescuer or veterinarian."
     )
+    return answer.replace("dog", "cat" if cat else "animal") if not dog else answer
 
 
 def _fallback_chat_response(

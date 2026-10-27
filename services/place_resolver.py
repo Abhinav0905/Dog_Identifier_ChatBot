@@ -1829,7 +1829,7 @@ def _locationiq_autocomplete_search(place: str) -> list[dict]:
             return []
         response.raise_for_status()
         payload = response.json()
-        web_operations.record_event("geocoder:" + provider, "ok", round((time.monotonic() - started) * 1000))
+        web_operations.record_event("geocoder:locationiq", "ok", round((time.monotonic() - started) * 1000))
         return payload if isinstance(payload, list) else []
     except Exception as exc:  # noqa: BLE001 - unresolved places get clarification
         status_code = getattr(getattr(exc, "response", None), "status_code", None)
@@ -1943,6 +1943,7 @@ def _nominatim_request(
     candidate_filter,
 ) -> dict | None:
     global _last_geocoder_request
+    started = time.monotonic()
     provider = _primary_geocoder_provider()
     if provider == "locationiq" and not config.LOCATIONIQ_API_KEY:
         logger.error("LocationIQ is selected but LOCATIONIQ_API_KEY is not configured")
