@@ -23,9 +23,12 @@ _turn_trace = ContextVar("web_turn_trace", default=None)
 def traced_turn(function):
     @wraps(function)
     def run(*args, **kwargs):
-        token = _turn_trace.set({"id": uuid.uuid4().hex, "events": []})
+        from services import agent_trace
+        trace_id = uuid.uuid4().hex
+        token = _turn_trace.set({"id": trace_id, "events": []})
         try:
-            return function(*args, **kwargs)
+            with agent_trace.turn(trace_id):
+                return function(*args, **kwargs)
         finally:
             _turn_trace.reset(token)
     return run
@@ -37,6 +40,8 @@ def current_turn_trace() -> dict:
 
 
 def initialize() -> None:
+    from services import agent_trace
+    agent_trace.initialize()
     with db.get_db() as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS web_service_events (
             id INTEGER PRIMARY KEY AUTOINCREMENT, observed_at TEXT NOT NULL,
@@ -53,6 +58,8 @@ def record_event(component: str, status: str, latency_ms: int = 0, error_type: s
     if status not in {"ok", "error", "timeout", "unavailable", "empty", "fallback"}:
         status = "error"
     safe_error = error_type if re.fullmatch(r"[a-zA-Z][a-zA-Z0-9_]{0,79}", error_type or "") else ""
+    from services import agent_trace
+    agent_trace.event(component, status, max(0, int(latency_ms)), safe_error)
     trace = _turn_trace.get()
     if trace is not None and len(trace["events"]) < 120:
         trace["events"].append({"component": component, "status": status,
@@ -168,6 +175,8 @@ def readiness() -> dict:
 def maintenance_tick() -> dict:
     """Run bounded web alert recovery and expire only operational telemetry."""
     from services import alerts
+    from services import agent_trace
+    agent_trace.expire((datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
     retried = alerts.retry_failed_alerts(limit=10)
     with db.get_db() as conn:
         conn.execute("DELETE FROM web_service_events WHERE observed_at < ?",

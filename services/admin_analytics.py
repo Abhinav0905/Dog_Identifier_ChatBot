@@ -3,6 +3,8 @@ Admin natural-language analytics service.
 Converts NL queries to safe read-only SQL using OpenAI, with strict allowlists.
 """
 
+from services import agent_trace
+
 import json
 import logging
 from openai import OpenAI
@@ -94,7 +96,7 @@ def _nl_to_sql(nl_query: str) -> tuple[str, str]:
         return _fallback_nl_to_sql(nl_query)
 
     try:
-        response = client.responses.create(
+        response = agent_trace.model_call('admin', client.responses.create,
             model=OPENAI_ADMIN_MODEL,
             input=[
                 {"role": "system", "content": PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM},

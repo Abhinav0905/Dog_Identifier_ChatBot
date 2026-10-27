@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from io import BytesIO
+from services import agent_trace
+
 import ipaddress
 import json
 import logging
@@ -530,6 +532,9 @@ def search_animal_question(
         return candidate
 
     result = review_result(result)
+    agent_trace.decision("search.refinement_gate", needed=_provider_research_needs_refinement(message, contextual_request, result, phone_only=effective_phone_only),
+                         remaining_seconds=round(deadline-time.monotonic(), 2), evidence_issue=result.evidence_issue,
+                         request_satisfied=result.request_satisfied)
     if _provider_research_needs_refinement(message, contextual_request, result, phone_only=effective_phone_only) and deadline - time.monotonic() >= 24.0:
         # One adaptive pass shares the same total turn budget and source cache.
         # This is evidence repair, never a fallback to an unrelated city/provider.
@@ -552,12 +557,18 @@ def search_animal_question(
         candidate = _run_search(refined_messages, ngo_mode=False, tool_choice="required",
             model_directed=True, language=language, deadline=deadline)
         candidate = review_result(candidate)
+        agent_trace.decision("search.refinement_comparison", previous_facts=result.validated_facts,
+                             candidate_facts=candidate.validated_facts,
+                             candidate_satisfied=candidate.request_satisfied,
+                             preserves_and_adds_facts=_validated_partial_is_richer(result, candidate))
         if candidate.result_kind != "unavailable" and (
             not _provider_research_needs_refinement(message, contextual_request, candidate, phone_only=effective_phone_only)
             or (not result.resource_links and candidate.resource_links)
             or _validated_partial_is_richer(result, candidate)
         ):
             result = candidate
+        agent_trace.decision("search.refinement_selected", selected="candidate" if result is candidate else "original",
+                             evidence_issue=result.evidence_issue, request_satisfied=result.request_satisfied)
     # Retain an explicitly requested service boundary even when evidence review
     # rewrites an answer or removes unsupported contact details.
     request_text = f"{message}\n{contextual_request}"
@@ -715,6 +726,7 @@ def unavailable_response() -> str:
     )
 
 
+@agent_trace.stage('search.research')
 def _run_search(
     prompt: str | list[dict[str, str]],
     *,
@@ -750,7 +762,7 @@ def _run_search(
             if model_directed and config.OPENAI_WEB_SEARCH_MODEL.startswith("gpt-5")
             else {}
         )
-        response = client.responses.create(
+        response = agent_trace.model_call('search', client.responses.create,
             model=config.OPENAI_WEB_SEARCH_MODEL,
             tools=[_web_search_tool(search_context_size="medium" if model_directed else "low")],
             tool_choice=tool_choice,
@@ -1781,7 +1793,7 @@ def _request_structured_web_search(
             logger.info("Structured web research skipped after overall deadline")
             return None
         try:
-            response = client.responses.create(
+            response = agent_trace.model_call('structured_search', client.responses.create,
                 model=config.OPENAI_WEB_SEARCH_MODEL,
                 tools=[web_search_tool],
                 tool_choice="required",
@@ -2543,6 +2555,7 @@ def _structured_contact_blocks(soup) -> list[str]:
     return blocks
 
 
+@agent_trace.stage('source.fetch')
 def _fetch_public_page_text(
     url: str,
     *,

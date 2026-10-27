@@ -48,6 +48,7 @@ from services import (
     request_limits,
     web_operations,
     text_contract,
+    agent_trace,
 )
 from services.prompts import PromptCatalog
 from services import prompt_store
@@ -540,8 +541,12 @@ def chat_query(
     """Model-directed conversation and open animal-help search, on a worker thread."""
     deadline = time.monotonic() + config.CHAT_TURN_TIMEOUT_SECONDS
     session_id = _resolve_request_session(http_request, http_response, request.session_id)
+    agent_trace.bind_session(session_id)
+    agent_trace.decision("turn.request", message=request.message)
     guard = guardrails.check_input(request.message)
     if not guard.allowed:
+        agent_trace.decision("answer.final", answer=guard.reason, result_kind="guardrail_refusal",
+                             guardrail_category=guard.category, model_call_skipped=True)
         if guard.category != "empty":
             db.save_chat_message(session_id, "user", request.message)
             db.save_chat_message(session_id, "assistant", guard.reason, metadata={
@@ -586,6 +591,8 @@ def chat_query(
     with region_scope.place_resolver.geocoding_budget(deadline):
         scope = _text_turn_scope(turn, request, case_location, history)
     requested_location_text = _literal_case_location_text(turn, history, scope)
+    agent_trace.decision("turn.routing", plan=turn, output_format=output_format,
+                         scope=scope, requested_location_text=requested_location_text)
     if scope.explicit_location and scope.scope in {region_scope.INDIA, region_scope.OUTSIDE_INDIA, region_scope.AMBIGUOUS}:
         db.save_session_case_location(session_id, scope.as_case_location())
     elif turn.location_kind == region_scope.place_resolver.NAMED_PLACE:
@@ -687,10 +694,15 @@ def chat_query(
             deadline=deadline,
         )
 
+    agent_trace.decision("answer.before_sanitization", answer=answer, resource_links=links)
     answer = guardrails.sanitize_text_response(answer)
     if output_format == "text":
         answer = _prepend_immediate_guidance(triage.humane_deterrent_boundary(request.message, language), answer)
     db.save_chat_message(session_id, "user", request.message)
+    agent_trace.decision("answer.final", answer=answer, resource_links=links,
+                         result_kind=result_kind, request_satisfied=request_satisfied,
+                         evidence_issue=evidence_issue, validated_facts=validated_facts,
+                         output_format=output_format)
     db.save_chat_message(session_id, "assistant", answer, metadata={
         "resource_links": links,
         "text_action": turn.action.value,
@@ -1246,6 +1258,15 @@ def health():
 def admin_operations(admin_password: str = Header("", alias="X-Admin-Password")):
     _require_admin_password(admin_password)
     return {"readiness": web_operations.readiness(), "operations": web_operations.snapshot()}
+
+
+@app.get("/v1/admin/traces/{trace_id}")
+def admin_trace(trace_id: str, admin_password: str = Header("", alias="X-Admin-Password")):
+    _require_admin_password(admin_password)
+    trace = agent_trace.read(trace_id)
+    if trace is None:
+        raise HTTPException(404, "Trace not found")
+    return trace
 
 
 @app.post("/v1/admin/alerts/{alert_id}/acknowledge")

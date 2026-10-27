@@ -10,6 +10,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from enum import Enum
+from services import agent_trace
+
 import json
 import logging
 import re
@@ -81,6 +83,7 @@ TEXT_TURN_SCHEMA = {
 }
 
 
+@agent_trace.stage('router.plan')
 def plan_text_turn(
     message: str,
     history: Iterable[Mapping[str, Any]] = (),
@@ -109,7 +112,7 @@ def plan_text_turn(
     prompt = PromptCatalog.TEXT_TURN_ROUTER_SYSTEM
     model_started = time.monotonic()
     try:
-        result = client.responses.create(
+        result = agent_trace.model_call('router', client.responses.create,
             model=config.OPENAI_QUERY_ROUTER_MODEL,
             input=[
                 {"role": "system", "content": prompt},
@@ -617,7 +620,7 @@ def analyze_query(
     prompt = PromptCatalog.query_analysis(text, history_text)
 
     try:
-        response = client.responses.create(
+        response = agent_trace.model_call('query_analysis', client.responses.create,
             model=getattr(config, "OPENAI_QUERY_ROUTER_MODEL", config.OPENAI_GEOGRAPHY_MODEL),
             input=prompt,
             store=False,

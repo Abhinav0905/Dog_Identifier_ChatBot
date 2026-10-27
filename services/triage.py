@@ -3,6 +3,8 @@ Vision triage service: uses the OpenAI Responses API for vision and chat
 from uploaded stray dog images.
 """
 
+from services import agent_trace
+
 import base64
 import json
 import logging
@@ -573,7 +575,7 @@ def analyze_image(
             last_error = "Photo assessment deadline exceeded"
             break
         try:
-            response = client.responses.create(
+            response = agent_trace.model_call('vision', client.responses.create,
                 model=OPENAI_VISION_MODEL,
                 input=[
                     {"role": "system", "content": PromptCatalog.vision_system(language)},
@@ -725,7 +727,7 @@ def enrich_recommended_actions(triage_result: dict, language: str = "en") -> lis
     system_prompt = PromptCatalog.enrichment_system(language, rag_context=rag_context)
 
     try:
-        response = client.responses.create(
+        response = agent_trace.model_call('enrichment', client.responses.create,
             model=OPENAI_CHAT_MODEL,
             input=[
                 {"role": "system", "content": system_prompt},
@@ -1473,6 +1475,7 @@ def validate_generated_care_response(
     return guardrails.clean_response_layout(cleaned)
 
 
+@agent_trace.stage('care.answer')
 def generate_chat_response(
     message: str,
     history: list[dict],
@@ -1524,7 +1527,7 @@ def generate_chat_response(
             return _fallback_chat_response(message, history, contextual_message, language)
         care_options = ({"reasoning": {"effort": "medium"}, "text": {"verbosity": "low"}}
                         if OPENAI_CHAT_MODEL.startswith("gpt-5") else {})
-        response = client.responses.create(
+        response = agent_trace.model_call('care', client.responses.create,
             model=OPENAI_CHAT_MODEL,
             input=[{"role": "system", "content": system_prompt}] + messages,
             store=False,

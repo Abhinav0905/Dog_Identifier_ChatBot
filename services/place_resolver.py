@@ -8,6 +8,8 @@ from contextlib import contextmanager
 from contextvars import ContextVar
 from functools import wraps
 from difflib import SequenceMatcher
+from services import agent_trace
+
 import json
 import logging
 import re
@@ -801,7 +803,7 @@ def _extract_place_with_model(message: str) -> PlaceReference:
 
     prompt = PromptCatalog.place_extraction(message)
     try:
-        response = client.responses.create(
+        response = agent_trace.model_call('geography', client.responses.create,
             model=config.OPENAI_GEOGRAPHY_MODEL,
             input=prompt,
             text={

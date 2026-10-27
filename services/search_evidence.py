@@ -2,6 +2,8 @@
 
 from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FuturesTimeout
 from dataclasses import dataclass, field
+from services import agent_trace
+
 import json
 import logging
 import re
@@ -82,6 +84,7 @@ REVIEW_SCHEMA = {
 }
 
 
+@agent_trace.stage('evidence.review')
 def review_contact_answer(
     message: str,
     history: Iterable[dict],
@@ -147,6 +150,8 @@ def review_contact_answer(
     if address_only:
         direct_address = _grounded_address_answer([], pages, list(pages), target, language)
         if direct_address.request_satisfied:
+            agent_trace.decision("evidence.direct_address", answer=direct_address.answer,
+                                 request_satisfied=direct_address.request_satisfied, method="literal_source_row")
             return direct_address
 
     instructions = PromptCatalog.CONTACT_EVIDENCE_REVIEW_SYSTEM
@@ -225,7 +230,7 @@ def review_contact_answer(
 def _call_evidence_model(**kwargs):
     started = time.monotonic()
     try:
-        response = query_router.client.responses.create(**kwargs)
+        response = agent_trace.model_call('evidence', query_router.client.responses.create, **kwargs)
     except Exception as exc:
         web_operations.record_event(component="model:evidence", status="error", latency_ms=round((time.monotonic() - started) * 1000), error_type=type(exc).__name__)
         raise
@@ -245,6 +250,7 @@ def _url_key(value: object) -> str:
     return urlunparse(parsed._replace(query=urlencode(query)))
 
 
+@agent_trace.stage('sources.fetch_batch')
 def _fetch_sources(source_urls: Iterable[str], *, deadline: float | None = None, page_cache: dict[str, str | None] | None = None) -> dict[str, str]:
     urls = []
     for value in source_urls:
@@ -1055,6 +1061,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
         name, place, quote = (claim[key].strip() for key in ("institution", "location", "evidence_quote"))
         source, service = _url_key(claim["source_url"]), claim["service_type"]
         if source not in approved_urls or not name or len(name) > 240 or not 10 <= len(quote) <= 2400:
+            agent_trace.decision("evidence.provider_rejected", reason="invalid_claim_or_unapproved_source", claim=claim)
             continue
         name = _literal_source_entity(pages[source], name)
         if name and requested_institution and not _target_matches_claim(requested_institution, name, ""):
@@ -1062,12 +1069,15 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             if qualified and _entity_key(name) in _entity_key(qualified):
                 name = qualified
         if not name:
+            agent_trace.decision("evidence.provider_rejected", reason="institution_not_literal_in_source", claim=claim)
             continue
         quote, same_block = _provider_source_excerpt(pages[source], name, service, quote)
         if not quote:
+            agent_trace.decision("evidence.provider_rejected", reason="no_entity_bound_excerpt", claim=claim)
             continue
         veterinary_context = bool(re.search(r"\bveterinary\s+hospitals?\b", str(pages[source]), re.I))
         if not _target_matches_claim(requested_institution, name, quote):
+            agent_trace.decision("evidence.provider_rejected", reason="wrong_requested_institution", claim=claim, requested=requested_institution)
             continue
         if place and (
             not _normalized_location(place)
@@ -1079,6 +1089,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
             # district/state. This never adds a city absent from this passage.
             first = place.split(",", 1)[0].strip()
             place = first if first and f" {_normalized_location(first)} " in f" {_normalized_location(quote)} " else ""
+            agent_trace.decision("evidence.address_reduced", institution=name, requested_address=claim["location"], retained_address=place, quote=quote, source=source)
         locality_source = ""
         regional_lead = False
         if (
@@ -1097,6 +1108,8 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                                  and bool(re.search(r"\bveterinary\s+(?:hospital|clinic|polyclinic|dispensary)\b", name, re.I)))
                 if not regional_lead:
                     web_operations.record_event("evidence:rejection", "empty", error_type="WrongStateOrLocality")
+                    agent_trace.decision("evidence.provider_rejected", reason="wrong_state_or_locality", institution=name,
+                                         locality=requested_locality, region=requested_region, place=place, quote=quote, source=source)
                     continue
         if (
             service == "identity_only"
@@ -1108,6 +1121,7 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
         ):
             # A bare department/category heading with no grounded location,
             # treatment role or facility identity is not an actionable lead.
+            agent_trace.decision("evidence.provider_rejected", reason="bare_category_without_location", claim=claim)
             continue
         key = _entity_key(name)
         row = providers.setdefault(key, {"name": name, "place": place, "services": set(), "urls": [], "geography_urls": set(), "regional_lead": regional_lead, "small_animal": False, "livestock_only": False})
@@ -1125,6 +1139,9 @@ def _grounded_provider_answer(claims: list, pages: dict[str, str], approved_urls
                 small_animal = _provider_service_is_grounded(name, service, quote, require_small_animal=True, allow_preceding=same_block, veterinary_context=veterinary_context)
                 row["small_animal"] = row["small_animal"] or small_animal
                 row["livestock_only"] = row["livestock_only"] or (not small_animal and bool(re.search(r"\b(?:cattle|livestock|bovine|ruminants?|equine|horses?|poultry)\b", quote, re.I)))
+        agent_trace.decision("evidence.provider_checked", institution=name, place=place, source=source,
+                             claimed_service=service, accepted_services=sorted(row["services"]),
+                             small_animal=row["small_animal"], regional_lead=regional_lead, quote=quote)
     if any(not row["regional_lead"] for row in providers.values()):
         providers = {key:row for key,row in providers.items() if not row["regional_lead"]}
     has_clinical = any(not row["regional_lead"] and "clinical_treatment" in row["services"] and row["place"] and not (require_small_animal and row["livestock_only"] and not row["small_animal"]) for row in providers.values())
@@ -1229,6 +1246,7 @@ def _discovery_locality(literal: str, resolved_place: str, resolved_city: str = 
     return parts[0] if parts else city
 
 
+@agent_trace.stage('evidence.validate')
 def _validate_review(value: object, pages: dict[str, str], *, requested_institution: str = "", phone_only: bool = False, requested_place: str = "", requested_location_text: str = "", requested_city: str = "", clinical_only: bool = False,
                      clinical_discovery: bool = False, require_small_animal: bool = False, language: str = "en",
                      phone_required: bool = False, address_required: bool = False, address_only: bool = False) -> ContactAnswerReview | None:
@@ -1291,8 +1309,10 @@ def _validate_review(value: object, pages: dict[str, str], *, requested_institut
         for phone in phones:
             excerpt = _source_bound_excerpt(pages[source], institution, phone, quote)
             if not excerpt or not _target_matches_claim(requested_institution, institution, excerpt):
+                agent_trace.decision("evidence.phone_rejected", reason="phone_or_entity_not_bound", institution=institution, phone=phone, source=source, quote=quote)
                 continue
             if clinical_only and not _has_clinical_phone_evidence(excerpt, phone):
+                agent_trace.decision("evidence.phone_rejected", reason="clinical_role_unverified", institution=institution, phone=phone, source=source, quote=excerpt)
                 continue
             generic_words = {"the", "a", "of", "and", "veterinary", "vet", "college", "hospital", "hospitals", "clinic", "animal", "science", "sciences", "husbandry", "teaching", "medical", "clinical", "complex", "government", "public"}
             target_words = set(re.findall(r"\w+", _normalized(requested_institution)))
@@ -1319,6 +1339,7 @@ def _validate_review(value: object, pages: dict[str, str], *, requested_institut
             role = "clinical contact" if _has_clinical_phone_evidence(excerpt, phone) else "administrative contact" if re.search(r"\b(?:office|director|o/o|administration|administrative|admissions?|registrar|dean)\b", excerpt, re.I) else "published contact"
             phone_roles[_phone_key(phone)] = role
             source_labels[source] = f"{institution}: {role} source"
+            agent_trace.decision("evidence.phone_accepted", institution=institution, phone=phone, role=role, source=source, quote=excerpt)
 
     if clinical_discovery and not phone_only:
         return _grounded_provider_answer(
