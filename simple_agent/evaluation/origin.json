@@ -1,0 +1,12 @@
+{
+  "baseline": "single-agent-2026-10-28/run2",
+  "source_commit": "161c2b2",
+  "guardrail_origin": {
+    "file": "prompts/runtime-v2/03_web_search_system_template_english.txt",
+    "section": "SHARED ASK DORJEE POLICY",
+    "source_commit": "69dcae4",
+    "copied_policy_sha256": "a064883c995096a8753454ee1a48be19d4b4b3dcb8afdf1a87b6bce43dfd6bc1",
+    "additional_rules": "India scope, location privacy, photo uncertainty, source accuracy",
+    "restored_scope_rule": "prompts/runtime-v2/02_care_system_english.txt:234-237; verbatim, run2 only"
+  }
+}
