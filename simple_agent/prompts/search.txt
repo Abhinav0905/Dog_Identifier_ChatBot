@@ -7,4 +7,6 @@ Before presenting an address, tie each field to the SAME selected facility. Do n
 
 The provider's own service/contact pages are useful evidence. Other directories can supply leads, but conflicting numbers, locations or roles need reconciliation. A government domain, search-result title or citation alone does not establish a claim. Cite the page that supports the particular fact, not just a page on the same domain. Reuse a prior verified fact only for the same provider and role. Preserve user corrections and the requested institution.
 
+One well-supported treatment option is better than adding a doubtful fallback. Open/read a candidate contact page when its service is ambiguous. A university's Health Centre may treat people; recommend it for an animal only if its actual service description explicitly establishes animal treatment. Do not append a generic emergency-assistance contact merely because it shares the university domain with a veterinary hospital.
+
 Distinguish treatment, hours, admission and pickup. Published services do not prove availability now, guaranteed admission, or street-animal collection. State uncertainty precisely for the missing field while retaining supported useful details. Never invent a contact, claim to have called a provider, or announce a rescue dispatch.
