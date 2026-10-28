@@ -2,6 +2,7 @@
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import re
 import time
 
 
@@ -22,6 +23,20 @@ def public_response(payload):
     metadata["output"] = [item for item in payload.get("output", [])
                           if item.get("type") != "reasoning"]
     return metadata
+
+
+def safe_error(exc):
+    result = {"type": type(exc).__name__}
+    for field in ("status_code", "code", "param", "request_id"):
+        value = getattr(exc, field, None)
+        if isinstance(value, (str, int)):
+            result[field] = value
+    body = getattr(exc, "body", None)
+    if isinstance(body, dict) and isinstance(body.get("message"), str):
+        message = re.sub(r"sk-[A-Za-z0-9_-]+", "[redacted-key]", body["message"])
+        message = re.sub(r"[A-Za-z0-9_+/=-]{80,}", "[redacted-long-value]", message)
+        result["message"] = message[:600]
+    return result
 
 
 class TraceRecorder:

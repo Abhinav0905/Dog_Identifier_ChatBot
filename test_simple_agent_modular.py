@@ -5,10 +5,10 @@ from tempfile import TemporaryDirectory
 import unittest
 from unittest.mock import MagicMock
 
-from simple_agent.agent import AgentConfig, SingleAgent
+from simple_agent.agent import AgentConfig, SingleAgent, continuation_items
 from simple_agent.catalog import PromptCatalog
 from simple_agent.tools import ImageAnalysisTool
-from simple_agent.tracing import TraceRecorder
+from simple_agent.tracing import TraceRecorder, safe_error
 
 
 def response(output, text="", status="completed"):
@@ -22,6 +22,28 @@ def message(text):
 
 
 class ModularAgentTests(unittest.TestCase):
+    def test_live_rejected_continuation_metadata_is_not_sent_back(self):
+        outputs = [
+            {"type": "reasoning", "id": "rs_1", "summary": [], "encrypted_content": "opaque", "status": None},
+            {"type": "function_call", "id": "fc_1", "call_id": "call_1", "name": "analyze_photo", "arguments": "{}", "namespace": None, "status": "completed"},
+        ]
+        items = continuation_items(outputs)
+        self.assertTrue(all("status" not in item for item in items))
+        self.assertNotIn("namespace", items[1])
+        self.assertEqual(items[0]["encrypted_content"], "opaque")
+        self.assertEqual(items[1]["call_id"], "call_1")
+        self.assertIn("status", outputs[1])
+
+    def test_api_error_keeps_actionable_details_without_key_or_opaque_value(self):
+        error = Exception()
+        error.body = {"message": "Unknown parameter input[5].status; sk-proj-secret " + "A" * 100}
+        error.code = "unknown_parameter"
+        error.param = "input[5].status"
+        result = safe_error(error)
+        self.assertEqual(result["param"], "input[5].status")
+        self.assertNotIn("sk-proj-secret", result["message"])
+        self.assertNotIn("A" * 100, result["message"])
+
     def test_photo_result_returns_to_agent_and_trace_excludes_image_and_reasoning(self):
         with TemporaryDirectory() as directory:
             image = Path(directory) / "dog.png"

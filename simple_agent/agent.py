@@ -7,7 +7,7 @@ import time
 
 from .catalog import PromptCatalog
 from .tools import SearchTool, ImageAnalysisTool
-from .tracing import TraceRecorder, public_response, utc_now
+from .tracing import TraceRecorder, public_response, safe_error, utc_now
 
 
 @dataclass(frozen=True)
@@ -30,6 +30,23 @@ def citations(payload):
                     if row not in rows:
                         rows.append(row)
     return rows
+
+
+def continuation_items(outputs):
+    """Remove response-only/null metadata rejected by some API input validators.
+
+    A live photo continuation rejected input[n].status. Keep call IDs and opaque
+    reasoning state, but do not round-trip optional response status/namespace.
+    """
+    result = []
+    for item in outputs:
+        value = {k: v for k, v in item.items() if v is not None}
+        if value.get("type") in {"reasoning", "function_call"}:
+            value.pop("status", None)
+            if value.get("type") == "function_call":
+                value.pop("namespace", None)
+        result.append(value)
+    return result
 
 
 class SingleAgent:
@@ -89,19 +106,19 @@ class SingleAgent:
                         status, error = "error", {"type": "EmptyAnswer"}
                     break
                 # Opaque API reasoning state stays only in this continuation.
-                transcript.extend(outputs)
+                transcript.extend(continuation_items(outputs))
                 for call in functions:
                     try:
                         args = json.loads(call["arguments"])
                         result = self.photo_tool.execute(args, images, deadline, trace) if call["name"] == "analyze_photo" else {"error": "Unknown tool."}
                     except Exception as exc:
-                        result = {"error": type(exc).__name__}
+                        result = {"error": safe_error(exc)}
                     trace.record("function_result", name=call["name"], arguments=call["arguments"], output=result)
                     transcript.append({"type": "function_call_output", "call_id": call["call_id"], "output": json.dumps(result, ensure_ascii=False)})
                 if calls_used >= self.config.tool_budget:
                     definitions = []
             except Exception as exc:
-                error = {"type": type(exc).__name__}
+                error = safe_error(exc)
                 trace.record("agent_error", step=step, error=error)
                 break
         else:
