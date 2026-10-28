@@ -1,0 +1,47 @@
+{
+  "started_at": "2026-10-28T18:23:10.431610+00:00",
+  "method": "Fresh 30-question live API acceptance set; not a production UI run",
+  "config": {
+    "model": "gpt-5.6-terra",
+    "vision_model": "gpt-5.6-terra",
+    "request_timeout": 35,
+    "turn_budget": 80,
+    "tool_budget": 8,
+    "max_steps": 5
+  },
+  "code_hashes": {
+    "README.txt": "24d6b9536cb7d213f6c3c641c9c651ac72887559abdc717c47f4ee577cd08170",
+    "__init__.py": "05a24652e48281a987ca6961a761a8d251e9195b8fe04701c81afd47b7622a93",
+    "__main__.py": "1d5e98792c0e820f4fe44073c2b84c675906108fb404ef00a96f64f9e200b08c",
+    "agent.py": "4e5eff63ca1a1a7126dc0c2ec2374333215f4d3ca5ade8088134749cb5a0641a",
+    "catalog.py": "056db3987a6953a09e88c3ef3dfc082e79bcf324720a4b747cad545637044ed7",
+    "evaluation/cases.json": "390b086be78fbff425e2a907b116c1b8c3b08ca77ca3e7847fabff2c36aacff8",
+    "evaluation/origin.json": "14cd9f618d21e955bbd54b2f2711e87b1ca1471d4a7839ae5ed79c0e57febcff",
+    "prompts/care.txt": "c801a54c737b45efdaa02068224b75490347a6e8f2648093ef50e5e1480523ab",
+    "prompts/guardrails.txt": "d0932f3d3105650c5496bbdcee74f13f521f160b0e7f2e2afd6b26508391760b",
+    "prompts/photo.txt": "3fd2434b6d91e9f1dbc9f8b65f68e4c33c543c3ccae5a4082b3f1f2369595a1a",
+    "prompts/search.txt": "3013be7b9a5124e2a60c2baab7c324ebee0c979f731bf6903c655c894db907e8",
+    "prompts/system.txt": "8bf6a65613fcf3065a0afaeada302285ad018d956a06cac174082a0d482370cc",
+    "tools.py": "9b164da801c842665cd9c03f72a9073df77c2c652f3fa806f44d4838f7102dbc",
+    "tracing.py": "8e55f5469795ce62fd92db5dd6c4f6893f39321fbf5708fb9ee0d3dce04ad236"
+  },
+  "prompt_hashes": {
+    "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+    "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+    "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+    "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+    "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+  },
+  "case_file_sha256": "4d1d3730e088d98e471578c12e81900a661a96a4034023d6e638b8c32fcbb5f4",
+  "groups": {
+    "coastal_and_central": 6,
+    "southern_treatment": 6,
+    "new_locations_and_constraints": 6,
+    "care_and_context": 6,
+    "new_welfare_tasks": 6
+  },
+  "acceptance": "At least 27 fully passing of 30; partials do not count as pass",
+  "s3_reads": 0,
+  "production_changes": false,
+  "outbound_alerts": false
+}

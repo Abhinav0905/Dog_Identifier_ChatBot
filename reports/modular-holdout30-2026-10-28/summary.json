@@ -1,0 +1,45 @@
+{
+  "method": "One fresh live API run, manually reviewed against locked criteria with targeted external source checks; not a production UI test.",
+  "date": "2026-10-28",
+  "cases": 30,
+  "new_cities_in_saved_test_corpus": 26,
+  "counts": {
+    "PASS": 28,
+    "PARTIAL": 2,
+    "FAIL": 0
+  },
+  "full_pass_percent": 93.33,
+  "target": 27,
+  "target_met": true,
+  "completed": 30,
+  "api_errors": 0,
+  "api_refusal_items": 0,
+  "started_at": "2026-10-28T18:23:10.431610+00:00",
+  "finished_at": "2026-10-28T18:24:28.661378+00:00",
+  "median_seconds": 6.44,
+  "prompts_and_code_unchanged_from_previous_47_of_50_run": true,
+  "model": "gpt-5.6-terra",
+  "code_commit": "192706e",
+  "remaining_cases": [
+    {
+      "id": "H11",
+      "verdict": "PARTIAL",
+      "reason": "PARTIAL: Correct polyclinic, Palakarai and PIN, with address-only format. Omits fuller locality/street details available in retrieved listings, so the requested full postal address is incomplete."
+    },
+    {
+      "id": "H29",
+      "verdict": "PARTIAL",
+      "reason": "PARTIAL: Rejects pulling limbs and forced grabbing, gives voluntary carrier and trained-help advice, and respects transport-only scope. Omits the explicit instruction to prevent the parked car being started or moved."
+    }
+  ],
+  "s3_uploaded": false,
+  "deployed": false,
+  "deployment_status": "Local versioned prompt candidate prepared. AWS bucket/profile and credentials unavailable; existing production web routes still use the multi-agent engine and require integration plus HTTP/UI acceptance before a switch.",
+  "limitations": [
+    "All 30 answers manually read; provider and medical sources checked selectively, no exhaustive fact audit or veterinary professional review.",
+    "No provider phone calls, no guaranteed admission/pickup, and no notifications sent.",
+    "Correct clarification, privacy refusals and honest inability to verify count as passes where the locked rubric allows them.",
+    "Cities were checked against 360 saved question/search strings, not an unknowable complete history of every conversation.",
+    "This run is separate from the earlier 50-question score; no best-of-runs selection."
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "checked_on": "2026-10-28",
+  "checks": [
+    {
+      "cases": [
+        "H01",
+        "H02"
+      ],
+      "url": "https://www.joonsquare.com/veterinary/aruma-multispeciality-pet-hospital-kozhikode",
+      "finding": "Binds ARUMA, Moorikkara Road near Malikkadav Bridge, Kozhikode 673611 and 6282693066."
+    },
+    {
+      "cases": [
+        "H03"
+      ],
+      "url": "https://www.kvasu.ac.in/public-information-officers",
+      "finding": "University table lists the Kokkalai veterinary hospital, 680021 and 0487-2423415 for its office and head."
+    },
+    {
+      "cases": [
+        "H04"
+      ],
+      "url": "https://jabalpurhelpline.com/pets-n-vets-pet-clinic-and-pet-shop",
+      "finding": "Published Pets N Vets Jabalpur contact is 9575545555."
+    },
+    {
+      "cases": [
+        "H08",
+        "H09"
+      ],
+      "url": "https://pvnrtvu.ac.in/veterinary-clinical-complex-warangal/",
+      "finding": "Official VCC treatment, small-animal services and Mamnoor correspondence address. The displayed phone field is blank; this page alone does not support the number."
+    },
+    {
+      "cases": [
+        "H08"
+      ],
+      "url": "https://pvnrtvukiosk.in/institutions%20home/colleges/cvsc%20mamnoor/departments/cvsc_mamnoor_vcc.html",
+      "finding": "University kiosk page, present in the agent trace, binds 9492424353 to the VCC head. This resolves the missing phone on the main page, rather than treating the citation alone as proof."
+    },
+    {
+      "cases": [
+        "H11"
+      ],
+      "url": "https://yappe.in/tamil-nadu/tiruchirappalli/government-veterinary-hospital/1496816",
+      "finding": "The selected polyclinic listing gives Malligaipuram Thottam, Palakarai, Sangillyandapuram, Tiruchirappalli 620008; response omits available address detail."
+    },
+    {
+      "cases": [
+        "H14"
+      ],
+      "url": "https://www.cybo.com/IN/silchar/pets/",
+      "finding": "Published State Veterinary Hospital location is Hospital Road, Ambicapatty, Silchar, Assam 788005."
+    },
+    {
+      "cases": [
+        "H17"
+      ],
+      "url": "https://www.ahvs.kar.nic.in/pdfs/others/Belgavi.pdf",
+      "finding": "Direct fetch returned 404, but indexed official table binds V H Belgaum, Dr Shrikant M and 9948116671. Phone answering/current duty was not checked."
+    },
+    {
+      "cases": [
+        "H17"
+      ],
+      "url": "https://www.ahvs.kar.nic.in/pdfs/others/Belagavi_Ahvs.pdf",
+      "finding": "A second indexed official table supports the same Belgaum hospital/doctor/phone relationship."
+    },
+    {
+      "cases": [
+        "H18"
+      ],
+      "url": "https://ahd.py.gov.in/livestock-health-section",
+      "finding": "Government page describes 24-hour casualty at Puducherry Veterinary Dispensary and publishes 0413-2206889 for the veterinary assistant surgeon/ambulatory service. It is not proof of current intake."
+    },
+    {
+      "cases": [
+        "H22"
+      ],
+      "url": "https://www.rvc.ac.uk/small-animal-vet/teaching-and-research/fact-files/heatstroke-in-dogs-and-cats",
+      "finding": "Supports immediate cooling before transport, cooler water with airflow, and urgent veterinary care."
+    },
+    {
+      "cases": [
+        "H23"
+      ],
+      "url": "https://www.pdsa.org.uk/pet-help-and-advice/pet-health-hub/other-veterinary-advice/first-aid-for-fitsseizures-in-pets",
+      "finding": "Supports staying away from the mouth, avoiding restraint, clearing hazards and seeking veterinary care."
+    },
+    {
+      "cases": [
+        "H24"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/rabies",
+      "finding": "Supports at least 15 minutes of soap/water wound washing and prompt medical attention."
+    }
+  ]
+}

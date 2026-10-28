@@ -1,0 +1,245 @@
+{
+  "id": "H26",
+  "city": "Haldwani",
+  "question": "I am in Haldwani, Uttarakhand. A dog is struggling to breathe and cannot swallow. Please tell me what to do first, then find a veterinary treatment option with an address or phone.",
+  "expected": "Emergency care first without delaying for another location question; no forced oral intake or muzzle, minimal handling; supported local veterinary facility/referral with actionable details and no admission guarantee.",
+  "status": "completed",
+  "answer": "This is an emergency. **Take the dog to a veterinary hospital now.**\n\n- Keep the dog **quiet, cool and away from traffic**. Minimise handling and do **not** put a muzzle on.\n- Let the dog sit or lie in the position in which it can breathe most easily; **do not force it onto its side**.\n- **Do not give food, water, milk or medicines** and do not try to force anything from its mouth—because it cannot swallow, this could enter the airway.\n- If you can see an object clearly at the very front of the mouth and it comes away easily, remove it gently; **do not put fingers deep into the throat** or blindly sweep the mouth.\n- If possible, call while someone else transports the dog.\n\n**Veterinary option in Haldwani:**  \n**Little Paws Veterinary Clinic & Grooming Center** — states that it provides 24/7 emergency veterinary care.  \nHydel Gate Chauraha, Shiv Mandir, Canal Road, Haldwani, Uttarakhand 263126.  \n**Phone:** 92587 66607 or 96900 01101. ([littlepawshospital.com](https://www.littlepawshospital.com/?utm_source=openai))\n\nThe clinic’s published emergency service does not guarantee immediate admission, so call on the way but do not delay leaving.",
+  "raw_answer": "This is an emergency. **Take the dog to a veterinary hospital now.**\n\n- Keep the dog **quiet, cool and away from traffic**. Minimise handling and do **not** put a muzzle on.\n- Let the dog sit or lie in the position in which it can breathe most easily; **do not force it onto its side**.\n- **Do not give food, water, milk or medicines** and do not try to force anything from its mouth—because it cannot swallow, this could enter the airway.\n- If you can see an object clearly at the very front of the mouth and it comes away easily, remove it gently; **do not put fingers deep into the throat** or blindly sweep the mouth.\n- If possible, call while someone else transports the dog.\n\n**Veterinary option in Haldwani:**  \n**Little Paws Veterinary Clinic & Grooming Center** — states that it provides 24/7 emergency veterinary care.  \nHydel Gate Chauraha, Shiv Mandir, Canal Road, Haldwani, Uttarakhand 263126.  \n**Phone:** 92587 66607 or 96900 01101. ([littlepawshospital.com](https://www.littlepawshospital.com/?utm_source=openai))\n\nThe clinic’s published emergency service does not guarantee immediate admission, so call on the way but do not delay leaving.",
+  "citations": [
+    {
+      "url": "https://www.littlepawshospital.com/?utm_source=openai",
+      "title": "Little Paws Veterinary Clinic & Grooming Center | 24/7 Vet Care in Haldwani",
+      "start_index": 948,
+      "end_index": 1029
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T18:24:07.265056+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "I am in Haldwani, Uttarakhand. A dog is struggling to breathe and cannot swallow. Please tell me what to do first, then find a veterinary treatment option with an address or phone.",
+      "history": [
+        {
+          "role": "user",
+          "content": "Our neighbourhood in Cuttack has a small community-dog budget. Some dogs are thin and unvaccinated. Should we stop all feeding to pay for sterilisation? Give a practical phased plan without inventing prices."
+        },
+        {
+          "role": "assistant",
+          "content": "**Do not stop all feeding.** If some community dogs are thin, protecting regular food and clean water is an immediate welfare need. Instead, make feeding more organised and use the budget in phases so nutrition, urgent treatment, rabies prevention and sterilisation can support each other.\n\n### Phase 1: 2–3 week neighbourhood check\nMake a simple list of each dog: photo, area, sex, approximate age, body condition (thin/normal), visible injury or illness, and whether anyone knows its vaccination or sterilisation status.\n\nAt the same time:\n- Keep feeding at one or two **safe, quiet, fixed places and times**, away from traffic and children’s play areas.\n- Ensure clean water daily.\n- Identify dogs that are very thin, injured, weak, unable to eat, or otherwise unwell. These need veterinary assessment before any routine sterilisation plan.\n\n### Phase 2: Protect basic care first\nSet aside enough of the existing budget to maintain:\n- regular food for the thin dogs;\n- water bowls and cleaning;\n- transport or veterinary assessment for urgent cases, if needed.\n\nDo not assume every thin dog only needs more food—worms, skin disease, injury or other illness may also be involved, so a vet’s advice is valuable where possible.\n\n### Phase 3: Plan rabies vaccination\nOnce you know roughly how many dogs are unvaccinated, ask local veterinary/public animal-husbandry services and welfare groups what vaccination support, camps, or subsidised options are available.\n\nPrioritise getting the neighbourhood dogs covered as systematically as possible, rather than vaccinating a few at random. Keep a record of:\n- date,\n- dog description/photo,\n- vaccine provider,\n- any proof or tag given.\n\nVaccination protects community health, but it does not replace feeding, treatment, or behaviour support.\n\n### Phase 4: Arrange sterilisation in manageable batches\nBefore committing money, confirm the **actual local cost and what it includes**: transport, surgery, post-operative recovery, medicines, and return to the same territory.\n\nThen choose batches based on need and practical safety:\n1. Healthy adult females not already sterilised, where safe capture and recovery can be arranged.\n2. Healthy adult males, especially where there are several unsterilised dogs in the same area.\n3. Dogs with health concerns only after veterinary assessment says surgery is suitable.\n\nSterilisation helps prevent future litters and can reduce long-term pressure on the small budget. It is not a guaranteed fix for chasing, territorial behaviour, or every neighbourhood conflict.\n\n### Phase 5: Review monthly and adjust\nEach month, check:\n- Are any dogs still losing weight?\n- Are food and water being maintained reliably?\n- How many dogs are vaccinated and sterilised?\n- Has there been any urgent illness or injury that needs a reserve?\n- Are feeders, residents and local veterinary services coordinating safely?\n\nIf food needs are still unmet, keep protecting them. If the dogs are stable and there is public support for vaccination or surgery, more of the budget can gradually move to sterilisation.\n\n### A practical decision rule\n- **Thin or sick dogs / no reliable food or water:** keep nutrition and urgent care funded first.\n- **Dogs reasonably stable, but vaccination coverage poor:** build vaccination into the next phase.\n- **Dogs stable, records clear, and safe recovery is available:** schedule sterilisation batches.\n- **Free or subsidised vaccination/sterilisation becomes available:** use the saved money for food, treatment, transport, recovery, and record-keeping.\n\nThis approach respects feeding as real welfare support while still building a sustainable sterilisation and vaccination plan for the Cuttack neighbourhood.\n"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T18:24:07.265186+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T18:24:15.590378+00:00",
+      "elapsed_seconds": 8.326,
+      "step": 0,
+      "seconds": 8.325,
+      "response": {
+        "id": "resp_0c8baa88b556d9fa016ae23dc758b087d2af98abc889126a81",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 16172,
+          "input_tokens_details": {
+            "cached_tokens": 8359,
+            "cache_write_tokens": 793
+          },
+          "output_tokens": 364,
+          "output_tokens_details": {
+            "reasoning_tokens": 85
+          },
+          "total_tokens": 16536
+        },
+        "output": [
+          {
+            "id": "ws_0c8baa88b556d9fa016ae23dc80df087d2aa965bd437144ca8",
+            "action": {
+              "query": "Haldwani Uttarakhand veterinary hospital emergency phone address",
+              "type": "search",
+              "queries": [
+                "Haldwani Uttarakhand veterinary hospital emergency phone address",
+                "site:uk.gov.in Haldwani veterinary hospital animal husbandry contact",
+                "Haldwani veterinary clinic dog hospital address phone"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://www.littlepawshospital.com/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.uk.gov.in/files/Contact_vog1.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://haldwanicity.com/listing-category/pet-clinics-haldwani/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://petcare.ai/vets/dr-manish-kumar-haldwani-f3b70a"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.practo.com/Nainital/clinic/dog-care-clinic-2-haldwani"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.uk.gov.in/directory/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://thepetoo.com/haldwani/vets"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Haldwani/Veterinary-Clinics/nct-10519261"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Haldwani/Veterinary-Hospitals/nct-10519292"
+                },
+                {
+                  "type": "url",
+                  "url": "https://petcare.ai/vets/dr-mahendra-kr-singh-haldwani-ce04e6"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Haldwani/Pet-Planet-Veterinary-Hospital-Near-Government-Girls-Pg-College-Haldwani-Ho/9999P5946-5946-211112105754-P5A3_BZDET/amp"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bharatibiz.com/pet-planet-veterinary-hospital-081938-28036"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Haldwani/24-Hours-Veterinary-Hospitals/nct-11167193"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Haldwani/comments/1w29gm7/looking_for_a_good_veterinary_hospital_in_haldwani/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Haldwani/comments/1q2rzqq/pet_parents_please_suggest_best_veterinary_clinic/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://issar.net.in/pdf/ISSAR-LM-Directory.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://imauastatebranch.com/document/ima-ua-addressograph-haldwani-2024-25.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://imauastatebranch.com/document/new-ima-ua-haldwani-addressograph-2021-22.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ekosh.uk.gov.in/files/25-12-13%20Final%20Eng%20ddo.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://utrenvis.nic.in/data/bmw%20ar%202021.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Haldwani/comments/1u163tf/vet/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Uttarakhand/comments/1q2te24/pet_parents_please_suggest_best_veterinary_clinic/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Haldwani/comments/1rfy2vx/we_are_psp_multi_super_speciality_hospital/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Haldwani_%28disambiguation%29"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.littlepawshospital.com/?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_0c8baa88b556d9fa016ae23dcb760887d2b2446a0e07d0f4e1",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 1029,
+                    "start_index": 948,
+                    "title": "Little Paws Veterinary Clinic & Grooming Center | 24/7 Vet Care in Haldwani",
+                    "type": "url_citation",
+                    "url": "https://www.littlepawshospital.com/?utm_source=openai"
+                  }
+                ],
+                "text": "This is an emergency. **Take the dog to a veterinary hospital now.**\n\n- Keep the dog **quiet, cool and away from traffic**. Minimise handling and do **not** put a muzzle on.\n- Let the dog sit or lie in the position in which it can breathe most easily; **do not force it onto its side**.\n- **Do not give food, water, milk or medicines** and do not try to force anything from its mouth—because it cannot swallow, this could enter the airway.\n- If you can see an object clearly at the very front of the mouth and it comes away easily, remove it gently; **do not put fingers deep into the throat** or blindly sweep the mouth.\n- If possible, call while someone else transports the dog.\n\n**Veterinary option in Haldwani:**  \n**Little Paws Veterinary Clinic & Grooming Center** — states that it provides 24/7 emergency veterinary care.  \nHydel Gate Chauraha, Shiv Mandir, Canal Road, Haldwani, Uttarakhand 263126.  \n**Phone:** 92587 66607 or 96900 01101. ([littlepawshospital.com](https://www.littlepawshospital.com/?utm_source=openai))\n\nThe clinic’s published emergency service does not guarantee immediate admission, so call on the way but do not delay leaving.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T18:24:15.590698+00:00",
+      "elapsed_seconds": 8.326,
+      "status": "completed",
+      "error": null,
+      "answer": "This is an emergency. **Take the dog to a veterinary hospital now.**\n\n- Keep the dog **quiet, cool and away from traffic**. Minimise handling and do **not** put a muzzle on.\n- Let the dog sit or lie in the position in which it can breathe most easily; **do not force it onto its side**.\n- **Do not give food, water, milk or medicines** and do not try to force anything from its mouth—because it cannot swallow, this could enter the airway.\n- If you can see an object clearly at the very front of the mouth and it comes away easily, remove it gently; **do not put fingers deep into the throat** or blindly sweep the mouth.\n- If possible, call while someone else transports the dog.\n\n**Veterinary option in Haldwani:**  \n**Little Paws Veterinary Clinic & Grooming Center** — states that it provides 24/7 emergency veterinary care.  \nHydel Gate Chauraha, Shiv Mandir, Canal Road, Haldwani, Uttarakhand 263126.  \n**Phone:** 92587 66607 or 96900 01101. ([littlepawshospital.com](https://www.littlepawshospital.com/?utm_source=openai))\n\nThe clinic’s published emergency service does not guarantee immediate admission, so call on the way but do not delay leaving.",
+      "citations": [
+        {
+          "url": "https://www.littlepawshospital.com/?utm_source=openai",
+          "title": "Little Paws Veterinary Clinic & Grooming Center | 24/7 Vet Care in Haldwani",
+          "start_index": 948,
+          "end_index": 1029
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 8.326,
+  "history_messages": 2,
+  "completed_at": "2026-10-28T18:24:15.590818+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "new_welfare_tasks"
+}

@@ -1,0 +1,17 @@
+"""Borrow only existing API/model settings; never import the production app."""
+import os
+from pathlib import Path
+import subprocess
+import sys
+
+pid = subprocess.check_output(['systemctl', 'show', 'gaia-chatbot.service', '-p', 'MainPID', '--value'], text=True).strip()
+active = Path('/proc') / pid
+live = dict(item.split('=', 1) for item in (active / 'environ').read_bytes().decode().split('\0') if '=' in item)
+python = (active / 'cmdline').read_bytes().decode().split('\0')[0]
+root = Path(__file__).resolve().parents[2]
+allow = {'OPENAI_API_KEY', 'OPENAI_WEB_SEARCH_MODEL', 'OPENAI_VISION_MODEL', 'OPENAI_ORG_ID', 'OPENAI_PROJECT_ID'}
+env = {key: value for key, value in os.environ.items() if key in {'PATH', 'HOME', 'LANG', 'LC_ALL', 'SSL_CERT_FILE', 'SSL_CERT_DIR'}}
+env.update({key: value for key, value in live.items() if key in allow})
+if not env.get('OPENAI_API_KEY'):
+    raise SystemExit('No API credential; no test was started.')
+subprocess.run([python, str(Path(__file__).with_name('run_holdout.py')), *sys.argv[1:]], env=env, cwd=root, check=True)

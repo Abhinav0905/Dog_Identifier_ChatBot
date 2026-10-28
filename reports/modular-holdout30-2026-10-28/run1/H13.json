@@ -1,0 +1,256 @@
+{
+  "id": "H13",
+  "city": "Dimapur",
+  "question": "Who can treat an injured community dog in Dimapur, Nagaland? Government veterinary hospitals and private clinics are both acceptable. I need a real name and address or published phone.",
+  "expected": "Useful Dimapur-specific animal treatment with supported actionable details, brief immediate safety and qualified availability; no default to previously discussed cities.",
+  "status": "completed",
+  "answer": "Keep the dog away from traffic if it is safe to do so, minimise handling, and use a clean cloth with gentle continuous pressure if there is active external bleeding.\n\n**Government option**\n- **Veterinary Hospital, Burma Camp (CVO, Dimapur)** — Burma Camp, Dimapur, Nagaland. This government veterinary hospital is listed by Nagaland government records. A current clinical phone number was not published in the source I could verify. ([npcb.nagaland.gov.in](https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf))\n\n**Private option**\n- **PAWS Veterinary PetCare Clinic (Dr. Liben)**  \n  Near DABA, Imli Ghas Junction, Duncan Basti, Dimapur, Nagaland 797113  \n  **Phone:** +91 98631 51103  \n  The listing specifically states dog treatment, consultation, surgery and wound care; call first to confirm they can take an injured community dog immediately. ([petcare.ai](https://petcare.ai/vets/dr-liben-dimapur-4fd008))\n\nI could not verify whether either facility provides pickup or is open at this moment.",
+  "raw_answer": "Keep the dog away from traffic if it is safe to do so, minimise handling, and use a clean cloth with gentle continuous pressure if there is active external bleeding.\n\n**Government option**\n- **Veterinary Hospital, Burma Camp (CVO, Dimapur)** — Burma Camp, Dimapur, Nagaland. This government veterinary hospital is listed by Nagaland government records. A current clinical phone number was not published in the source I could verify. ([npcb.nagaland.gov.in](https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf))\n\n**Private option**\n- **PAWS Veterinary PetCare Clinic (Dr. Liben)**  \n  Near DABA, Imli Ghas Junction, Duncan Basti, Dimapur, Nagaland 797113  \n  **Phone:** +91 98631 51103  \n  The listing specifically states dog treatment, consultation, surgery and wound care; call first to confirm they can take an injured community dog immediately. ([petcare.ai](https://petcare.ai/vets/dr-liben-dimapur-4fd008))\n\nI could not verify whether either facility provides pickup or is open at this moment.",
+  "citations": [
+    {
+      "url": "https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf",
+      "title": "Microsoft Word - BMW List till 2024",
+      "start_index": 433,
+      "end_index": 561
+    },
+    {
+      "url": "https://petcare.ai/vets/dr-liben-dimapur-4fd008",
+      "title": "Dr. Liben, Vet in Dimapur — Book Online | PetCare.AI",
+      "start_index": 899,
+      "end_index": 962
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T18:23:10.437597+00:00",
+      "elapsed_seconds": 0.001,
+      "question": "Who can treat an injured community dog in Dimapur, Nagaland? Government veterinary hospitals and private clinics are both acceptable. I need a real name and address or published phone.",
+      "history": [],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T18:23:10.438593+00:00",
+      "elapsed_seconds": 0.002,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 79.999
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T18:23:18.879037+00:00",
+      "elapsed_seconds": 8.442,
+      "step": 0,
+      "seconds": 8.44,
+      "response": {
+        "id": "resp_00859f1678c62bcb016ae23d8ef25087d288fc9d955d7480e6",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 22974,
+          "input_tokens_details": {
+            "cached_tokens": 8311,
+            "cache_write_tokens": 39
+          },
+          "output_tokens": 390,
+          "output_tokens_details": {
+            "reasoning_tokens": 167
+          },
+          "total_tokens": 23364
+        },
+        "output": [
+          {
+            "id": "ws_00859f1678c62bcb016ae23d8ff6f487d2874d0060b5873e7d",
+            "action": {
+              "query": "Dimapur Nagaland veterinary hospital phone address injured dog",
+              "type": "search",
+              "queries": [
+                "Dimapur Nagaland veterinary hospital phone address injured dog",
+                "site:nagaland.gov.in Dimapur veterinary hospital phone",
+                "Dimapur private veterinary clinic dog phone address"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://vety.nagaland.gov.in/contact-us/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://npwdomis.nagaland.gov.in/getHousingByClass/1"
+                },
+                {
+                  "type": "url",
+                  "url": "https://petcare.ai/vets/dr-liben-dimapur-4fd008"
+                },
+                {
+                  "type": "url",
+                  "url": "https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://cmhis.nagaland.gov.in/storage/pageFiles/1727362766_179.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ipr.nagaland.gov.in/MS-DISTRICT-HOSPITAL-DIMAPUR-UPDATES-PHONE-NUMBER"
+                },
+                {
+                  "type": "url",
+                  "url": "https://hcservices.nagaland.gov.in/pdfWatermark.php?file=2025%2F222000001792025_1.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://yappe.in/nagaland/dimapur/veterinary-healthcare-center/89428"
+                },
+                {
+                  "type": "url",
+                  "url": "https://cmhis.nagaland.gov.in/storage/pageFiles/1736525410_201.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Dimapur/Veterinary-Hospitals/nct-10519292"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.cybo.com/IN/dimapur/veterinarians-and-animal-clinics/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.yananagaland.com/dimapur/wagging-tails-veterinary-clinic"
+                },
+                {
+                  "type": "url",
+                  "url": "https://akhandapp.in/place/ani-vet-clinic-72918/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://vety.nagaland.gov.in/wp-content/uploads/2025/05/RTI-Disclosure-2025-Final.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.cybo.com/IN-biz/paws-veterinary-petcare-clinic"
+                },
+                {
+                  "type": "url",
+                  "url": "https://dimapurlibrary.com/Listings/animal-helath-centre/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://nivedi.res.in/adsmc/document/contactlist.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bharatibiz.com/en/ani-vet-clinic-087309-25051"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianPets/comments/1wfba9i/my_post_was_not_accepted_by_the_moderator/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/List_of_hospitals_in_Nagaland"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Christian_Institute_of_Health_Sciences_and_Research"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Madurai/comments/1u9qynn/animal_injured/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianPets/comments/1v8yzf5/urgent_help_needed/"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "ws_00859f1678c62bcb016ae23d935ce087d28125aa95f5387138",
+            "action": {
+              "type": "open_page",
+              "url": "https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf"
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_00859f1678c62bcb016ae23d9461a087d294815c235dc725b8",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 561,
+                    "start_index": 433,
+                    "title": "Microsoft Word - BMW List till 2024",
+                    "type": "url_citation",
+                    "url": "https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf"
+                  },
+                  {
+                    "end_index": 962,
+                    "start_index": 899,
+                    "title": "Dr. Liben, Vet in Dimapur — Book Online | PetCare.AI",
+                    "type": "url_citation",
+                    "url": "https://petcare.ai/vets/dr-liben-dimapur-4fd008"
+                  }
+                ],
+                "text": "Keep the dog away from traffic if it is safe to do so, minimise handling, and use a clean cloth with gentle continuous pressure if there is active external bleeding.\n\n**Government option**\n- **Veterinary Hospital, Burma Camp (CVO, Dimapur)** — Burma Camp, Dimapur, Nagaland. This government veterinary hospital is listed by Nagaland government records. A current clinical phone number was not published in the source I could verify. ([npcb.nagaland.gov.in](https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf))\n\n**Private option**\n- **PAWS Veterinary PetCare Clinic (Dr. Liben)**  \n  Near DABA, Imli Ghas Junction, Duncan Basti, Dimapur, Nagaland 797113  \n  **Phone:** +91 98631 51103  \n  The listing specifically states dog treatment, consultation, surgery and wound care; call first to confirm they can take an injured community dog immediately. ([petcare.ai](https://petcare.ai/vets/dr-liben-dimapur-4fd008))\n\nI could not verify whether either facility provides pickup or is open at this moment.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T18:23:18.879425+00:00",
+      "elapsed_seconds": 8.442,
+      "status": "completed",
+      "error": null,
+      "answer": "Keep the dog away from traffic if it is safe to do so, minimise handling, and use a clean cloth with gentle continuous pressure if there is active external bleeding.\n\n**Government option**\n- **Veterinary Hospital, Burma Camp (CVO, Dimapur)** — Burma Camp, Dimapur, Nagaland. This government veterinary hospital is listed by Nagaland government records. A current clinical phone number was not published in the source I could verify. ([npcb.nagaland.gov.in](https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf))\n\n**Private option**\n- **PAWS Veterinary PetCare Clinic (Dr. Liben)**  \n  Near DABA, Imli Ghas Junction, Duncan Basti, Dimapur, Nagaland 797113  \n  **Phone:** +91 98631 51103  \n  The listing specifically states dog treatment, consultation, surgery and wound care; call first to confirm they can take an injured community dog immediately. ([petcare.ai](https://petcare.ai/vets/dr-liben-dimapur-4fd008))\n\nI could not verify whether either facility provides pickup or is open at this moment.",
+      "citations": [
+        {
+          "url": "https://npcb.nagaland.gov.in/wp-content/uploads/List-of-Health-Care-Facilities-as-of-2024-Nagaland.pdf",
+          "title": "Microsoft Word - BMW List till 2024",
+          "start_index": 433,
+          "end_index": 561
+        },
+        {
+          "url": "https://petcare.ai/vets/dr-liben-dimapur-4fd008",
+          "title": "Dr. Liben, Vet in Dimapur — Book Online | PetCare.AI",
+          "start_index": 899,
+          "end_index": 962
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 8.442,
+  "history_messages": 0,
+  "completed_at": "2026-10-28T18:23:18.879515+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "new_locations_and_constraints"
+}

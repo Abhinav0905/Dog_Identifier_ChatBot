@@ -1,0 +1,343 @@
+{
+  "id": "H01",
+  "city": "Kozhikode",
+  "question": "An injured community dog is near Nadakkavu, Kozhikode, Kerala. I can arrange transport. Give a real treatment facility and its address or published phone.",
+  "expected": "Brief safe injury handling first; Kozhikode dog-treatment facility with source-supported actionable address or phone; no pickup or admission guarantee.",
+  "status": "completed",
+  "answer": "Keep the dog away from traffic if it is safe to do so, and minimise handling; for active external bleeding, hold a clean cloth with gentle, continuous pressure.\n\n**ARUMA Multispeciality Pet Hospital**  \nNear Malikkadav Bridge, Moorikkara Road, Malikkadav, Kozhikode, Kerala **673611**  \n**Phone:** 06282 693066  \n\nIt is listed as a small-animal veterinary hospital with emergency/medical and surgical services. Call while arranging transport to confirm that they can receive this injured community dog now. ([in.linkedin.com](https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai))",
+  "raw_answer": "Keep the dog away from traffic if it is safe to do so, and minimise handling; for active external bleeding, hold a clean cloth with gentle, continuous pressure.\n\n**ARUMA Multispeciality Pet Hospital**  \nNear Malikkadav Bridge, Moorikkara Road, Malikkadav, Kozhikode, Kerala **673611**  \n**Phone:** 06282 693066  \n\nIt is listed as a small-animal veterinary hospital with emergency/medical and surgical services. Call while arranging transport to confirm that they can receive this injured community dog now. ([in.linkedin.com](https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai))",
+  "citations": [
+    {
+      "url": "https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai",
+      "title": "ARUMA PET HOSPITAL | LinkedIn",
+      "start_index": 507,
+      "end_index": 596
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T18:23:10.437227+00:00",
+      "elapsed_seconds": 0.002,
+      "question": "An injured community dog is near Nadakkavu, Kozhikode, Kerala. I can arrange transport. Give a real treatment facility and its address or published phone.",
+      "history": [],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T18:23:10.437521+00:00",
+      "elapsed_seconds": 0.003,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 79.999
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T18:23:20.090824+00:00",
+      "elapsed_seconds": 9.656,
+      "step": 0,
+      "seconds": 9.653,
+      "response": {
+        "id": "resp_0a2478ad89e19efa016ae23d8ec7f487d29b9ec2453a059e60",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 25038,
+          "input_tokens_details": {
+            "cached_tokens": 8311,
+            "cache_write_tokens": 37
+          },
+          "output_tokens": 295,
+          "output_tokens_details": {
+            "reasoning_tokens": 157
+          },
+          "total_tokens": 25333
+        },
+        "output": [
+          {
+            "id": "ws_0a2478ad89e19efa016ae23d8ff46487d283014cee4726a0fa",
+            "action": {
+              "query": "Kozhikode Kerala veterinary hospital Nadakkavu dog treatment phone address",
+              "type": "search",
+              "queries": [
+                "Kozhikode Kerala veterinary hospital Nadakkavu dog treatment phone address",
+                "Kozhikode Government Veterinary Polyclinic phone address Kerala animal husbandry"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/en/kozhikkode/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://esamrudha.kerala.gov.in/public/onboardedInstitutions"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bharatibiz.com/en/government-veterinary-poly-clinic_9a-0496-261-6401"
+                },
+                {
+                  "type": "url",
+                  "url": "https://kozhikode.nic.in/en/department-directory/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.indiacustomercare.com/kerala-state-animal-husbandry-department-no-0471-230-2283"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/images/pdf/DIRECTORY__OF_OFFICERS.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://fibkerala.gov.in/sites/default/files/inline-files/Farmguide%202024.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://web.cdit.org/animalhusbandry/2020/02/03/kozhikode/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://web.cdit.org/animalhusbandry/wp-content/uploads/2022/09/AHD_MANUAL_-_Black__White_-_Final.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.kvasu.ac.in/institution/district/12"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/contact/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://web.cdit.org/animalhusbandry/contact/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://calicutinfopages.com/listing/district-animal-husbandry-office/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.onmanorama.com/news/kerala/2025/06/26/mobile-veterinary-units-launched-kozhikode-emergency-care.html"
+                },
+                {
+                  "type": "url",
+                  "url": "https://kmscl.kerala.gov.in/KMSCL/uploads/announcements/41ab0348-AHD__Tender_document_2024_25.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://azhiyurpanchayat.lsgkerala.gov.in/en/node/186"
+                },
+                {
+                  "type": "url",
+                  "url": "https://sdma.kerala.gov.in/wp-content/uploads/2018/11/10-Kozhikode-Final.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Kunnamkulam"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/kozhikode/comments/1bungod"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/kozhikode/comments/1bd0165"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Nadakkavu"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kerala/comments/1msrlhp"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/kozhikode/comments/1tyyroo/best_vet_vet_clinic_in_kozhikode/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Department_of_Animal_Husbandry_%28Kerala%29"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/malappuram/comments/1xg7sp9/we_need_a_247_emergency_animal_hospital_in/"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "ws_0a2478ad89e19efa016ae23d933c9087d2b83a14a6612bc58d",
+            "action": {
+              "query": "veterinary hospital Kozhikode Nadakkavu official phone address dog emergency",
+              "type": "search",
+              "queries": [
+                "veterinary hospital Kozhikode Nadakkavu official phone address dog emergency",
+                "Aruma Pets Hospital Kozhikode official contact address phone",
+                "Calicut Veterinary Clinic Kozhikode official contact address phone"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/en/kozhikkode/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://in.linkedin.com/company/aruma-pet-hospital"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bharatibiz.com/en/aruma-multispeciality-pet-hospital-062826-93066"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.kozhikode.directory/aruma-multi-speciality-pet-hospital/i/2674"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/contact/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/en/kozhikode/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://esamrudha.kerala.gov.in/public/onboardedInstitutions"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.zaubacorp.com/ARUMA-PET-HOSPITAL-PRIVATE-LIMITED-U85110KL2023PTC080029"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.indiafilings.com/search/aruma-pet-hospital-private-limited-cin-U85110KL2023PTC080029"
+                },
+                {
+                  "type": "url",
+                  "url": "https://petcare.ai/vets/dr-harish-krishnan-kozhikode-72b151"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.joonsquare.com/veterinary/aruma-multispeciality-pet-hospital-kozhikode"
+                },
+                {
+                  "type": "url",
+                  "url": "https://mypetlingo.com/listings/calicut-corporation-veterinary-hospital/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/images/pdf/veterinary%20service%20list%2024%20hour.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://sdma.kerala.gov.in/wp-content/uploads/2018/11/10-Kozhikode-Final.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://prd.kerala.gov.in/sites/default/files/inline-files/Kerala%20Calling%20March%202023%20LR.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ksvc.kerala.gov.in/wp-content/uploads/2023/09/Electoral-roll-2023.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.ahd.kerala.gov.in/images/pdf/rti_2015to2020.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/kozhikode/comments/1bd0165"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/kozhikode/comments/1bungod"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/kozhikode/comments/1tyyroo/best_vet_vet_clinic_in_kozhikode/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Mavoor_Road"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Nadakkavu"
+                },
+                {
+                  "type": "url",
+                  "url": "https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_0a2478ad89e19efa016ae23d96ab2487d2b8d5a3aedff5eb76",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 596,
+                    "start_index": 507,
+                    "title": "ARUMA PET HOSPITAL | LinkedIn",
+                    "type": "url_citation",
+                    "url": "https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai"
+                  }
+                ],
+                "text": "Keep the dog away from traffic if it is safe to do so, and minimise handling; for active external bleeding, hold a clean cloth with gentle, continuous pressure.\n\n**ARUMA Multispeciality Pet Hospital**  \nNear Malikkadav Bridge, Moorikkara Road, Malikkadav, Kozhikode, Kerala **673611**  \n**Phone:** 06282 693066  \n\nIt is listed as a small-animal veterinary hospital with emergency/medical and surgical services. Call while arranging transport to confirm that they can receive this injured community dog now. ([in.linkedin.com](https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai))",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T18:23:20.091083+00:00",
+      "elapsed_seconds": 9.656,
+      "status": "completed",
+      "error": null,
+      "answer": "Keep the dog away from traffic if it is safe to do so, and minimise handling; for active external bleeding, hold a clean cloth with gentle, continuous pressure.\n\n**ARUMA Multispeciality Pet Hospital**  \nNear Malikkadav Bridge, Moorikkara Road, Malikkadav, Kozhikode, Kerala **673611**  \n**Phone:** 06282 693066  \n\nIt is listed as a small-animal veterinary hospital with emergency/medical and surgical services. Call while arranging transport to confirm that they can receive this injured community dog now. ([in.linkedin.com](https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai))",
+      "citations": [
+        {
+          "url": "https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai",
+          "title": "ARUMA PET HOSPITAL | LinkedIn",
+          "start_index": 507,
+          "end_index": 596
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 9.655,
+  "history_messages": 0,
+  "completed_at": "2026-10-28T18:23:20.091258+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "coastal_and_central"
+}
