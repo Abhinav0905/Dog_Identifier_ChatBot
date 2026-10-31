@@ -1,0 +1,39 @@
+{
+  "verified_at_utc": "2026-10-31T17:47:39Z",
+  "url": "https://askdorjee.dharamsalaanimalrescue.org/",
+  "source_revision": "9d6b040a724816cbe54df8b2da7d3de27b861a4b",
+  "merge_commit": "caa0852f028bc9009fcddf880eb671469b2c7cda",
+  "pull_request": 2,
+  "chat_engine": "single_agent",
+  "prompt_version": "single-agent-v1.0.0-2026-10-28",
+  "prompt_manifest_sha256": "b9c3068408735f6f4daa6b8d68961cc25ac35f7a02d17daf87df85bb2c9e9ace",
+  "prompt_source": "prompts/V1 from the GitHub commit, copied into a verified local EC2 release",
+  "s3_used": false,
+  "full_machine_reboot_verified_by_changed_boot_id": true,
+  "service_active": true,
+  "nginx_active": true,
+  "public_health_status": "ready",
+  "database_backup_created": true,
+  "existing_incident_count_preserved": true,
+  "previous_release_and_rollback_script_retained": true,
+  "post_reboot_http_smoke_checks": [
+    {"name": "health and release provenance", "passed": true},
+    {"name": "humane child-facing guidance", "passed": true},
+    {"name": "internet search with official contact citation", "passed": true},
+    {"name": "same-conversation number-only follow-up", "passed": true},
+    {"name": "India scope for a foreign provider request", "passed": true},
+    {"name": "photo tool recognises a logo without inventing injury", "passed": true}
+  ],
+  "production_private_trace_spans_verified": {
+    "main_agent_model_calls": 7,
+    "photo_model_calls": 1,
+    "photo_function_results": 1,
+    "includes_one_pre_reboot_text_smoke": true
+  },
+  "limits": [
+    "Six HTTP smoke checks are functional checks, not a new 50-question quality evaluation.",
+    "Browser UI was not rerun; the browser access host was unavailable.",
+    "Live rescue alert delivery remains unconfigured, as before this release. No rescue notification was sent by the checks.",
+    "The latest historical standalone score remains 43 pass, 6 partial, 1 fail (86 percent)."
+  ]
+}
