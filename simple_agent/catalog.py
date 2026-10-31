@@ -14,7 +14,10 @@ class PromptCatalog:
 
     @classmethod
     def load(cls, directory=None):
-        root = Path(directory) if directory else Path(__file__).parent / "prompts"
+        root = Path(directory) if directory else Path(__file__).resolve().parents[1] / "prompts" / "V1"
+        if (root / "manifest.json").exists():
+            from .release import load_bundle
+            return load_bundle(root).catalog
         values = {name: (root / f"{name}.txt").read_text().strip()
                   for name in cls.__dataclass_fields__}
         if any(not text for text in values.values()):

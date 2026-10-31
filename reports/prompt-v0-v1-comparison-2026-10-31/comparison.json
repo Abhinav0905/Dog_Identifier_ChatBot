@@ -1,0 +1,115 @@
+{
+  "old": {
+    "label": "V0 means the previous live legacy package, not the historically named v1 export",
+    "commit": "69dcae4",
+    "version": "srini-v2.9-2026-10-25",
+    "manifest_sha256": "a18f3fbb6fc727b5e10f9809cea433fdcd9f9490065e2fb4cf7eea6e396f4ee4",
+    "chatbot_files": 28,
+    "lines_including_blank": 1281,
+    "nonblank_lines": 1220,
+    "whitespace_words": 14126
+  },
+  "new": {
+    "commit": "d473a22",
+    "version": "single-agent-v1.0.0-2026-10-28",
+    "files": 5,
+    "lines_including_blank": 215,
+    "nonblank_lines": 200,
+    "whitespace_words": 2934
+  },
+  "comparison": {
+    "verbatim_nonblank_lines_in_new": 174,
+    "percent_of_new_nonblank_lines_copied": 87.0,
+    "new_or_rewritten_nonblank_lines": 26,
+    "old_line_occurrences_removed_reworked_or_deduplicated": 1046,
+    "net_nonblank_line_reduction": 1020,
+    "source_line_reduction_percent": 83.60655737704919,
+    "word_reduction_percent": 79.22978904148378
+  },
+  "new_files": [
+    {
+      "file": "system.txt",
+      "lines_including_blank": 3,
+      "nonblank_lines": 3,
+      "whitespace_words": 44,
+      "verbatim_old_nonblank_lines": 0,
+      "new_or_rewritten_nonblank_lines": 3
+    },
+    {
+      "file": "guardrails.txt",
+      "lines_including_blank": 185,
+      "nonblank_lines": 179,
+      "whitespace_words": 2065,
+      "verbatim_old_nonblank_lines": 174,
+      "new_or_rewritten_nonblank_lines": 5
+    },
+    {
+      "file": "care.txt",
+      "lines_including_blank": 10,
+      "nonblank_lines": 6,
+      "whitespace_words": 335,
+      "verbatim_old_nonblank_lines": 0,
+      "new_or_rewritten_nonblank_lines": 6
+    },
+    {
+      "file": "search.txt",
+      "lines_including_blank": 12,
+      "nonblank_lines": 7,
+      "whitespace_words": 409,
+      "verbatim_old_nonblank_lines": 0,
+      "new_or_rewritten_nonblank_lines": 7
+    },
+    {
+      "file": "photo.txt",
+      "lines_including_blank": 5,
+      "nonblank_lines": 5,
+      "whitespace_words": 81,
+      "verbatim_old_nonblank_lines": 0,
+      "new_or_rewritten_nonblank_lines": 5
+    }
+  ],
+  "empathy": {
+    "shared_policy_retained_verbatim": true,
+    "shared_policy_lines_including_blank": 174,
+    "shared_policy_nonblank_lines": 170,
+    "existing_scope_lines_retained": 4,
+    "voice_and_values_lines_retained_verbatim": 60,
+    "voice_new_lines": [
+      4,
+      63
+    ],
+    "voice_old_care_lines": [
+      28,
+      87
+    ],
+    "audience_guidance_lines_retained_verbatim": 19,
+    "audience_new_lines": [
+      87,
+      105
+    ],
+    "all_seven_audiences_present": [
+      "child",
+      "elder",
+      "village",
+      "school/teacher",
+      "volunteer/NGO",
+      "government/panchayat",
+      "donor/international"
+    ],
+    "raw_Deb_reference": {
+      "file": "prompts/runtime-v2/00_Deb_DAR_Humane_Education_GPT_Full.txt",
+      "lines_including_blank": 176,
+      "nonblank_lines": 155,
+      "whitespace_words": 917,
+      "runtime_role": "Reference only in both versions. Its guidance had already been condensed into the legacy shared policy; do not call the raw document 100 percent verbatim retained."
+    },
+    "behaviour_evidence": "Latest F31 reply begins That sounds frightening. F34 uses four short child-facing sentences. These are examples, not a dedicated empathy score."
+  },
+  "method": [
+    "Count only files listed in the old runtime manifest, excluding admin-only 09_admin_nl_to_sql_system.txt; exclude reference documents, archives, JSON schemas in code and conversation data.",
+    "Count all five new prompt files. Nonblank line means strip(line) is nonempty; exact matching normalizes leading/trailing whitespace only and uses multiset line comparison.",
+    "Words use whitespace splitting; these are not model tokens.",
+    "Totals include legacy repeated policies, language alternatives and different agent paths; do not interpret the aggregate reduction as savings on every individual request.",
+    "The latest 86 percent evaluation is overall answer acceptance, not an empathy metric. No new model calls or prompt edits were made for this comparison."
+  ]
+}

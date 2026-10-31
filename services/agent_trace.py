@@ -118,9 +118,9 @@ def turn(trace_id=None):
     if _trace.get() is not None:
         yield _trace.get()["id"]
         return
-    from services import prompt_store
+    from services import prompt_store, single_agent_runtime
     try:
-        bundle = prompt_store.current()
+        bundle = single_agent_runtime.pinned() or prompt_store.current()
         version, digest = bundle.version, bundle.digest
     except Exception:
         version, digest = "unavailable", ""

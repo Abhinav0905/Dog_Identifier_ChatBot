@@ -8,6 +8,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 from contextvars import ContextVar
 from functools import wraps
+import inspect
 import uuid
 import logging
 from pathlib import Path
@@ -21,6 +22,18 @@ _turn_trace = ContextVar("web_turn_trace", default=None)
 
 
 def traced_turn(function):
+    if inspect.iscoroutinefunction(function):
+        @wraps(function)
+        async def run_async(*args, **kwargs):
+            from services import agent_trace
+            trace_id = uuid.uuid4().hex
+            token = _turn_trace.set({"id": trace_id, "events": []})
+            try:
+                with agent_trace.turn(trace_id):
+                    return await function(*args, **kwargs)
+            finally:
+                _turn_trace.reset(token)
+        return run_async
     @wraps(function)
     def run(*args, **kwargs):
         from services import agent_trace
@@ -166,7 +179,12 @@ def readiness() -> dict:
         if backend == "pinecone":
             knowledge["status"] = "recent_success" if rag_event["status"] == "ok" else "recent_failure"
     result["knowledge"] = knowledge
-    result["status"] = "ready" if result["models"] == "recent_success" and knowledge["status"] in {"ready", "recent_success"} and (not rag_event or rag_event["status"] == "ok") else "degraded"
+    if getattr(config, "CHAT_ENGINE", "legacy") == "single_agent":
+        knowledge["required_for_chat"] = False
+        knowledge_ready = True
+    else:
+        knowledge_ready = knowledge["status"] in {"ready", "recent_success"} and (not rag_event or rag_event["status"] == "ok")
+    result["status"] = "ready" if result["models"] == "recent_success" and knowledge_ready else "degraded"
     result["alert_delivery_configured"] = bool(config.SLACK_WEBHOOK_URL or config.ALERT_WEBHOOK_URL)
     result["alerts_needing_operator_attention"] = state["alerts_needing_operator_attention"]
     return result

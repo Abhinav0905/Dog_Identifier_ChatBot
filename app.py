@@ -13,6 +13,7 @@ import unicodedata
 import time
 import asyncio
 import threading
+import os
 from dataclasses import replace
 from types import SimpleNamespace
 from pathlib import Path
@@ -52,6 +53,7 @@ from services import (
 )
 from services.prompts import PromptCatalog
 from services import prompt_store
+from services import single_agent_runtime
 
 # Logging setup
 logging.basicConfig(
@@ -78,21 +80,25 @@ async def pin_prompt_release(request: Request, call_next):
         return await call_next(request)
     try:
         bundle = await run_in_threadpool(prompt_store.current)
-    except prompt_store.PromptPackageError:
+        simple_bundle = await run_in_threadpool(single_agent_runtime.current) if single_agent_runtime.enabled() and request.url.path != "/v1/admin/query" else None
+    except (OSError, ValueError):
         from starlette.responses import JSONResponse
         return JSONResponse({"detail": "Prompt configuration is unavailable"}, status_code=503)
     # ContextVars propagate into FastAPI's worker threads. Routing, care, search
     # and evidence therefore use one version, even during a prompt-only update.
-    with prompt_store.pin(bundle):
+    with prompt_store.pin(bundle), single_agent_runtime.pin(simple_bundle):
         response = await call_next(request)
-        response.headers["X-Prompt-Package-Version"] = bundle.version
-        response.headers["X-Prompt-Package-SHA256"] = bundle.digest
+        active = simple_bundle or bundle
+        response.headers["X-Prompt-Package-Version"] = active.version
+        response.headers["X-Prompt-Package-SHA256"] = active.digest
         return response
 
 # Initialize database on startup
 @app.on_event("startup")
 def startup():
     prompt_store.current()  # Reject an invalid first release before serving.
+    if single_agent_runtime.enabled():
+        single_agent_runtime.current()
     db.init_db()
     request_limits.initialize()
     web_operations.initialize()
@@ -253,6 +259,7 @@ async def image_preview(image: UploadFile = File(...)):
 
 
 @app.post("/v1/triage/image")
+@web_operations.traced_turn
 async def triage_image(
     request: Request,
     response: Response,
@@ -281,9 +288,10 @@ async def triage_image(
         raise HTTPException(400, str(exc)) from exc
 
     session_id = _resolve_request_session(request, response, session_id)
+    agent_trace.bind_session(session_id)
 
     # Guardrail check on context text
-    if context:
+    if context and not single_agent_runtime.enabled():
         guard = guardrails.check_input(context)
         if not guard.allowed:
             return ChatResponse(response=guard.reason)
@@ -352,6 +360,27 @@ async def triage_image(
             "lat": lat, "lng": lng, "country_code": "in" if location.is_in_india(lat, lng) else "",
             "source": loc_source, "in_dharamsala": location.is_in_dharamsala_region(lat, lng),
         })
+    simple_answer = None
+    if single_agent_runtime.enabled():
+        simple_answer = await run_in_threadpool(
+            single_agent_runtime.answer, session_id, context,
+            image_bytes=image_bytes, media_type=media_type, deadline=deadline,
+        )
+        # Local dispatch still needs the existing calibrated triage fields.
+        # All other public photo answers use the evaluated two-tool agent.
+        if not (has_precise_pin and not location_conflict and location.is_in_dharamsala_region(lat, lng)):
+            if location_conflict:
+                simple_answer.response += "\n\n" + location_conflict
+            else:
+                simple_answer.response += (
+                    "\n\nअभी कोई बचाव रिपोर्ट नहीं भेजी गई है। स्थानीय रिपोर्ट के लिए पशु की सही जगह का पिन ज़रूरी है।"
+                    if lang == "hi" else
+                    "\n\nNo rescue report has been submitted. A local report requires a precise pin for the animal."
+                )
+            simple_answer.location_verification = location_verification
+            simple_answer.in_jurisdiction = location.is_in_dharamsala_region(lat, lng) if lat is not None and lng is not None else None
+            single_agent_runtime.save(session_id, f"[Photo] {context}", simple_answer)
+            return simple_answer
     triage_result = await run_in_threadpool(
         triage.analyze_image,
         image_bytes,
@@ -361,6 +390,8 @@ async def triage_image(
         deadline=deadline,
     )
     needs_rescue = triage.needs_rescue_help(triage_result)
+    if simple_answer:
+        triage_result["_single_agent_answer"] = simple_answer.response
     triage_data = _triage_response_payload(triage_result)
 
     if not needs_rescue or location_conflict:
@@ -370,7 +401,7 @@ async def triage_image(
             in_region=None,
             language=lang,
         )
-        if triage_result.get("is_fallback") or float(triage_result.get("confidence") or 0) < triage.VISUAL_REVIEW_CONFIDENCE_FLOOR:
+        if simple_answer is None and (triage_result.get("is_fallback") or float(triage_result.get("confidence") or 0) < triage.VISUAL_REVIEW_CONFIDENCE_FLOOR):
             caption_guidance = triage.urgent_caption_guidance(context, language=lang)
             if caption_guidance:
                 # The caption is direct reporter evidence even when pixels are
@@ -384,6 +415,12 @@ async def triage_image(
         if location_conflict:
             response_text += f"\n\n{location_conflict}"
         response_text = guardrails.sanitize_text_response(response_text)
+        if simple_answer:
+            simple_answer.response = response_text
+            simple_answer.triage = triage_data
+            simple_answer.location_verification = location_verification
+            single_agent_runtime.save(session_id, f"[Photo] {context}", simple_answer)
+            return simple_answer
         db.save_chat_message(session_id, "user", f"[Image uploaded: {image.filename}] {context}")
         db.save_chat_message(session_id, "assistant", response_text)
         return ChatResponse(
@@ -512,13 +549,15 @@ async def triage_image(
             "\n\nThe report was recorded, but no rescue notification was delivered. Please contact a veterinary or rescue service directly."
         )
     resource_links = _build_resource_links(loc)
+    if simple_answer:
+        resource_links.extend(link.model_dump() for link in simple_answer.resource_links)
 
     db.save_chat_message(session_id, "user", f"[Image uploaded: {image.filename}] {context}")
     db.save_chat_message(
         session_id,
         "assistant",
         response_text,
-        metadata={"resource_links": resource_links},
+        metadata={"resource_links": resource_links, "stage_trace": web_operations.current_turn_trace()},
     )
 
     return ChatResponse(
@@ -543,6 +582,13 @@ def chat_query(
     session_id = _resolve_request_session(http_request, http_response, request.session_id)
     agent_trace.bind_session(session_id)
     agent_trace.decision("turn.request", message=request.message)
+    if single_agent_runtime.enabled():
+        question = request.message
+        if request.lat is not None and request.lng is not None:
+            question += f"\n\nUser-supplied location pin: latitude {request.lat}, longitude {request.lng}."
+        result = single_agent_runtime.answer(session_id, question, deadline=deadline)
+        single_agent_runtime.save(session_id, request.message, result)
+        return result
     guard = guardrails.check_input(request.message)
     if not guard.allowed:
         agent_trace.decision("answer.final", answer=guard.reason, result_kind="guardrail_refusal",
@@ -1239,12 +1285,18 @@ async def _process_twilio_whatsapp_media_background(
 @app.get("/health")
 def health():
     state = web_operations.readiness()
-    prompts = prompt_store.status()
+    legacy_prompts = prompt_store.status()
+    prompts = single_agent_runtime.status() if single_agent_runtime.enabled() else legacy_prompts
+    if prompts.get("status") == "invalid":
+        state["status"] = "not_ready"
     return {
         **state,
         "version": "1.1.0-web-rc",
         "prompt_catalog_version": prompts["version"],
         "prompt_package": prompts,
+        "operational_prompt_package": legacy_prompts,
+        "chat_engine": config.CHAT_ENGINE,
+        "source_revision": os.getenv("APP_SOURCE_REVISION", "unknown"),
         "india_only_scope": config.INDIA_ONLY_SCOPE_ENABLED,
         "india_boundary_loaded": location.india_boundary_available(),
         "location_required_for_assessment": False,
@@ -1318,7 +1370,7 @@ def _build_image_assessment_response(
     language: str = "en",
 ) -> str:
     """Preserve the assessment's uncertainty and useful actions in every region."""
-    if triage_result.get("is_fallback"):
+    if triage_result.get("is_fallback") and not triage_result.get("_single_agent_answer"):
         if language == "hi":
             return (
                 "इस फोटो का आकलन नहीं हो पाया। कृपया बताएँ कि क्या हो रहा है। "
@@ -1328,8 +1380,8 @@ def _build_image_assessment_response(
             "I could not assess this photo. Please describe what is happening. "
             "If the animal is injured, struggling to breathe or unable to move, seek urgent veterinary help."
         )
-    summary = str(triage_result.get("triage_summary") or "I cannot determine the animal's condition from this photo.").strip()
-    uncertain = float(triage_result.get("confidence") or 0) < 0.65
+    summary = str(triage_result.get("_single_agent_answer") or triage_result.get("triage_summary") or "I cannot determine the animal's condition from this photo.").strip()
+    uncertain = not triage_result.get("_single_agent_answer") and float(triage_result.get("confidence") or 0) < 0.65
     parts = [summary]
     if uncertain:
         parts.append(
@@ -1337,7 +1389,7 @@ def _build_image_assessment_response(
             if language == "hi" else
             "This assessment is uncertain; a photo cannot establish that an animal is healthy. A clearer photo and a description of its symptoms would help."
         )
-    actions = triage_result.get("recommended_actions") or []
+    actions = [] if triage_result.get("_single_agent_answer") else triage_result.get("recommended_actions") or []
     if actions:
         parts.append("\n".join(f"{i}. {guardrails.sanitize_text_response(str(action))}" for i, action in enumerate(actions[:5], 1)))
     if needs_rescue:

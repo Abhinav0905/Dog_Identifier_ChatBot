@@ -50,7 +50,7 @@ def activation_lock(current: Path):
         lock.rmdir()
 
 
-def activate(source: Path, current: Path):
+def activate(source: Path, current: Path, *, loader=load_bundle):
     """Validate a snapshot, then change the pointer with one atomic filesystem call."""
     source = source.resolve(strict=True)
     current = current.absolute()
@@ -63,10 +63,10 @@ def activate(source: Path, current: Path):
         staging = Path(tempfile.mkdtemp(prefix=".staging-", dir=release_root))
         try:
             shutil.copytree(source, staging, dirs_exist_ok=True)
-            bundle = load_bundle(staging)
+            bundle = loader(staging)
             target = release_root / (bundle.version + "-" + bundle.digest[:12])
             if target.exists():
-                existing = load_bundle(target)
+                existing = loader(target)
                 if existing.digest != bundle.digest:
                     raise ValueError("Existing release has conflicting content")
             else:
