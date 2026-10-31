@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "engine": "simple_agent",
+  "version": "single-agent-v1.0.0-2026-10-28",
+  "source_commit": "192706e",
+  "files": {
+    "care.txt": "c801a54c737b45efdaa02068224b75490347a6e8f2648093ef50e5e1480523ab",
+    "guardrails.txt": "d0932f3d3105650c5496bbdcee74f13f521f160b0e7f2e2afd6b26508391760b",
+    "photo.txt": "3fd2434b6d91e9f1dbc9f8b65f68e4c33c543c3ccae5a4082b3f1f2369595a1a",
+    "search.txt": "3013be7b9a5124e2a60c2baab7c324ebee0c979f731bf6903c655c894db907e8",
+    "system.txt": "8bf6a65613fcf3065a0afaeada302285ad018d956a06cac174082a0d482370cc"
+  },
+  "prompt_hashes": {
+    "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+    "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+    "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+    "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+    "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+  },
+  "acceptance": {
+    "baseline50": {
+      "pass": 47,
+      "partial": 2,
+      "fail": 1
+    },
+    "fresh30": {
+      "PASS": 28,
+      "PARTIAL": 2,
+      "FAIL": 0
+    },
+    "additional_guardrail_and_photo_checks": {
+      "pass": 8,
+      "partial": 0,
+      "fail": 0
+    }
+  },
+  "compatibility": "Load these five files with simple_agent.catalog.PromptCatalog. This is not a replacement for the old 27-file services.prompt_store bundle; switching the web engine requires code integration."
+}

@@ -10,6 +10,12 @@ load_dotenv(ENV_FILE)
 
 # Versioned prompt release on the local filesystem (GitHub checkout or EC2 mount).
 PROMPT_PACKAGE_DIR = Path(os.getenv("PROMPT_PACKAGE_DIR") or BASE_DIR / "prompts" / "runtime-v2")
+CHAT_ENGINE = os.getenv("CHAT_ENGINE", "legacy")
+if CHAT_ENGINE not in {"legacy", "single_agent"}:
+    raise ValueError("CHAT_ENGINE must be legacy or single_agent")
+SIMPLE_AGENT_PROMPT_DIR = Path(os.getenv("SIMPLE_AGENT_PROMPT_DIR") or BASE_DIR / "prompts" / "V1")
+SIMPLE_AGENT_MODEL = os.getenv("SIMPLE_AGENT_MODEL", "gpt-5.6-terra")
+SIMPLE_AGENT_VISION_MODEL = os.getenv("SIMPLE_AGENT_VISION_MODEL", "gpt-5.6-terra")
 
 
 def _env_path(name: str, default: Path) -> Path:

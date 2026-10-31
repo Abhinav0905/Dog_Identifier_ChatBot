@@ -1,0 +1,27 @@
+{
+  "change": "Connect the evaluated single agent to the web routes and publish prompts/V1",
+  "prompt_version": "single-agent-v1.0.0-2026-10-28",
+  "prompt_manifest_sha256": "b9c3068408735f6f4daa6b8d68961cc25ac35f7a02d17daf87df85bb2c9e9ace",
+  "prompt_files_changed_from_evaluated_candidate": 0,
+  "offline_checks": {
+    "passed": 80,
+    "failed": 0,
+    "command": "GAIA_ENV_FILE=/dev/null python -B -m unittest test_single_agent_web test_simple_agent_modular test_prompt_http test_prompt_store test_agent_trace test_web_operations test_text_turns test_web_region_release",
+    "scope": "Mocked HTTP integration, conversation isolation, source provenance, photo continuation, local reporting with failed alert delivery, private traces, activation, rollback, legacy compatibility"
+  },
+  "additional_baseline_check": {
+    "suite": "test_twilio_whatsapp",
+    "tests": 7,
+    "failures": 3,
+    "same_failures_on_unchanged_main_tree": true,
+    "reason": "Tests expect public WhatsApp routes that return 404 in the current web-only release"
+  },
+  "historical_latest_answer_acceptance": {
+    "date": "2026-10-30",
+    "scope": "Standalone candidate, not a new web-release quality rerun",
+    "pass": 43,
+    "partial": 6,
+    "fail": 1,
+    "total": 50
+  }
+}
