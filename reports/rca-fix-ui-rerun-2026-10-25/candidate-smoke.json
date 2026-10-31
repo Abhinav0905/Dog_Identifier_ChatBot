@@ -1,0 +1,1322 @@
+{
+  "source_revision": "4537463",
+  "channel": "private_candidate_backend",
+  "conversation_id": "d4b9a6e0-7c40-4d99-96d3-55ba7e19725f",
+  "cases": [
+    {
+      "id": "UI04",
+      "question": "Who can treat an injured street dog in Port Blair?",
+      "response": "The injured dog needs prompt veterinary treatment. Keep people and animals back, avoid handling, and transport only if safe—using a blanket or rigid board to support the whole body and minimise movement. Severe bleeding, breathing trouble, collapse, or major trauma requires emergency care immediately.\n\nI couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.\n\nFor treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup.",
+      "resource_links": [],
+      "answer_format": "text",
+      "elapsed_seconds": 55.12,
+      "metadata": {
+        "resource_links": [],
+        "text_action": "search",
+        "contextual_request": "Find veterinary treatment or animal rescue help for an injured street dog in Port Blair.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "contact_unconfirmed",
+        "request_satisfied": false,
+        "evidence_issue": "no_grounded_provider_claims",
+        "model_history_policy": "include",
+        "requested_institution": "",
+        "requested_location_text": "Port Blair",
+        "case_place": "Port Blair, Port Blair Tehsil, Andaman and Nicobar Islands, India",
+        "phone_only": false,
+        "local_help": true,
+        "output_format": "text",
+        "lookup_scope": "locationiq",
+        "needs_care_guidance": true,
+        "stage_trace": {
+          "id": "41564c8280804a2eaf6f16528d6ba210",
+          "events": [
+            {
+              "component": "model:router",
+              "status": "ok",
+              "latency_ms": 2751,
+              "error_type": ""
+            },
+            {
+              "component": "rag:chroma",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "model:care",
+              "status": "ok",
+              "latency_ms": 4139,
+              "error_type": ""
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 11270,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1017,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 2905,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3340,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3341,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 78,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 167,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3021,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1151,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:http",
+              "status": "error",
+              "latency_ms": 0,
+              "error_type": "HTTP403"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 816,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3011,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3007,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3014,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "model:evidence",
+              "status": "ok",
+              "latency_ms": 5264,
+              "error_type": ""
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:result",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": "NoGroundedProviderClaims"
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 9243,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1521,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3027,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3697,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 4544,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:http",
+              "status": "error",
+              "latency_ms": 0,
+              "error_type": "HTTP403"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 158,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3348,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "model:evidence",
+              "status": "ok",
+              "latency_ms": 4447,
+              "error_type": ""
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:result",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": "NoGroundedProviderClaims"
+            }
+          ]
+        },
+        "validated_facts": [],
+        "latency_ms": 55091
+      }
+    },
+    {
+      "id": "V05",
+      "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Give only the full postal address, including the PIN code if verified.",
+      "response": "Vepery, Chennai",
+      "resource_links": [
+        {
+          "label": "Madras Veterinary College Teaching Hospital: address source",
+          "url": "https://www.tanuvas.ac.in/dir_cli.php",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "answer_format": "address_only",
+      "elapsed_seconds": 14.68,
+      "metadata": {
+        "resource_links": [
+          {
+            "label": "Madras Veterinary College Teaching Hospital: address source",
+            "url": "https://www.tanuvas.ac.in/dir_cli.php"
+          }
+        ],
+        "text_action": "search",
+        "contextual_request": "Find the full verified postal address, including PIN code if verified, of TANUVAS Madras Veterinary College Teaching Hospital. Provide only the address.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "search_answer",
+        "request_satisfied": true,
+        "evidence_issue": "",
+        "model_history_policy": "include",
+        "requested_institution": "TANUVAS Madras Veterinary College Teaching Hospital",
+        "requested_location_text": "",
+        "case_place": "",
+        "phone_only": false,
+        "local_help": false,
+        "output_format": "address_only",
+        "lookup_scope": "institution_lookup",
+        "needs_care_guidance": false,
+        "stage_trace": {
+          "id": "fbfd7c0805704397b8b99c29d0a96d20",
+          "events": [
+            {
+              "component": "model:router",
+              "status": "ok",
+              "latency_ms": 2025,
+              "error_type": ""
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 3634,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 1207,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:http",
+              "status": "error",
+              "latency_ms": 0,
+              "error_type": "HTTP404"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 1518,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1795,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1862,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1577,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1515,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1437,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1530,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1205,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 4608,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1502,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1576,
+              "error_type": ""
+            }
+          ]
+        },
+        "validated_facts": [
+          {
+            "kind": "location",
+            "institution": "madras veterinary college teaching hospital",
+            "value": "vepery chennai"
+          }
+        ],
+        "latency_ms": 14666
+      }
+    },
+    {
+      "id": "UI14",
+      "question": "I mean Rampur in Uttar Pradesh.",
+      "response": "I couldn't confirm the requested institution's address from accessible sources.",
+      "resource_links": [],
+      "answer_format": "address_only",
+      "elapsed_seconds": 27.34,
+      "metadata": {
+        "resource_links": [],
+        "text_action": "search",
+        "contextual_request": "Find the full postal address, including the PIN code if verified, for TANUVAS Madras Veterinary College Teaching Hospital; the user clarifies they mean Rampur in Uttar Pradesh.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "contact_unconfirmed",
+        "request_satisfied": false,
+        "evidence_issue": "requested_address_not_grounded",
+        "model_history_policy": "include",
+        "requested_institution": "TANUVAS Madras Veterinary College Teaching Hospital",
+        "requested_location_text": "Rampur in Uttar Pradesh",
+        "case_place": "Rampur, Rampur, Uttar Pradesh, India",
+        "phone_only": false,
+        "local_help": true,
+        "output_format": "address_only",
+        "lookup_scope": "locationiq",
+        "needs_care_guidance": false,
+        "stage_trace": {
+          "id": "f87df4f6167540e892f07f73836aa153",
+          "events": [
+            {
+              "component": "model:router",
+              "status": "ok",
+              "latency_ms": 1886,
+              "error_type": ""
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 3853,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 384,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 108,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:http",
+              "status": "error",
+              "latency_ms": 0,
+              "error_type": "HTTP403"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 54,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1488,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1527,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1767,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1427,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1162,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:http",
+              "status": "error",
+              "latency_ms": 0,
+              "error_type": "HTTP404"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 1138,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 4445,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1468,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1532,
+              "error_type": ""
+            },
+            {
+              "component": "model:evidence",
+              "status": "ok",
+              "latency_ms": 2062,
+              "error_type": ""
+            },
+            {
+              "component": "evidence:result",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 4183,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1183,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1435,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 336,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 2039,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1545,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 2033,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 4207,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 3591,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:http",
+              "status": "error",
+              "latency_ms": 0,
+              "error_type": "HTTP404"
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 809,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "model:evidence",
+              "status": "ok",
+              "latency_ms": 1404,
+              "error_type": ""
+            },
+            {
+              "component": "evidence:result",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": ""
+            }
+          ]
+        },
+        "validated_facts": [],
+        "latency_ms": 27327
+      }
+    },
+    {
+      "id": "UI18",
+      "question": "An injured community cat is hiding near Andheri East, Mumbai. Where can I get treatment and how should I move her?",
+      "response": "Do not chase the frightened cat or reach under the car. Ask the driver not to move it and keep yourself out of traffic. Call a veterinarian or trained animal handler for help with safe capture. Only if she tolerates handling and you can do it safely, support her body with a towel and place her gently in a secure, ventilated carrier. Keep her face clear and avoid pressure on injuries. A towel does not prevent bites or scratches; stop if she struggles and do not force a capture.\n\nThese institutions are listed in the sources, but clinical treatment access remains unconfirmed:\n\n- AMTM Dana Pani Hospital — CTS 166/167, Ashram, Madh-Marve Road Malad West, Mumbai 400061 — institution listed; clinical treatment access is unconfirmed.\n\nA treatment listing alone does not establish rescue pickup or current availability. Call before travelling to confirm treatment and admission for this animal and the correct emergency location.",
+      "resource_links": [
+        {
+          "label": "AMTM Dana Pani Hospital: source",
+          "url": "https://amtmindia.org/our-work/kolad-hospital",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "answer_format": "text",
+      "elapsed_seconds": 55.87,
+      "metadata": {
+        "resource_links": [
+          {
+            "label": "AMTM Dana Pani Hospital: source",
+            "url": "https://amtmindia.org/our-work/kolad-hospital"
+          }
+        ],
+        "text_action": "search",
+        "contextual_request": "Find treatment options for an injured community cat near Andheri East, Mumbai, and provide safe guidance on how to move her.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "contact_unconfirmed",
+        "request_satisfied": false,
+        "evidence_issue": "requested_contact_or_service_unverified",
+        "model_history_policy": "include",
+        "requested_institution": "",
+        "requested_location_text": "Andheri East, Mumbai",
+        "case_place": "Andheri East, Mumbai, Maharashtra, 400069, India",
+        "phone_only": false,
+        "local_help": true,
+        "output_format": "text",
+        "lookup_scope": "locationiq",
+        "needs_care_guidance": true,
+        "stage_trace": {
+          "id": "c8a62bdc50304993bb484fdc1ea61e3c",
+          "events": [
+            {
+              "component": "model:router",
+              "status": "ok",
+              "latency_ms": 1358,
+              "error_type": ""
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 13131,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 387,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 502,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 129,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 559,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 265,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 342,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 392,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1729,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 957,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 2221,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 237,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 491,
+              "error_type": ""
+            },
+            {
+              "component": "model:evidence",
+              "status": "ok",
+              "latency_ms": 9159,
+              "error_type": ""
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:result",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "model:search",
+              "status": "ok",
+              "latency_ms": 17372,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 476,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 719,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1205,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1830,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 2279,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "unavailable",
+              "latency_ms": 3885,
+              "error_type": "UnreadableSource"
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:queue",
+              "status": "ok",
+              "latency_ms": 0,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1406,
+              "error_type": ""
+            },
+            {
+              "component": "fetch:page",
+              "status": "ok",
+              "latency_ms": 1422,
+              "error_type": ""
+            },
+            {
+              "component": "model:evidence",
+              "status": "ok",
+              "latency_ms": 5257,
+              "error_type": ""
+            },
+            {
+              "component": "evidence:rejection",
+              "status": "empty",
+              "latency_ms": 0,
+              "error_type": "WrongStateOrLocality"
+            },
+            {
+              "component": "evidence:result",
+              "status": "fallback",
+              "latency_ms": 0,
+              "error_type": ""
+            }
+          ]
+        },
+        "validated_facts": [
+          {
+            "kind": "identity",
+            "institution": "amtm dana pani hospital",
+            "value": "amtm dana pani hospital"
+          },
+          {
+            "kind": "location",
+            "institution": "amtm dana pani hospital",
+            "value": "cts 166 167 ashram madh marve road malad west mumbai 400061"
+          }
+        ],
+        "latency_ms": 55860
+      }
+    },
+    {
+      "id": "UI24",
+      "question": "Can you write my sales email for a new mobile phone?",
+      "response": "I can help with animal welfare, community animals and finding animal-care resources in India.",
+      "resource_links": [],
+      "answer_format": "text",
+      "elapsed_seconds": 0.02,
+      "metadata": {
+        "resource_links": [],
+        "text_action": "out_of_scope",
+        "contextual_request": "Can you write my sales email for a new mobile phone?",
+        "routing_source": "scope_contract",
+        "awaiting_clarification": false,
+        "web_search_ran": false,
+        "result_kind": "out_of_scope",
+        "request_satisfied": null,
+        "evidence_issue": "",
+        "model_history_policy": "include",
+        "requested_institution": "",
+        "requested_location_text": "",
+        "case_place": "",
+        "phone_only": false,
+        "local_help": false,
+        "output_format": "text",
+        "lookup_scope": "out_of_scope",
+        "needs_care_guidance": false,
+        "stage_trace": {
+          "id": "e538a37fcfea4f8a94a808b1be6df7c8",
+          "events": []
+        },
+        "validated_facts": [],
+        "latency_ms": 10
+      }
+    }
+  ]
+}

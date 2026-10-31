@@ -1,0 +1,88 @@
+{
+  "base_url": "http://127.0.0.1:8001",
+  "prompts": [
+    {
+      "question": "A street dog is bleeding heavily after being hit by a vehicle. What should I do right now?",
+      "status": 200,
+      "seconds": 1.787,
+      "payload": {
+        "response": "**A dog hit by a vehicle needs emergency veterinary care.**\n\n1. Keep yourself out of traffic. An injured dog may bite from pain or fear, so keep your face and hands away from its mouth.\n2. Arrange an immediate veterinary assessment even if the dog is alert or the visible bleeding stops. Internal bleeding, chest or abdominal injury, fractures, and head injury may be hidden at first.\n3. If a wound is bleeding and you can reach it without being bitten, apply firm, continuous, direct pressure with a clean cloth or gauze. Do not lift the first layer to check. If blood soaks through, add more layers on top.\n4. Do not make the dog walk. Minimise movement of the head, neck, and spine. If the dog must be moved out of danger or transported, support the whole body on a blanket, board, or other flat surface.\n5. Keep the dog quiet and warm. Do not give human medicine. Difficulty breathing, pale gums, weakness, collapse, unresponsiveness, or severe bleeding are life-threatening signs.",
+        "incident_id": null,
+        "triage": null,
+        "similarity": null,
+        "escalation_triggered": false,
+        "in_jurisdiction": null,
+        "location_confirmed_needed": null,
+        "pending_token": null,
+        "resource_links": [],
+        "location_verification": null
+      }
+    },
+    {
+      "question": "He is unconscious. Should I give him water?",
+      "status": 200,
+      "seconds": 4.079,
+      "payload": {
+        "response": "Do not attempt to give water to an unconscious dog. It can cause choking or make the situation worse. Focus on getting immediate veterinary help. Check for breathing—look for chest movement or feel for breath at the nose—and keep the dog warm and still. Contact a vet or emergency service right away.",
+        "incident_id": null,
+        "triage": null,
+        "similarity": null,
+        "escalation_triggered": false,
+        "in_jurisdiction": null,
+        "location_confirmed_needed": null,
+        "pending_token": null,
+        "resource_links": [],
+        "location_verification": null
+      }
+    }
+  ],
+  "artificial_test": true,
+  "conversation_id": "39deb44d-dcfa-484d-b623-3c89df35a843",
+  "history": {
+    "conversation_id": "39deb44d-dcfa-484d-b623-3c89df35a843",
+    "messages": [
+      {
+        "role": "user",
+        "content": "A street dog is bleeding heavily after being hit by a vehicle. What should I do right now?",
+        "created_at": "2026-09-17T16:43:14.586671+00:00",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "**A dog hit by a vehicle needs emergency veterinary care.**\n\n1. Keep yourself out of traffic. An injured dog may bite from pain or fear, so keep your face and hands away from its mouth.\n2. Arrange an immediate veterinary assessment even if the dog is alert or the visible bleeding stops. Internal bleeding, chest or abdominal injury, fractures, and head injury may be hidden at first.\n3. If a wound is bleeding and you can reach it without being bitten, apply firm, continuous, direct pressure with a clean cloth or gauze. Do not lift the first layer to check. If blood soaks through, add more layers on top.\n4. Do not make the dog walk. Minimise movement of the head, neck, and spine. If the dog must be moved out of danger or transported, support the whole body on a blanket, board, or other flat surface.\n5. Keep the dog quiet and warm. Do not give human medicine. Difficulty breathing, pale gums, weakness, collapse, unresponsiveness, or severe bleeding are life-threatening signs.",
+        "created_at": "2026-09-17T16:43:14.589287+00:00",
+        "metadata": {
+          "resource_links": [],
+          "text_action": "answer",
+          "contextual_request": "What should I do right now for a street dog that is bleeding heavily after being hit by a vehicle?",
+          "routing_source": "model",
+          "awaiting_clarification": false,
+          "web_search_ran": false,
+          "result_kind": "care_answer",
+          "model_history_policy": "include"
+        }
+      },
+      {
+        "role": "user",
+        "content": "He is unconscious. Should I give him water?",
+        "created_at": "2026-09-17T16:43:18.652974+00:00",
+        "metadata": {}
+      },
+      {
+        "role": "assistant",
+        "content": "Do not attempt to give water to an unconscious dog. It can cause choking or make the situation worse. Focus on getting immediate veterinary help. Check for breathing—look for chest movement or feel for breath at the nose—and keep the dog warm and still. Contact a vet or emergency service right away.",
+        "created_at": "2026-09-17T16:43:18.664218+00:00",
+        "metadata": {
+          "resource_links": [],
+          "text_action": "answer",
+          "contextual_request": "An unconscious injured dog is on the ground; should I give him water?",
+          "routing_source": "model",
+          "awaiting_clarification": false,
+          "web_search_ran": false,
+          "result_kind": "care_answer",
+          "model_history_policy": "include"
+        }
+      }
+    ]
+  }
+}

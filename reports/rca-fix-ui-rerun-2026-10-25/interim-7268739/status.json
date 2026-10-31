@@ -1,0 +1,7 @@
+{
+  "status": "stopped_at_18_to_fix_exact_institution_ambiguity",
+  "completed": 18,
+  "source_revision": "7268739",
+  "reason": "UI16 requested only a named institution phone but received a state-clarification question.",
+  "evidence_preserved": true
+}

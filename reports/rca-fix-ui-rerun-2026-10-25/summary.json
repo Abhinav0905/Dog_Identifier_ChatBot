@@ -1,0 +1,76 @@
+{
+  "updated_at": "2026-10-27T14:27:06.173053+00:00",
+  "live_source_revision": "547c787",
+  "live_prompt_version": "srini-v2.9-2026-10-25",
+  "repository": "Abhinav0905/Dog_Identifier_ChatBot",
+  "branch": "fix/rca-runtime-contracts",
+  "baseline": {
+    "source": "440951f",
+    "questions": 40,
+    "counts": {
+      "PASS": 19,
+      "PARTIAL": 13,
+      "FAIL": 8
+    }
+  },
+  "full_ui_rerun": {
+    "source": "857bc23",
+    "questions": 40,
+    "counts": {
+      "PARTIAL": 9,
+      "PASS": 30,
+      "FAIL": 1
+    }
+  },
+  "targeted_ui_followup": {
+    "source": "547c787",
+    "questions": 8,
+    "counts": {
+      "PARTIAL": 4,
+      "PASS": 4
+    }
+  },
+  "latest_per_question": {
+    "questions": 40,
+    "counts": {
+      "PASS": 32,
+      "PARTIAL": 8
+    },
+    "mixed_versions": true
+  },
+  "automated_checks": {
+    "deployed_full_run_build": 229,
+    "latest_build": 232,
+    "live_questions": false
+  },
+  "same_chat": {
+    "conversation_id": "95f381f3-cabd-4337-9b8d-bde5786c0652",
+    "full_question_order_matches_backend": true,
+    "followup_question_order_matches_backend": true,
+    "new_chat_clicked": false
+  },
+  "full_run_latency_seconds": {
+    "measured_turns": 39,
+    "median": 27.3,
+    "p95_nearest_rank": 70.3,
+    "max": 72.8
+  },
+  "interim_preserved": {
+    "source": "7268739",
+    "questions": 18,
+    "reason": "Exact-institution lookup incorrectly required city-state clarification; fixed before restarting the full run."
+  },
+  "ui_submissions_this_fix_cycle": 66,
+  "release_decision": "Improved, but not a production-readiness sign-off: incomplete provider lookup and long search latency remain.",
+  "judgment_method": "Assistant review against the saved expectation, visible answer and source-validation metadata; not an independent human or clinical sign-off.",
+  "limitations": [
+    "Only 8 targeted questions were rerun on the latest build; the complete 40-question run used 857bc23. Latest-per-question totals combine those phases.",
+    "These are synthetic questions in one long conversation, not a fresh-session benchmark or independent clinical review.",
+    "PASS means the stated expectation was met; exact-number refusal cases can pass without resolving the lookup.",
+    "Published phone/address/service evidence does not verify current admission, pickup, opening hours, or whether a community animal will be accepted.",
+    "Provider research remains variable; the corrected Panaji handling question still returned a generic provider fallback.",
+    "Automated checks include mocks and controlled concurrency; they are separate from the actual browser UI answers.",
+    "No Google/LocationIQ purchase or model migration was performed. A paid geocoder is not demonstrated to resolve these evidence gaps.",
+    "Older local health and candidate smoke files are historical phase evidence, not current UI outcomes."
+  ]
+}

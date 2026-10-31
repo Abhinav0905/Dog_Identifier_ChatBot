@@ -1,0 +1,23 @@
+{
+  "mode": "Current local backup copied into a temporary database; production database untouched",
+  "migration_runs": 2,
+  "existing_tables_checked": 11,
+  "existing_columns_and_records_preserved": true,
+  "added_columns": {
+    "alerts": [
+      "delivery_status",
+      "delivery_details",
+      "attempted_at",
+      "delivered_at",
+      "delivery_payload",
+      "delivery_attempts",
+      "delivery_retry_at",
+      "delivery_lease_token"
+    ]
+  },
+  "second_run_idempotent": true,
+  "integrity_check": "ok",
+  "foreign_key_violations": 0,
+  "pass": true,
+  "test_note": "Initial strict whole-schema equality check detected the intended additive alert columns. The corrected check verifies preservation of every existing field and row, additive columns, and second-run idempotence."
+}

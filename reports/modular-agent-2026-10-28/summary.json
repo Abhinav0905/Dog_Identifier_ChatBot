@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-28",
+  "latest_full_run": "run2",
+  "core50": {
+    "PASS": 47,
+    "PARTIAL": 2,
+    "FAIL": 1
+  },
+  "full_pass_percent": 94,
+  "target": "45 fully passing answers out of 50",
+  "target_met": true,
+  "groups": {
+    "original40": {
+      "PASS": 38,
+      "PARTIAL": 2,
+      "FAIL": 0
+    },
+    "new10": {
+      "PASS": 9,
+      "PARTIAL": 0,
+      "FAIL": 1
+    },
+    "scope_checks": {
+      "PASS": 4,
+      "PARTIAL": 0,
+      "FAIL": 0
+    },
+    "photo_checks": {
+      "PASS": 4,
+      "PARTIAL": 0,
+      "FAIL": 0
+    }
+  },
+  "all58": {
+    "PASS": 55,
+    "PARTIAL": 2,
+    "FAIL": 1
+  },
+  "runtime": {
+    "api_completed": 58,
+    "api_errors": 0,
+    "api_refusal_items": 0,
+    "main_model_calls": 61,
+    "vision_model_calls": 3,
+    "search_tool_calls": 45,
+    "median_seconds": 6.03,
+    "max_seconds": 14.757
+  },
+  "experiment_commit": "3b1d59e",
+  "main_checkout_commits": [
+    "5d8c6e5",
+    "192706e"
+  ],
+  "production_deployed": false,
+  "ui_rerun": false,
+  "remaining_cases": [
+    {
+      "id": "UI02",
+      "group": "original40",
+      "verdict": "PARTIAL",
+      "reason": "PARTIAL: Useful Kochi facilities and safe handling, but the phone is not supported by the cited contact page. A retrieved university directory does list it for Edappally, yet repeats it for Mattancherry; another directory assigns it to a pharmacy. The conflicting contact needs qualification or omission, not a confident clinical phone claim."
+    },
+    {
+      "id": "V10",
+      "group": "original40",
+      "verdict": "PARTIAL",
+      "reason": "PARTIAL: Correct trauma advice and officially published Ranchi veterinary hospital phone, but the address adds the Near Veterinary Hospital / Siromtoli wording from a neighbouring human hospital record. Old HB Road is supported separately; the combined address is not properly bound to the named facility."
+    },
+    {
+      "id": "N05",
+      "group": "new10",
+      "verdict": "FAIL",
+      "reason": "FAIL: Silently selects Maharashtra for ambiguous Aurangabad. The trace already inserts Maharashtra in the first search query before the user confirms the state. Safe first aid does not repair this location error."
+    }
+  ],
+  "limitations": [
+    "One full live API run on a fixed previously-used test set, not a production UI test or a new unseen benchmark.",
+    "Pass includes correct policy redirects, clarification requests, and honest inability to verify where the saved rubric allows them.",
+    "All answers manually reviewed; external sources checked selectively. No provider phone calls or independent veterinarian review.",
+    "No best-of-runs aggregation; raw outputs and prompts are preserved."
+  ]
+}

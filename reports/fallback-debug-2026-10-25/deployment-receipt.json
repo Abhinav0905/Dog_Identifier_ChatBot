@@ -1,0 +1,32 @@
+{
+  "source_revision": "440951f",
+  "prompt_version": "srini-v2.4-2026-10-25",
+  "prompt_sha256": "9b4fbd9810063b3d3560b2007dca7ff1829c866315d7df2028cd68e36f1f4d48",
+  "prompt_release": "/home/ec2-user/ask-dorjee-prompts/current.releases/srini-v2.4-2026-10-25-9b4fbd981006",
+  "previous_prompt_release": "/home/ec2-user/ask-dorjee-prompts/current.releases/srini-v2.3-2026-10-25-4708f332b9d8",
+  "backup_directory": "/home/ec2-user/backups/fallback-fix-440951f-20261025T214310Z",
+  "previous_source_release": "/home/ec2-user/gaia-releases/f86ead9",
+  "tracked_source_hashes_verified": 6,
+  "data_before": {
+    "counts": {
+      "incidents": 23,
+      "alerts": 5,
+      "rag_chunks": 156
+    },
+    "integrity": "ok",
+    "available_images": 23,
+    "image_references": 23
+  },
+  "data_after": {
+    "counts": {
+      "incidents": 23,
+      "alerts": 5,
+      "rag_chunks": 156
+    },
+    "integrity": "ok",
+    "available_images": 23,
+    "image_references": 23
+  },
+  "database_rewound": false,
+  "state": "public_ui_address_pass_patna_pass_port_blair_fail"
+}

@@ -1,0 +1,26 @@
+{
+  "prompt_version": "srini-v2-2026-10-25",
+  "input_files_preserved_byte_for_byte": 14,
+  "runtime_text_files": 27,
+  "historical_source_preserved_as_comments": true,
+  "historical_source_archive": "prompts/archive/prompts_2026-10-05.py.txt",
+  "test_command": ".venv/bin/python -m unittest test_prompt_store test_prompt_http test_model_directed_search test_search_evidence test_veterinary_safety test_text_turns_review test_deploy_release test_local_validation_runner",
+  "result": {
+    "tests_run": 163,
+    "failures": 0,
+    "errors": 0
+  },
+  "coverage": [
+    "Full-release validation, missing files, hashes and supported placeholders",
+    "Shared-policy consistency and single-pass rendering",
+    "Language adaptation and safe JSON context insertion",
+    "Atomic activation, failed activation and rollback",
+    "In-flight HTTP request retains release; subsequent request sees next release",
+    "No valid package returns 503 before calling a model",
+    "Docker optional read-only prompt-release mount",
+    "Provider/evidence regressions and isolated validation runner"
+  ],
+  "full_historical_suite_is_green": false,
+  "baseline_comparison": "baseline-comparison.json",
+  "deployment_tested_on_ec2": false
+}

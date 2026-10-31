@@ -1,0 +1,34 @@
+{
+  "source_revision": "6fb696c",
+  "channel": "backend_candidate",
+  "one_conversation": true,
+  "cases": [
+    {
+      "case_id": "PORT_BLAIR",
+      "question": "Who can treat an injured street dog in Port Blair?",
+      "response": "I couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.\n\nFor treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup.",
+      "resource_links": [],
+      "http_status": 200,
+      "elapsed_seconds": 39.36,
+      "prompt_version": "srini-v2.6-2026-10-25",
+      "metadata": {
+        "resource_links": [],
+        "text_action": "search",
+        "contextual_request": "Find local veterinary or animal rescue help to treat an injured street dog in Port Blair.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "contact_unconfirmed",
+        "request_satisfied": false,
+        "evidence_issue": "no_provider_bound_to_requested_locality: source must bind the facility name to Port Blair",
+        "model_history_policy": "include",
+        "requested_institution": "",
+        "requested_location_text": "Port Blair",
+        "case_place": "Port Blair, Port Blair Tehsil, Andaman and Nicobar Islands, India",
+        "phone_only": false,
+        "local_help": true,
+        "latency_ms": 39337
+      }
+    }
+  ]
+}

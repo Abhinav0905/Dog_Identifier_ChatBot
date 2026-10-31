@@ -146,19 +146,19 @@
             <div class="stats-grid" id="statsGrid">
                 <div class="stat-card">
                     <div class="stat-value" id="totalIncidents">-</div>
-                    <div class="stat-label">Total Incidents</div>
+                    <div class="stat-label">Recent Incidents (up to 200)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="highSeverity">-</div>
-                    <div class="stat-label">High/Critical</div>
+                    <div class="stat-label">Recent High/Critical</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="totalAlerts">-</div>
-                    <div class="stat-label">Alerts Sent</div>
+                    <div class="stat-label">Delivered Alerts (recent 200)</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-value" id="openCases">-</div>
-                    <div class="stat-label">Open Cases</div>
+                    <div class="stat-label">Recent Open Cases</div>
                 </div>
             </div>
         </div>
@@ -172,7 +172,8 @@
                 <button class="example-btn" onclick="setQuery('Show latest 10 incidents')">Latest incidents</button>
             </div>
             <div class="query-form">
-                <input type="password" id="adminPassword" placeholder="Admin password">
+                <input type="password" id="adminPassword" placeholder="Admin password" autocomplete="current-password" onchange="loadDashboard()" onkeydown="if(event.key==='Enter')loadDashboard()">
+                <button class="btn btn-primary" onclick="loadDashboard()">Load dashboard</button>
                 <input type="text" id="nlQuery" placeholder='e.g., "Show high-severity incidents in last 7 days by area"' onkeydown="if(event.key==='Enter')runQuery()">
                 <button class="btn btn-primary" onclick="runQuery()">Query</button>
             </div>
@@ -184,13 +185,20 @@
         </div>
 
         <div class="admin-section">
+            <h2>Service and notification status</h2>
+            <p id="operationStatus">Load the dashboard to check service status.</p>
+            <div class="result-box" id="deliveryList"></div>
+        </div>
+
+        <div class="admin-section">
             <h2>Recent Incidents</h2>
-            <div class="result-box" id="incidentsList">Loading...</div>
+            <div class="result-box" id="incidentsList">Enter the admin password and load the dashboard.</div>
         </div>
     </div>
 
     <script>
         const adminPw = () => document.getElementById("adminPassword").value;
+        const adminHeaders = () => ({ "X-Admin-Password": adminPw() });
 
         function setQuery(q) {
             document.getElementById("nlQuery").value = q;
@@ -210,19 +218,20 @@
             try {
                 const res = await fetch("/v1/admin/query", {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", ...adminHeaders() },
                     body: JSON.stringify({ query, admin_password: adminPw() }),
                 });
                 if (res.status === 403) {
                     document.getElementById("resultSummary").textContent = "Access denied. Check your admin password.";
                     return;
                 }
+                if (!res.ok) throw new Error("The query could not be completed.");
                 const data = await res.json();
                 document.getElementById("resultSummary").textContent = data.summary || "Query complete.";
                 document.getElementById("sqlDisplay").textContent = data.sql_generated || "N/A";
 
                 if (data.results && data.results.length > 0) {
-                    document.getElementById("resultTable").innerHTML = buildTable(data.results);
+                    document.getElementById("resultTable").replaceChildren(buildTable(data.results));
                 } else {
                     document.getElementById("resultTable").textContent = "No results.";
                 }
@@ -232,29 +241,47 @@
         }
 
         function buildTable(rows) {
-            if (!rows.length) return "No data";
+            if (!rows.length) return document.createTextNode("No data");
             const cols = Object.keys(rows[0]);
-            let html = '<table class="data-table"><thead><tr>';
-            cols.forEach(c => { html += "<th>" + c + "</th>"; });
-            html += "</tr></thead><tbody>";
+            const table = document.createElement("table");
+            table.className = "data-table";
+            const head = table.createTHead().insertRow();
+            cols.forEach(c => {
+                const cell = document.createElement("th");
+                cell.textContent = c;
+                head.appendChild(cell);
+            });
+            const body = table.createTBody();
             rows.forEach(row => {
-                html += "<tr>";
+                const tableRow = body.insertRow();
                 cols.forEach(c => {
                     let val = row[c];
                     if (val === null || val === undefined) val = "-";
                     if (typeof val === "string" && val.length > 60) val = val.substring(0, 60) + "...";
-                    html += "<td>" + val + "</td>";
+                    tableRow.insertCell().textContent = String(val);
                 });
-                html += "</tr>";
             });
-            html += "</tbody></table>";
-            return html;
+            return table;
         }
 
         async function loadDashboard() {
+            for (const id of ["totalIncidents", "highSeverity", "openCases", "totalAlerts"]) {
+                document.getElementById(id).textContent = "-";
+            }
+            document.getElementById("operationStatus").textContent = "Load the dashboard to check service status.";
+            document.getElementById("deliveryList").replaceChildren();
+            if (!adminPw()) {
+                document.getElementById("incidentsList").textContent = "Enter the admin password and load the dashboard.";
+                return;
+            }
+            document.getElementById("incidentsList").textContent = "Loading...";
             try {
-                const res = await fetch("/v1/admin/incidents?limit=200&admin_password=" + encodeURIComponent(adminPw()));
-                if (!res.ok) return;
+                const res = await fetch("/v1/admin/incidents?limit=200", { headers: adminHeaders() });
+                if (!res.ok) {
+                    document.getElementById("incidentsList").textContent = res.status === 403
+                        ? "Access denied. Check your admin password." : "Could not load the dashboard.";
+                    return;
+                }
                 const data = await res.json();
                 const incidents = data.incidents || [];
 
@@ -269,7 +296,7 @@
                 // Load recent incidents table
                 const recent = incidents.slice(0, 20);
                 if (recent.length) {
-                    document.getElementById("incidentsList").innerHTML = buildTable(
+                    document.getElementById("incidentsList").replaceChildren(buildTable(
                         recent.map(i => ({
                             ID: (i.incident_id || "").substring(0, 8) + "...",
                             Created: (i.created_at || "").substring(0, 19),
@@ -278,22 +305,71 @@
                             Status: i.status || "-",
                             Summary: (i.triage_summary || "-").substring(0, 80),
                         }))
-                    );
+                    ));
                 } else {
                     document.getElementById("incidentsList").textContent = "No incidents yet.";
                 }
             } catch (e) {
-                console.error("Dashboard load error:", e);
+                document.getElementById("incidentsList").textContent = "Could not load the dashboard.";
+                return;
             }
 
             try {
-                const res = await fetch("/v1/admin/alerts?limit=200&admin_password=" + encodeURIComponent(adminPw()));
+                const res = await fetch("/v1/admin/alerts?limit=200", { headers: adminHeaders() });
                 if (!res.ok) return;
                 const data = await res.json();
-                document.getElementById("totalAlerts").textContent = (data.alerts || []).length;
+                renderDeliveries(data.alerts || []);
+                document.getElementById("totalAlerts").textContent = (data.alerts || []).filter(
+                    alert => alert.delivery_status === "delivered"
+                ).length;
             } catch (e) {
                 document.getElementById("totalAlerts").textContent = "?";
             }
+        }
+
+        function renderDeliveries(alerts) {
+            const target = document.getElementById("deliveryList");
+            target.replaceChildren();
+            for (const alert of alerts.slice(0, 20)) {
+                const row = document.createElement("p");
+                row.textContent = "Incident " + String(alert.incident_id || "").slice(0, 8) +
+                    " · delivery: " + (alert.delivery_status || "unknown") +
+                    " · attempts: " + (alert.delivery_attempts || 0) +
+                    " · acknowledged: " + (alert.ack_status === "acknowledged" ? "yes" : "no") + " ";
+                if (alert.delivery_status === "delivered" && alert.ack_status !== "acknowledged") {
+                    const button = document.createElement("button");
+                    button.className = "example-btn";
+                    button.textContent = "Acknowledge receipt";
+                    button.addEventListener("click", async () => {
+                        button.disabled = true;
+                        try {
+                            const result = await fetch("/v1/admin/alerts/" + encodeURIComponent(alert.alert_id) + "/acknowledge", {
+                                method: "POST", headers: adminHeaders(),
+                            });
+                            if (!result.ok) throw new Error("Acknowledgement failed");
+                            row.textContent = "Receipt acknowledged. This does not confirm rescue dispatch.";
+                        } catch (error) {
+                            button.disabled = false;
+                            document.getElementById("operationStatus").textContent = "Could not acknowledge receipt. Reload and check your access.";
+                        }
+                    });
+                    row.appendChild(button);
+                }
+                target.appendChild(row);
+            }
+            if (!alerts.length) target.textContent = "No notifications recorded.";
+            fetch("/v1/admin/operations", { headers: adminHeaders() })
+                .then(result => { if (!result.ok) throw new Error("Status unavailable"); return result.json(); })
+                .then(data => {
+                    const ready = data.readiness || {}, operations = data.operations || {};
+                    document.getElementById("operationStatus").textContent =
+                        "Service: " + (ready.status || "unknown") + " · Models: " + (ready.models || "unknown") +
+                        " · Knowledge: " + ((ready.knowledge || {}).status || "unknown") +
+                        " · Notification channel: " + (ready.alert_delivery_configured ? "configured" : "not configured") +
+                        " · Notifications needing attention: " + (operations.alerts_needing_operator_attention || 0) +
+                        " · Delivered, awaiting acknowledgement: " + (operations.delivered_unacknowledged || 0);
+                })
+                .catch(() => { document.getElementById("operationStatus").textContent = "Service status could not be loaded."; });
         }
 
         loadDashboard();

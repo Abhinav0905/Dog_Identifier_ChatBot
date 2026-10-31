@@ -1,0 +1,341 @@
+{
+  "id": "H05",
+  "city": "Gwalior",
+  "question": "This is a new case in Gwalior, Madhya Pradesh. A puppy was hit by a scooter near Morar and cannot stand. I need safe first steps and an animal hospital, not a human hospital.",
+  "expected": "Trauma and traffic safety first, keep puppy still with supported transport, no forced food/water or human medicine; real Gwalior animal-treatment facility with supported address/contact.",
+  "status": "completed",
+  "answer": "A puppy who cannot stand after being hit may have injuries to the spine, pelvis, legs, chest, or internal organs. **Keep the puppy still and arrange veterinary care now.**\n\n- Move the puppy only if needed to get out of traffic. Slide a flat, firm support—such as a board, thick cardboard, or a folded blanket—under the whole body, keeping the back as straight as possible. Lift with help if available.  \n- Place the puppy in a box or carrier padded with towels so they cannot roll around during transport. Keep them warm, quiet and away from crowds.  \n- Do **not** try to straighten the legs, massage the body, give pain medicines, or force food/water. If there is external bleeding and it is safe to handle, hold a clean cloth gently and continuously against it.\n\n**Animal treatment facility:**  \n**Paw Cure Pet Clinic and Shop**  \nB-56, Adityapuram 1, Bhind Road, in front of DD Nagar Gate, Gwalior, Madhya Pradesh **474005**  \n**Published phone:** **+91 70498 58556**\n\nThe clinic identifies itself as an animal hospital and lists dog treatment, surgery and emergency care. Call while leaving, explain that it is a scooter-hit puppy who cannot stand, and ask them to prepare to receive the puppy. ([pawcure-pet-clinic.grexa.site](https://pawcure-pet-clinic.grexa.site/contact?utm_source=openai))",
+  "raw_answer": "A puppy who cannot stand after being hit may have injuries to the spine, pelvis, legs, chest, or internal organs. **Keep the puppy still and arrange veterinary care now.**\n\n- Move the puppy only if needed to get out of traffic. Slide a flat, firm support—such as a board, thick cardboard, or a folded blanket—under the whole body, keeping the back as straight as possible. Lift with help if available.  \n- Place the puppy in a box or carrier padded with towels so they cannot roll around during transport. Keep them warm, quiet and away from crowds.  \n- Do **not** try to straighten the legs, massage the body, give pain medicines, or force food/water. If there is external bleeding and it is safe to handle, hold a clean cloth gently and continuously against it.\n\n**Animal treatment facility:**  \n**Paw Cure Pet Clinic and Shop**  \nB-56, Adityapuram 1, Bhind Road, in front of DD Nagar Gate, Gwalior, Madhya Pradesh **474005**  \n**Published phone:** **+91 70498 58556**\n\nThe clinic identifies itself as an animal hospital and lists dog treatment, surgery and emergency care. Call while leaving, explain that it is a scooter-hit puppy who cannot stand, and ask them to prepare to receive the puppy. ([pawcure-pet-clinic.grexa.site](https://pawcure-pet-clinic.grexa.site/contact?utm_source=openai))",
+  "citations": [
+    {
+      "url": "https://pawcure-pet-clinic.grexa.site/contact?utm_source=openai",
+      "title": "Contact | Pawcure Pet Clinic and Shop gwalior",
+      "start_index": 1199,
+      "end_index": 1297
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T18:23:42.843188+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "This is a new case in Gwalior, Madhya Pradesh. A puppy was hit by a scooter near Morar and cannot stand. I need safe first steps and an animal hospital, not a human hospital.",
+      "history": [
+        {
+          "role": "user",
+          "content": "An injured community dog is near Nadakkavu, Kozhikode, Kerala. I can arrange transport. Give a real treatment facility and its address or published phone."
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if it is safe to do so, and minimise handling; for active external bleeding, hold a clean cloth with gentle, continuous pressure.\n\n**ARUMA Multispeciality Pet Hospital**  \nNear Malikkadav Bridge, Moorikkara Road, Malikkadav, Kozhikode, Kerala **673611**  \n**Phone:** 06282 693066  \n\nIt is listed as a small-animal veterinary hospital with emergency/medical and surgical services. Call while arranging transport to confirm that they can receive this injured community dog now. ([in.linkedin.com](https://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai))\nhttps://in.linkedin.com/company/aruma-pet-hospital?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "Give only the published phone number for the first treatment facility you just listed. If you cannot verify its number, say that briefly; do not switch providers."
+        },
+        {
+          "role": "assistant",
+          "content": "+91 62826 93066\n"
+        },
+        {
+          "role": "user",
+          "content": "Different animal: an injured community cat is hiding inside a drain near Swaraj Round, Thrissur, Kerala. How can I move her safely, and where can she receive treatment?"
+        },
+        {
+          "role": "assistant",
+          "content": "This is a difficult situation—please don’t reach into the drain or try to pull her out by hand. A frightened injured cat may bite or scratch from panic.\n\n1. **Keep people, dogs and traffic away** and reduce noise around the drain.  \n2. Place an **open, secure carrier or sturdy cardboard box** at the drain exit, lined with a towel. Put strongly smelling food such as fish or wet cat food at the back. Step away and give her quiet time to come out voluntarily.  \n3. If the drain has a safe, accessible opening and she does not come out, use a **large rigid board or cardboard** only to gently guide her toward the carrier—do not poke her, chase her deeper, or reach into a narrow drain.  \n4. Once she enters, close the carrier/box securely, keep it covered loosely with a towel, and transport her quietly. If she is struggling or inaccessible, stop rather than grabbing her; a trained rescuer or municipal/public-safety help may be needed to access the drain safely.\n\n**Treatment facility:**  \n**University Veterinary Hospital, Kokkalai, Thrissur – 680021**  \n**Phone:** 0487 2423415  \n\nIt is a Kerala Veterinary and Animal Sciences University veterinary hospital; the university lists small-animal clinical/surgical services at its Thrissur hospitals. Call first and say that the cat is injured and presently hiding in a drain, to confirm they can receive her when recovered. ([kvasu.ac.in](https://www.kvasu.ac.in/public-information-officers?utm_source=openai))\nhttps://www.kvasu.ac.in/public-information-officers?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "A community dog has a deep cut near Wright Town, Jabalpur, Madhya Pradesh. What should I do first, and where can I take it?"
+        },
+        {
+          "role": "assistant",
+          "content": "A deep cut needs veterinary treatment promptly. **First**, if it is safe to approach, keep the dog quiet and away from traffic, then press a clean cloth or gauze firmly but gently on the wound continuously during transport. Do not apply turmeric, oil, ash, or antiseptic powders, and do not try to close the cut yourself. Use a blanket or large box as a stretcher if the dog cannot walk; avoid handling near its mouth because pain can make even a gentle dog react.\n\n**Pets N Vets (Veterinary Polyclinic)**  \n1712, 3rd Road, near Samadhan Hospital, Wright Town, Jabalpur, Madhya Pradesh **482002**  \n**Published phone:** +91 95755 45555  \n\nThe clinic’s published profile describes veterinary surgery and lists daily consultation hours; call before leaving to confirm they can receive an injured community dog immediately. ([practo.com](https://www.practo.com/jabalpur/clinic/pets-n-vets-jabalpur-wright-town/about?utm_source=openai))\nhttps://www.practo.com/jabalpur/clinic/pets-n-vets-jabalpur-wright-town/about?utm_source=openai"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T18:23:42.843339+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T18:23:55.789909+00:00",
+      "elapsed_seconds": 12.947,
+      "step": 0,
+      "seconds": 12.946,
+      "response": {
+        "id": "resp_0916d280d896a5b8016ae23daeeb6887d297cd6445267ebe12",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 23159,
+          "input_tokens_details": {
+            "cached_tokens": 8985,
+            "cache_write_tokens": 297
+          },
+          "output_tokens": 609,
+          "output_tokens_details": {
+            "reasoning_tokens": 308
+          },
+          "total_tokens": 23768
+        },
+        "output": [
+          {
+            "id": "ws_0916d280d896a5b8016ae23db0547487d280e2d9f9f646baec",
+            "action": {
+              "query": "Gwalior Morar veterinary hospital animal treatment phone address",
+              "type": "search",
+              "queries": [
+                "Gwalior Morar veterinary hospital animal treatment phone address",
+                "site:mp.gov.in Gwalior veterinary hospital Morar animal hospital",
+                "Gwalior veterinary polyclinic animal hospital Morar address phone"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Gwalior/Veterinary-Hospitals-in-Morar/nct-10519292"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.echs.gov.in/regional.html./"
+                },
+                {
+                  "type": "url",
+                  "url": "https://defencestay.com/services/echs-polyclinic-gwalior"
+                },
+                {
+                  "type": "url",
+                  "url": "https://gwaliorpulse.com/veterinary"
+                },
+                {
+                  "type": "url",
+                  "url": "https://sahuhospital.com/contact/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://doglover.in/dir/vet/people-for-animals-gwalior/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://pawcure-pet-clinic.grexa.site/contact"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Gwalior/Pet-Clinics-in-Morar/nct-10616595"
+                },
+                {
+                  "type": "url",
+                  "url": "https://bdir.in/p/best/in/veterinary-hospitals-in-gwalior-mp/ODAyMDg%3D"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.lybrate.com/gwalior/hospitals/veterinary-hospitals/morar-gwalior"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.latrexa.com/hospital/echs-polyclinic-gwalior"
+                },
+                {
+                  "type": "url",
+                  "url": "https://akhandapp.in/place/dr-r-k-mawai-vet-clinic-surgery-centre-236153/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ayushmanbharat.mp.gov.in/uploads/media/Final_letter_2020.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://rules.nivabupa.com/static_doc/unlisted/Excluded_List_Revised_ReeoEoW.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.mppcb.mp.gov.in/proc/BMW/BMW-Finale-Report-2022.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://kvbeu.co.in/Documents/NEW%20MEDICAL%20INS.%20SCHEME-LIST%20OF%20HOSPITALS.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.magmainsurance.com/documents/d/magmainsurance/smart-network"
+                },
+                {
+                  "type": "url",
+                  "url": "https://dst.gov.in/sites/default/files/Directory%20of%20RD%20Ins%202025.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/gwalior/comments/1wmhlt1/urgent_injured_cow_w_lsd_need_gaushala_animal/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Gwalior"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/gwalior/comments/1qqd9c2/where_can_i_get_pet_medicines/"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "ws_0916d280d896a5b8016ae23db5361487d28942565a92149d0a",
+            "action": {
+              "query": "site:mp.gov.in \"Veterinary Hospital\" \"Gwalior\" animal",
+              "type": "search",
+              "queries": [
+                "site:mp.gov.in \"Veterinary Hospital\" \"Gwalior\" animal",
+                "site:mp.gov.in \"पशु चिकित्सालय\" \"ग्वालियर\" मोरार",
+                "Paw Cure Pet Clinic Gwalior official emergency trauma x ray"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://pawcure-pet-clinic.grexa.site/contact"
+                },
+                {
+                  "type": "url",
+                  "url": "https://pawcure-pet-clinic.grexa.site/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://bdir.in/p/best/in/veterinary-hospitals-in-gwalior-mp/ODAyMDE%3D"
+                },
+                {
+                  "type": "url",
+                  "url": "https://bdir.in/p/best/in/veterinary-hospitals-in-gwalior-mp/ODAyMTE%3D"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bdir.in/p/best/in/veterinary-hospitals-in-gwalior-mp/MTAwMDQ%3D"
+                },
+                {
+                  "type": "url",
+                  "url": "https://pawcure-pet-clinic.grexa.site/about"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bdir.in/p/best/in/veterinary-hospitals-in-gwalior-mp/MTAwMDU%3D"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bharatibiz.com/en/vyas-animal-care-and-cure-pet-hospital-094257-73748"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.prayaashospitalgwalior.com/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.grotal.com/Gwalior/Animal-Cure-and-Care-C137/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://bdir.in/p/best/in/veterinary-hospitals-in-gwalior-mp/ODAxOTU%3D"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Gwalior/Pawcure-Pet-Clinic-Reliance-Petrol-Pump-Road-Aditya-Puram/9999PX751-X751-251205211233-I5G6_BZDET"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.mppcb.mp.gov.in/proc/BMW/BMW-Finale-Report-2022.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://iiitd.ac.in/sites/default/files/docs/about/2024/grouphealthinsurancerenewaljune2024june2025/list%20of%20blacklisted%20hospitals.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://mediassisttpa.in/assets/excluded-hospitals/ICICI-excluded-list.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://cewacor.nic.in/Docs/Reliance_Empaneled_Hospital_List.pdf?GIv9E7p4M4=t2Bem"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.magmainsurance.com/documents/5553002/0/List%20of%20Non-network%20hospital.pdf/df6ed795-a41e-5816-dd91-637504cb72bc"
+                },
+                {
+                  "type": "url",
+                  "url": "https://pawcure-pet-clinic.grexa.site/contact?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_0916d280d896a5b8016ae23db85df487d2b43a78b9b1eecce6",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 1297,
+                    "start_index": 1199,
+                    "title": "Contact | Pawcure Pet Clinic and Shop gwalior",
+                    "type": "url_citation",
+                    "url": "https://pawcure-pet-clinic.grexa.site/contact?utm_source=openai"
+                  }
+                ],
+                "text": "A puppy who cannot stand after being hit may have injuries to the spine, pelvis, legs, chest, or internal organs. **Keep the puppy still and arrange veterinary care now.**\n\n- Move the puppy only if needed to get out of traffic. Slide a flat, firm support—such as a board, thick cardboard, or a folded blanket—under the whole body, keeping the back as straight as possible. Lift with help if available.  \n- Place the puppy in a box or carrier padded with towels so they cannot roll around during transport. Keep them warm, quiet and away from crowds.  \n- Do **not** try to straighten the legs, massage the body, give pain medicines, or force food/water. If there is external bleeding and it is safe to handle, hold a clean cloth gently and continuously against it.\n\n**Animal treatment facility:**  \n**Paw Cure Pet Clinic and Shop**  \nB-56, Adityapuram 1, Bhind Road, in front of DD Nagar Gate, Gwalior, Madhya Pradesh **474005**  \n**Published phone:** **+91 70498 58556**\n\nThe clinic identifies itself as an animal hospital and lists dog treatment, surgery and emergency care. Call while leaving, explain that it is a scooter-hit puppy who cannot stand, and ask them to prepare to receive the puppy. ([pawcure-pet-clinic.grexa.site](https://pawcure-pet-clinic.grexa.site/contact?utm_source=openai))",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T18:23:55.790179+00:00",
+      "elapsed_seconds": 12.947,
+      "status": "completed",
+      "error": null,
+      "answer": "A puppy who cannot stand after being hit may have injuries to the spine, pelvis, legs, chest, or internal organs. **Keep the puppy still and arrange veterinary care now.**\n\n- Move the puppy only if needed to get out of traffic. Slide a flat, firm support—such as a board, thick cardboard, or a folded blanket—under the whole body, keeping the back as straight as possible. Lift with help if available.  \n- Place the puppy in a box or carrier padded with towels so they cannot roll around during transport. Keep them warm, quiet and away from crowds.  \n- Do **not** try to straighten the legs, massage the body, give pain medicines, or force food/water. If there is external bleeding and it is safe to handle, hold a clean cloth gently and continuously against it.\n\n**Animal treatment facility:**  \n**Paw Cure Pet Clinic and Shop**  \nB-56, Adityapuram 1, Bhind Road, in front of DD Nagar Gate, Gwalior, Madhya Pradesh **474005**  \n**Published phone:** **+91 70498 58556**\n\nThe clinic identifies itself as an animal hospital and lists dog treatment, surgery and emergency care. Call while leaving, explain that it is a scooter-hit puppy who cannot stand, and ask them to prepare to receive the puppy. ([pawcure-pet-clinic.grexa.site](https://pawcure-pet-clinic.grexa.site/contact?utm_source=openai))",
+      "citations": [
+        {
+          "url": "https://pawcure-pet-clinic.grexa.site/contact?utm_source=openai",
+          "title": "Contact | Pawcure Pet Clinic and Shop gwalior",
+          "start_index": 1199,
+          "end_index": 1297
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 12.947,
+  "history_messages": 8,
+  "completed_at": "2026-10-28T18:23:55.790263+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "coastal_and_central"
+}

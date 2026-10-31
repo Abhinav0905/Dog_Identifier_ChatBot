@@ -3,38 +3,27 @@ Admin natural-language analytics service.
 Converts NL queries to safe read-only SQL using OpenAI, with strict allowlists.
 """
 
+from services import agent_trace
+
 import json
 import logging
 from openai import OpenAI
 from config import OPENAI_API_KEY, OPENAI_ADMIN_MODEL
 import database as db
+from services.prompts import PromptCatalog
 
 logger = logging.getLogger("dharmasala.admin")
 
 client = OpenAI(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
-NL_TO_SQL_SYSTEM = """You are a SQL query generator for the Dharamsala Animal Rescue incident database.
-You convert natural language questions into safe, read-only SQLite SELECT queries.
+# Previous import-time snapshot retained for reference:
+# NL_TO_SQL_SYSTEM = PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM
 
-STRICT RULES:
-- ONLY generate SELECT statements. Never INSERT, UPDATE, DELETE, DROP, ALTER, or any DDL/DML.
-- ONLY query these tables and columns:
 
-  incidents: incident_id, created_at, updated_at, reporter_session_id, triage_severity,
-             triage_severity_score, triage_confidence, triage_summary, distress_flags,
-             lat, lng, location_source, similar_incident_id, similarity_score, status
-
-  alerts: alert_id, incident_id, alert_channel, trigger_reason, sent_at, ack_status, ack_by, ack_at
-
-- Use SQLite date functions (date(), datetime(), julianday()) for time-based queries.
-- Limit results to 100 rows maximum.
-- Use appropriate GROUP BY, COUNT, AVG aggregations for summary queries.
-
-Respond with ONLY a valid JSON object:
-{
-    "sql": "SELECT ...",
-    "explanation": "Brief explanation of what this query does"
-}"""
+def __getattr__(name):
+    if name == "NL_TO_SQL_SYSTEM":
+        return PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM
+    raise AttributeError(name)
 
 NL_TO_SQL_SCHEMA = {
     "type": "object",
@@ -47,7 +36,7 @@ NL_TO_SQL_SCHEMA = {
 }
 
 # Allowed table names for validation
-ALLOWED_TABLES = {"incidents", "alerts", "triage_events"}
+ALLOWED_TABLES = db.ADMIN_ANALYTICS_TABLES
 
 
 def process_nl_query(nl_query: str, admin_user: str = "admin") -> dict:
@@ -107,10 +96,10 @@ def _nl_to_sql(nl_query: str) -> tuple[str, str]:
         return _fallback_nl_to_sql(nl_query)
 
     try:
-        response = client.responses.create(
+        response = agent_trace.model_call('admin', client.responses.create,
             model=OPENAI_ADMIN_MODEL,
             input=[
-                {"role": "system", "content": NL_TO_SQL_SYSTEM},
+                {"role": "system", "content": PromptCatalog.ADMIN_NL_TO_SQL_SYSTEM},
                 {"role": "user", "content": nl_query},
             ],
             text={
@@ -121,6 +110,7 @@ def _nl_to_sql(nl_query: str) -> tuple[str, str]:
                     "strict": True,
                 }
             },
+            **({"reasoning": {"effort": "none"}} if OPENAI_ADMIN_MODEL.startswith("gpt-5.6") else {}),
         )
         text = (response.output_text or "").strip()
         if not text:
@@ -164,7 +154,7 @@ def _fallback_nl_to_sql(nl_query: str) -> tuple[str, str]:
 
     if "alert" in lower:
         return (
-            "SELECT a.alert_id, a.incident_id, a.alert_channel, a.trigger_reason, a.sent_at, a.ack_status FROM alerts a ORDER BY a.sent_at DESC LIMIT 50",
+            "SELECT a.alert_id, a.incident_id, a.alert_channel, a.trigger_reason, a.attempted_at, a.delivered_at, a.delivery_status, a.ack_status FROM alerts a ORDER BY a.sent_at DESC LIMIT 50",
             "Recent alerts",
         )
 

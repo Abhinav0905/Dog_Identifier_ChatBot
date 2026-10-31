@@ -1,0 +1,10 @@
+Discover possible non-governmental dog rescue and animal-welfare
+organizations operating across {{REGION}}, India. Search broadly with queries such as
+"{{REGION}} animal rescue NGO", "{{REGION}} rescue feeding network", "stray dog rescue foundation
+{{REGION}}", and "animal welfare helpline {{REGION}}". Open each candidate's official contact page and
+return it only when that official site publishes a current phone or WhatsApp number. Rank direct
+rescue organizations with a published phone first. This is discovery only: do not make exact-city
+coverage claims. Exclude government,
+municipal, police, regulator, directory, map, social-media-only, commercial, and SPCA results.
+possible_official_url must copy an exact URL opened in this search. Return no more than
+{{MAXIMUM_CANDIDATES}} candidates.

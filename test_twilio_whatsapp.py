@@ -37,14 +37,40 @@ class TestTwilioWhatsAppHelpers(unittest.TestCase):
         self.assertIn("Helpful links:", xml)
         self.assertIn("https://dharamsalaanimalrescue.org/contact/", xml)
 
+    def test_signature_validation_accepts_valid_and_rejects_invalid(self):
+        from twilio.request_validator import RequestValidator
+
+        url = "https://askdorjee.dharamsalaanimalrescue.org/v1/integrations/twilio/whatsapp"
+        params = {"From": "whatsapp:+15551234567", "Body": "Help"}
+        token = "unit-test-auth-token"
+        valid_signature = RequestValidator(token).compute_signature(url, params)
+        with patch.object(twilio_whatsapp.config, "TWILIO_VALIDATE_SIGNATURES", True), \
+             patch.object(twilio_whatsapp.config, "TWILIO_AUTH_TOKEN", token):
+            self.assertTrue(
+                twilio_whatsapp.validate_webhook(url, params, valid_signature)
+            )
+            self.assertFalse(
+                twilio_whatsapp.validate_webhook(url, params, "invalid-signature")
+            )
+
 
 class TestTwilioWhatsAppWebhook(unittest.TestCase):
     def setUp(self):
+        self.query_router_client_patcher = patch.object(app.query_router, "client", None)
+        self.query_router_client_patcher.start()
+        self.signature_patcher = patch.object(
+            app.config,
+            "TWILIO_VALIDATE_SIGNATURES",
+            False,
+        )
+        self.signature_patcher.start()
         self.client = TestClient(app.app)
         self.client.__enter__()
 
     def tearDown(self):
         self.client.__exit__(None, None, None)
+        self.signature_patcher.stop()
+        self.query_router_client_patcher.stop()
 
     @patch("app.db.save_session_location")
     def test_location_pin_is_saved_and_acknowledged(self, save_location):
@@ -65,10 +91,18 @@ class TestTwilioWhatsAppWebhook(unittest.TestCase):
         self.assertIn("Location received and saved", response.text)
         save_location.assert_called_once()
 
-    @patch("app.db.get_chat_history", return_value=[])
     @patch("app.db.get_session_location", return_value=None)
-    @patch("app.db.save_chat_message")
-    def test_text_question_returns_twiml(self, _save_message, _get_location, _get_history):
+    @patch("app.twilio_whatsapp.send_whatsapp_message", return_value="SM-text-outbound")
+    @patch(
+        "app.chat_query",
+        return_value=ChatResponse(response="Wash the bite with soap and running water."),
+    )
+    def test_text_question_is_acknowledged_then_answered_in_background(
+        self,
+        chat_query,
+        send_whatsapp_message,
+        _get_location,
+    ):
         response = self.client.post(
             "/v1/integrations/twilio/whatsapp",
             data={
@@ -82,7 +116,13 @@ class TestTwilioWhatsAppWebhook(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.headers["content-type"], "application/xml")
-        self.assertIn("Wash the bite", response.text)
+        self.assertIn("Message received", response.text)
+        chat_query.assert_called_once()
+        send_whatsapp_message.assert_called_once_with(
+            to="whatsapp:+15551234567",
+            from_="whatsapp:+14155238886",
+            text="Wash the bite with soap and running water.",
+        )
 
     @patch("app.config.WHATSAPP_DEMO_LOCATION_FALLBACK", True)
     @patch("app.config.WHATSAPP_DEMO_LAT", 32.2196)
@@ -98,12 +138,14 @@ class TestTwilioWhatsAppWebhook(unittest.TestCase):
         _download_image,
         _get_location,
     ):
+        dar_phone = app.config.DAR_PHONE_NUMBER or "+91 98828 58631"
         triage_image.return_value = ChatResponse(
             response="Photo processed",
             resource_links=[
                 {
                     "label": "Contact Dharamsala Animal Rescue",
                     "url": app.config.DAR_CONTACT_URL,
+                    "phone": dar_phone,
                 },
                 {
                     "label": "Find nearby vets",
@@ -137,7 +179,8 @@ class TestTwilioWhatsAppWebhook(unittest.TestCase):
             text=(
                 "Photo processed\n\n"
                 "Helpful links:\n"
-                f"- Contact Dharamsala Animal Rescue: {app.config.DAR_CONTACT_URL}\n"
+                f"- Contact Dharamsala Animal Rescue: {app.config.DAR_CONTACT_URL}"
+                f" | Phone: {dar_phone}\n"
                 "- Find nearby vets: "
                 "https://www.google.com/maps/search/?api=1&query=veterinarian+near+32.2196%2C76.3234"
             ),

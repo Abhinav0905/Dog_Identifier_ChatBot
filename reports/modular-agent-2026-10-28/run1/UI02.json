@@ -1,0 +1,340 @@
+{
+  "id": "UI02",
+  "question": "I found an injured community dog in Kochi, Kerala. Where can I take it?",
+  "expected": "Kochi-specific treatment options with source-supported service and actionable address or contact; admission and pickup remain unconfirmed until contacted.",
+  "execution_order": 2,
+  "previous_verdict": "PASS",
+  "previous_reason": "Kochi-specific pet-treatment hospital and full published address; no current admission/pickup guarantee.",
+  "status": "completed",
+  "answer": "Keep the dog away from traffic if it is safe to do so, and minimise handling—an injured dog may bite from pain or fear. If there is active external bleeding and the dog allows it, hold a clean cloth gently and continuously over the wound while arranging help.\n\n**In Kochi, these are practical options:**\n\n1. **Government Veterinary Hospital, Edappally**  \n   Ganapathy Temple Road, Edappally P.O., Kochi – 682024.  \n   This is listed by Kerala’s Animal Husbandry Department as a veterinary hospital. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n2. **Veterinary Polyclinic, Mattancherry**  \n   Star Junction, Mattancherry P.O., Kochi – 682002.  \n   Also listed by the Kerala Animal Husbandry Department. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n3. **Government Mobile Veterinary Hospital / District Veterinary Centre, Ernakulam**  \n   Club Road, Ernakulam – 682011  \n   **Phone: 0484 2351264**  \n   The department lists this number for the Mobile Veterinary Hospital and District Veterinary Centre. Call to ask whether they can attend or direct you to the nearest clinician; a listing does not guarantee immediate pickup. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n4. **Animal Rescue Kochi — rescue support**  \n   **Helpline: 97477 73950**  \n   Their rescue coverage is limited mainly to Fort Kochi, Mattancherry, Thoppumpady, Wellington Island, Palluruthy, Edakochi, Perumbadappu, Kumbalangi and Chellanam. Call with the exact locality and injury details; they may be able to assist or advise on transport within that area. ([animalrescuekochi.org](https://animalrescuekochi.org/contact-us/?utm_source=openai))\n\nDo not put turmeric, oil, powders, or household remedies into the wound. If the dog cannot stand, is struggling to breathe, has severe bleeding, or has been hit by a vehicle, tell the clinic/rescue that clearly—it needs urgent veterinary assessment.",
+  "raw_answer": "Keep the dog away from traffic if it is safe to do so, and minimise handling—an injured dog may bite from pain or fear. If there is active external bleeding and the dog allows it, hold a clean cloth gently and continuously over the wound while arranging help.\n\n**In Kochi, these are practical options:**\n\n1. **Government Veterinary Hospital, Edappally**  \n   Ganapathy Temple Road, Edappally P.O., Kochi – 682024.  \n   This is listed by Kerala’s Animal Husbandry Department as a veterinary hospital. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n2. **Veterinary Polyclinic, Mattancherry**  \n   Star Junction, Mattancherry P.O., Kochi – 682002.  \n   Also listed by the Kerala Animal Husbandry Department. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n3. **Government Mobile Veterinary Hospital / District Veterinary Centre, Ernakulam**  \n   Club Road, Ernakulam – 682011  \n   **Phone: 0484 2351264**  \n   The department lists this number for the Mobile Veterinary Hospital and District Veterinary Centre. Call to ask whether they can attend or direct you to the nearest clinician; a listing does not guarantee immediate pickup. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n4. **Animal Rescue Kochi — rescue support**  \n   **Helpline: 97477 73950**  \n   Their rescue coverage is limited mainly to Fort Kochi, Mattancherry, Thoppumpady, Wellington Island, Palluruthy, Edakochi, Perumbadappu, Kumbalangi and Chellanam. Call with the exact locality and injury details; they may be able to assist or advise on transport within that area. ([animalrescuekochi.org](https://animalrescuekochi.org/contact-us/?utm_source=openai))\n\nDo not put turmeric, oil, powders, or household remedies into the wound. If the dog cannot stand, is struggling to breathe, has severe bleeding, or has been hit by a vehicle, tell the clinic/rescue that clearly—it needs urgent veterinary assessment.",
+  "citations": [
+    {
+      "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai",
+      "title": "Ernakulam – Kerala State",
+      "start_index": 500,
+      "end_index": 580
+    },
+    {
+      "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai",
+      "title": "Ernakulam – Kerala State",
+      "start_index": 740,
+      "end_index": 820
+    },
+    {
+      "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai",
+      "title": "Ernakulam – Kerala State",
+      "start_index": 1199,
+      "end_index": 1279
+    },
+    {
+      "url": "https://animalrescuekochi.org/contact-us/?utm_source=openai",
+      "title": "Contact Us - Animal Rescue Kochi",
+      "start_index": 1641,
+      "end_index": 1727
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T17:56:56.594988+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "I found an injured community dog in Kochi, Kerala. Where can I take it?",
+      "history": [
+        {
+          "role": "user",
+          "content": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if you can do so safely, and avoid touching the deep wound. If it is bleeding, apply **gentle continuous pressure with a clean cloth** only if the dog will tolerate it without struggling.\n\n**Closest practical help for Vijay Nagar:**\n\n1. **Arham Animal Ambulance, Indore — call 89890 80848.**  \n   Their published coverage includes **Vijay Nagar** and they state that they rescue and treat injured street/community animals. Tell them the exact landmark, that it is a **deep wound**, whether the dog can stand, and send a photo if asked. Availability still needs confirmation when you call. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))\n\n2. **If you can safely transport the dog:**  \n   **Government Veterinary Hospital & Polyclinic**  \n   Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore  \n   Phone: **0731 2543312**  \n   Online listings show 7 am–6 pm, but please call first to confirm the doctor and admission. ([kaam.com](https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nDo not put turmeric, oil, powder, or household remedies into the wound. If the dog becomes weak, cannot stand, has heavy bleeding, or you see maggots, describe that clearly on the ambulance call—it needs urgent veterinary care.\nhttps://alwayscare.org/ambulances/indore?utm_source=openai\nhttps://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "ba96b156f60d91a102056b88622d99822e557010758644cf433bb670593a536f",
+        "search": "005eb995968419f0ed91fa2bfb66c349de78d4e3269dfbe02a132d02eb1356c4",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T17:56:56.595112+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T17:57:08.001210+00:00",
+      "elapsed_seconds": 11.406,
+      "step": 0,
+      "seconds": 11.406,
+      "response": {
+        "id": "resp_006673bee7298e37016ae23768afdc87d28093f16fd6038b87",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 16994,
+          "input_tokens_details": {
+            "cached_tokens": 8232,
+            "cache_write_tokens": 385
+          },
+          "output_tokens": 583,
+          "output_tokens_details": {
+            "reasoning_tokens": 119
+          },
+          "total_tokens": 17577
+        },
+        "output": [
+          {
+            "id": "ws_006673bee7298e37016ae2376a811087d28c4c75e557bc7df3",
+            "action": {
+              "query": "site:ahd.kerala.gov.in Kochi veterinary hospital Ernakulam contact injured dogs",
+              "type": "search",
+              "queries": [
+                "site:ahd.kerala.gov.in Kochi veterinary hospital Ernakulam contact injured dogs",
+                "Kochi Kerala government veterinary hospital contact address animal husbandry department",
+                "Kochi animal rescue injured dog veterinary hospital official contact"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://animalrescuekochi.org/contact-us/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/en/ernakulam/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://animalrescuekochi.org/what-we-do/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/contact/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/images/pdf/DIRECTORY__OF_OFFICERS.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://amtmindia.org/faq/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://esamrudha.kerala.gov.in/public/onboardedInstitutions"
+                },
+                {
+                  "type": "url",
+                  "url": "https://voicelessindia.org/kerala-animal-helplines-1"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.jivdayatrust.org/contact/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://edrop.sec.kerala.gov.in/institution/newlist?direction=asc&page=219&sort=i.institutionName"
+                },
+                {
+                  "type": "url",
+                  "url": "https://forest.kerala.gov.in/en/wildlife-rescue/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.felican.in/emergency-care-ambulance"
+                },
+                {
+                  "type": "url",
+                  "url": "https://animalrescuekochi.org/about-us/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://prd.kerala.gov.in/sites/default/files/inline-files/Kerala%20Calling%20March%202023%20LR.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://khordha.odisha.gov.in/sites/default/files/2023-06/1_191.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kochi/comments/1w5fvmw/strau_dog_with_both_legs_brokencan_anyone_help/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://fibkerala.gov.in/sites/default/files/inline-files/Farmguide%202024.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.fibkerala.gov.in/sites/default/files/inline-files/Farmguide%202022.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://keralaagriculture.gov.in/wp-content/uploads/2023/02/Farmguide-2023.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kochi/comments/1ulrqzx/looking_for_home_veterinary_rehabilitation/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indiedogs/comments/1q78iws/urgent_stray_dog_in_need_of_medical_attention_in/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianPets/comments/1q78lue/urgent_stray_dog_in_need_of_medical_attention_in/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kochi/comments/1xbi5wa/immediate_help_needed_please_dm/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kochi/comments/1q1mp3a/urgent_dog_found_please_help/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kochi/comments/160wk6p"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kochi/comments/1qflx92/dog_shelters_around_kochi/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Coconaad/comments/1cutkow"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kochi/comments/17fbfr5"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indiedogs/comments/1wkfons/my_stray_doggo_was_beaten_to_pulp_and_needs_help/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Kochi/comments/1uhugk0/found_an_injured_stray_kitten_in_a_village_near/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Department_of_Animal_Husbandry_%28Kerala%29"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/List_of_government_hospitals_in_Kerala"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai"
+                },
+                {
+                  "type": "url",
+                  "url": "https://animalrescuekochi.org/contact-us/?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_006673bee7298e37016ae2376ecde487d29d781936bb381bbd",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 580,
+                    "start_index": 500,
+                    "title": "Ernakulam – Kerala State",
+                    "type": "url_citation",
+                    "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai"
+                  },
+                  {
+                    "end_index": 820,
+                    "start_index": 740,
+                    "title": "Ernakulam – Kerala State",
+                    "type": "url_citation",
+                    "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai"
+                  },
+                  {
+                    "end_index": 1279,
+                    "start_index": 1199,
+                    "title": "Ernakulam – Kerala State",
+                    "type": "url_citation",
+                    "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai"
+                  },
+                  {
+                    "end_index": 1727,
+                    "start_index": 1641,
+                    "title": "Contact Us - Animal Rescue Kochi",
+                    "type": "url_citation",
+                    "url": "https://animalrescuekochi.org/contact-us/?utm_source=openai"
+                  }
+                ],
+                "text": "Keep the dog away from traffic if it is safe to do so, and minimise handling—an injured dog may bite from pain or fear. If there is active external bleeding and the dog allows it, hold a clean cloth gently and continuously over the wound while arranging help.\n\n**In Kochi, these are practical options:**\n\n1. **Government Veterinary Hospital, Edappally**  \n   Ganapathy Temple Road, Edappally P.O., Kochi – 682024.  \n   This is listed by Kerala’s Animal Husbandry Department as a veterinary hospital. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n2. **Veterinary Polyclinic, Mattancherry**  \n   Star Junction, Mattancherry P.O., Kochi – 682002.  \n   Also listed by the Kerala Animal Husbandry Department. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n3. **Government Mobile Veterinary Hospital / District Veterinary Centre, Ernakulam**  \n   Club Road, Ernakulam – 682011  \n   **Phone: 0484 2351264**  \n   The department lists this number for the Mobile Veterinary Hospital and District Veterinary Centre. Call to ask whether they can attend or direct you to the nearest clinician; a listing does not guarantee immediate pickup. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n4. **Animal Rescue Kochi — rescue support**  \n   **Helpline: 97477 73950**  \n   Their rescue coverage is limited mainly to Fort Kochi, Mattancherry, Thoppumpady, Wellington Island, Palluruthy, Edakochi, Perumbadappu, Kumbalangi and Chellanam. Call with the exact locality and injury details; they may be able to assist or advise on transport within that area. ([animalrescuekochi.org](https://animalrescuekochi.org/contact-us/?utm_source=openai))\n\nDo not put turmeric, oil, powders, or household remedies into the wound. If the dog cannot stand, is struggling to breathe, has severe bleeding, or has been hit by a vehicle, tell the clinic/rescue that clearly—it needs urgent veterinary assessment.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T17:57:08.001517+00:00",
+      "elapsed_seconds": 11.407,
+      "status": "completed",
+      "error": null,
+      "answer": "Keep the dog away from traffic if it is safe to do so, and minimise handling—an injured dog may bite from pain or fear. If there is active external bleeding and the dog allows it, hold a clean cloth gently and continuously over the wound while arranging help.\n\n**In Kochi, these are practical options:**\n\n1. **Government Veterinary Hospital, Edappally**  \n   Ganapathy Temple Road, Edappally P.O., Kochi – 682024.  \n   This is listed by Kerala’s Animal Husbandry Department as a veterinary hospital. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n2. **Veterinary Polyclinic, Mattancherry**  \n   Star Junction, Mattancherry P.O., Kochi – 682002.  \n   Also listed by the Kerala Animal Husbandry Department. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n3. **Government Mobile Veterinary Hospital / District Veterinary Centre, Ernakulam**  \n   Club Road, Ernakulam – 682011  \n   **Phone: 0484 2351264**  \n   The department lists this number for the Mobile Veterinary Hospital and District Veterinary Centre. Call to ask whether they can attend or direct you to the nearest clinician; a listing does not guarantee immediate pickup. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n4. **Animal Rescue Kochi — rescue support**  \n   **Helpline: 97477 73950**  \n   Their rescue coverage is limited mainly to Fort Kochi, Mattancherry, Thoppumpady, Wellington Island, Palluruthy, Edakochi, Perumbadappu, Kumbalangi and Chellanam. Call with the exact locality and injury details; they may be able to assist or advise on transport within that area. ([animalrescuekochi.org](https://animalrescuekochi.org/contact-us/?utm_source=openai))\n\nDo not put turmeric, oil, powders, or household remedies into the wound. If the dog cannot stand, is struggling to breathe, has severe bleeding, or has been hit by a vehicle, tell the clinic/rescue that clearly—it needs urgent veterinary assessment.",
+      "citations": [
+        {
+          "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai",
+          "title": "Ernakulam – Kerala State",
+          "start_index": 500,
+          "end_index": 580
+        },
+        {
+          "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai",
+          "title": "Ernakulam – Kerala State",
+          "start_index": 740,
+          "end_index": 820
+        },
+        {
+          "url": "https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai",
+          "title": "Ernakulam – Kerala State",
+          "start_index": 1199,
+          "end_index": 1279
+        },
+        {
+          "url": "https://animalrescuekochi.org/contact-us/?utm_source=openai",
+          "title": "Contact Us - Animal Rescue Kochi",
+          "start_index": 1641,
+          "end_index": 1727
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 11.407,
+  "history_messages": 2,
+  "completed_at": "2026-10-28T17:57:08.001619+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "original40"
+}

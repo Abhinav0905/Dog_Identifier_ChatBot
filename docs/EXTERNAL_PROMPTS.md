@@ -1,0 +1,127 @@
+# Versioned prompt files on GitHub and EC2
+
+The current release is `prompts/runtime-v2/`. Files 01–09 originated byte-for-byte
+from Srini's supplied package. Release v2.2 adds treatment-first pet-clinic research terms to file 03; its original is
+retained in `prompts/archive/03_web_search_system_template_srini_v2_original.txt`.
+Release v2.1 added a clarification to file 04 about
+literal full institution names, one branch address per claim and citation placement.
+The original file 04 is retained in `prompts/archive/04_contact_evidence_review_system_srini_v2_original.txt`.
+Release v2.3 also makes the refinement support template preserve an institution only
+when one was explicitly selected. Open discovery can seek stronger providers within
+the explicitly requested city; a neighbourhood does not exclude the rest of that city.
+Deb's full prompt (00), regression cases (10),
+README, changes and diff are reference material and are never used as system
+instructions. `support/` contains the existing language rules and ancillary
+templates that were not part of the nine supplied files.
+
+`services/prompts.py` now assembles text from these files. Its old implementation
+is preserved as comments at the bottom, and verbatim in
+`prompts/archive/prompts_2026-10-05.py.txt`.
+
+## How a request reads prompts
+
+GitHub stores the reviewed package. EC2 reads its local copy. There is no GitHub,
+S3 or other network call in prompt loading. Set `PROMPT_PACKAGE_DIR` to a local
+package directory or a current-release symlink. The default is the checked-in
+`prompts/runtime-v2/` directory.
+
+At startup the complete release is validated. At the start of each model-using
+HTTP request the loader reads the small local manifest. Unchanged releases use
+the in-memory cache. A changed manifest causes all runtime files to be loaded
+and validated together. The entire HTTP request uses the same immutable bundle,
+including calls made in worker threads. Responses carry
+`X-Prompt-Package-Version` and `X-Prompt-Package-SHA256`.
+
+The manifest supplies a version and SHA-256 for every runtime file. The loader
+checks required files, UTF-8, sizes, supported placeholders and identical shared
+policy across care/search/vision/enrichment. Hashes check package integrity, not
+the medical or factual quality of an edited prompt. Prompt wording still needs
+review and backend acceptance testing.
+
+An invalid update keeps the last valid in-memory release and reports
+`using_last_valid` under `/health` → `prompt_package`. A new process without a
+valid release refuses startup. Activate validated immutable snapshots so a bad
+edit is rejected before the current-release pointer changes. Keep old snapshots
+for rollback. All workers see the new pointer on their next request; in-flight
+requests finish using their prior version.
+
+## Review and edit in GitHub
+
+1. Edit files in a staging copy of `prompts/runtime-v2/` through a branch/PR.
+2. The four embedded shared policy sections must remain identical, as required
+   by Srini's package. Keep `{{CURRENT_MESSAGE}}`, `{{RECENT_CONTEXT}}` and the
+   web context placeholder intact. Templates are text: Python/JS is never run.
+3. After editing, seal and validate the staging package:
+
+```bash
+.venv/bin/python scripts/manage_prompts.py seal prompts/runtime-v2 --version srini-v2-revision-2
+.venv/bin/python scripts/manage_prompts.py validate prompts/runtime-v2
+```
+
+Sealing changes only `manifest.json`; it does not rewrite prompt files. Do not
+seal or edit an active immutable release. A text edit without a new manifest is
+not a published release and is not hot-loaded.
+
+## EC2 using systemd / a local checkout
+
+For the first deployment, deploy the code and prompt directory together. The
+default path works without new cloud credentials. For future prompt-only updates,
+configure a stable symlink path once, for example:
+
+```dotenv
+PROMPT_PACKAGE_DIR=/home/ec2-user/ask-dorjee-prompts/current
+```
+
+Fetch the approved GitHub commit on EC2 or upload its prompt directory. Then run:
+
+```bash
+.venv/bin/python scripts/manage_prompts.py activate prompts/runtime-v2 --current /home/ec2-user/ask-dorjee-prompts/current
+```
+
+The command prints the active version/hash and previous release path. A restart
+is needed once when initially configuring `PROMPT_PACKAGE_DIR`; subsequent
+activations are read on the next request without restarting the application.
+For rollback, run `activate` with the printed previous release path as the
+directory argument and the same `--current` path. No old release is deleted.
+
+## EC2 using Docker
+
+With the default path, the prompt package is included by the existing `COPY . .`
+Docker build. For prompt-only activation, mount the **parent directory** of
+`current` and `current.releases` read-only, e.g.:
+
+```bash
+--mount type=bind,src=/home/ec2-user/ask-dorjee-prompts,dst=/app/prompt-releases,readonly \
+-e PROMPT_PACKAGE_DIR=/app/prompt-releases/current
+```
+
+Relative symlinks generated by the activation command resolve inside this mount.
+Mounting only the `current` symlink can pin a container to the previous target;
+mount the parent instead. The EC2 Docker deployment script accepts
+`PROMPT_RELEASES_DIR=/home/ec2-user/ask-dorjee-prompts` for this mount. Activate a
+release before starting a container with that setting. Existing application data
+and `.env` remain managed by the deployment workflow.
+
+## Verification
+
+`srini-v2.6-2026-10-25` separates address-only lookups from clinical-access
+verification. An address must still bind to the selected facility's own source
+row; a campus name, parent acronym or another campus's address is not guessed.
+Research history is limited to the current case, while the full transcript stays
+in storage. Failed source URLs are cached only for one research turn and passed
+to the adaptive retry, together with the specific evidence gap. A new chat turn
+can retry a temporarily unavailable source. Original v2.3 text is in
+`prompts/archive/`. Bounded evidence fetching interleaves publishers after the
+leading citations so one inaccessible site cannot consume every source slot.
+The reviewer receives the literal requested locality and sees matching local
+page identities first; local identity/address leads remain explicitly partial
+when clinical service evidence is missing.
+Fetched passages identifying a local Animal Husbandry or veterinary administrative
+office are also highlighted for a clearly labelled referral when clinical evidence
+is insufficient. That referral remains partial and cannot establish treatment.
+
+Check `/health` for the version/hash, then run a real chat request and check its
+prompt headers and response. `test_prompt_store.py` covers integrity, activation,
+rollback, per-request pinning and template assembly. `scripts/run_prompt_v2_review.py`
+records selected live backend questions/responses separately from offline tests.
+Local testing does not establish the state of the public EC2 service.

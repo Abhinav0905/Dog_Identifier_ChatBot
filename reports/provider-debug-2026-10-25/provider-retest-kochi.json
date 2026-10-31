@@ -1,0 +1,152 @@
+{
+  "checked_at": "2026-10-25T21:12:52.524736+00:00",
+  "base_url": "http://127.0.0.1:8002",
+  "mode": "kochi",
+  "health_before": {
+    "database": "ready",
+    "models": "recent_success",
+    "knowledge": {
+      "backend": "chroma",
+      "status": "missing",
+      "sqlite_fallback_chunks": 156
+    },
+    "model_probe_performed": false,
+    "outbound_messages_sent": false,
+    "model_observations": [
+      {
+        "component": "model:care",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T20:43:20.742828+00:00"
+      },
+      {
+        "component": "model:router",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T21:04:00.198564+00:00"
+      },
+      {
+        "component": "model:search",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T21:04:11.664423+00:00"
+      },
+      {
+        "component": "model:evidence",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T21:04:21.766337+00:00"
+      }
+    ],
+    "observation_window_minutes": 30,
+    "status": "degraded",
+    "alert_delivery_configured": false,
+    "alerts_needing_operator_attention": 0,
+    "version": "1.1.0-web-rc",
+    "prompt_catalog_version": "srini-v2.3-2026-10-25",
+    "prompt_package": {
+      "version": "srini-v2.3-2026-10-25",
+      "sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+      "status": "ready",
+      "source": "local_files",
+      "reload_error": null
+    },
+    "india_only_scope": true,
+    "india_boundary_loaded": true,
+    "location_required_for_assessment": false,
+    "location_required_for_local_report": true,
+    "max_image_size_mb": 100,
+    "heic_supported": true,
+    "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+    "timestamp": "2026-10-25T21:12:52.523396+00:00"
+  },
+  "cases": [
+    {
+      "case_id": "KOCHI",
+      "question": "I found an injured community dog in Kochi, Kerala. Where can I take it?",
+      "expected": "Supported Kochi treatment options and actionable address/contact; no current admission or pickup guarantee.",
+      "response": "The sources identify these treatment options and institution leads:\n\n- Felican Pet Hospital — Eroor Road, Sharipady, Tripunithura, Kochi - 682306 — the source describes treatment for pets or small animals. Published contact: +91 99619 33999. Published contact: +91 484 277 6661. Published contact: +91 97460 46089. Published contact: +91 97460 46017.\n\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.\n\nA treatment listing alone does not establish rescue pickup or current availability.",
+      "resource_links": [
+        {
+          "label": "Felican Pet Hospital: source",
+          "url": "https://www.felican.in/felican-pet-hospital",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        },
+        {
+          "label": "Felican Pet Hospital: source",
+          "url": "https://www.felican.in/contact",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "http_status": 200,
+      "elapsed_seconds": 33.41,
+      "prompt_version": "srini-v2.3-2026-10-25",
+      "prompt_sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+      "technical_pass": true,
+      "backend_review": {
+        "contextual_request": "Find places to take an injured community dog in Kochi, Kerala.",
+        "result_kind": "search_answer",
+        "request_satisfied": true,
+        "case_place": "Kochi, Kochi, Kerala, India",
+        "requested_institution": ""
+      }
+    }
+  ],
+  "health_after": {
+    "database": "ready",
+    "models": "recent_success",
+    "knowledge": {
+      "backend": "chroma",
+      "status": "missing",
+      "sqlite_fallback_chunks": 156
+    },
+    "model_probe_performed": false,
+    "outbound_messages_sent": false,
+    "model_observations": [
+      {
+        "component": "model:router",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T21:12:54.804747+00:00"
+      },
+      {
+        "component": "model:search",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T21:13:10.333630+00:00"
+      },
+      {
+        "component": "model:evidence",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T21:13:25.885645+00:00"
+      }
+    ],
+    "observation_window_minutes": 30,
+    "status": "degraded",
+    "alert_delivery_configured": false,
+    "alerts_needing_operator_attention": 0,
+    "version": "1.1.0-web-rc",
+    "prompt_catalog_version": "srini-v2.3-2026-10-25",
+    "prompt_package": {
+      "version": "srini-v2.3-2026-10-25",
+      "sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+      "status": "ready",
+      "source": "local_files",
+      "reload_error": null
+    },
+    "india_only_scope": true,
+    "india_boundary_loaded": true,
+    "location_required_for_assessment": false,
+    "location_required_for_local_report": true,
+    "max_image_size_mb": 100,
+    "heic_supported": true,
+    "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+    "timestamp": "2026-10-25T21:13:25.964731+00:00"
+  },
+  "technical_pass": true
+}

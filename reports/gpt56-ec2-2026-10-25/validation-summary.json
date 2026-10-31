@@ -1,0 +1,83 @@
+{
+  "checked_at": "2026-10-25T19:17:12.807115+00:00",
+  "source_revision": "85f389a",
+  "repository": "https://github.com/Abhinav0905/Dog_Identifier_ChatBot",
+  "branch": "feature/external-prompt-files-v2",
+  "public_url": "https://askdorjee.dharamsalaanimalrescue.org/",
+  "local_url": "http://127.0.0.1:8001",
+  "deployment_status": "GPT-5.6 profile and external prompts active; not a declaration that all Dev requirements pass",
+  "models": {
+    "OPENAI_MODEL": "gpt-5.6-sol",
+    "OPENAI_CHAT_MODEL": "gpt-5.6-sol",
+    "OPENAI_VISION_MODEL": "gpt-5.6-terra",
+    "OPENAI_ADMIN_MODEL": "gpt-5.6-terra",
+    "OPENAI_WEB_SEARCH_MODEL": "gpt-5.6-terra",
+    "OPENAI_QUERY_ROUTER_MODEL": "gpt-5.6-terra",
+    "OPENAI_GEOGRAPHY_MODEL": "gpt-5.6-terra"
+  },
+  "prompt_version": "srini-v2-2026-10-25",
+  "prompt_sha256": "250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12",
+  "focused_automated_tests": {
+    "passed": 165,
+    "command": ".venv/bin/python -m unittest test_model_profile test_prompt_store test_prompt_http test_model_directed_search test_search_evidence test_veterinary_safety test_text_turns_review test_deploy_release test_local_validation_runner",
+    "note": "Mocked/unit/integration coverage; these are not 165 live user questions."
+  },
+  "live_role_probes": {
+    "passed": 7,
+    "total": 7,
+    "report": "gpt56-role-probes.json"
+  },
+  "candidate_http": {
+    "technical_passed": 3,
+    "total": 3,
+    "requirement_passed": 2,
+    "requirement_failed": 1,
+    "report": "candidate-http-results-56.json"
+  },
+  "public_https": {
+    "technical_passed": 3,
+    "total": 3,
+    "requirement_passed": 2,
+    "requirement_failed": 1,
+    "report": "public-http-results.json"
+  },
+  "combined_gpt56_http_quality": {
+    "passed": 4,
+    "failed": 2,
+    "total": 6,
+    "not_independent_source_verification": true
+  },
+  "browser": {
+    "question": "Explain to a child what to do when a community dog comes near.",
+    "response_rendered": true,
+    "input_controls_reenabled": true,
+    "screenshot": "live-browser.png"
+  },
+  "data_preservation": {
+    "incidents": 23,
+    "alerts": 5,
+    "retrieval_chunks": 156,
+    "incident_image_references_available": 23,
+    "old_broken_image_path_rows_normalized": 17,
+    "original_missing_image_files_restored": 8,
+    "database_integrity": "ok",
+    "original_environment_unchanged": true,
+    "original_code_directory_retained": true,
+    "rollback": "Host backups retained; see model-deployment-receipt.json. Model rollback does not rewind live data."
+  },
+  "remaining_limits": [
+    "Provider discovery remains incomplete for both Indore and Kochi. It supplies no verified local options and should fail review even though it avoids inventing details.",
+    "The Indore deep-wound response omits immediate first-aid guidance.",
+    "EC2 logs show failed source fetches and a 12-second evidence-model timeout on the initial Kochi pass; a subsequent review succeeds but still returns no usable provider facts. Model availability alone does not fix source access or answer assembly.",
+    "Provider requests took approximately 55-60 seconds in these smoke checks.",
+    "Earlier 15-question acceptance results were 11 PASS, 4 PARTIAL, 0 FAIL under the earlier model profile; they have not been rerun or relabelled as GPT-5.6 results.",
+    "The full historical automated suite is not green; baseline-reproduced failures are documented in reports/prompt-v2-2026-10-25/baseline-comparison.json.",
+    "Alert delivery is not configured on this host. Health readiness does not certify rescue dispatch or current provider admission.",
+    "Production uses SQLite retrieval; isolated localhost validation uses Chroma. Both have 156 knowledge chunks."
+  ],
+  "next_work": [
+    "Ensure emergency first aid survives evidence-review failure and provider fallback, while preserving address-only and phone-only constraints.",
+    "Investigate source availability and evidence-review timing; retain supported provider facts when direct clinical contacts cannot be confirmed.",
+    "Rerun the bounded 10-15 acceptance cases with actual answers and explicit requirement verdicts before claiming all Dev expectations are met."
+  ]
+}

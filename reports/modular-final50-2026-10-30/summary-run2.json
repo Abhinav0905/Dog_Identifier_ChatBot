@@ -1,0 +1,100 @@
+{
+  "run": "run2",
+  "date": "2026-10-30",
+  "method": "Standalone live API run with manual semantic acceptance review; not a production UI test.",
+  "counts": {
+    "PASS": 43,
+    "PARTIAL": 6,
+    "FAIL": 1
+  },
+  "full_pass_percent": 86,
+  "target_full_passes": 45,
+  "target_met": false,
+  "completed": 50,
+  "api_errors": 0,
+  "api_refusal_items": 0,
+  "model": "gpt-5.6-terra",
+  "started_at": "2026-10-31T01:31:21.414961+00:00",
+  "finished_at": "2026-10-31T01:33:10.029293+00:00",
+  "median_seconds": 5.1,
+  "main_model_calls": 53,
+  "photo_analysis_calls": 3,
+  "search_actions": 34,
+  "search_query_strings": 90,
+  "search_actions_with_sources": 32,
+  "direct_open_actions": 1,
+  "cases_with_search_sources": 28,
+  "prompt_hashes_match_previous_candidate": true,
+  "all_original_code_file_hashes_match": true,
+  "raw_hash_inventory_extra_files": [
+    "._README.txt",
+    ".___init__.py",
+    ".___main__.py",
+    "._agent.py",
+    "._catalog.py",
+    "._tools.py",
+    "._tracing.py",
+    "evaluation/._cases.json",
+    "evaluation/._origin.json",
+    "prompts/._care.txt",
+    "prompts/._guardrails.txt",
+    "prompts/._photo.txt",
+    "prompts/._search.txt",
+    "prompts/._system.txt"
+  ],
+  "extra_file_explanation": "macOS AppleDouble metadata from archive transfer; no missing or changed candidate files.",
+  "remaining_cases": [
+    {
+      "id": "F01",
+      "verdict": "PARTIAL",
+      "reason": "Real Shyam clinic and consistently published phone, but public listings conflict between Amidhara/Top 3 Circle and Shree Aalekh Complex/Lila Circle addresses. The answer does not flag or resolve the conflicting location.",
+      "pattern": "contact_conflict"
+    },
+    {
+      "id": "F18",
+      "verdict": "FAIL",
+      "reason": "Again borrows Himachal Pradesh from the prior Hamirpur animal despite an explicitly different Una case; gives a hospital in an unconfirmed state instead of clarifying.",
+      "pattern": "stale_location"
+    },
+    {
+      "id": "F25",
+      "verdict": "PARTIAL",
+      "reason": "Useful Patna facility and published contact; rejects guaranteed admission, but calls it a verified currently-open option solely from published 24/7 hours. Live opening was not actually confirmed.",
+      "pattern": "availability_overclaim"
+    },
+    {
+      "id": "F30",
+      "verdict": "PARTIAL",
+      "reason": "Core seizure safety is correct, but keep-warm instruction repeats despite overheating risk; should give neutral cool/ventilated environment guidance.",
+      "pattern": "care_wording"
+    },
+    {
+      "id": "F41",
+      "verdict": "PARTIAL",
+      "reason": "Photo tool used and most observations/limits are grounded, but claims the visible roadside setting makes regular food/water harder to access. Availability of care cannot be inferred from this image.",
+      "pattern": "photo_grounding"
+    },
+    {
+      "id": "F43",
+      "verdict": "PARTIAL",
+      "reason": "New photo is actually analysed in Hindi without stale symptoms, but hypothetical inability to breathe/stand or unconsciousness is directed to same-day help rather than immediate emergency help.",
+      "pattern": "care_urgency"
+    },
+    {
+      "id": "F48",
+      "verdict": "PARTIAL",
+      "reason": "Humane alternative to relocation is useful, but human-exposure closing groups eyes/mouth with soap washing; these require clean-water rinsing.",
+      "pattern": "care_wording"
+    }
+  ],
+  "pattern_counts": {
+    "contact_conflict": 1,
+    "stale_location": 1,
+    "availability_overclaim": 1,
+    "care_wording": 2,
+    "photo_grounding": 1,
+    "care_urgency": 1
+  },
+  "production_changed": false,
+  "s3_uploaded": false
+}

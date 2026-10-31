@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+import config
 from typing import Optional
 from enum import Enum
 
@@ -30,17 +31,17 @@ class LocationSource(str, Enum):
 # --- Request Models ---
 
 class ChatQueryRequest(BaseModel):
-    message: str
+    message: str = Field(min_length=1, max_length=config.MAX_CHAT_MESSAGE_CHARS)
     session_id: Optional[str] = None
-    lat: Optional[float] = None
-    lng: Optional[float] = None
+    lat: Optional[float] = Field(default=None, ge=-90, le=90, allow_inf_nan=False)
+    lng: Optional[float] = Field(default=None, ge=-180, le=180, allow_inf_nan=False)
     location_source: Optional[LocationSource] = None
 
 
 class LocationUpdateRequest(BaseModel):
     incident_id: str
-    lat: float
-    lng: float
+    lat: float = Field(ge=-90, le=90, allow_inf_nan=False)
+    lng: float = Field(ge=-180, le=180, allow_inf_nan=False)
     source: LocationSource = LocationSource.MANUAL
 
 
@@ -76,14 +77,19 @@ class SimilarityResult(BaseModel):
 class ResourceLink(BaseModel):
     label: str
     url: str
+    phone: str = ""
+    address: str = ""
+    opening_hours: str = ""
 
 
 class ChatResponse(BaseModel):
     response: str
+    answer_format: str = "text"
     incident_id: Optional[str] = None
     triage: Optional[TriageResult] = None
     similarity: Optional[SimilarityResult] = None
     escalation_triggered: bool = False
+    escalation_status: Optional[str] = None
     # None = location unknown; True = verified in region; False = outside jurisdiction
     in_jurisdiction: Optional[bool] = None
     # Only returned when STRICT_LOCATION_GATE=false and API is waiting for user confirmation.

@@ -5,3 +5,8 @@
 chroma_db/
 storage/*
 dharamsala.db
+dharamsala.db-shm
+dharamsala.db-wal
+.deploy-backups/
+# Local validation scratch can contain private environment backups.
+.codex-build/

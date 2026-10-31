@@ -1,0 +1,192 @@
+{
+  "checked_at": "2026-10-25T20:59:39.354572+00:00",
+  "base_url": "http://127.0.0.1:8002",
+  "mode": "core",
+  "health_before": {
+    "database": "ready",
+    "models": "recent_success",
+    "knowledge": {
+      "backend": "chroma",
+      "status": "missing",
+      "sqlite_fallback_chunks": 156
+    },
+    "model_probe_performed": false,
+    "outbound_messages_sent": false,
+    "model_observations": [
+      {
+        "component": "model:care",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T20:43:20.742828+00:00"
+      },
+      {
+        "component": "model:router",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T20:44:11.201041+00:00"
+      },
+      {
+        "component": "model:search",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T20:44:30.467289+00:00"
+      },
+      {
+        "component": "model:evidence",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T20:44:39.456442+00:00"
+      }
+    ],
+    "observation_window_minutes": 30,
+    "status": "degraded",
+    "alert_delivery_configured": false,
+    "alerts_needing_operator_attention": 0,
+    "version": "1.1.0-web-rc",
+    "prompt_catalog_version": "srini-v2.3-2026-10-25",
+    "prompt_package": {
+      "version": "srini-v2.3-2026-10-25",
+      "sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+      "status": "ready",
+      "source": "local_files",
+      "reload_error": null
+    },
+    "india_only_scope": true,
+    "india_boundary_loaded": true,
+    "location_required_for_assessment": false,
+    "location_required_for_local_report": true,
+    "max_image_size_mb": 100,
+    "heic_supported": true,
+    "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+    "timestamp": "2026-10-25T20:59:39.353191+00:00"
+  },
+  "cases": [
+    {
+      "case_id": "KOCHI",
+      "question": "I found an injured community dog in Kochi, Kerala. Where can I take it?",
+      "expected": "Supported Kochi treatment options and actionable address/contact; no current admission or pickup guarantee.",
+      "response": "The sources identify these treatment options and institution leads:\n\n- Felican Pet Hospital — Baby Marine Road, Near B.O.T Bridge, Thoppumpady, Kochi - Kerala - 682005. — the source describes veterinary treatment services. Dog or cat treatment and admission remain unconfirmed. Published contact: +91 97460 46089. Published contact: +91 97460 46017.\n\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.\n\nA treatment listing alone does not establish rescue pickup or current availability.",
+      "resource_links": [
+        {
+          "label": "Felican Pet Hospital: source",
+          "url": "https://www.felican.in/felican-pet-hospital",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        },
+        {
+          "label": "Felican Pet Hospital: source",
+          "url": "https://www.felican.in/mobile-veterinary-clinic",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "http_status": 200,
+      "elapsed_seconds": 23.76,
+      "prompt_version": "srini-v2.3-2026-10-25",
+      "prompt_sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+      "technical_pass": true,
+      "backend_review": {
+        "contextual_request": "Find places in Kochi, Kerala where the user can take an injured community dog for veterinary treatment or rescue assistance.",
+        "result_kind": "search_answer",
+        "request_satisfied": true,
+        "case_place": "Kochi, Kochi, Kerala, India",
+        "requested_institution": ""
+      }
+    },
+    {
+      "case_id": "INDORE",
+      "question": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?",
+      "expected": "First aid, then supported Indore treatment options with an address/contact; no admission or pickup guarantee.",
+      "response": "A deep or open wound needs prompt veterinary care. Keep the dog calm and avoid handling if it may bite. If you can do so safely, loosely cover the wound with clean gauze or cloth. If it is bleeding, apply continuous direct pressure with a clean cloth; add layers if soaked rather than lifting the first cloth. Do not press on or remove an embedded object, probe the wound, apply powders or chemicals, or give human medicine. Arrange safe transport and call ahead about treatment and admission.\n\nThe sources identify these treatment options and institution leads:\n\n- PetVet Veterinary Clinic — Surya Dev Nagar, Indore — the source describes treatment for pets or small animals.\n\n- MYRA PET CLINIC-Pet Clinic in Indore - 08048032681 — institution listed; clinical treatment access is unconfirmed. Published contact: 08048032681.\n\nCall the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.\n\nA treatment listing alone does not establish rescue pickup or current availability.",
+      "resource_links": [
+        {
+          "label": "PetVet Veterinary Clinic: source",
+          "url": "https://indorepetvet.com/",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        },
+        {
+          "label": "MYRA PET CLINIC-Pet Clinic in Indore - 08048032681: source",
+          "url": "https://www.myrapetclinic.co.in/",
+          "phone": "",
+          "address": "",
+          "opening_hours": ""
+        }
+      ],
+      "http_status": 200,
+      "elapsed_seconds": 46.99,
+      "prompt_version": "srini-v2.3-2026-10-25",
+      "prompt_sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+      "technical_pass": true,
+      "backend_review": {
+        "contextual_request": "Find nearby veterinary treatment, animal rescue, or shelter options for a street dog with a deep wound near Vijay Nagar, Indore.",
+        "result_kind": "search_answer",
+        "request_satisfied": true,
+        "case_place": "Indore, Juni Indore Tahsil, Madhya Pradesh, India",
+        "requested_institution": ""
+      }
+    }
+  ],
+  "health_after": {
+    "database": "ready",
+    "models": "recent_success",
+    "knowledge": {
+      "backend": "chroma",
+      "status": "missing",
+      "sqlite_fallback_chunks": 156
+    },
+    "model_probe_performed": false,
+    "outbound_messages_sent": false,
+    "model_observations": [
+      {
+        "component": "model:care",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T20:43:20.742828+00:00"
+      },
+      {
+        "component": "model:router",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T20:59:41.889182+00:00"
+      },
+      {
+        "component": "model:search",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T21:00:17.987193+00:00"
+      },
+      {
+        "component": "model:evidence",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-10-25T21:00:26.329310+00:00"
+      }
+    ],
+    "observation_window_minutes": 30,
+    "status": "degraded",
+    "alert_delivery_configured": false,
+    "alerts_needing_operator_attention": 0,
+    "version": "1.1.0-web-rc",
+    "prompt_catalog_version": "srini-v2.3-2026-10-25",
+    "prompt_package": {
+      "version": "srini-v2.3-2026-10-25",
+      "sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+      "status": "ready",
+      "source": "local_files",
+      "reload_error": null
+    },
+    "india_only_scope": true,
+    "india_boundary_loaded": true,
+    "location_required_for_assessment": false,
+    "location_required_for_local_report": true,
+    "max_image_size_mb": 100,
+    "heic_supported": true,
+    "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+    "timestamp": "2026-10-25T21:00:26.392447+00:00"
+  },
+  "technical_pass": true
+}

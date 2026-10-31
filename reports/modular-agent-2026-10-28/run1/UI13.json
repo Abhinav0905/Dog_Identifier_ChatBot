@@ -1,0 +1,133 @@
+{
+  "id": "UI13",
+  "question": "Find a veterinary hospital for a street dog in Rampur.",
+  "expected": "Ask for the state/district or explicitly explain that Rampur is ambiguous; do not silently choose a state.",
+  "execution_order": 5,
+  "previous_verdict": "FAIL",
+  "previous_reason": "Silently selects Rampur, Uttar Pradesh without asking the state/district or explaining ambiguity. Actual hospital and office leads do not repair the location-selection error.",
+  "status": "completed",
+  "answer": "Which **Rampur district/state** do you mean? There are several places named Rampur in India. Please share the state or a nearby landmark, and I’ll find the nearest veterinary hospital for the community dog.",
+  "raw_answer": "Which **Rampur district/state** do you mean? There are several places named Rampur in India. Please share the state or a nearby landmark, and I’ll find the nearest veterinary hospital for the community dog.",
+  "citations": [],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T17:57:20.229775+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "Find a veterinary hospital for a street dog in Rampur.",
+      "history": [
+        {
+          "role": "user",
+          "content": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if you can do so safely, and avoid touching the deep wound. If it is bleeding, apply **gentle continuous pressure with a clean cloth** only if the dog will tolerate it without struggling.\n\n**Closest practical help for Vijay Nagar:**\n\n1. **Arham Animal Ambulance, Indore — call 89890 80848.**  \n   Their published coverage includes **Vijay Nagar** and they state that they rescue and treat injured street/community animals. Tell them the exact landmark, that it is a **deep wound**, whether the dog can stand, and send a photo if asked. Availability still needs confirmation when you call. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))\n\n2. **If you can safely transport the dog:**  \n   **Government Veterinary Hospital & Polyclinic**  \n   Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore  \n   Phone: **0731 2543312**  \n   Online listings show 7 am–6 pm, but please call first to confirm the doctor and admission. ([kaam.com](https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nDo not put turmeric, oil, powder, or household remedies into the wound. If the dog becomes weak, cannot stand, has heavy bleeding, or you see maggots, describe that clearly on the ambulance call—it needs urgent veterinary care.\nhttps://alwayscare.org/ambulances/indore?utm_source=openai\nhttps://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "I found an injured community dog in Kochi, Kerala. Where can I take it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if it is safe to do so, and minimise handling—an injured dog may bite from pain or fear. If there is active external bleeding and the dog allows it, hold a clean cloth gently and continuously over the wound while arranging help.\n\n**In Kochi, these are practical options:**\n\n1. **Government Veterinary Hospital, Edappally**  \n   Ganapathy Temple Road, Edappally P.O., Kochi – 682024.  \n   This is listed by Kerala’s Animal Husbandry Department as a veterinary hospital. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n2. **Veterinary Polyclinic, Mattancherry**  \n   Star Junction, Mattancherry P.O., Kochi – 682002.  \n   Also listed by the Kerala Animal Husbandry Department. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n3. **Government Mobile Veterinary Hospital / District Veterinary Centre, Ernakulam**  \n   Club Road, Ernakulam – 682011  \n   **Phone: 0484 2351264**  \n   The department lists this number for the Mobile Veterinary Hospital and District Veterinary Centre. Call to ask whether they can attend or direct you to the nearest clinician; a listing does not guarantee immediate pickup. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n4. **Animal Rescue Kochi — rescue support**  \n   **Helpline: 97477 73950**  \n   Their rescue coverage is limited mainly to Fort Kochi, Mattancherry, Thoppumpady, Wellington Island, Palluruthy, Edakochi, Perumbadappu, Kumbalangi and Chellanam. Call with the exact locality and injury details; they may be able to assist or advise on transport within that area. ([animalrescuekochi.org](https://animalrescuekochi.org/contact-us/?utm_source=openai))\n\nDo not put turmeric, oil, powders, or household remedies into the wound. If the dog cannot stand, is struggling to breathe, has severe bleeding, or has been hit by a vehicle, tell the clinic/rescue that clearly—it needs urgent veterinary assessment.\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://animalrescuekochi.org/contact-us/?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "Who can treat an injured street dog in Port Blair?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if safe, and handle as little as possible—pain can make even a gentle community dog frightened. If there is active bleeding and the dog accepts it, hold a clean cloth with steady gentle pressure.\n\n**For treatment in/near Port Blair:**\n\n- **Veterinary Hospital, Junglighat** — **03192 232252**  \n- **Veterinary Hospital, Garacharma** — **03192 252823**\n\nThe Andaman & Nicobar Animal Husbandry Department has published these two government veterinary hospitals for animal emergencies in the municipal area, including round-the-clock service. Call first, explain that it is an **injured street dog**, give the landmark, and ask whether they can receive the dog now or advise transport. ([andamanchronicle.net](https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai))\n\nIf you cannot move the dog safely, contact the **Directorate of Animal Husbandry & Veterinary Services, Haddo, Port Blair: 03192 233286** for guidance to the appropriate local veterinary service. ([ahvs.andamannicobar.gov.in](https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai))\n\nDo not put turmeric, oil, powders, or other household substances on the wound.\nhttps://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai\nhttps://ahvs.andamannicobar.gov.in/contactus?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only."
+        },
+        {
+          "role": "assistant",
+          "content": "Madras Veterinary College Teaching Hospital,  \nMadras Veterinary College Campus, Vepery, Chennai – 600 007, Tamil Nadu.\n"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "ba96b156f60d91a102056b88622d99822e557010758644cf433bb670593a536f",
+        "search": "005eb995968419f0ed91fa2bfb66c349de78d4e3269dfbe02a132d02eb1356c4",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T17:57:20.229930+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T17:57:22.694865+00:00",
+      "elapsed_seconds": 2.465,
+      "step": 0,
+      "seconds": 2.465,
+      "response": {
+        "id": "resp_012af9fc6d11d950016ae2378051d087d2aadb80aca216b094",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 9633,
+          "input_tokens_details": {
+            "cached_tokens": 9580,
+            "cache_write_tokens": 50
+          },
+          "output_tokens": 117,
+          "output_tokens_details": {
+            "reasoning_tokens": 68
+          },
+          "total_tokens": 9750
+        },
+        "output": [
+          {
+            "id": "msg_012af9fc6d11d950016ae23781e3d487d29e2ce393253b9290",
+            "content": [
+              {
+                "annotations": [],
+                "text": "Which **Rampur district/state** do you mean? There are several places named Rampur in India. Please share the state or a nearby landmark, and I’ll find the nearest veterinary hospital for the community dog.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T17:57:22.695026+00:00",
+      "elapsed_seconds": 2.465,
+      "status": "completed",
+      "error": null,
+      "answer": "Which **Rampur district/state** do you mean? There are several places named Rampur in India. Please share the state or a nearby landmark, and I’ll find the nearest veterinary hospital for the community dog.",
+      "citations": []
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 2.465,
+  "history_messages": 8,
+  "completed_at": "2026-10-28T17:57:22.695143+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "original40"
+}

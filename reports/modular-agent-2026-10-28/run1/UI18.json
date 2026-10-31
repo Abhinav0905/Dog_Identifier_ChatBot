@@ -1,0 +1,354 @@
+{
+  "id": "UI18",
+  "question": "An injured community cat is hiding near Andheri East, Mumbai. Where can I get treatment and how should I move her?",
+  "expected": "Cat-appropriate safe handling and supported Mumbai treatment options; no forcing handling or assuming an owner.",
+  "execution_order": 7,
+  "previous_verdict": "PARTIAL",
+  "previous_reason": "Now supplies a Mumbai small-animal hospital, full address and labelled clinical contact, but entirely omits the requested cat-specific handling/transport advice.",
+  "status": "completed",
+  "answer": "Keep the cat quiet and away from traffic. **Do not reach into her hiding place or try to grab her**—a frightened injured cat can panic and worsen an injury.\n\n### Treatment options\n\n1. **The Feline Foundation Community Veterinary Clinic — Andheri West**  \n   **Bungalow 104, JP Road, opposite Veda Factory, Aram Nagar Part 2, Machlimar, Versova, Andheri West, Mumbai 400061**  \n   **99676 86918 / 93245 24373**  \n   They treat injured community cats, including wound care and maggot removal, and can admit cats or perform surgery when needed. Their clinic is Monday–Saturday; registration is first-come, first-served and limited, so call before leaving. ([thefelinefoundation.com](https://thefelinefoundation.com/community_clinic_mumbai/))\n\n2. **Kashika’s Pampered Paws Veterinary Clinic — Andheri East**  \n   **90049 23590 / 90380 43590**  \n   Their own page lists veterinary consultations and emergency consultations during clinic hours, Tuesday–Sunday, 11 am–9 pm. Call first, explain that she is a **community cat hiding and injured**, and confirm they can receive her. ([kashikaspamperedpaws.com](https://kashikaspamperedpaws.com/contact.html))\n\n3. **If she cannot be safely moved:**  \n   **World For All: WhatsApp 98200 01506.** A Mumbai animal-support directory lists Andheri East coverage and says on-site treatment/admission may be possible case by case. This does **not** guarantee pickup or availability, so share an exact landmark, a clear photo from a safe distance, and whether she is bleeding, unable to stand, or breathing with difficulty. ([taleoftails.in](https://taleoftails.in/home/))\n\n### How to move her safely\n- Place a **secure cat carrier or sturdy ventilated box** close to her hiding spot, with its opening facing her. Put a small amount of strong-smelling food just inside only if she is alert and interested. Step back and allow her to enter voluntarily.  \n- Once she is inside, close it securely, cover the carrier loosely with a light cloth to reduce fear, and keep it level during travel.  \n- If she will not enter, **do not pull her out, chase her, or use a towel if she is struggling.** Ask the clinic or rescue contact for help with safe capture.  \n- If she has severe bleeding, trouble breathing, cannot stand, or seems barely responsive, treat it as urgent and call while arranging transport. Do not force food or water.",
+  "raw_answer": "Keep the cat quiet and away from traffic. **Do not reach into her hiding place or try to grab her**—a frightened injured cat can panic and worsen an injury.\n\n### Treatment options\n\n1. **The Feline Foundation Community Veterinary Clinic — Andheri West**  \n   **Bungalow 104, JP Road, opposite Veda Factory, Aram Nagar Part 2, Machlimar, Versova, Andheri West, Mumbai 400061**  \n   **99676 86918 / 93245 24373**  \n   They treat injured community cats, including wound care and maggot removal, and can admit cats or perform surgery when needed. Their clinic is Monday–Saturday; registration is first-come, first-served and limited, so call before leaving. ([thefelinefoundation.com](https://thefelinefoundation.com/community_clinic_mumbai/))\n\n2. **Kashika’s Pampered Paws Veterinary Clinic — Andheri East**  \n   **90049 23590 / 90380 43590**  \n   Their own page lists veterinary consultations and emergency consultations during clinic hours, Tuesday–Sunday, 11 am–9 pm. Call first, explain that she is a **community cat hiding and injured**, and confirm they can receive her. ([kashikaspamperedpaws.com](https://kashikaspamperedpaws.com/contact.html))\n\n3. **If she cannot be safely moved:**  \n   **World For All: WhatsApp 98200 01506.** A Mumbai animal-support directory lists Andheri East coverage and says on-site treatment/admission may be possible case by case. This does **not** guarantee pickup or availability, so share an exact landmark, a clear photo from a safe distance, and whether she is bleeding, unable to stand, or breathing with difficulty. ([taleoftails.in](https://taleoftails.in/home/))\n\n### How to move her safely\n- Place a **secure cat carrier or sturdy ventilated box** close to her hiding spot, with its opening facing her. Put a small amount of strong-smelling food just inside only if she is alert and interested. Step back and allow her to enter voluntarily.  \n- Once she is inside, close it securely, cover the carrier loosely with a light cloth to reduce fear, and keep it level during travel.  \n- If she will not enter, **do not pull her out, chase her, or use a towel if she is struggling.** Ask the clinic or rescue contact for help with safe capture.  \n- If she has severe bleeding, trouble breathing, cannot stand, or seems barely responsive, treat it as urgent and call while arranging transport. Do not force food or water.",
+  "citations": [
+    {
+      "url": "https://thefelinefoundation.com/community_clinic_mumbai/",
+      "title": "Affordable Vet Care for Stray Animals In Mumbai | Community Clinic by TFF",
+      "start_index": 653,
+      "end_index": 738
+    },
+    {
+      "url": "https://kashikaspamperedpaws.com/contact.html",
+      "title": "Contact & Enquiry | Kashika's Pampered Paws",
+      "start_index": 1073,
+      "end_index": 1148
+    },
+    {
+      "url": "https://taleoftails.in/home/",
+      "title": "Tale of Tails | Pet Care Assistant",
+      "start_index": 1555,
+      "end_index": 1603
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T17:57:29.363175+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "An injured community cat is hiding near Andheri East, Mumbai. Where can I get treatment and how should I move her?",
+      "history": [
+        {
+          "role": "user",
+          "content": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if you can do so safely, and avoid touching the deep wound. If it is bleeding, apply **gentle continuous pressure with a clean cloth** only if the dog will tolerate it without struggling.\n\n**Closest practical help for Vijay Nagar:**\n\n1. **Arham Animal Ambulance, Indore — call 89890 80848.**  \n   Their published coverage includes **Vijay Nagar** and they state that they rescue and treat injured street/community animals. Tell them the exact landmark, that it is a **deep wound**, whether the dog can stand, and send a photo if asked. Availability still needs confirmation when you call. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))\n\n2. **If you can safely transport the dog:**  \n   **Government Veterinary Hospital & Polyclinic**  \n   Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore  \n   Phone: **0731 2543312**  \n   Online listings show 7 am–6 pm, but please call first to confirm the doctor and admission. ([kaam.com](https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nDo not put turmeric, oil, powder, or household remedies into the wound. If the dog becomes weak, cannot stand, has heavy bleeding, or you see maggots, describe that clearly on the ambulance call—it needs urgent veterinary care.\nhttps://alwayscare.org/ambulances/indore?utm_source=openai\nhttps://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "I found an injured community dog in Kochi, Kerala. Where can I take it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if it is safe to do so, and minimise handling—an injured dog may bite from pain or fear. If there is active external bleeding and the dog allows it, hold a clean cloth gently and continuously over the wound while arranging help.\n\n**In Kochi, these are practical options:**\n\n1. **Government Veterinary Hospital, Edappally**  \n   Ganapathy Temple Road, Edappally P.O., Kochi – 682024.  \n   This is listed by Kerala’s Animal Husbandry Department as a veterinary hospital. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n2. **Veterinary Polyclinic, Mattancherry**  \n   Star Junction, Mattancherry P.O., Kochi – 682002.  \n   Also listed by the Kerala Animal Husbandry Department. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n3. **Government Mobile Veterinary Hospital / District Veterinary Centre, Ernakulam**  \n   Club Road, Ernakulam – 682011  \n   **Phone: 0484 2351264**  \n   The department lists this number for the Mobile Veterinary Hospital and District Veterinary Centre. Call to ask whether they can attend or direct you to the nearest clinician; a listing does not guarantee immediate pickup. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n4. **Animal Rescue Kochi — rescue support**  \n   **Helpline: 97477 73950**  \n   Their rescue coverage is limited mainly to Fort Kochi, Mattancherry, Thoppumpady, Wellington Island, Palluruthy, Edakochi, Perumbadappu, Kumbalangi and Chellanam. Call with the exact locality and injury details; they may be able to assist or advise on transport within that area. ([animalrescuekochi.org](https://animalrescuekochi.org/contact-us/?utm_source=openai))\n\nDo not put turmeric, oil, powders, or household remedies into the wound. If the dog cannot stand, is struggling to breathe, has severe bleeding, or has been hit by a vehicle, tell the clinic/rescue that clearly—it needs urgent veterinary assessment.\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://animalrescuekochi.org/contact-us/?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "Who can treat an injured street dog in Port Blair?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if safe, and handle as little as possible—pain can make even a gentle community dog frightened. If there is active bleeding and the dog accepts it, hold a clean cloth with steady gentle pressure.\n\n**For treatment in/near Port Blair:**\n\n- **Veterinary Hospital, Junglighat** — **03192 232252**  \n- **Veterinary Hospital, Garacharma** — **03192 252823**\n\nThe Andaman & Nicobar Animal Husbandry Department has published these two government veterinary hospitals for animal emergencies in the municipal area, including round-the-clock service. Call first, explain that it is an **injured street dog**, give the landmark, and ask whether they can receive the dog now or advise transport. ([andamanchronicle.net](https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai))\n\nIf you cannot move the dog safely, contact the **Directorate of Animal Husbandry & Veterinary Services, Haddo, Port Blair: 03192 233286** for guidance to the appropriate local veterinary service. ([ahvs.andamannicobar.gov.in](https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai))\n\nDo not put turmeric, oil, powders, or other household substances on the wound.\nhttps://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai\nhttps://ahvs.andamannicobar.gov.in/contactus?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only."
+        },
+        {
+          "role": "assistant",
+          "content": "Madras Veterinary College Teaching Hospital,  \nMadras Veterinary College Campus, Vepery, Chennai – 600 007, Tamil Nadu.\n"
+        },
+        {
+          "role": "user",
+          "content": "Find a veterinary hospital for a street dog in Rampur."
+        },
+        {
+          "role": "assistant",
+          "content": "Which **Rampur district/state** do you mean? There are several places named Rampur in India. Please share the state or a nearby landmark, and I’ll find the nearest veterinary hospital for the community dog.\n"
+        },
+        {
+          "role": "user",
+          "content": "I mean Rampur in Uttar Pradesh."
+        },
+        {
+          "role": "assistant",
+          "content": "For a street dog in **Rampur, Uttar Pradesh**, try:\n\n**Government Animal Hospital, Rampur**  \nMohsin-e-Azam Colony, Mohalla Khatkan, Rampur – 244901.  \nThis listing identifies it as an animal hospital; please call the district Animal Husbandry office first to confirm the veterinarian is available. ([yappe.in](https://yappe.in/uttar-pradesh/rampur/government-animal-hospital-rampur/1659565?utm_source=openai))\n\n**Chief Veterinary Officer, Animal Husbandry, Rampur**  \nVikas Bhawan, Rampur  \n**0595-2352485 / 8765957909**  \nAsk for the nearest government veterinary hospital that can examine an injured community dog. The contact is listed in the Uttar Pradesh Animal Husbandry Department directory. ([up.goashray.in](https://up.goashray.in/Upload/ChiefVeterinaryOfficers.pdf?utm_source=openai))\n\nIf the dog is currently injured, keep it away from traffic if safe and minimise handling.\nhttps://yappe.in/uttar-pradesh/rampur/government-animal-hospital-rampur/1659565?utm_source=openai\nhttps://up.goashray.in/Upload/ChiefVeterinaryOfficers.pdf?utm_source=openai"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "ba96b156f60d91a102056b88622d99822e557010758644cf433bb670593a536f",
+        "search": "005eb995968419f0ed91fa2bfb66c349de78d4e3269dfbe02a132d02eb1356c4",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T17:57:29.363358+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T17:57:48.596207+00:00",
+      "elapsed_seconds": 19.233,
+      "step": 0,
+      "seconds": 19.233,
+      "response": {
+        "id": "resp_0bac4cd77e17804a016ae2378972c087d29610a686bd685a1a",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 26593,
+          "input_tokens_details": {
+            "cached_tokens": 9691,
+            "cache_write_tokens": 306
+          },
+          "output_tokens": 988,
+          "output_tokens_details": {
+            "reasoning_tokens": 440
+          },
+          "total_tokens": 27581
+        },
+        "output": [
+          {
+            "id": "ws_0bac4cd77e17804a016ae2378a941487d2aa0b433413845bc5",
+            "action": {
+              "query": "Mumbai veterinary hospital Andheri East official contact injured cat",
+              "type": "search",
+              "queries": [
+                "Mumbai veterinary hospital Andheri East official contact injured cat",
+                "site:mcgm.gov.in veterinary hospital Andheri Mumbai animal hospital contact",
+                "site:maharashtra.gov.in veterinary hospital Andheri East Mumbai"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://www.mcgm.gov.in/irj/go/km/docs/documents/HomePage%20Data/FAQ/SANKALAN%20FAQ%20-ENGLISH%20COPY-%20MCGM%20MUMBAI.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.animalhopefoundation.in/rescue/report/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://strayicare.org/helpline"
+                },
+                {
+                  "type": "url",
+                  "url": "https://kashikaspamperedpaws.com/contact.html"
+                },
+                {
+                  "type": "url",
+                  "url": "https://trustedvets.in/clinic/shivansh-pet-clinic/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://alwayscare.arham.org/ambulances/mumbai"
+                },
+                {
+                  "type": "url",
+                  "url": "https://shakehands.co.in/pages/veterinary"
+                },
+                {
+                  "type": "url",
+                  "url": "https://taleoftails.in/home/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://upasanasociety.org/wp-content/uploads/2023/09/Animal-and-Bird-Rescue-NGOs-AreaWise.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.jinseva.in/helpline"
+                },
+                {
+                  "type": "url",
+                  "url": "https://thefelinefoundation.com/community_clinic_mumbai/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://vetlistr.com/dr-anils-pet-animal-clinic-jvlr/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://anacarefoundation.com/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://portal.mcgm.gov.in/irj/go/km/docs/documents/HomePage%20Data/Whats%20New/English%20Year%20Book%202025%20Portal.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://gazetteers.maharashtra.gov.in/cultural.maharashtra.gov.in/english/gazetteer/greater_bombay/otherdepartments.html"
+                },
+                {
+                  "type": "url",
+                  "url": "https://maharashtra.gov.in/Site/Upload/Pdf/Animal_Husbandry.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://crmapp.mcgm.gov.in/irj/go/km/docs/documents/MCGM%20Department%20List/Veterinary%20Health%20Dept/Contact%20details%20of%20Dog%20Control%20Offices%20and%20Cattle%20Pound%20Office.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://trac.cmcaindia.org/wp-content/uploads/2024/06/Mumbai-Helplines.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/mumbai/comments/1eyfmfp"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianCats/comments/1x1dwrn/hello_everyone/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianPets/comments/1to13fj/comprehensive_list_of_animal_helplines_shelters/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianCats/comments/1urss79/need_help_and_guidance_for_a_injured_stray_cat_at/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianCats/comments/1tq90b1/urgent_mumbai_injuredinfected_cat/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/mumbai/comments/18tkvf2"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/mumbai/comments/1tuqmhr/urgent_help_needed_injured_stray_cat_in_ghansoli/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianPets/comments/1tq8z0y/urgent_mumbai_injuredinfected_cat/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/mumbai/comments/1vh0vke/government_veterinary_hospitals_in_mumbai/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianPets/comments/1oo2wff"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/mumbai/comments/1m271kz"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/mumbai/comments/1vxp6or/looking_for_reliable_vets_in_andheri_east_jb_nagar/"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "ws_0bac4cd77e17804a016ae2378f90c487d29780e3ff96d87f26",
+            "action": {
+              "type": "open_page",
+              "url": "https://thefelinefoundation.com/community_clinic_mumbai/"
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_0bac4cd77e17804a016ae23795597c87d293ee4d3229da77b5",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 738,
+                    "start_index": 653,
+                    "title": "Affordable Vet Care for Stray Animals In Mumbai | Community Clinic by TFF",
+                    "type": "url_citation",
+                    "url": "https://thefelinefoundation.com/community_clinic_mumbai/"
+                  },
+                  {
+                    "end_index": 1148,
+                    "start_index": 1073,
+                    "title": "Contact & Enquiry | Kashika's Pampered Paws",
+                    "type": "url_citation",
+                    "url": "https://kashikaspamperedpaws.com/contact.html"
+                  },
+                  {
+                    "end_index": 1603,
+                    "start_index": 1555,
+                    "title": "Tale of Tails | Pet Care Assistant",
+                    "type": "url_citation",
+                    "url": "https://taleoftails.in/home/"
+                  }
+                ],
+                "text": "Keep the cat quiet and away from traffic. **Do not reach into her hiding place or try to grab her**—a frightened injured cat can panic and worsen an injury.\n\n### Treatment options\n\n1. **The Feline Foundation Community Veterinary Clinic — Andheri West**  \n   **Bungalow 104, JP Road, opposite Veda Factory, Aram Nagar Part 2, Machlimar, Versova, Andheri West, Mumbai 400061**  \n   **99676 86918 / 93245 24373**  \n   They treat injured community cats, including wound care and maggot removal, and can admit cats or perform surgery when needed. Their clinic is Monday–Saturday; registration is first-come, first-served and limited, so call before leaving. ([thefelinefoundation.com](https://thefelinefoundation.com/community_clinic_mumbai/))\n\n2. **Kashika’s Pampered Paws Veterinary Clinic — Andheri East**  \n   **90049 23590 / 90380 43590**  \n   Their own page lists veterinary consultations and emergency consultations during clinic hours, Tuesday–Sunday, 11 am–9 pm. Call first, explain that she is a **community cat hiding and injured**, and confirm they can receive her. ([kashikaspamperedpaws.com](https://kashikaspamperedpaws.com/contact.html))\n\n3. **If she cannot be safely moved:**  \n   **World For All: WhatsApp 98200 01506.** A Mumbai animal-support directory lists Andheri East coverage and says on-site treatment/admission may be possible case by case. This does **not** guarantee pickup or availability, so share an exact landmark, a clear photo from a safe distance, and whether she is bleeding, unable to stand, or breathing with difficulty. ([taleoftails.in](https://taleoftails.in/home/))\n\n### How to move her safely\n- Place a **secure cat carrier or sturdy ventilated box** close to her hiding spot, with its opening facing her. Put a small amount of strong-smelling food just inside only if she is alert and interested. Step back and allow her to enter voluntarily.  \n- Once she is inside, close it securely, cover the carrier loosely with a light cloth to reduce fear, and keep it level during travel.  \n- If she will not enter, **do not pull her out, chase her, or use a towel if she is struggling.** Ask the clinic or rescue contact for help with safe capture.  \n- If she has severe bleeding, trouble breathing, cannot stand, or seems barely responsive, treat it as urgent and call while arranging transport. Do not force food or water.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T17:57:48.596471+00:00",
+      "elapsed_seconds": 19.234,
+      "status": "completed",
+      "error": null,
+      "answer": "Keep the cat quiet and away from traffic. **Do not reach into her hiding place or try to grab her**—a frightened injured cat can panic and worsen an injury.\n\n### Treatment options\n\n1. **The Feline Foundation Community Veterinary Clinic — Andheri West**  \n   **Bungalow 104, JP Road, opposite Veda Factory, Aram Nagar Part 2, Machlimar, Versova, Andheri West, Mumbai 400061**  \n   **99676 86918 / 93245 24373**  \n   They treat injured community cats, including wound care and maggot removal, and can admit cats or perform surgery when needed. Their clinic is Monday–Saturday; registration is first-come, first-served and limited, so call before leaving. ([thefelinefoundation.com](https://thefelinefoundation.com/community_clinic_mumbai/))\n\n2. **Kashika’s Pampered Paws Veterinary Clinic — Andheri East**  \n   **90049 23590 / 90380 43590**  \n   Their own page lists veterinary consultations and emergency consultations during clinic hours, Tuesday–Sunday, 11 am–9 pm. Call first, explain that she is a **community cat hiding and injured**, and confirm they can receive her. ([kashikaspamperedpaws.com](https://kashikaspamperedpaws.com/contact.html))\n\n3. **If she cannot be safely moved:**  \n   **World For All: WhatsApp 98200 01506.** A Mumbai animal-support directory lists Andheri East coverage and says on-site treatment/admission may be possible case by case. This does **not** guarantee pickup or availability, so share an exact landmark, a clear photo from a safe distance, and whether she is bleeding, unable to stand, or breathing with difficulty. ([taleoftails.in](https://taleoftails.in/home/))\n\n### How to move her safely\n- Place a **secure cat carrier or sturdy ventilated box** close to her hiding spot, with its opening facing her. Put a small amount of strong-smelling food just inside only if she is alert and interested. Step back and allow her to enter voluntarily.  \n- Once she is inside, close it securely, cover the carrier loosely with a light cloth to reduce fear, and keep it level during travel.  \n- If she will not enter, **do not pull her out, chase her, or use a towel if she is struggling.** Ask the clinic or rescue contact for help with safe capture.  \n- If she has severe bleeding, trouble breathing, cannot stand, or seems barely responsive, treat it as urgent and call while arranging transport. Do not force food or water.",
+      "citations": [
+        {
+          "url": "https://thefelinefoundation.com/community_clinic_mumbai/",
+          "title": "Affordable Vet Care for Stray Animals In Mumbai | Community Clinic by TFF",
+          "start_index": 653,
+          "end_index": 738
+        },
+        {
+          "url": "https://kashikaspamperedpaws.com/contact.html",
+          "title": "Contact & Enquiry | Kashika's Pampered Paws",
+          "start_index": 1073,
+          "end_index": 1148
+        },
+        {
+          "url": "https://taleoftails.in/home/",
+          "title": "Tale of Tails | Pet Care Assistant",
+          "start_index": 1555,
+          "end_index": 1603
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 19.234,
+  "history_messages": 12,
+  "completed_at": "2026-10-28T17:57:48.596570+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "original40"
+}

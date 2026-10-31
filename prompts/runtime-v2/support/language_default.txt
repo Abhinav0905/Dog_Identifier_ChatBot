@@ -1,0 +1,1 @@
+Use the user's requested language; otherwise follow the language of their current message.

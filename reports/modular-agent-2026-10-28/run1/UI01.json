@@ -1,0 +1,293 @@
+{
+  "id": "UI01",
+  "question": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?",
+  "expected": "First aid first, then supported local treatment facilities and actionable address or contact; no guaranteed admission or pickup.",
+  "execution_order": 1,
+  "previous_verdict": "PARTIAL",
+  "previous_reason": "Deep-wound first aid is now present. The explicitly pet-treating clinic has no displayed address/contact; the addressed second listing leaves dog/cat treatment unconfirmed. No guaranteed admission or pickup.",
+  "status": "completed",
+  "answer": "Keep the dog away from traffic if you can do so safely, and avoid touching the deep wound. If it is bleeding, apply **gentle continuous pressure with a clean cloth** only if the dog will tolerate it without struggling.\n\n**Closest practical help for Vijay Nagar:**\n\n1. **Arham Animal Ambulance, Indore — call 89890 80848.**  \n   Their published coverage includes **Vijay Nagar** and they state that they rescue and treat injured street/community animals. Tell them the exact landmark, that it is a **deep wound**, whether the dog can stand, and send a photo if asked. Availability still needs confirmation when you call. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))\n\n2. **If you can safely transport the dog:**  \n   **Government Veterinary Hospital & Polyclinic**  \n   Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore  \n   Phone: **0731 2543312**  \n   Online listings show 7 am–6 pm, but please call first to confirm the doctor and admission. ([kaam.com](https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nDo not put turmeric, oil, powder, or household remedies into the wound. If the dog becomes weak, cannot stand, has heavy bleeding, or you see maggots, describe that clearly on the ambulance call—it needs urgent veterinary care.",
+  "raw_answer": "Keep the dog away from traffic if you can do so safely, and avoid touching the deep wound. If it is bleeding, apply **gentle continuous pressure with a clean cloth** only if the dog will tolerate it without struggling.\n\n**Closest practical help for Vijay Nagar:**\n\n1. **Arham Animal Ambulance, Indore — call 89890 80848.**  \n   Their published coverage includes **Vijay Nagar** and they state that they rescue and treat injured street/community animals. Tell them the exact landmark, that it is a **deep wound**, whether the dog can stand, and send a photo if asked. Availability still needs confirmation when you call. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))\n\n2. **If you can safely transport the dog:**  \n   **Government Veterinary Hospital & Polyclinic**  \n   Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore  \n   Phone: **0731 2543312**  \n   Online listings show 7 am–6 pm, but please call first to confirm the doctor and admission. ([kaam.com](https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nDo not put turmeric, oil, powder, or household remedies into the wound. If the dog becomes weak, cannot stand, has heavy bleeding, or you see maggots, describe that clearly on the ambulance call—it needs urgent veterinary care.",
+  "citations": [
+    {
+      "url": "https://alwayscare.org/ambulances/indore?utm_source=openai",
+      "title": "Animal Ambulance in Indore | Arham Always Care",
+      "start_index": 620,
+      "end_index": 698
+    },
+    {
+      "url": "https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai",
+      "title": "Government Veterinary Hospital And Polyclinic · Indore · on Kaam.com",
+      "start_index": 991,
+      "end_index": 1094
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T17:56:46.231704+00:00",
+      "elapsed_seconds": 0.001,
+      "question": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?",
+      "history": [],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "ba96b156f60d91a102056b88622d99822e557010758644cf433bb670593a536f",
+        "search": "005eb995968419f0ed91fa2bfb66c349de78d4e3269dfbe02a132d02eb1356c4",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T17:56:46.232032+00:00",
+      "elapsed_seconds": 0.001,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 79.999
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T17:56:56.593719+00:00",
+      "elapsed_seconds": 10.363,
+      "step": 0,
+      "seconds": 10.361,
+      "response": {
+        "id": "resp_04832e70b54c4276016ae2375f772887d2a12f561e8f2c5fd6",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 16669,
+          "input_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 8232
+          },
+          "output_tokens": 387,
+          "output_tokens_details": {
+            "reasoning_tokens": 82
+          },
+          "total_tokens": 17056
+        },
+        "output": [
+          {
+            "id": "ws_04832e70b54c4276016ae23760b24087d2aad6af8b59882e85",
+            "action": {
+              "query": "Indore government veterinary hospital Vijay Nagar Indore animal treatment address phone",
+              "type": "search",
+              "queries": [
+                "Indore government veterinary hospital Vijay Nagar Indore animal treatment address phone",
+                "Indore veterinary hospital injured street dog Vijay Nagar official",
+                "Indore Municipal Corporation animal helpline injured dog official"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://indore.nic.in/en/helpline/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.smc.gov.in/Home/EmergencyContactNo"
+                },
+                {
+                  "type": "url",
+                  "url": "https://alwayscare.org/ambulances/indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.indiacustomercare.com/indore-municipal-corporation-contact-no"
+                },
+                {
+                  "type": "url",
+                  "url": "https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://sniffsociety.in/blog/animal-helpline-numbers-in-indore-which-line-to-call-first"
+                },
+                {
+                  "type": "url",
+                  "url": "https://indore.mppolice.gov.in/helpline-number/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://imcindore.mp.gov.in/pdf/Important_numbers.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://portal.mcgm.gov.in/irj/go/km/docs/documents/MCGM%20Department%20List/Veterinary%20Health%20Dept/BMC%20Guidelines%20with%20respect%20to%20pet%20dogs%20and%20street%20dogs%2C%20animal%20caretakers%20and%20feeders%2C%20RWAs%20%20and%20AOAs%2C%20Public%20Institutions.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://swachhchhindwaranagarnigam.com/Portal/View/Portal.aspx"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.indorepetvet.com/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://dogwithblog.in/dog-adoption-in-indore/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://in.worldorgs.com/catalog/indore/animal-hospital/government-veterinary-hospital"
+                },
+                {
+                  "type": "url",
+                  "url": "https://urbandevelopment.up.nic.in/data/Govt_Orders/NV-8-968%5B15-06-23%5D-GO.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://mphc.gov.in/upload/indore/MPHCIND/2019/WP/15275/WP_15275_2019_Order_19-12-2025_digi.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://rabiesfreeindia.mohfw.gov.in/resources/uploads/PageContentPdf/174419151310.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.rrcat.gov.in/contact/docs/chssOMnew/HospitallistEmpanelled_v3.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/z1rb3h"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianPets/comments/1ix9y9r"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/wpwphq"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/17h472z"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1e4r2vv"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1gnyr8m"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1uh07q8/mad_dog_menace_in_our_society/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1s3ugre/urgent_an_street_dog_bit_me_in_bholaram_ustad_marg/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1ix7xrm"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1bs5j7b"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1j74cwj/street_dog_catcher_in_indore/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Vijay_Nagar%2C_Indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1r5l300/any_ngos_that_helps_street_dogs/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Maharaja_Yeshwantrao_Hospital"
+                },
+                {
+                  "type": "url",
+                  "url": "https://alwayscare.org/ambulances/indore?utm_source=openai"
+                },
+                {
+                  "type": "url",
+                  "url": "https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_04832e70b54c4276016ae23764a06c87d2bbae5b33f9b54157",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 698,
+                    "start_index": 620,
+                    "title": "Animal Ambulance in Indore | Arham Always Care",
+                    "type": "url_citation",
+                    "url": "https://alwayscare.org/ambulances/indore?utm_source=openai"
+                  },
+                  {
+                    "end_index": 1094,
+                    "start_index": 991,
+                    "title": "Government Veterinary Hospital And Polyclinic · Indore · on Kaam.com",
+                    "type": "url_citation",
+                    "url": "https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai"
+                  }
+                ],
+                "text": "Keep the dog away from traffic if you can do so safely, and avoid touching the deep wound. If it is bleeding, apply **gentle continuous pressure with a clean cloth** only if the dog will tolerate it without struggling.\n\n**Closest practical help for Vijay Nagar:**\n\n1. **Arham Animal Ambulance, Indore — call 89890 80848.**  \n   Their published coverage includes **Vijay Nagar** and they state that they rescue and treat injured street/community animals. Tell them the exact landmark, that it is a **deep wound**, whether the dog can stand, and send a photo if asked. Availability still needs confirmation when you call. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))\n\n2. **If you can safely transport the dog:**  \n   **Government Veterinary Hospital & Polyclinic**  \n   Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore  \n   Phone: **0731 2543312**  \n   Online listings show 7 am–6 pm, but please call first to confirm the doctor and admission. ([kaam.com](https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nDo not put turmeric, oil, powder, or household remedies into the wound. If the dog becomes weak, cannot stand, has heavy bleeding, or you see maggots, describe that clearly on the ambulance call—it needs urgent veterinary care.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T17:56:56.593994+00:00",
+      "elapsed_seconds": 10.363,
+      "status": "completed",
+      "error": null,
+      "answer": "Keep the dog away from traffic if you can do so safely, and avoid touching the deep wound. If it is bleeding, apply **gentle continuous pressure with a clean cloth** only if the dog will tolerate it without struggling.\n\n**Closest practical help for Vijay Nagar:**\n\n1. **Arham Animal Ambulance, Indore — call 89890 80848.**  \n   Their published coverage includes **Vijay Nagar** and they state that they rescue and treat injured street/community animals. Tell them the exact landmark, that it is a **deep wound**, whether the dog can stand, and send a photo if asked. Availability still needs confirmation when you call. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))\n\n2. **If you can safely transport the dog:**  \n   **Government Veterinary Hospital & Polyclinic**  \n   Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore  \n   Phone: **0731 2543312**  \n   Online listings show 7 am–6 pm, but please call first to confirm the doctor and admission. ([kaam.com](https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nDo not put turmeric, oil, powder, or household remedies into the wound. If the dog becomes weak, cannot stand, has heavy bleeding, or you see maggots, describe that clearly on the ambulance call—it needs urgent veterinary care.",
+      "citations": [
+        {
+          "url": "https://alwayscare.org/ambulances/indore?utm_source=openai",
+          "title": "Animal Ambulance in Indore | Arham Always Care",
+          "start_index": 620,
+          "end_index": 698
+        },
+        {
+          "url": "https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai",
+          "title": "Government Veterinary Hospital And Polyclinic · Indore · on Kaam.com",
+          "start_index": 991,
+          "end_index": 1094
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 10.363,
+  "history_messages": 0,
+  "completed_at": "2026-10-28T17:56:56.594086+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "original40"
+}

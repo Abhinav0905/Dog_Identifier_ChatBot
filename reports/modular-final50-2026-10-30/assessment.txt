@@ -1,0 +1,22 @@
+LATEST COMPLETE RUN: 43 PASS / 6 PARTIAL / 1 FAIL (86%).
+The agreed target is at least 45 full passes out of 50 (90%); partial answers do not count as full passes. This final set does not meet that target.
+
+DECISION: Hold the merge and release for Iyer testing. Production and S3 remain unchanged. No product code or prompt changes were made during this evaluation.
+
+The one failure, F18, repeated in both runs: a new, explicitly different Una case incorrectly inherits Himachal Pradesh from the previous Hamirpur case, instead of clarifying the state.
+
+Six partials in run2:
+F01: conflicting published clinic addresses are not acknowledged.
+F25: advertised 24/7 hours are described as verified current opening.
+F30: seizure advice includes inappropriate keep-warm wording.
+F41: a photo is used to infer food/water availability that is not visible.
+F43: serious hypothetical symptoms receive same-day rather than immediate emergency wording.
+F48: soap washing is incorrectly extended to eye/mouth exposure.
+
+The first full attempt scored 31 PASS / 17 PARTIAL / 2 FAIL (62%) during source-empty web search behaviour. A minimal-prompt control showed the same problem; later the same control returned sources. One complete repeat of all 50 unchanged questions followed that recovery. The 86% figure is that repeat alone, not a combination of best answers. These observations suggest transient search/discovery failure; they do not prove a provider-wide outage.
+
+All 100 evaluated requests completed without API errors and without API refusal items. Appropriate scope/privacy refusals still occur where the locked rubric expects them. Both runs used the unchanged candidate and the same ordered conversations; all three photo-analysis calls completed in each run.
+
+Recommended next work, not implemented here: reset/clarify location for a new case, expose search failure distinctly from missing real-world information, handle conflicting addresses and advertised availability carefully, and tighten the specific first-aid and image-evidence instructions. The standalone package also needs a compatible web adapter and HTTP/UI acceptance before production activation.
+
+Manual acceptance review and targeted source checks are limited evidence, not a general accuracy estimate or a complete clinical/contact audit. The results and traces are preserved for handoff; no further evaluation or prompt changes are part of this final round.

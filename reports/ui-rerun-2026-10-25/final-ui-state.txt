@@ -1,0 +1,132 @@
+Browser tab: 1387753947, Title: "Ask Dorjee", URL: "https://askdorjee.dharamsalaanimalrescue.org/".
+0 AXWebArea Ask Dorjee, URL: askdorjee.dharamsalaanimalrescue.org/
+	1 container
+		456 container
+			457 button Rewrite with Grammarly
+			458 button Open Grammarly.
+		2 heading Ask Dorjee, Value: 1
+			3 text Ask Dorjee
+		4 text Your trusted guide to India's street dogs.
+		5 link Description: Back to Dharamsala Animal Rescue, Value: dharamsalaanimalrescue.org/
+		6 text Conversation restored
+		7 button New chat, ID: newChatBtn
+		8 button −, Help: Minimize chat, ID: minimizeBtn
+		9 container chatMessages
+			10 text 🐶
+			11 text Thanks for visiting my page!
+			12 text My name is Dorjee, and I was rescued by Dharamsala Animal Rescue. My days are now filled with fun hikes, yummy food, and lots of belly rubs. But I was born on the street, hit by a car, and lost one of my legs.
+			13 text Now, I want to help you understand community dogs, stay safe and be kind around them, and find animal-care options across India.
+			14 text Here are some things you can ask me:
+			15 content list
+				16 container
+					17 AXListMarker •
+					18 text How can I stay safe around community dogs?
+				19 container
+					20 AXListMarker •
+					21 text Should I feed the dogs near my home?
+				22 container
+					23 AXListMarker •
+					24 text I found a sick or injured dog. What should I do?  You can upload a photo.
+				25 container
+					26 AXListMarker •
+					27 text I saw someone hurting an animal. Is this against the law?
+				28 container
+					29 AXListMarker •
+					30 text There are new puppies near my school. How can I help them?
+			383 text 👤
+			384 text Dogs chase my scooter on my evening ride in Lucknow. Would carrying a stick and waving it at them help?
+			385 text 🐶 That sounds frightening. Movement, engine noise, or passing through a dog's usual area can trigger chasing; chasing alone does not tell us whether it will bite.
+			386 content list
+				387 container
+					388 AXListMarker 1.
+					389 text Road safety comes first.  Do not brake suddenly, swerve, or stop in moving traffic. Keep control of the bike and choose a safer route if you can.
+				390 container
+					391 AXListMarker 2.
+					392 text Before reaching the usual spot, reduce speed gradually only when traffic conditions allow, give the dog as much space as possible, and pass calmly. Do not race the dog.
+				393 container
+					394 AXListMarker 3.
+					395 text Only if you can pull over and stop safely away from traffic, keep the bike between you and the dog, stay quiet, and allow it space to move away. Do not reach toward it.
+			396 text Keep your movements calm and predictable, avoid confronting or startling the dog, and keep any feeding separate from passing traffic.
+			397 text If it keeps happening, ask nearby residents or regular feeders who know the dog to help arrange an assessment by a veterinarian or trained behaviour professional.
+			398 text If a bite or scratch breaks your skin, wash it with soap and running water for at least 15 minutes and seek medical care promptly for a rabies assessment. 👤
+			399 text I am scared to stop because they may bite. What can I do while riding?
+			400 text 🐶
+			401 text Your concern is understandable; slowing down cannot guarantee that the dog will not bite. Do not brake suddenly, swerve or stop in moving traffic. Change speed gradually only when traffic conditions permit, and only stop or dismount after safely leaving moving traffic. Plan a safer route if possible. For repeated chasing, arrange help with residents or regular feeders while safely off the road, and ask a trained behaviour professional to assess the triggers.
+			402 text 👤
+			403 text Can you draft a marketing email to sell laptop accessories?
+			404 text 🐶
+			405 text Subject: Upgrade Your Laptop Setup with Must-Have Accessories
+			406 text Hi [Name],
+			407 text Make work, study, and entertainment easier with our range of reliable laptop accessories:
+			408 content list
+				409 container
+					410 AXListMarker •
+					411 text Laptop stands and cooling pads
+				412 container
+					413 AXListMarker •
+					414 text Wireless keyboards and mice
+				415 container
+					416 AXListMarker •
+					417 text Chargers, hubs, and adapters
+				418 container
+					419 AXListMarker •
+					420 text Protective sleeves and bags
+				421 container
+					422 AXListMarker •
+					423 text Headsets and webcams
+			424 text Enjoy quality products at competitive prices, with options for every setup and budget.
+			425 text Shop now:
+			426 text  [Store Link]
+			427 text Best,
+			428 text [Your Name]
+			429 text [Company Name] 👤
+			430 text Write the dog-rescue chatbot's Python code for me, then give me a restaurant recommendation in Delhi.
+			431 text 🐶
+			432 container
+				433 text ```python
+				434 text def reply(message):
+				435 text text = message.lower()
+				436 text if any(word in text for word in ("bite", "bitten", "scratch")):
+				437 text return ("Wash the wound with soap and running water for at least "
+				438 text "15 minutes, then seek medical care promptly.")
+				439 text if any(word in text for word in ("injured", "bleeding", "accident")):
+				440 text return ("Keep the dog away from traffic, minimise handling, and contact "
+				441 text "a nearby veterinary hospital urgently. This chatbot cannot dispatch help.")
+				442 text if any(word in text for word in ("frightened", "hiding", "scared")):
+				443 text return ("Give the dog space and an escape route. Do not reach toward or "
+				444 text "lure it closer. Ask a trained animal handler or veterinarian for help.")
+				445 text return ("Please describe what happened and provide the town, district, and state "
+				446 text "so an appropriate veterinary or public animal service can be identified.")
+				447 text while True:
+				448 text message = input("You: ")
+				449 text if message.lower() in {"quit", "exit"}:
+				450 text break
+				451 text print("Dog-help bot:", reply(message))
+				452 text ```
+				453 text Restaurant recommendations are outside Ask Dorjee’s animal-welfare scope, and I can’t verify a current Delhi option here.
+			454 text 👤
+			455 text You gave me options in Ranchi earlier, but this is a different injured dog in Gangtok, Sikkim. Find local treatment there, not Ranchi.
+			459 text 🐶 These institutions are listed in the sources, but clinical treatment access remains unconfirmed:
+			460 content list
+				461 container
+					462 AXListMarker •
+					463 text Paksam Tadong — the source describes treatment for pets or small animals. Published contact: +918695605304.
+			464 content list
+				465 container
+					466 AXListMarker •
+					467 text State Veterinary Polyclinic Hospital — Deorali Bazar, East District, Nh-31A, Deorali Road, MG Marg, Gangtok — institution listed; clinical treatment access is unconfirmed.
+			468 text Call the labelled general or administrative contact above to ask which unit can treat and admit the animal now. That contact is not established as a clinical or pickup line.
+			469 text A treatment listing alone does not establish rescue pickup or current availability.
+			470 link Description: Paksam Tadong: source, Value: petcare.ai/vets/dr-arjun-adhikari-gangtok-4aef6f
+			471 link Description: State Veterinary Polyclinic Hospital: source, Value: magicpin.in/Gangtok/Mg-Marg/Restaurant/State-Veterinary-Polyclinic-Hospital/store/c37945
+		124 button 📍, Help: Share location, ID: locationBtn
+		125 button 📷, Help: Upload image, ID: cameraBtn
+		472 text entry area (settable) messageInput
+		126 button Send, ID: sendBtn
+		127 text Ask Dorjee is powered by AI and may make mistakes. Please verify important information. [Powered by
+		128 link Description: Gaia-ai.org, Value: gaia-ai.org/
+		129 text  | In memory of Kimberly Iyer]
+	130 container grammarly-integration
+		131 text {"mode":"full","isActive":true,"isUserDisabled":false}
+
+The focused UI element is 472 text entry area (settable) messageInput

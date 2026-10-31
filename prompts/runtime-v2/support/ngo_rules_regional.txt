@@ -1,0 +1,17 @@
+REGIONAL FALLBACK OUTPUT RULES:
+- Return only a current dog rescue, animal rescue, or animal-welfare NGO/nonprofit whose searched
+  source explicitly supports operations across {{REQUIRED_REGION}}.
+- The requested city is {{REQUIRED_CITY}}. Do not claim exact-city coverage. The application will
+  label every result as a regional contact whose {{REQUIRED_CITY}} coverage must be confirmed.
+- service_region must exactly copy {{REQUIRED_REGION}}. service_area_evidence must explicitly name
+  {{REQUIRED_REGION}} and support regional operations, a regional network, or a regional service.
+- animal_rescue_evidence must state direct dog rescue, animal rescue, animal treatment,
+  rehabilitation, shelter, or animal-welfare field work.
+- Prefer an official organisation website or contact page. Exclude government, municipal, police,
+  regulator, board, animal-control, SPCA, generic charity, directory-only, and commercial listings.
+- Include phone, address, and opening_hours only when a searched source explicitly publishes that
+  exact detail; otherwise return an empty string for the field.
+- For this regional fallback, return zero organizations unless at least one current official phone
+  or WhatsApp number can be verified.
+- Set every verification boolean to true only when searched source text supports it. Return fewer
+  results, including zero, rather than inventing a contact.

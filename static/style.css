@@ -26,69 +26,125 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    background: var(--bg);
+    background: #183c2d;
     color: var(--text);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    isolation: isolate;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+}
+
+body::before {
+    background: #183c2d url("/static/assets/dharamsala-streetscape.jpg") center / cover no-repeat;
+    z-index: -2;
+}
+
+body::after {
+    background: rgba(12, 32, 24, 0.08);
+    z-index: -1;
 }
 
 /* Header */
 .header {
-    background: var(--primary-dark);
+    background: rgba(45, 85, 65, 0.98);
+    backdrop-filter: blur(12px);
     color: white;
-    padding: 12px 20px;
+    padding: 18px 34px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
     width: 100%;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .header h1 {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 34px;
+    font-weight: 750;
+    letter-spacing: 0;
+    line-height: 1;
 }
 
 .header .subtitle {
-    font-size: 12px;
-    opacity: 0.8;
+    font-size: 16px;
+    opacity: 0.9;
+    margin-top: 6px;
 }
 
-.header-icon {
-    font-size: 28px;
+.header-brand {
+    min-width: 0;
 }
 
-.header-right {
+.header-home-link {
     margin-left: auto;
-    display: flex;
-    gap: 8px;
-}
-
-.header-right a {
-    color: white;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     font-size: 13px;
-    padding: 4px 10px;
-    border-radius: 4px;
-    background: rgba(255,255,255,0.15);
+    font-weight: 650;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.header-right a:hover {
-    background: rgba(255,255,255,0.25);
+.header-home-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+}
+
+.header-home-link span {
+    color: var(--primary-dark);
+}
+
+.header-home-link img {
+    display: block;
+    height: 46px;
+    width: auto;
 }
 
 /* Landing area */
 .landing {
     flex: 1;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
-    padding-bottom: 80px;
+    min-height: 0;
+    padding: clamp(12px, 2vh, 24px) 20px;
+    width: 100%;
 }
 
 .landing.hidden {
     display: none;
+}
+
+.dorjee-intro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: min(92vw, 520px);
+}
+
+.dorjee-portrait {
+    display: block;
+    width: min(46vw, 460px);
+    max-width: 100%;
+    max-height: calc(100vh - 240px);
+    object-fit: contain;
+    filter: drop-shadow(0 18px 30px rgba(7, 24, 17, 0.34));
 }
 
 .open-chat-btn {
@@ -100,22 +156,75 @@ body {
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 16px rgba(45,106,79,0.3);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    box-shadow: 0 14px 34px rgba(16, 48, 35, 0.34);
 }
 
 .open-chat-btn:hover {
     background: var(--primary-dark);
-    box-shadow: 0 6px 20px rgba(45,106,79,0.4);
+    box-shadow: 0 16px 38px rgba(16, 48, 35, 0.42);
     transform: translateY(-1px);
+}
+
+.open-chat-btn:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 3px;
 }
 
 /* Chat toolbar */
 .chat-toolbar {
     display: flex;
-    justify-content: flex-end;
-    padding: 6px 10px 0;
-    background: var(--bg-chat);
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 42px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.84);
+    border-bottom: 1px solid rgba(45, 106, 79, 0.1);
+}
+
+.conversation-tools {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.conversation-status {
+    color: var(--text-light);
+    font-size: 11px;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.conversation-status.error {
+    color: var(--danger);
+}
+
+.new-chat-btn {
+    flex-shrink: 0;
+    border: 1px solid rgba(45, 106, 79, 0.28);
+    border-radius: 999px;
+    background: #f5fbf7;
+    color: var(--primary-dark);
+    padding: 6px 11px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, opacity 0.2s;
+}
+
+.new-chat-btn:hover:not(:disabled) {
+    background: #e6f4ec;
+    border-color: rgba(45, 106, 79, 0.45);
+}
+
+.new-chat-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
 }
 
 .minimize-btn {
@@ -139,18 +248,25 @@ body {
     color: var(--primary);
 }
 
+.minimize-btn:focus-visible,
+.new-chat-btn:focus-visible {
+    outline: 3px solid rgba(45, 106, 79, 0.28);
+    outline-offset: 2px;
+}
+
 /* Chat container */
 .chat-container {
     display: flex;
     flex-direction: column;
-    max-width: 800px;
+    max-width: 860px;
     width: 100%;
     flex: 1;
-    background: var(--bg-chat);
+    background: rgba(255, 255, 255, 0.94);
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    box-shadow: 0 18px 60px rgba(10, 35, 25, 0.28);
     overflow: hidden;
     margin: 20px;
+    backdrop-filter: blur(8px);
 }
 
 .chat-container.hidden {
@@ -320,7 +436,7 @@ body {
 .input-area {
     padding: 16px 20px;
     border-top: 1px solid var(--border);
-    background: white;
+    background: rgba(255, 255, 255, 0.92);
 }
 
 .input-row {
@@ -366,6 +482,13 @@ body {
 
 .btn-primary:hover {
     background: var(--primary-dark);
+}
+
+.btn:disabled,
+.btn-icon:disabled,
+.input-row textarea:disabled {
+    cursor: not-allowed;
+    opacity: 0.58;
 }
 
 .btn-icon {
@@ -470,6 +593,28 @@ body {
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 12px;
+    align-items: flex-start;
+}
+
+.resource-card {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 5px;
+    max-width: min(100%, 360px);
+}
+
+.resource-detail {
+    display: inline-flex;
+    color: #39594a;
+    font-size: 12px;
+    line-height: 1.35;
+    padding: 0 4px;
+    text-decoration: none;
+}
+
+.resource-phone {
+    color: var(--primary-dark);
+    font-weight: 700;
 }
 
 /* Loading indicator */
@@ -509,9 +654,43 @@ body {
     font-size: 11px;
     color: var(--text-light);
     text-align: center;
-    background: #f9f9f9;
+    background: rgba(249, 249, 249, 0.92);
     border-top: 1px solid #eee;
     border-radius: 0 0 16px 16px;
+}
+
+.site-footer {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 8px 16px;
+    background: rgba(27, 67, 50, 0.92);
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 11px;
+    line-height: 1.3;
+    text-align: center;
+}
+
+.site-footer span + span::before {
+    content: " | ";
+}
+
+@media (max-width: 640px) {
+    .site-footer span {
+        display: block;
+    }
+
+    .site-footer span + span::before {
+        content: "";
+    }
+}
+
+.site-footer a {
+    color: inherit;
+    text-underline-offset: 2px;
+}
+
+.site-footer a:hover {
+    color: white;
 }
 
 /* Responsive */
@@ -519,9 +698,48 @@ body {
     .chat-container { max-width: 100%; margin: 0; border-radius: 0; flex: 1; }
     .status-bar { border-radius: 0; }
     .message { max-width: 92%; }
-    .header h1 { font-size: 15px; }
+    .header {
+        align-items: flex-start;
+        padding: 14px 16px;
+        gap: 12px;
+    }
+    .header h1 { font-size: 26px; }
+    .header .subtitle { font-size: 13px; }
+    .header-home-link {
+        padding: 7px 8px;
+        gap: 8px;
+    }
+    .header-home-link span {
+        display: none;
+    }
+    .header-home-link img {
+        height: 38px;
+    }
+    .chat-toolbar {
+        gap: 8px;
+    }
+    .conversation-tools {
+        gap: 7px;
+    }
+    .conversation-status {
+        max-width: 150px;
+    }
+    .landing {
+        min-height: 0;
+        padding: 14px 16px 20px;
+    }
+    .dorjee-intro {
+        gap: 14px;
+    }
+    .dorjee-portrait {
+        width: min(86vw, 360px);
+        max-height: calc(100vh - 230px);
+    }
     .map-action-btn,
     .resource-link {
+        width: 100%;
+    }
+    .resource-card {
         width: 100%;
     }
 }

@@ -1,0 +1,316 @@
+{
+  "id": "UI01",
+  "question": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?",
+  "expected": "First aid first, then supported local treatment facilities and actionable address or contact; no guaranteed admission or pickup.",
+  "execution_order": 1,
+  "previous_verdict": "PARTIAL",
+  "previous_reason": "Deep-wound first aid is now present. The explicitly pet-treating clinic has no displayed address/contact; the addressed second listing leaves dog/cat treatment unconfirmed. No guaranteed admission or pickup.",
+  "status": "completed",
+  "answer": "A deep wound needs veterinary treatment **as soon as possible**. If the dog is bleeding, keep people and traffic away and apply **gentle continuous pressure with a clean cloth** only if the dog allows it safely. Don’t put turmeric, oil, powder, or antiseptic into the wound.\n\n**Closest help for Vijay Nagar:**  \n- **Arham Animal Ambulance (covers Vijay Nagar): 89890 80848** — call and describe the wound and exact landmark; their page says they handle injured community animals and ask callers to confirm ambulance availability. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))  \n- If you can safely arrange transport, **Dr. Vet Ranch Pet Vet Clinic & Surgery Centre**, **125 Durgesh Complex, Scheme No. 114, opposite C21 Mall, A.B. Road, Vijay Nagar, Indore – 452010**; listed phone: **81051 03484**. Please call first to confirm they can immediately take a seriously injured street dog. ([justdial.com](https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET?utm_source=openai))  \n- A government option is **Government Veterinary Hospital & Polyclinic**, **Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore** — **0731 254 3312**. Published listings give hours as 7 am–6 pm, but please confirm before leaving. ([sunaam.io](https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nAvoid trying to lift or restrain a frightened dog yourself. If anyone is bitten or scratched while helping, wash the area with soap and running water for **15 minutes** and seek medical care promptly.",
+  "raw_answer": "A deep wound needs veterinary treatment **as soon as possible**. If the dog is bleeding, keep people and traffic away and apply **gentle continuous pressure with a clean cloth** only if the dog allows it safely. Don’t put turmeric, oil, powder, or antiseptic into the wound.\n\n**Closest help for Vijay Nagar:**  \n- **Arham Animal Ambulance (covers Vijay Nagar): 89890 80848** — call and describe the wound and exact landmark; their page says they handle injured community animals and ask callers to confirm ambulance availability. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))  \n- If you can safely arrange transport, **Dr. Vet Ranch Pet Vet Clinic & Surgery Centre**, **125 Durgesh Complex, Scheme No. 114, opposite C21 Mall, A.B. Road, Vijay Nagar, Indore – 452010**; listed phone: **81051 03484**. Please call first to confirm they can immediately take a seriously injured street dog. ([justdial.com](https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET?utm_source=openai))  \n- A government option is **Government Veterinary Hospital & Polyclinic**, **Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore** — **0731 254 3312**. Published listings give hours as 7 am–6 pm, but please confirm before leaving. ([sunaam.io](https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nAvoid trying to lift or restrain a frightened dog yourself. If anyone is bitten or scratched while helping, wash the area with soap and running water for **15 minutes** and seek medical care promptly.",
+  "citations": [
+    {
+      "url": "https://alwayscare.org/ambulances/indore?utm_source=openai",
+      "title": "Animal Ambulance in Indore | Arham Always Care",
+      "start_index": 530,
+      "end_index": 608
+    },
+    {
+      "url": "https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET?utm_source=openai",
+      "title": "Dr. Vet Ranch Pet Vet Clinic & Surgery Centre in Vijay Nagar,Indore - Best Veterinary Clinics near me in Indore - Justdial",
+      "start_index": 920,
+      "end_index": 1099
+    },
+    {
+      "url": "https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai",
+      "title": "Government Veterinary Hospital And Polyclinic - Veterinary in Indore | Sunaam",
+      "start_index": 1344,
+      "end_index": 1475
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T18:03:02.641870+00:00",
+      "elapsed_seconds": 0.001,
+      "question": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?",
+      "history": [],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T18:03:02.642666+00:00",
+      "elapsed_seconds": 0.002,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 79.998
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T18:03:11.605975+00:00",
+      "elapsed_seconds": 8.965,
+      "step": 0,
+      "seconds": 8.963,
+      "response": {
+        "id": "resp_0afd7dd1343decf9016ae238d71e0c87d2a04d48fb24f85965",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 16818,
+          "input_tokens_details": {
+            "cached_tokens": 8311,
+            "cache_write_tokens": 24
+          },
+          "output_tokens": 435,
+          "output_tokens_details": {
+            "reasoning_tokens": 81
+          },
+          "total_tokens": 17253
+        },
+        "output": [
+          {
+            "id": "ws_0afd7dd1343decf9016ae238d7e30887d29741c4e226b2e846",
+            "action": {
+              "query": "Indore government veterinary hospital Vijay Nagar Indore address phone animal treatment",
+              "type": "search",
+              "queries": [
+                "Indore government veterinary hospital Vijay Nagar Indore address phone animal treatment",
+                "Indore veterinary hospital injured dog government veterinary hospital address phone",
+                "Indore animal welfare injured street dog veterinary clinic Vijay Nagar"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://alwayscare.org/ambulances/indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://sniffsociety.in/blog/animal-helpline-numbers-in-indore-which-line-to-call-first"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.indorepetvet.com/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://thepetoo.com/indore/vets"
+                },
+                {
+                  "type": "url",
+                  "url": "https://streets.openalfa.in/streets/n-service-road-indore-tahsil-indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.lybrate.com/indore/clinics/veterinary-clinics/vijay-nagar-indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET"
+                },
+                {
+                  "type": "url",
+                  "url": "https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://dogwithblog.in/dog-adoption-in-indore/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.practo.com/indore/hospital/government-veterinary-hospital-1-rau"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.citywity.in/veterinary-hospitals/indore/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.rrcat.gov.in/contact/docs/chssOMnew/HospitallistEmpanelled_v3.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/IndianPets/comments/1ix9y9r"
+                },
+                {
+                  "type": "url",
+                  "url": "https://awbi.gov.in/uploads/regulations/170445670534AR%202022-23%20-%20English_compressed.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.mppcb.mp.gov.in/proc/BMW/BMW-Finale-Report-2022.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/17h472z"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.ppam.co.in/PPAMDirectory2018.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/z1rb3h"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/wpwphq"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.iitg.ac.in/medical/GMISagree2025.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.mospi.gov.in/sites/default/files/economic-census/Directories_of_Establishment/Urban_23.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1uh07q8/mad_dog_menace_in_our_society/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1s3ugre/urgent_an_street_dog_bit_me_in_bholaram_ustad_marg/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1ix7xrm"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indiedogs/comments/1rbflsk/need_help_regarding_injured_street_pup/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1bs5j7b"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1llslm8"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Vijay_Nagar%2C_Indore"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1gnyr8m"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Indore/comments/1e6vxp8"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Maharaja_Yeshwantrao_Hospital"
+                },
+                {
+                  "type": "url",
+                  "url": "https://alwayscare.org/ambulances/indore?utm_source=openai"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET?utm_source=openai"
+                },
+                {
+                  "type": "url",
+                  "url": "https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_0afd7dd1343decf9016ae238db3a6487d28b3f3fd737b8996c",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 608,
+                    "start_index": 530,
+                    "title": "Animal Ambulance in Indore | Arham Always Care",
+                    "type": "url_citation",
+                    "url": "https://alwayscare.org/ambulances/indore?utm_source=openai"
+                  },
+                  {
+                    "end_index": 1099,
+                    "start_index": 920,
+                    "title": "Dr. Vet Ranch Pet Vet Clinic & Surgery Centre in Vijay Nagar,Indore - Best Veterinary Clinics near me in Indore - Justdial",
+                    "type": "url_citation",
+                    "url": "https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET?utm_source=openai"
+                  },
+                  {
+                    "end_index": 1475,
+                    "start_index": 1344,
+                    "title": "Government Veterinary Hospital And Polyclinic - Veterinary in Indore | Sunaam",
+                    "type": "url_citation",
+                    "url": "https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai"
+                  }
+                ],
+                "text": "A deep wound needs veterinary treatment **as soon as possible**. If the dog is bleeding, keep people and traffic away and apply **gentle continuous pressure with a clean cloth** only if the dog allows it safely. Don’t put turmeric, oil, powder, or antiseptic into the wound.\n\n**Closest help for Vijay Nagar:**  \n- **Arham Animal Ambulance (covers Vijay Nagar): 89890 80848** — call and describe the wound and exact landmark; their page says they handle injured community animals and ask callers to confirm ambulance availability. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))  \n- If you can safely arrange transport, **Dr. Vet Ranch Pet Vet Clinic & Surgery Centre**, **125 Durgesh Complex, Scheme No. 114, opposite C21 Mall, A.B. Road, Vijay Nagar, Indore – 452010**; listed phone: **81051 03484**. Please call first to confirm they can immediately take a seriously injured street dog. ([justdial.com](https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET?utm_source=openai))  \n- A government option is **Government Veterinary Hospital & Polyclinic**, **Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore** — **0731 254 3312**. Published listings give hours as 7 am–6 pm, but please confirm before leaving. ([sunaam.io](https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nAvoid trying to lift or restrain a frightened dog yourself. If anyone is bitten or scratched while helping, wash the area with soap and running water for **15 minutes** and seek medical care promptly.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T18:03:11.606247+00:00",
+      "elapsed_seconds": 8.966,
+      "status": "completed",
+      "error": null,
+      "answer": "A deep wound needs veterinary treatment **as soon as possible**. If the dog is bleeding, keep people and traffic away and apply **gentle continuous pressure with a clean cloth** only if the dog allows it safely. Don’t put turmeric, oil, powder, or antiseptic into the wound.\n\n**Closest help for Vijay Nagar:**  \n- **Arham Animal Ambulance (covers Vijay Nagar): 89890 80848** — call and describe the wound and exact landmark; their page says they handle injured community animals and ask callers to confirm ambulance availability. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))  \n- If you can safely arrange transport, **Dr. Vet Ranch Pet Vet Clinic & Surgery Centre**, **125 Durgesh Complex, Scheme No. 114, opposite C21 Mall, A.B. Road, Vijay Nagar, Indore – 452010**; listed phone: **81051 03484**. Please call first to confirm they can immediately take a seriously injured street dog. ([justdial.com](https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET?utm_source=openai))  \n- A government option is **Government Veterinary Hospital & Polyclinic**, **Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore** — **0731 254 3312**. Published listings give hours as 7 am–6 pm, but please confirm before leaving. ([sunaam.io](https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nAvoid trying to lift or restrain a frightened dog yourself. If anyone is bitten or scratched while helping, wash the area with soap and running water for **15 minutes** and seek medical care promptly.",
+      "citations": [
+        {
+          "url": "https://alwayscare.org/ambulances/indore?utm_source=openai",
+          "title": "Animal Ambulance in Indore | Arham Always Care",
+          "start_index": 530,
+          "end_index": 608
+        },
+        {
+          "url": "https://www.justdial.com/Indore/Dr-Vet-Ranch-Pet-Vet-Clinic-Surgery-Centre-Opposite-C21-Mall-Vijay-Nagar/0731PX731-X731-181116202854-W7U8_BZDET?utm_source=openai",
+          "title": "Dr. Vet Ranch Pet Vet Clinic & Surgery Centre in Vijay Nagar,Indore - Best Veterinary Clinics near me in Indore - Justdial",
+          "start_index": 920,
+          "end_index": 1099
+        },
+        {
+          "url": "https://sunaam.io/directory/indore/veterinary/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai",
+          "title": "Government Veterinary Hospital And Polyclinic - Veterinary in Indore | Sunaam",
+          "start_index": 1344,
+          "end_index": 1475
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 8.965,
+  "history_messages": 0,
+  "completed_at": "2026-10-28T18:03:11.606340+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "original40"
+}

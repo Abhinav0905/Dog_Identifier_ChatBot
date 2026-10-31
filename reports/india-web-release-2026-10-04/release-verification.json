@@ -1,0 +1,172 @@
+{
+  "date": "2026-10-04T10:32:14.990668-07:00",
+  "status": "Local candidate with 14 passing scenarios and 1 partial; production not verified",
+  "scope": "India-wide web chatbot. WhatsApp route retired; no messaging-channel feature work.",
+  "changes": [
+    "Model-directed need-led provider search across government hospitals, colleges, clinics and animal welfare services; bounded evidence refinement.",
+    "Current named institution and place override old context; India-only boundaries and a single ambiguity clarification; no fabricated location pin.",
+    "Phone evidence binds institution and contact role to fetched source text; clinical-service claims require separate entity-bound service evidence. Identity-only leads preserve uncertainty and trigger bounded refinement.",
+    "Humane traffic-first community-dog guidance, actual exposure versus feared bite distinction, child/Hindi handling, and urgent veterinary-first exceptions.",
+    "Narrow output checks for unsafe poisoning handling, home-remedy ambiguity, forced feeding/positioning and unrelated human-bite templates.",
+    "Honest failed/unconfigured notification states, bounded persisted retries, separate acknowledgement, ownership/admin controls and operational visibility.",
+    "Local knowledge warmup/readiness and incremental document refresh that removes obsolete Markdown vectors while preserving PDF knowledge.",
+    "Persistent deployment data, quiesced backup/restore verification, protected previous image/container and mocked startup rollback checks.",
+    "Web timeouts/retry copy, separate safe source cards, clearer India-wide scope, and notification status UI."
+  ],
+  "models": {
+    "care": "gpt-5.4",
+    "router": "gpt-5.4-mini",
+    "search": "gpt-5.4-mini",
+    "vision": "gpt-4o"
+  },
+  "care_profile": {
+    "reasoning": "medium",
+    "verbosity": "low",
+    "max_output_tokens": 1600
+  },
+  "focused_offline_regressions": [
+    {
+      "suite": "test_search_evidence",
+      "count": 40,
+      "result": "passed; model/fetch calls mocked"
+    },
+    {
+      "suite": "test_veterinary_safety",
+      "count": 17,
+      "result": "passed"
+    },
+    {
+      "suite": "test_web_region_release",
+      "count": 8,
+      "result": "passed"
+    },
+    {
+      "suite": "test_web_operations + test_deploy_release",
+      "count": 11,
+      "result": "passed; outbound transports/Docker mocked"
+    },
+    {
+      "suite": "test_web_knowledge_refresh",
+      "count": 2,
+      "result": "passed with isolated fixture stores"
+    },
+    {
+      "suite": "test_static_resource_links.js",
+      "count": 8,
+      "result": "passed"
+    }
+  ],
+  "syntax_and_whitespace": "Python compilation, JavaScript syntax, shell syntax and git diff --check passed",
+  "knowledge": {
+    "backend": "chroma",
+    "chunks": 156,
+    "embedding_status": "warm",
+    "actual_local_refresh": "dog_behaviour.md: 2 replacement chunks; 2 obsolete vector IDs removed; PDFs and unrelated records preserved",
+    "post_refresh_dry_run": "No remaining changed Markdown documents",
+    "production_refreshed": false
+  },
+  "backup": {
+    "scope": "Actual local stores, not production",
+    "files_verified": 43,
+    "restore_integrity_check": "passed",
+    "location": "Private ignored .deploy-backups directory; contents intentionally excluded from shareable artifacts"
+  },
+  "migration": {
+    "mode": "Current local backup copied into a temporary database; production database untouched",
+    "migration_runs": 2,
+    "existing_tables_checked": 11,
+    "existing_columns_and_records_preserved": true,
+    "added_columns": {
+      "alerts": [
+        "delivery_status",
+        "delivery_details",
+        "attempted_at",
+        "delivered_at",
+        "delivery_payload",
+        "delivery_attempts",
+        "delivery_retry_at",
+        "delivery_lease_token"
+      ]
+    },
+    "second_run_idempotent": true,
+    "integrity_check": "ok",
+    "foreign_key_violations": 0,
+    "pass": true,
+    "test_note": "Initial strict whole-schema equality check detected the intended additive alert columns. The corrected check verifies preservation of every existing field and row, additive columns, and second-run idempotence."
+  },
+  "browser": {
+    "scope": "Local isolated preview at http://127.0.0.1:8765; not production",
+    "date": "2026-10-04",
+    "browser": "Chrome via computer-use integration",
+    "live_model_replays": 1,
+    "replayed_case_id": "C02",
+    "observed_answer": "+91-044-25381366",
+    "checks": [
+      {
+        "check": "India-wide welcome and enabled web input",
+        "result": "pass"
+      },
+      {
+        "check": "Named clinical institution with number-only answer and separate source card",
+        "result": "pass"
+      },
+      {
+        "check": "Reload and Start Chat restore the same response and sources",
+        "result": "pass"
+      },
+      {
+        "check": "New chat clears the prior answer",
+        "result": "pass"
+      },
+      {
+        "check": "Authenticated test admin dashboard shows failed delivery, zero delivered alerts, and report still new",
+        "result": "pass"
+      },
+      {
+        "check": "Updated status panel exposes notification channel not configured",
+        "result": "pass"
+      }
+    ],
+    "screenshots": [
+      "browser-number-only.jpg",
+      "browser-operations.jpg"
+    ],
+    "limitations": [
+      "Preview process started before the final backend wording changes; browser checks establish rendered UI and persistence, not a complete retest of the final backend.",
+      "The final backend is exercised separately by the recorded FastAPI acceptance cases.",
+      "Admin data and password were synthetic test fixtures; external notifications were disabled.",
+      "No public proxy, HTTPS, production credentials, or actual operator handoff was tested."
+    ]
+  },
+  "external_notifications_sent": false,
+  "deployed": false,
+  "remaining_release_gates": [
+    "Resolve or explicitly accept the documented partial clinical-service discovery result; verify that partial answers retain useful evidence-bound contact/locality detail. The latest live C03 answer is preserved unchanged.",
+    "Identify the current public deployment URL/host and candidate image; compare effective runtime models, credentials and knowledge backend with this tested profile.",
+    "Back up and refresh the actual production stores with writers stopped; verify retrieval and local embedding warmth after restart.",
+    "Exercise the public HTTPS/proxy path, secure cookies, ownership/admin controls, request limits and a small live model smoke check.",
+    "If web reporting remains enabled, verify an explicitly authorized real receiver and operator acknowledgement; channel acceptance is not dispatch.",
+    "Verify rollback/restart and expected concurrency on the actual target host; assign monitoring, unacknowledged-alert ownership and retention periods.",
+    "Have Deb/product owner review the supplied transcripts and scope interpretation; clinical stakeholder review remains separate.",
+    "Set an acceptable search latency target; the final two-pass C03 lookup took 53.084 seconds. Measure performance under the expected concurrent load before general release."
+  ],
+  "route_inspection": {
+    "network": "blocked",
+    "web_chat": true,
+    "web_image": true,
+    "admin_operations": true,
+    "whatsapp_mounted": false
+  },
+  "live_preview_stopped": true,
+  "post_live_fixes": {
+    "final_candidate_source_sha256": "7b88ef53cd00212092b5851b6b93944d988e42ae49f2f6c0ee6501a18495b50a",
+    "live_rerun_performed": false,
+    "offline_evidence_tests_passed": 40,
+    "changes": [
+      "Source-bound locality matching tolerates punctuation and whitespace variations without accepting an absent location.",
+      "A refined partial is retained when it preserves validated facts and adds a valid phone or fuller address. Clinical adequacy remains false without service evidence."
+    ],
+    "effect_on_report": "Latest generated responses and their verdicts are unchanged. These final changes are offline-tested, not another live success."
+  },
+  "runner_sha256": "17d881456c8e36c610b85e5897076282ea9f39ba2226a3b16ee7839af36ec361"
+}

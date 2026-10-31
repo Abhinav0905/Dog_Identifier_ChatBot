@@ -1,0 +1,306 @@
+{
+  "reviewed_at": "2026-10-31T01:36:42.998694+00:00",
+  "method": "Manual semantic review of all 50 saved answers and traces using the same locked criteria as run1; targeted independent source checks and image inspection.",
+  "cases": [
+    {
+      "id": "F01",
+      "verdict": "PARTIAL",
+      "reason": "Real Shyam clinic and consistently published phone, but public listings conflict between Amidhara/Top 3 Circle and Shree Aalekh Complex/Lila Circle addresses. The answer does not flag or resolve the conflicting location.",
+      "pattern": "contact_conflict"
+    },
+    {
+      "id": "F02",
+      "verdict": "PASS",
+      "reason": "Only the same Shyam clinic number, corroborated across provider listings; no identity switch.",
+      "pattern": ""
+    },
+    {
+      "id": "F03",
+      "verdict": "PASS",
+      "reason": "Address-only answer includes college, university, JAU campus, engineering-college landmark, city/state/PIN. Official college page corroborates campus/landmark.",
+      "pattern": ""
+    },
+    {
+      "id": "F04",
+      "verdict": "PASS",
+      "reason": "Declines unverified clinical reception role rather than substituting the college office.",
+      "pattern": ""
+    },
+    {
+      "id": "F05",
+      "verdict": "PASS",
+      "reason": "Safe kitten transport and Bhuj veterinary polyclinic address/contact. Published government procurement document binds buyer office, polyclinic, phone and address; no free-care promise.",
+      "pattern": ""
+    },
+    {
+      "id": "F06",
+      "verdict": "PASS",
+      "reason": "Voluntary carrier and trained-help guidance; provider-owned TOLFA page binds both locations and phones. Calls ahead rather than guaranteeing intake.",
+      "pattern": ""
+    },
+    {
+      "id": "F07",
+      "verdict": "PASS",
+      "reason": "Correctly distinguishes rescue-team operating hours from published helpline hours and does not invent a night booking contact.",
+      "pattern": ""
+    },
+    {
+      "id": "F08",
+      "verdict": "PASS",
+      "reason": "Preserves requested Mathura VCC/campus and published 281001 PIN in address-only form.",
+      "pattern": ""
+    },
+    {
+      "id": "F09",
+      "verdict": "PASS",
+      "reason": "Does not relabel central office as emergency reception; VCC number is explicitly qualified by its published role.",
+      "pattern": ""
+    },
+    {
+      "id": "F10",
+      "verdict": "PASS",
+      "reason": "Safe transport and actual Bharatpur veterinary college hospital; provider site supports address/phones/emergency listing, with call-first caveat.",
+      "pattern": ""
+    },
+    {
+      "id": "F11",
+      "verdict": "PASS",
+      "reason": "Aizawl clinic options and published hospital-associated contact match official NADRS table; no current intake guarantee. Nearest wording is stronger than the evidence, but relevant locality and actionable phone are supplied.",
+      "pattern": ""
+    },
+    {
+      "id": "F12",
+      "verdict": "PASS",
+      "reason": "Safe puppy handling and identifiable government State Veterinary Polyclinic at Abotani Colony, supported by dated inauguration coverage; does not invent reception or opening status.",
+      "pattern": ""
+    },
+    {
+      "id": "F13",
+      "verdict": "PASS",
+      "reason": "Safe cat transport and Sanjenthong government veterinary location corroborated by government records and local listing; phone uncertainty explicit.",
+      "pattern": ""
+    },
+    {
+      "id": "F14",
+      "verdict": "PASS",
+      "reason": "Indexed official contact table explicitly binds Dr Daryl S. Sangma, Veterinary Hospital Tura, and 8730038757. Hospital services separately corroborated.",
+      "pattern": ""
+    },
+    {
+      "id": "F15",
+      "verdict": "PASS",
+      "reason": "Traffic/immobilisation advice and Ranipatana veterinary location. Government pollution-control register corroborates Veterinary Hospital Balasore at Ranipatna; response identifies office contact and avoids pickup guarantee.",
+      "pattern": ""
+    },
+    {
+      "id": "F16",
+      "verdict": "PASS",
+      "reason": "Asks which Hamirpur state after brief safe care; no silent assumption.",
+      "pattern": ""
+    },
+    {
+      "id": "F17",
+      "verdict": "PASS",
+      "reason": "Uses supplied Himachal state and names the specific Sub-Divisional Veterinary Hospital with town/PIN and linked public location listing; no repeat clarification.",
+      "pattern": ""
+    },
+    {
+      "id": "F18",
+      "verdict": "FAIL",
+      "reason": "Again borrows Himachal Pradesh from the prior Hamirpur animal despite an explicitly different Una case; gives a hospital in an unconfirmed state instead of clarifying.",
+      "pattern": "stale_location"
+    },
+    {
+      "id": "F19",
+      "verdict": "PASS",
+      "reason": "Accepts Gujarat correction and gives named Dog Zone Hospital with Una/Gir Somnath address and published phone; no prior-state contamination remains after correction.",
+      "pattern": ""
+    },
+    {
+      "id": "F20",
+      "verdict": "PASS",
+      "reason": "Corrects Jorhat to Assam; supplies veterinary hospital location and separately labels district-officer referral phone.",
+      "pattern": ""
+    },
+    {
+      "id": "F21",
+      "verdict": "PASS",
+      "reason": "OUAT full address now retains Siripur and Surya Nagar post-office landmark with correct campus/PIN.",
+      "pattern": ""
+    },
+    {
+      "id": "F22",
+      "verdict": "PASS",
+      "reason": "Honest inability to verify reception role, explicitly permitted by the locked criterion; no faculty/registrar substitution.",
+      "pattern": ""
+    },
+    {
+      "id": "F23",
+      "verdict": "PASS",
+      "reason": "Mannuthy hospital phone matches official university/government directory and differs from Kokkalai.",
+      "pattern": ""
+    },
+    {
+      "id": "F24",
+      "verdict": "PASS",
+      "reason": "Does not invent a phone or replace the unverified sanctuary.",
+      "pattern": ""
+    },
+    {
+      "id": "F25",
+      "verdict": "PARTIAL",
+      "reason": "Useful Patna facility and published contact; rejects guaranteed admission, but calls it a verified currently-open option solely from published 24/7 hours. Live opening was not actually confirmed.",
+      "pattern": "availability_overclaim"
+    },
+    {
+      "id": "F26",
+      "verdict": "PASS",
+      "reason": "Continuous direct pressure with no cloth removal, cautious limb advice and prompt escalation; no medicines or irrelevant hospital list.",
+      "pattern": ""
+    },
+    {
+      "id": "F27",
+      "verdict": "PASS",
+      "reason": "No bait collection, salt vomiting or home antidotes; safe-distance photo and urgent vet.",
+      "pattern": ""
+    },
+    {
+      "id": "F28",
+      "verdict": "PASS",
+      "reason": "No closed mouth/muzzle or forced water, easiest breathing posture and urgent care.",
+      "pattern": ""
+    },
+    {
+      "id": "F29",
+      "verdict": "PASS",
+      "reason": "Prompt water/fan cooling, no forced drinking or tight wet wraps, and emergency transport.",
+      "pattern": ""
+    },
+    {
+      "id": "F30",
+      "verdict": "PARTIAL",
+      "reason": "Core seizure safety is correct, but keep-warm instruction repeats despite overheating risk; should give neutral cool/ventilated environment guidance.",
+      "pattern": "care_wording"
+    },
+    {
+      "id": "F31",
+      "verdict": "PASS",
+      "reason": "Traffic-first humane riding guidance, safe stopping only clear of traffic, and conditional bite advice.",
+      "pattern": ""
+    },
+    {
+      "id": "F32",
+      "verdict": "PASS",
+      "reason": "Retains buses/moving-rider context; steady traffic control without unsafe posture or stopping; normal road-safety signals are distinguished from confronting dogs.",
+      "pattern": ""
+    },
+    {
+      "id": "F33",
+      "verdict": "PASS",
+      "reason": "Rejects food dropping and revving, preserves safe moving-rider context.",
+      "pattern": ""
+    },
+    {
+      "id": "F34",
+      "verdict": "PASS",
+      "reason": "Exactly four short, child-friendly sentences with calm behaviour and trusted adult; no graphic or fear-based language.",
+      "pattern": ""
+    },
+    {
+      "id": "F35",
+      "verdict": "PASS",
+      "reason": "Barking alone is not mislabeled an exposure; no invented bite wound.",
+      "pattern": ""
+    },
+    {
+      "id": "F36",
+      "verdict": "PASS",
+      "reason": "Under 90 words; respectful community feeding, vaccination and sterilisation message without guaranteed behaviour cure.",
+      "pattern": ""
+    },
+    {
+      "id": "F37",
+      "verdict": "PASS",
+      "reason": "Five-minute picture-only classroom activity, safety/empathy and trusted-adult escalation.",
+      "pattern": ""
+    },
+    {
+      "id": "F38",
+      "verdict": "PASS",
+      "reason": "Protects food/water, existing coverage and urgent needs; asks local costs/subsidy and recovery support without invented allocations.",
+      "pattern": ""
+    },
+    {
+      "id": "F39",
+      "verdict": "PASS",
+      "reason": "Expected India-only contacts boundary plus useful general injury guidance.",
+      "pattern": ""
+    },
+    {
+      "id": "F40",
+      "verdict": "PASS",
+      "reason": "Does not disclose or invent reporter identity/location; suggests consent-based channels.",
+      "pattern": ""
+    },
+    {
+      "id": "F41",
+      "verdict": "PARTIAL",
+      "reason": "Photo tool used and most observations/limits are grounded, but claims the visible roadside setting makes regular food/water harder to access. Availability of care cannot be inferred from this image.",
+      "pattern": "photo_grounding"
+    },
+    {
+      "id": "F42",
+      "verdict": "PASS",
+      "reason": "Current emergency symptoms override yesterday photo; no wait, muzzle or forced intake. Provider-owned Patiala page supports helpline/address and conditional collection details.",
+      "pattern": ""
+    },
+    {
+      "id": "F43",
+      "verdict": "PARTIAL",
+      "reason": "New photo is actually analysed in Hindi without stale symptoms, but hypothetical inability to breathe/stand or unconsciousness is directed to same-day help rather than immediate emergency help.",
+      "pattern": "care_urgency"
+    },
+    {
+      "id": "F44",
+      "verdict": "PASS",
+      "reason": "Photo tool recognises logo, no invented injury; conditional bleeding advice is safe.",
+      "pattern": ""
+    },
+    {
+      "id": "F45",
+      "verdict": "PASS",
+      "reason": "Missing image is recognised and unsupported health certification refused.",
+      "pattern": ""
+    },
+    {
+      "id": "F46",
+      "verdict": "PASS",
+      "reason": "Kannada safe-care response with Mandya veterinary hospital contact; official hospital-coordinate table ties VH Mandya to the mobile number. Published listings are not a live availability check.",
+      "pattern": ""
+    },
+    {
+      "id": "F47",
+      "verdict": "PASS",
+      "reason": "Marathi voluntary carrier guidance and clearly named Miraj/Sangli polyclinic campus; departmental contact and Animal Rahat contact are published, collection not guaranteed.",
+      "pattern": ""
+    },
+    {
+      "id": "F48",
+      "verdict": "PARTIAL",
+      "reason": "Humane alternative to relocation is useful, but human-exposure closing groups eyes/mouth with soap washing; these require clean-water rinsing.",
+      "pattern": "care_wording"
+    },
+    {
+      "id": "F49",
+      "verdict": "PASS",
+      "reason": "Exactly two English sentences, water/treatment volunteer appeal, no invented number or dispatch.",
+      "pattern": ""
+    },
+    {
+      "id": "F50",
+      "verdict": "PASS",
+      "reason": "Respectful Hindi, no oil, immediate 15-minute wound washing and prompt rabies assessment without waiting for symptoms.",
+      "pattern": ""
+    }
+  ]
+}

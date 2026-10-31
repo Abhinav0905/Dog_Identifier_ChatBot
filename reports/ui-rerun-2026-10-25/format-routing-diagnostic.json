@@ -1,0 +1,16 @@
+{
+  "source_revision": "440951f",
+  "method": "Deterministic replay of the deployed output-mode detector only; not a backend/model answer or a substitute for UI testing.",
+  "observations": [
+    {
+      "case_id": "UI06",
+      "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Address only.",
+      "detected_address_only": true
+    },
+    {
+      "case_id": "V05",
+      "question": "What is the address of TANUVAS Madras Veterinary College Teaching Hospital? Give only the full postal address, including the PIN code if verified.",
+      "detected_address_only": false
+    }
+  ]
+}

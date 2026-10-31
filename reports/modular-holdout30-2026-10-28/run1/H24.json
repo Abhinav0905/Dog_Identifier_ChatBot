@@ -1,0 +1,139 @@
+{
+  "id": "H24",
+  "city": "Nainital",
+  "question": "नैनीताल में एक सामुदायिक कुत्ते ने मेरे भाई को काटा है। घाव छोटा है। क्या सिर्फ हल्दी लगाकर कल तक इंतजार कर सकते हैं? सरल हिंदी में बताइए।",
+  "expected": "Simple Hindi; no turmeric or waiting until tomorrow; soap/running-water washing at least 15 minutes and prompt medical assessment for rabies prevention even for small wound; no invented exposure details.",
+  "status": "completed",
+  "answer": "नहीं। **सिर्फ हल्दी लगाकर कल तक इंतजार न करें।** छोटा घाव भी रैबीज़ के जोखिम में आ सकता है।\n\nअभी यह करें:\n\n1. घाव को **साबुन और बहते पानी से पूरे 15 मिनट** अच्छी तरह धोएँ।  \n2. हल्दी, तेल, राख या कोई घरेलू चीज़ घाव पर न लगाएँ।  \n3. भाई को **आज ही** डॉक्टर/सरकारी अस्पताल ले जाएँ, ताकि रैबीज़ से बचाव के टीके और ज़रूरत हो तो दूसरी देखभाल मिल सके।  \n4. घाव से खून ज्यादा निकल रहा हो तो साफ कपड़े से हल्का लगातार दबाव दें।\n\nरैबीज़ से बचाव समय पर इलाज से संभव है, इसलिए लक्षण आने का इंतजार नहीं करना चाहिए।",
+  "raw_answer": "नहीं। **सिर्फ हल्दी लगाकर कल तक इंतजार न करें।** छोटा घाव भी रैबीज़ के जोखिम में आ सकता है।\n\nअभी यह करें:\n\n1. घाव को **साबुन और बहते पानी से पूरे 15 मिनट** अच्छी तरह धोएँ।  \n2. हल्दी, तेल, राख या कोई घरेलू चीज़ घाव पर न लगाएँ।  \n3. भाई को **आज ही** डॉक्टर/सरकारी अस्पताल ले जाएँ, ताकि रैबीज़ से बचाव के टीके और ज़रूरत हो तो दूसरी देखभाल मिल सके।  \n4. घाव से खून ज्यादा निकल रहा हो तो साफ कपड़े से हल्का लगातार दबाव दें।\n\nरैबीज़ से बचाव समय पर इलाज से संभव है, इसलिए लक्षण आने का इंतजार नहीं करना चाहिए।",
+  "citations": [],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T18:24:18.765909+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "नैनीताल में एक सामुदायिक कुत्ते ने मेरे भाई को काटा है। घाव छोटा है। क्या सिर्फ हल्दी लगाकर कल तक इंतजार कर सकते हैं? सरल हिंदी में बताइए।",
+      "history": [
+        {
+          "role": "user",
+          "content": "Dogs chase my motorbike near my home in Mangaluru, Karnataka. Should I accelerate hard or keep sounding the horn?"
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds stressful. **Don’t accelerate hard or keep sounding the horn**—both can make dogs more excited or frightened, and sudden speed changes increase your crash risk.\n\nInstead:\n\n- **Keep a steady, controlled speed** and focus on the road ahead.\n- **Avoid sudden swerves or braking.** If you need to slow, do so gradually and only when traffic conditions make it safe.\n- If it is safe to pull fully out of traffic and stop, you can use the **stationary bike as a barrier** while you wait for the dogs to lose interest; then leave calmly when there is a safe gap.\n- For future rides, choose a safer route or timing if the same stretch has repeated chasing—especially near territory, food spots, or puppies.\n\nDogs often chase because the bike’s noise and movement trigger a territorial or chase response; it is not a reliable sign they will bite. If a dog ever bites or scratches you, wash the area with soap and running water for **at least 15 minutes** and seek medical care promptly for rabies prevention.\n"
+        },
+        {
+          "role": "user",
+          "content": "Would throwing biscuits from the moving bike distract them safely?"
+        },
+        {
+          "role": "assistant",
+          "content": "No—please don’t throw biscuits from a moving bike. It can distract you, draw dogs into the road, and may make them associate passing bikes with food, so they keep approaching or chasing riders.\n\nFor safety, keep both hands on the bike, ride steadily without sudden acceleration or horn use, and slow gradually only if traffic allows. If the same spot is a repeated problem, a calmer route or timing is safer than trying to feed while riding.\n"
+        },
+        {
+          "role": "user",
+          "content": "A community dog in Karimnagar may have eaten rat-poison bait and is vomiting. Should I give salt water to make it vomit more? I do not need a hospital list, just what to do now."
+        },
+        {
+          "role": "assistant",
+          "content": "**Do not give salt water or try to make the dog vomit more.** Salt water can cause serious salt poisoning, and further vomiting can make some poison exposures worse.\n\n- Keep the dog away from any more bait or contaminated food; **do not touch or collect it**. Take a photo from a safe distance if possible.\n- Keep the dog quiet, away from traffic, and minimise handling. Do **not** force water, milk, food, medicines, or home remedies.\n- Because the dog is already vomiting after possible rat poison, arrange **urgent veterinary treatment now**. If transport is possible, use a box/crate or a vehicle with a barrier and handle only as much as needed for safety.\n- If there is weakness, tremors, collapse, bleeding, breathing trouble, or seizures, treat it as an immediate emergency.\n"
+        },
+        {
+          "role": "user",
+          "content": "A dog collapsed in the heat in Madurai and is panting heavily. Is pouring ice water over it and forcing water into its mouth the best thing to do?"
+        },
+        {
+          "role": "assistant",
+          "content": "**No—do not force water into its mouth.** A collapsed, heavily panting dog may inhale it into the lungs.\n\nDo this **now**:\n\n1. Move the dog into **shade and airflow**; stop all activity.\n2. Cool the body with plenty of water that is cooler than the dog—pour or spray it over the **neck, chest/belly, and thighs**, while fanning. **Avoid pouring water over the face/head** because breathing is already difficult. Ice water is not necessary; use whatever clean water is available quickly. ([rspca.org.uk](https://www.rspca.org.uk/adviceandwelfare/pets/dogs/health/heatstroke?utm_source=openai))\n3. Let a conscious dog choose its easiest position to breathe. Do not muzzle it, force it onto its side, or cover it with a wet towel.\n4. If it can swallow normally, leave a bowl of water nearby for **small voluntary sips only**—do not pour water in.\n5. This needs **urgent veterinary care** even if the dog appears better after cooling. Collapse and heavy panting are heatstroke warning signs, and internal injury can continue after the dog cools. ([rspca.org.uk](https://www.rspca.org.uk/adviceandwelfare/pets/dogs/health/firstaid?utm_source=openai))\nhttps://www.rspca.org.uk/adviceandwelfare/pets/dogs/health/heatstroke?utm_source=openai\nhttps://www.rspca.org.uk/adviceandwelfare/pets/dogs/health/firstaid?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "A community puppy in Dharwad is having a seizure. Someone says to hold its tongue and pour milk into its mouth. What should we do first?"
+        },
+        {
+          "role": "assistant",
+          "content": "**First, keep people safe and prevent injury:** move furniture, stones, traffic hazards, and other animals away, but **do not hold the puppy down or put fingers near its mouth**. It cannot swallow its tongue, and it may bite involuntarily during a seizure.\n\n**Do not pour milk, water, food, or medicine into its mouth.** It could choke or inhale liquid.\n\n- Keep the area quiet and dim; do not crowd the puppy.\n- Note the start time and, from a safe distance, take a short video if that does not delay help.\n- Once the shaking stops, keep the puppy warm and quiet in a ventilated box/carrier for transport, with minimal handling.\n- **Urgent veterinary care is needed now**, especially if the seizure lasts about 5 minutes or more, repeats, the puppy does not regain awareness, or there may be poisoning or injury. Ongoing seizures are an emergency. ([merckvetmanual.com](https://www.merckvetmanual.com/special-pet-topics/emergencies/evaluation-and-initial-treatment-of-dog-and-cat-emergencies?utm_source=openai))\nhttps://www.merckvetmanual.com/special-pet-topics/emergencies/evaluation-and-initial-treatment-of-dog-and-cat-emergencies?utm_source=openai"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T18:24:18.766068+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T18:24:24.114814+00:00",
+      "elapsed_seconds": 5.349,
+      "step": 0,
+      "seconds": 5.349,
+      "response": {
+        "id": "resp_06cba2301148517c016ae23dd2d98087d2aafd255ced4ea169",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 9646,
+          "input_tokens_details": {
+            "cached_tokens": 9313,
+            "cache_write_tokens": 330
+          },
+          "output_tokens": 223,
+          "output_tokens_details": {
+            "reasoning_tokens": 39
+          },
+          "total_tokens": 9869
+        },
+        "output": [
+          {
+            "id": "msg_06cba2301148517c016ae23dd3c6b487d2be127160d0f47094",
+            "content": [
+              {
+                "annotations": [],
+                "text": "नहीं। **सिर्फ हल्दी लगाकर कल तक इंतजार न करें।** छोटा घाव भी रैबीज़ के जोखिम में आ सकता है।\n\nअभी यह करें:\n\n1. घाव को **साबुन और बहते पानी से पूरे 15 मिनट** अच्छी तरह धोएँ।  \n2. हल्दी, तेल, राख या कोई घरेलू चीज़ घाव पर न लगाएँ।  \n3. भाई को **आज ही** डॉक्टर/सरकारी अस्पताल ले जाएँ, ताकि रैबीज़ से बचाव के टीके और ज़रूरत हो तो दूसरी देखभाल मिल सके।  \n4. घाव से खून ज्यादा निकल रहा हो तो साफ कपड़े से हल्का लगातार दबाव दें।\n\nरैबीज़ से बचाव समय पर इलाज से संभव है, इसलिए लक्षण आने का इंतजार नहीं करना चाहिए।",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T18:24:24.114992+00:00",
+      "elapsed_seconds": 5.349,
+      "status": "completed",
+      "error": null,
+      "answer": "नहीं। **सिर्फ हल्दी लगाकर कल तक इंतजार न करें।** छोटा घाव भी रैबीज़ के जोखिम में आ सकता है।\n\nअभी यह करें:\n\n1. घाव को **साबुन और बहते पानी से पूरे 15 मिनट** अच्छी तरह धोएँ।  \n2. हल्दी, तेल, राख या कोई घरेलू चीज़ घाव पर न लगाएँ।  \n3. भाई को **आज ही** डॉक्टर/सरकारी अस्पताल ले जाएँ, ताकि रैबीज़ से बचाव के टीके और ज़रूरत हो तो दूसरी देखभाल मिल सके।  \n4. घाव से खून ज्यादा निकल रहा हो तो साफ कपड़े से हल्का लगातार दबाव दें।\n\nरैबीज़ से बचाव समय पर इलाज से संभव है, इसलिए लक्षण आने का इंतजार नहीं करना चाहिए।",
+      "citations": []
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 5.349,
+  "history_messages": 10,
+  "completed_at": "2026-10-28T18:24:24.115058+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "care_and_context"
+}

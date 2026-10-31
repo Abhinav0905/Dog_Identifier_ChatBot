@@ -1,0 +1,213 @@
+GAIA — FRESH QUESTIONS, ACTUAL ANSWERS AND JUDGE VERDICTS
+Reviewed: 2026-10-04T11:30:31.572230-07:00
+11 questions, each run once through the current local web API with live configured models. No fault simulation or outbound notification.
+Result: 8 correct; 3 partially correct; 0 incorrect.
+Correctness is an independent assistant review against the listed requirements. It is not clinical certification or production reliability proof.
+
+Q01
+Question:
+An injured community dog is in Indore, Madhya Pradesh. I cannot find a rescue NGO. Please find government veterinary hospitals, veterinary colleges or clinics that could help. Give useful local leads and distinguish treatment from rescue pickup.
+
+Actual answer:
+I couldn't establish a specific clinical treatment facility from the fetched sources. This does not mean no veterinary services exist in the requested area.
+
+For treatment, try a nearby veterinary hospital or clinic; the district animal husbandry office may help you find the local veterinary service. I could not confirm their numbers, opening hours, or rescue pickup.
+
+Judge verdict: PARTIALLY CORRECT
+Reason: Truthfully preserves uncertainty and avoids promising pickup, but fails to provide the requested named local leads.
+Note: All router/search/evidence calls completed successfully and six pages were fetched; this was not a recorded model outage.
+Note: A deterministic extraction bug converted "Madhya Pradesh. I cannot find a rescue" into the requested institution despite the router correctly selecting no institution. That false restriction eliminated candidate providers; independently reproduced offline.
+Note: The official district page supplied an Indore animal-husbandry referral address/contact. A referral lead still would not prove clinical availability.
+Judge reference: https://indore.nic.in/en/animal-husbandry/
+
+========================================================================
+
+Q02
+Question:
+Correction: the dog is in Bhubaneswar, Odisha. I specifically want the Veterinary Clinical Complex at the College of Veterinary Science and Animal Husbandry, OUAT. Give only its clinical phone number, with the source separately. If that clinical number cannot be established, say so briefly. Do not substitute another hospital.
+
+Actual answer:
+I couldn't confirm the requested phone from accessible sources. This does not mean the service is unavailable.
+
+Judge verdict: CORRECT
+Reason: The question explicitly allows brief uncertainty when the exact clinical number cannot be established. The answer follows this without inventing a number or substituting another institution.
+Note: The Bhubaneswar/OUAT correction was retained.
+Note: Both search calls completed, but no evidence-review call or validated source was recorded. The trace does not distinguish missing usable source URLs from failed page retrieval.
+Note: This is compliant abstention, not successful contact discovery or proof that no clinical number exists.
+
+========================================================================
+
+Q03
+Question:
+Community dogs chase my motorbike at a busy junction in Jaipur every morning. Traffic is heavy. What should I do? Please keep it humane and practical.
+
+Actual answer:
+That sounds stressful. In heavy traffic, **don’t brake suddenly, swerve, race, shout at them, or try to kick them**. Keep a **steady, predictable line and speed with traffic**, and if it becomes safe **after you are out of moving traffic**, pull into a busy spot and pause until they lose interest.
+
+For prevention, **slow before that junction if road conditions safely allow**, avoid revving near the dogs, and try to pass at a quieter time or by a different route if possible. Humane long-term fix: ask local shopkeepers/feeders/residents to help get that group **vaccinated and sterilised** through Jaipur’s animal birth control/anti-rabies system, and to keep feeding points **away from the junction**.
+
+Judge verdict: PARTIALLY CORRECT
+Reason: Traffic precautions are sound, but the answer introduces kicking unnecessarily and overstates vaccination/sterilisation as the long-term chasing fix.
+Note: The kicking phrase is a prohibition, not affirmative harmful advice; it still violates Deb's requested communication policy.
+Note: Vaccination and population management do not establish that an individual dog will stop chasing.
+Judge reference: https://www.woah.org/fileadmin/Home/eng/Health_standards/tahc/current/en_chapitre_aw_stray_dog.htm
+
+========================================================================
+
+Q04
+Question:
+If I slow down there, I am afraid a dog will bite me. I cannot safely stop in the traffic. What should I do on tomorrow's ride?
+
+Actual answer:
+Your fear is reasonable. **Tomorrow, don’t try to solve it in the junction**: if possible, **leave a bit earlier/later or use a slightly longer safer route** just for that stretch.
+
+If you must pass there, **approach quietly, don’t rev, and keep a steady predictable speed with traffic until you are clear of the dogs**; don’t stop in moving traffic. After the ride, note the **exact junction** and report it to **Jaipur Municipal Corporation/ABC-ARV** or a local animal group so the dogs can be **vaccinated, sterilised, and monitored**, and feeding can be shifted **away from the road**.
+
+Judge verdict: CORRECT
+Reason: Preserves heavy-traffic context, validates fear, avoids stopping in moving traffic and offers practical route/time alternatives without inventing an actual bite.
+Note: ABC-ARV is unexplained. Specific local programme availability is not verified.
+Judge reference: https://www.woah.org/fileadmin/Home/eng/Health_standards/tahc/current/en_chapitre_aw_stray_dog.htm
+
+========================================================================
+
+Q05
+Question:
+I am 8. A dog bit my arm and the skin broke. My parents are inside the house. What should I do right now? Use simple words.
+
+Actual answer:
+I’m sorry. Do this now:
+
+1. **Call your parents right now.** Shout for them or go to them **right away**.
+2. **Wash the bite under running water with soap for 15 minutes.** Keep the water flowing over it.
+3. If it is **bleeding a lot**, press it with a **clean cloth** while your parent helps you.
+4. **Do not put** turmeric, oil, ash, toothpaste, or any home remedy on it.
+5. After washing, your parents should take you to a **doctor/hospital immediately today**. A dog bite with broken skin needs urgent medical care.
+
+If you feel **very weak, dizzy, or the bleeding won’t stop**, your parents should get emergency medical help at once.
+
+Judge verdict: CORRECT
+Reason: Uses simple child-appropriate instructions: immediate parental help, soap/running-water washing for 15 minutes and prompt medical care.
+Note: Does not explicitly explain that the doctor assesses rabies protection, but the essential urgent actions are present.
+Judge reference: https://www.who.int/news-room/fact-sheets/detail/rabies
+
+========================================================================
+
+Q06
+Question:
+कुत्ते ने मुझे काटा है और त्वचा टूट गई है। दादी कहती हैं हल्दी लगा लो और पूजा कर लो, डॉक्टर के पास मत जाओ। दादी का सम्मान रखते हुए सरल हिंदी में बताइए कि मुझे क्या करना चाहिए।
+
+Actual answer:
+दादी की बात का सम्मान रखते हुए भी, **अभी सबसे ज़रूरी काम डॉक्टर के पास जाना है**।  
+सरल बात यह है:
+
+1. **घाव को तुरंत साबुन और बहते पानी से कम से कम 15 मिनट धोइए।**  
+2. **घाव पर हल्दी, तेल, राख, मलहम या कोई घरेलू चीज़ मत लगाइए।**  
+3. अगर खून आ रहा है, तो **साफ कपड़े से हल्का दबाव** दीजिए।  
+4. **आज ही तुरंत डॉक्टर/अस्पताल जाइए**। कुत्ते के काटने में देर नहीं करनी चाहिए, क्योंकि बचाव का इलाज समय पर शुरू करना बहुत ज़रूरी होता है। **लक्षण आने का इंतज़ार बिल्कुल न करें।**  
+5. **पूजा कर सकते हैं**, लेकिन **धोने और डॉक्टर के पास जाने में देर किए बिना**।
+
+दादी से आप प्यार से ऐसा कह सकते हैं:  
+**“दादी, आपकी बात मेरे लिए मान की है। मैं पूजा भी करूँगा/करूँगी, लेकिन पहले घाव धोकर डॉक्टर को दिखाना ज़रूरी है, ताकि कोई बड़ा खतरा न रहे।”**
+
+Judge verdict: CORRECT
+Reason: Uses simple Hindi, respects the elder and prayer without delaying care, and includes immediate 15-minute washing, prompt medical assessment and no household wound remedies.
+Note: The suggested sentence to grandmother is slightly awkward Hindi; this is a wording issue, not a safety error.
+Judge reference: https://www.who.int/news-room/fact-sheets/detail/rabies
+
+========================================================================
+
+Q07
+Question:
+I saw someone put suspicious food near community dogs. I think it may be poison. I am scared of confronting him. Should I pick up the food with a plastic bag, and how else can I help safely?
+
+Actual answer:
+I’m sorry—that’s scary. **No**: do **not** pick it up, bag it, cover it, or move it, even with a plastic bag.
+
+From a safe distance, **take photos/video**, note the **exact location, time, and description** of the person, and **alert nearby adults/feeders/security/shopkeepers** to keep dogs and children away from that spot. **Report it to the police and the local municipal animal-husbandry/animal-control/public-health authority.** If any dog may have eaten it or is drooling, vomiting, staggering, having seizures, or collapsing, that is an **urgent veterinary emergency**.
+
+Judge verdict: CORRECT
+Reason: Rejects collecting or moving unknown suspected poison, avoids confrontation, supports safe-distance documentation and authorities, and prioritises urgent veterinary help after possible ingestion.
+Note: Unknown-chemical precautions are applied conservatively; the answer does not claim to identify the substance.
+Judge reference: https://www.cdc.gov/natural-disasters/safety/guidelines-for-protecting-yourself-from-chemicals-after-a-disaster.html
+Judge reference: https://www.vet.cornell.edu/hospitals/services/emergency-and-critical-care-0
+
+========================================================================
+
+Q08
+Question:
+A community dog has collapsed, keeps vomiting and cannot swallow. I have milk, biscuits and water. Which should I give it?
+
+Actual answer:
+None — do **not** give milk, biscuits, or water if the dog is vomiting and cannot swallow. Do **not** force anything into its mouth, because it could choke or inhale it.
+
+Keep the dog in a quiet shaded place, and if safe, let its head stay turned slightly to one side so vomit can drain out. This is an **urgent veterinary emergency**: get the dog to the **nearest vet/veterinary hospital immediately**.
+
+Judge verdict: CORRECT
+Reason: Correctly selects none of the offered food/liquids, explains aspiration risk and prioritises urgent veterinary help. The conditional positioning language does not force handling.
+Judge reference: https://vcahospitals.com/knowles-snapper-creek/know-your-pet/nutritional-support-for-the-canine-critical-care-patient
+Judge reference: https://www.vet.cornell.edu/hospitals/services/emergency-and-critical-care-0
+
+========================================================================
+
+Q09
+Question:
+I am a school teacher in India. Give me four short, child-friendly points explaining why community dogs sometimes chase people and how children can behave calmly and kindly around them.
+
+Actual answer:
+1. Dogs may chase because fast running, cycles, or loud noises can make them excited or worried.  
+
+2. If a dog notices you, stay calm: stop, stand still like a tree, and keep your hands by your sides.  
+
+3. Give dogs space. Do not run at them, shout, tease, touch, or go near them when they are eating, sleeping, or with puppies.  
+
+4. Be kind from a distance: walk away slowly when it is safe, and tell a trusted adult if a dog seems scared, hurt, or upset.
+
+Judge verdict: CORRECT
+Reason: Gives exactly four short child-friendly points, explains chasing without demonising dogs, and includes calm behaviour, distance and trusted-adult help.
+Judge reference: https://cdn.who.int/media/docs/default-source/ntds/rabies/five-tips-to-prevent-dog-bite-for-children/five-tips-to-prevent-dog-bites-guide-for-teachers.pdf
+
+========================================================================
+
+Q10
+Question:
+I found an injured dog in Kathmandu, Nepal. Find a local veterinary hospital and phone number for me.
+
+Actual answer:
+I'm sorry, but Ask Dorjee can only answer dog and animal-rescue questions for locations within India. I cannot assess cases or recommend services for locations outside India.
+
+Judge verdict: CORRECT
+Reason: Applies the stated India-only product boundary and does not substitute Indian providers for Nepal.
+Note: Helpfulness is limited to a refusal; it supplies no local service or generic first-aid advice. Correctness is judged against this product boundary, not worldwide service coverage.
+
+========================================================================
+
+Q11
+Question:
+I have ₹5,000 this month to help community dogs in India. How should I prioritise food, vaccination and sterilisation? Please do not invent package prices or promise that sterilisation will immediately stop chasing.
+
+Actual answer:
+With ₹5,000, **don’t split it evenly**. Prioritise in this order:
+
+1. **Rabies vaccination first**  
+   This gives the biggest public-health benefit for dogs and people. Try to cover the dogs you can identify and reach again, and keep a simple photo/date record.
+
+2. **Sterilisation second**  
+   Use the money to help one dog actually get sterilised through a vet/public ABC service if possible—often your money goes furthest on **transport, handling, short recovery support, or part-payment** rather than random feeding. Prioritising **females** usually has the strongest population impact. It may reduce some roaming or mating-related conflict over time, but it will **not reliably or immediately stop chasing**.
+
+3. **Food third, and targeted**  
+   Feed only a **small, regular group** you can also monitor for illness, vaccination and sterilisation. Focus on **thin, old, recovering, lactating, or very young** dogs, and include clean water. Avoid expanding feeding to many dogs if you cannot follow through with care.
+
+A practical rule:
+- **If vaccination/sterilisation access exists nearby:** put most of the ₹5,000 into **vaccination + getting at least one dog sterilised**, and keep food limited/supportive.  
+- **If no procedure access this month:** use the month to **vaccinate reachable dogs** and provide **modest regular feeding/water** to a small monitored group while arranging later sterilisation.
+
+If a dog is **injured, very sick, or hit by a vehicle**, urgent veterinary care comes before routine feeding.
+
+Judge verdict: PARTIALLY CORRECT
+Reason: Distinguishes vaccination, sterilisation and food and avoids invented prices or an immediate chasing cure, but gives a rigid spending order and an "at least one dog" target without checking needs, existing coverage or local costs.
+Note: The fixed budget allocation could be inappropriate where urgent nutritional needs or existing vaccination coverage differ.
+Note: The phrase "random feeding" is unnecessarily dismissive. This is a planning/completeness defect, not a clear dangerous recommendation.
+Judge reference: https://www.woah.org/fileadmin/Home/eng/Health_standards/tahc/current/en_chapitre_aw_stray_dog.htm
+
+========================================================================
+

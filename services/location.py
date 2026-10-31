@@ -6,9 +6,12 @@ and Dharamsala jurisdiction verification.
 from PIL import Image
 from PIL.ExifTags import TAGS, GPSTAGS
 from typing import Optional
+from functools import lru_cache
 import io
+import json
 import logging
 import math
+from pathlib import Path
 import config
 from services.image_processing import register_heif_support
 
@@ -86,6 +89,12 @@ SERVICE_AREA_POLYGON: tuple[tuple[float, float], ...] = (
     (32.169574, 76.301985),  # Chakban Banwala
     (32.181542, 76.373371),  # Yol
     (32.148737, 76.417314),  # Chamunda Devi Temple, Padar
+)
+
+# Simplified ADM0 boundary published by geoBoundaries under CC0 1.0.
+INDIA_BOUNDARY_PATH = Path(__file__).with_name("india_boundary.geojson")
+INDIA_BOUNDARY_SOURCE_URL = (
+    "https://www.geoboundaries.org/api/current/gbOpen/IND/ADM0/"
 )
 
 
@@ -198,6 +207,67 @@ def _point_in_polygon(lat: float, lng: float, polygon: tuple[tuple[float, float]
     return inside
 
 
+@lru_cache(maxsize=1)
+def _india_boundary_polygons() -> tuple[tuple[tuple[tuple[float, float], ...], ...], ...]:
+    """Load India ADM0 polygons as rings of (lat, lng) points."""
+    try:
+        payload = json.loads(INDIA_BOUNDARY_PATH.read_text(encoding="utf-8"))
+        geometry = payload["features"][0]["geometry"]
+        geometry_type = geometry["type"]
+        coordinates = geometry["coordinates"]
+    except (OSError, ValueError, KeyError, IndexError, TypeError) as exc:
+        logger.error("India boundary data could not be loaded: %s", exc)
+        return ()
+
+    if geometry_type == "Polygon":
+        raw_polygons = [coordinates]
+    elif geometry_type == "MultiPolygon":
+        raw_polygons = coordinates
+    else:
+        logger.error("Unsupported India boundary geometry type: %s", geometry_type)
+        return ()
+
+    polygons = []
+    for raw_polygon in raw_polygons:
+        rings = []
+        for raw_ring in raw_polygon:
+            ring = tuple(
+                (float(point[1]), float(point[0]))
+                for point in raw_ring
+                if isinstance(point, (list, tuple)) and len(point) >= 2
+            )
+            if len(ring) >= 3:
+                rings.append(ring)
+        if rings:
+            polygons.append(tuple(rings))
+    return tuple(polygons)
+
+
+def india_boundary_available() -> bool:
+    """Return True when the bundled India boundary can be loaded."""
+    return bool(_india_boundary_polygons())
+
+
+def is_in_india(lat: float, lng: float) -> bool:
+    """Return True when coordinates fall within India's bundled ADM0 boundary."""
+    try:
+        lat = float(lat)
+        lng = float(lng)
+    except (TypeError, ValueError):
+        return False
+    if not (-90 <= lat <= 90 and -180 <= lng <= 180):
+        return False
+
+    for rings in _india_boundary_polygons():
+        outer_ring, *holes = rings
+        if not _point_in_polygon(lat, lng, outer_ring):
+            continue
+        if any(_point_in_polygon(lat, lng, hole) for hole in holes):
+            continue
+        return True
+    return False
+
+
 def nearest_service_area_checkpoint(lat: float, lng: float) -> dict:
     """Return the nearest named point from Deb's Dharamsala route map."""
     nearest = min(
@@ -236,6 +306,7 @@ def build_jurisdiction_details(lat: float, lng: float, source: str) -> dict:
         "source": source,
         "lat": round(lat, 6),
         "lng": round(lng, 6),
+        "in_india": is_in_india(lat, lng),
         "distance_km": nearest["distance_km"],
         "allowed_radius_km": DHARAMSALA_REGION_RADIUS_KM,
         "in_jurisdiction": in_jurisdiction,

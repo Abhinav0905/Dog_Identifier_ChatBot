@@ -1,0 +1,9 @@
+
+
+APPLICATION-DISCOVERED EXACT-CITY CANDIDATES:
+{{CANDIDATES_JSON}}
+
+The application is independently checking these untrusted discovery candidates against their
+official websites. Continue the source-backed search for additional organizations rather than
+limiting the response to this list. If the same organization is returned, keep it on the same
+official website domain and do not create a duplicate entry.

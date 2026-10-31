@@ -1,0 +1,141 @@
+{
+  "checked_on": "2026-10-28",
+  "scope": "Targeted verification; linked pages are not guaranteed current service availability.",
+  "checks": [
+    {
+      "cases": [
+        "UI02"
+      ],
+      "url": "https://ahd.cditproject.org/contact/",
+      "finding": "Confirms the Edappally hospital street address; does not show the claimed phone in the fetched page."
+    },
+    {
+      "cases": [
+        "UI02"
+      ],
+      "url": "https://www.kvasu.ac.in/institution/district/6",
+      "finding": "A source present in the agent trace does publish 0484-2228573 for VH Edappally and VPC Mattancherry. This prevents calling it simply fabricated, but the duplicated role/location needs reconciliation."
+    },
+    {
+      "cases": [
+        "UI02"
+      ],
+      "url": "https://www.medibuddy.in/pharmacies/cochin/profile/gem-medicals",
+      "finding": "Lists the same phone for Gem Medicals at Star Junction, Mattancherry. Conflicting public directory evidence; no phone call was made."
+    },
+    {
+      "cases": [
+        "V10"
+      ],
+      "url": "https://animalhusbandry.jharkhand.gov.in/hospitals/",
+      "finding": "Official indexed table binds Dr Aparna Pandey and 9431707887 to State Veterinary Hospital, Ranchi. Direct fetch timed out; search returned the relevant table."
+    },
+    {
+      "cases": [
+        "V10"
+      ],
+      "url": "https://portal.nabh.co/Documents/AccreditedList/Entry-Level%20Hospitals/PEH-2024-2621.pdf",
+      "finding": "The address containing Near Veterinary Hospital and Siromtoli is the address of Divine Super Speciality Hospital, a human hospital. This PDF is present in the agent trace."
+    },
+    {
+      "cases": [
+        "V10"
+      ],
+      "url": "https://rajvetcouncil.in/content/downloads/State%20veterinary%20Councils%20ver%201.0.pdf",
+      "finding": "Independently supports the veterinary hospital at Old HB Road, Chutia, Ranchi 834001; its registrar phone must not replace the clinical contact."
+    },
+    {
+      "cases": [
+        "V15"
+      ],
+      "url": "https://www.cvscadmaclab.org.in/contact_us/CONNECT-NER%20VETS%20A%20DIRECTORY.pdf",
+      "finding": "Binds 9832031552 to an official of the State Veterinary Polyclinic. The source is present in the agent search trace."
+    },
+    {
+      "cases": [
+        "V15"
+      ],
+      "url": "https://www.sikkimexpress.com/news-details/modern-veterinary-healthcare-services-launched-at-state-veterinary-polyclinic",
+      "finding": "Identifies the veterinary polyclinic near Krishi Bhawan and its treatment facilities. Present in the agent trace."
+    },
+    {
+      "cases": [
+        "V15"
+      ],
+      "url": "https://www.nhidcl.com/sites/default/files/2026-05/rfp_11.pdf",
+      "finding": "Independent official tender locates the NHIDCL office at Amdo Golai opposite State Veterinary Polyclinic, Gangtok 737102. Supports the landmark relationship; not a clinical contact source."
+    },
+    {
+      "cases": [
+        "V15"
+      ],
+      "url": "https://gst.jamku.app/gstin/11AAECN7759E1ZI",
+      "finding": "The search trace includes this address record, which explicitly places the nearby NHIDCL office opposite State Veterinary Polyclinic in Upper Tadong. Combined with the primary tender and treatment report, the locality is supported."
+    },
+    {
+      "cases": [
+        "UI17"
+      ],
+      "url": "https://doglover.in/veterinary-hospitals/",
+      "finding": "Publishes JBF 9954449528 as a 24-hour emergency telephone and describes treatment of homeless animals. Actual admission tonight remains unconfirmed."
+    },
+    {
+      "cases": [
+        "UI17"
+      ],
+      "url": "https://www.avfu.ac.in/health_centre/",
+      "finding": "The run1 fallback was the university human health centre; its student health services do not establish veterinary intake. Run2 no longer uses this fallback."
+    },
+    {
+      "cases": [
+        "V04"
+      ],
+      "url": "https://www.wikiprocedure.com/index.php/Tripura_-_Get_Animal_Vaccinated",
+      "finding": "Binds State Veterinary Hospital, Abhay Nagar, Agartala 799010 to 0381-2223611; third-party published contact, not verified by calling."
+    },
+    {
+      "cases": [
+        "V08"
+      ],
+      "url": "https://www.justdial.com/Bilaspur-Chhattisgarh/Dr-Radheshyam-Mani-Tripathi-District-Veterinary-Hospital-Near-Shyam-Talkies-Shanichari-Bazar/9999P7752-7752-130508162249-F3J1_BZDET",
+      "finding": "Independently places District Veterinary Hospital near Shyam Talkies, Bilaspur 495001. Cited VCI PDF was too large for the web parser; no claim of a successful full-PDF audit."
+    },
+    {
+      "cases": [
+        "V08"
+      ],
+      "url": "https://www.bharatibiz.com/en/district-veterinary-hospital_25e-098271-90253",
+      "finding": "Binds the named district hospital to Telipara, Bilaspur 495001. The conflicting phone in run1 is omitted in run2."
+    },
+    {
+      "cases": [
+        "N06"
+      ],
+      "url": "https://www.bharatibiz.com/en/govt-veterinary-hospital_274L-095116-75235",
+      "finding": "Same page binds government veterinary hospital, Khadkeshwar, Aurangabad 431001 and 9511675235."
+    },
+    {
+      "cases": [
+        "N07"
+      ],
+      "url": "https://vetic.in/clinics-locator",
+      "finding": "Official locator confirms the Salt Lake branch at First Floor AE-358, 1st Avenue Road, Sector 1, Kolkata 700064."
+    },
+    {
+      "cases": [
+        "N01",
+        "N02"
+      ],
+      "url": "https://www.starbreeds.in/",
+      "finding": "Clinic website supports the Gajuwaka branch, veterinary services and published 9039699039 contact."
+    },
+    {
+      "cases": [
+        "N03",
+        "N04"
+      ],
+      "url": "https://www.bombayspca.org/services.html",
+      "finding": "Supports the Parel hospital street address and animal ambulance service; does not establish a specific street-animal pickup dispatch number."
+    }
+  ]
+}

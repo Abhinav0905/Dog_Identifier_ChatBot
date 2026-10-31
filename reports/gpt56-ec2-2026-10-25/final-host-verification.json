@@ -1,0 +1,26 @@
+{
+  "active_code_revision": "85f389a",
+  "effective_env_file": "/home/ec2-user/gaia-releases/85f389a/runtime56.env",
+  "models": {
+    "OPENAI_MODEL": "gpt-5.6-sol",
+    "OPENAI_CHAT_MODEL": "gpt-5.6-sol",
+    "OPENAI_VISION_MODEL": "gpt-5.6-terra",
+    "OPENAI_ADMIN_MODEL": "gpt-5.6-terra",
+    "OPENAI_WEB_SEARCH_MODEL": "gpt-5.6-terra",
+    "OPENAI_QUERY_ROUTER_MODEL": "gpt-5.6-terra",
+    "OPENAI_GEOGRAPHY_MODEL": "gpt-5.6-terra"
+  },
+  "counts_after_deployment": {
+    "incidents": 23,
+    "alerts": 5,
+    "chat_history": 799,
+    "rag_chunks": 156
+  },
+  "incident_images_available": 23,
+  "all_incident_images_exist": true,
+  "database_integrity": "ok",
+  "original_environment_unchanged": true,
+  "original_code_directory_retained": true,
+  "public_maintenance_enabled": false,
+  "prompt_release_path": "/home/ec2-user/ask-dorjee-prompts/current"
+}

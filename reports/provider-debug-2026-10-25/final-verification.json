@@ -1,0 +1,23 @@
+{
+  "service_active": "active",
+  "working_directory": "/home/ec2-user/gaia-releases/f86ead9",
+  "prompt_package": {
+    "version": "srini-v2.3-2026-10-25",
+    "sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+    "status": "ready",
+    "source": "local_files",
+    "reload_error": null
+  },
+  "model_health": "recent_success",
+  "single_conversation_id": "95f381f3-cabd-4337-9b8d-bde5786c0652",
+  "distinct_planned_questions_persisted": 25,
+  "matching_question_attempts_persisted": 29,
+  "repeated_question_counts": {
+    "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?": 2,
+    "I found an injured community dog in Kochi, Kerala. Where can I take it?": 3,
+    "Should I throw stones to scare them away?": 2
+  },
+  "observed_ui_records": 28,
+  "original_environment_unchanged": true,
+  "maintenance_enabled": false
+}

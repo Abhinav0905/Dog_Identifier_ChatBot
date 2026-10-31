@@ -1,0 +1,132 @@
+ASK DORJEE — TEAM REVIEW HANDOFF — 30 OCTOBER 2026
+
+Branch: review/single-agent-2026-10-30
+Repository: https://github.com/Abhinav0905/Dog_Identifier_ChatBot
+
+This consolidates the simplified agent, its five prompts and two tools, durable
+traces, the earlier web/runtime fixes, and the saved acceptance evidence. The
+owner explicitly requested merging for team review after seeing the 86% result.
+The earlier reports' hold-on-merge statements describe the decision at that time;
+they do not change the scores or imply that the remaining issues are fixed.
+
+WHAT TO RUN
+
+Use simple_agent to review the agent measured in the 47/50, 28/30 and 43/50 runs.
+It has one main agent, native web search and an image-analysis function. Its
+original code and five prompts are unchanged by this consolidation.
+
+The existing app.py web/rescue pipeline is also retained, with its tracing and
+runtime fixes merged. It does NOT automatically route requests to simple_agent.
+The public EC2 chatbot and S3 prompt release have not been changed by this merge.
+Web integration, rescue-workflow integration and live browser acceptance remain
+separate work. Do not use the public chatbot to judge the standalone candidate.
+
+QUICK START (Python 3.10+)
+
+git clone --branch review/single-agent-2026-10-30 https://github.com/Abhinav0905/Dog_Identifier_ChatBot.git
+cd Dog_Identifier_ChatBot
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install openai==2.30.0
+
+Supply OPENAI_API_KEY through your normal local environment or secret manager.
+The standalone CLI reads environment variables; it does not load .env itself.
+Model defaults are gpt-5.6-terra for both main and vision calls. If your account
+needs a different model, use --model and --vision-model and record that change;
+results on a different model are not a repeat of the saved baseline.
+
+One fresh question:
+python -m simple_agent --question 'Where can an injured community dog get treatment in Mysuru?' --output .codex-build/team-question-01
+
+One photo:
+python -m simple_agent --question 'What can you see in this photo?' --image example_images/dog_1.png --output .codex-build/team-photo-01
+
+Original 50-question set, with ordered conversation history:
+python -m simple_agent --suite core50 --output .codex-build/team-core50-01
+
+Original 50 plus eight guardrail/photo checks:
+python -m simple_agent --suite all58 --output .codex-build/team-all58-01
+
+Use a NEW output directory for each run. Calls use the configured API account.
+Read <case>.json for the answer and citations, and traces/<case>.jsonl for model
+calls, search sources, tool results and errors. The runner marks answers
+UNREVIEWED: an HTTP/API completion is not an accuracy pass.
+
+For custom ordered follow-ups, use the SingleAgent API with the SAME history
+list between turns; use a new empty list for a genuinely new conversation:
+
+from pathlib import Path
+from openai import OpenAI
+from simple_agent.agent import SingleAgent
+
+agent = SingleAgent(OpenAI(max_retries=0))
+history = []
+result = agent.turn("I need a vet in Hamirpur, Himachal Pradesh.", history,
+                    trace_path=Path(".codex-build/team-multiturn/turn1.jsonl"))
+print(result["answer"])
+result = agent.turn("A completely different case: an injured dog in Una. Where can I take it?", history,
+                    trace_path=Path(".codex-build/team-multiturn/turn2.jsonl"))
+print(result["answer"])
+
+The second turn should clarify the state; the saved final run did not. Other
+custom turns can pass image_path=Path("photo.png") for a supplied attachment.
+
+RESULTS (separate complete runs, not a best-answer combination)
+
+28 October, core 50:          47 pass / 2 partial / 1 fail (94%)
+28 October, eight extra:       8 pass / 0 partial / 0 fail
+28 October, fresh 30:         28 pass / 2 partial / 0 fail (93.3%)
+30 October, fresh 50 run1:    31 pass / 17 partial / 2 fail (62%)
+30 October, same 50 run2:     43 pass / 6 partial / 1 fail (86%)
+
+Run1 encountered source-empty search behaviour, including in a plain-prompt
+control. After an identical control returned sources, all 50 unchanged cases
+were repeated once. Both runs are preserved. No third full run was performed.
+The latest complete run remains below the 45/50 full-pass target.
+
+Read these files locally after cloning:
+reports/modular-agent-2026-10-28/findings.html
+reports/modular-holdout30-2026-10-28/findings.html
+reports/modular-final50-2026-10-30/findings.html
+reports/modular-final50-2026-10-30/assessment.txt
+reports/modular-final50-2026-10-30/source-checks.json
+
+The final report includes every question, answer, locked criterion, review and
+trace link. All acceptance scores are manual reviews of standalone live API
+runs. They are not production UI scores or general accuracy estimates. Provider
+sources were checked selectively; no opening, admission or phone availability
+was confirmed by calling providers. Historical reports keep their original
+build and deployment context.
+
+KNOWN ISSUES TO TARGET
+
+F18 FAIL: A new Una case borrows Himachal Pradesh from the previous case.
+F01 PARTIAL: Conflicting published clinic addresses are not acknowledged.
+F25 PARTIAL: Published 24/7 hours become a verified-current-opening claim.
+F30 PARTIAL: Seizure guidance includes inappropriate keep-warm wording.
+F41 PARTIAL: Photo interpretation assumes unseen food/water availability.
+F43 PARTIAL: Serious symptoms get same-day instead of immediate wording.
+F48 PARTIAL: Eye/mouth exposure is incorrectly grouped with soap washing.
+
+Also probe new cities, state ambiguity, institution changes, exact-phone and
+address-only requests, Hindi/Kannada/Marathi, new photos after earlier symptoms,
+and empty search results. Record the complete conversation, not just the final
+question. Do not count expected privacy/scope boundaries as wrong refusals.
+
+For each issue send the commit, model, question sequence, expected behaviour,
+actual answer and the relevant result/trace files. Use synthetic examples and
+review trace contents before sharing; traces include the supplied conversation.
+
+MERGE VALIDATION
+
+210 focused automated checks passed: 152 covering the tool loop, traces,
+evidence and prompt contracts; 58 covering safety, model configuration, web
+operations, prompt HTTP handling and deployment rollback fixtures. These use
+mocks/fixtures and are separate from the live 43/50 score.
+
+Evidence and commands: reports/team-review-2026-10-30/validation.json,
+merge-tests.log and compatibility-tests.log in that directory.
+
+The overlapping legacy search/prompt changes were reconciled and their local
+manifest resealed as srini-v2.11-review-2026-10-30. This legacy prompt version
+does not replace the five simple_agent prompts and has not been activated.

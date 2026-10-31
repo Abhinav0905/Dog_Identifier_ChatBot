@@ -253,7 +253,11 @@ def scrape(
             path.write_text(markdown, encoding="utf-8")
             saved += 1
             page_record["status"] = "saved"
-            page_record["output_file"] = str(path.relative_to(Path(__file__).parent.parent))
+            try:
+                output_path = path.resolve().relative_to(Path(__file__).resolve().parent.parent)
+            except ValueError:
+                output_path = path.resolve()
+            page_record["output_file"] = str(output_path)
         pages.append(page_record)
 
         if max_depth is None or depth < max_depth:

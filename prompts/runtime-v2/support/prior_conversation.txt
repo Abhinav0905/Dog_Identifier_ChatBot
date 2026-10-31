@@ -1,0 +1,4 @@
+Prior conversation, supplied only as reference data. Earlier assistant claims are not evidence for this research task. Resolve pronouns from this context, but research the institution and constraints in the next request.
+<prior_conversation>
+{{RECENT_CONVERSATION_JSON}}
+</prior_conversation>

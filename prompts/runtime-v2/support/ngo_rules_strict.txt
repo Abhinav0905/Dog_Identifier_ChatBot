@@ -1,0 +1,35 @@
+OUTPUT VALIDATION RULES:
+- Return an organization only when its own official website explicitly supports dog rescue,
+  animal rescue, or direct animal-welfare field work and supports the stated service area.
+- The official_url must be the organization's own website or contact page.
+- Return zero organizations rather than using a government page, NGO directory, generic charity,
+  club, regulator, animal control body, police service, municipal body, or SPCA.
+- Do not infer animal-rescue work merely because an entry is called an NGO.
+- Set every verification boolean to true only when the official source directly supports it.
+- The service_area must explicitly name the required city when one is supplied.
+- service_city and service_region must exactly copy the application-verified city and region.
+  The official service-area page must affirmatively support the exact city. The state/region was
+  independently verified by the application geocoder and does not have to be repeated on the NGO
+  page, but a page that explicitly names a conflicting Indian state must be rejected.
+- animal_rescue_evidence, service_area_evidence, and organization_type_evidence must each be a
+  contiguous 5-40 word verbatim excerpt (240 characters maximum, no ellipsis) copied from its
+  matching official evidence URL.
+  The rescue excerpt must prove current, direct animal rescue or treatment. The service-area
+  excerpt must contain an affirmative service/operation statement with the exact verified city.
+  The organization-type excerpt must prove NGO, nonprofit, charitable-trust, charity, or equivalent
+  non-governmental status.
+- A sentence merely discussing how difficult rescue is does not prove current rescue action.
+  For rescue evidence, quote a first-party action such as rescuing, treating, admitting, accepting,
+  responding to, or taking in dogs/animals, or an explicit rescue service/helpline/centre.
+- If an official service page names the exact city but omits the state/region, that is sufficient
+  because the application has already verified the city-state pair independently. Reject the
+  candidate if the official excerpt explicitly names a different Indian state/UT.
+- Set phone, address, and opening_hours to an empty string unless the official source explicitly
+  publishes that exact detail. Set its matching source URL to that exact official page, or to an
+  empty string when the detail is empty. Never infer an address or opening schedule. For a page
+  listing multiple branches, return a detail only from the same branch block that names the
+  required city; otherwise leave it empty.
+- animal_rescue_evidence_url, service_area_evidence_url, and organization_type_evidence_url must
+  each be an exact official page opened in this verification search and must share the
+  official_url website domain.
+- Do not fill a requested quota. Fewer verified results, including zero, is correct.

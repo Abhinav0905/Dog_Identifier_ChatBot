@@ -1,0 +1,33 @@
+{
+  "source_revision": "f86ead9",
+  "prompt_version": "srini-v2.3-2026-10-25",
+  "prompt_sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+  "prompt_release": "/home/ec2-user/ask-dorjee-prompts/current.releases/srini-v2.3-2026-10-25-4708f332b9d8",
+  "previous_prompt_release": "/home/ec2-user/ask-dorjee-prompts/current.releases/srini-v2.3-2026-10-25-4708f332b9d8",
+  "backup_directory": "/home/ec2-user/backups/provider-fix-f86ead9-20261025T211408Z",
+  "previous_source_release": "/home/ec2-user/gaia-releases/9fb5c47",
+  "tracked_source_hashes_verified": 226,
+  "data_before": {
+    "counts": {
+      "incidents": 23,
+      "alerts": 5,
+      "rag_chunks": 156
+    },
+    "integrity": "ok",
+    "available_images": 23,
+    "image_references": 23
+  },
+  "data_after": {
+    "counts": {
+      "incidents": 23,
+      "alerts": 5,
+      "rag_chunks": 156
+    },
+    "integrity": "ok",
+    "available_images": 23,
+    "image_references": 23
+  },
+  "database_rewound": false,
+  "state": "deployed_public_ui_retest_verified",
+  "ui_review": "review.json"
+}

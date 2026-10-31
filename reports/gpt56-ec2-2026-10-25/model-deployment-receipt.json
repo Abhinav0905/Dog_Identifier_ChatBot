@@ -1,0 +1,21 @@
+{
+  "source_revision": "85f389a",
+  "release_directory": "/home/ec2-user/gaia-releases/85f389a",
+  "previous_release_directory": "/home/ec2-user/gaia-releases/a152ce7",
+  "rollback_configuration": "/home/ec2-user/backups/models-56-85f389a-20261025T191204Z/service-before.conf",
+  "backup_directory": "/home/ec2-user/backups/models-56-85f389a-20261025T191204Z",
+  "database_rewound": false,
+  "prompt_version": "srini-v2-2026-10-25",
+  "prompt_sha256": "250425caaee2f2ffbd414ba048cbd1171f6d2cb4e2abc93c2e8eef72f1ed3e12",
+  "models": {
+    "OPENAI_MODEL": "gpt-5.6-sol",
+    "OPENAI_CHAT_MODEL": "gpt-5.6-sol",
+    "OPENAI_VISION_MODEL": "gpt-5.6-terra",
+    "OPENAI_ADMIN_MODEL": "gpt-5.6-terra",
+    "OPENAI_WEB_SEARCH_MODEL": "gpt-5.6-terra",
+    "OPENAI_QUERY_ROUTER_MODEL": "gpt-5.6-terra",
+    "OPENAI_GEOGRAPHY_MODEL": "gpt-5.6-terra"
+  },
+  "state": "deployed_public_technical_checks_passed_content_gaps_remain",
+  "public_verification_report": "public-http-results.json"
+}

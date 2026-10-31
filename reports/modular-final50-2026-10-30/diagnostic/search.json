@@ -1,0 +1,88 @@
+{
+  "started_at": "2026-10-31T01:26:18.132521+00:00",
+  "control": "search",
+  "question": "Search the internet for the official World Health Organization rabies fact sheet. Return its title and official URL with a source citation.",
+  "method": "Same API model and search tool; only a helpful-assistant system prompt; not an acceptance case.",
+  "response": {
+    "id": "resp_091fee90900a0b06016ae543ba7b8887d181270359c48086c6",
+    "incomplete_details": null,
+    "model": "gpt-5.6-terra",
+    "status": "completed",
+    "usage": {
+      "input_tokens": 8701,
+      "input_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 4356
+      },
+      "output_tokens": 221,
+      "output_tokens_details": {
+        "reasoning_tokens": 159
+      },
+      "total_tokens": 8922
+    },
+    "output": [
+      {
+        "id": "ws_091fee90900a0b06016ae543bb2db487d18aa595df7f7fb0e9",
+        "action": {
+          "query": "site:who.int/news-room/fact-sheets/detail rabies World Health Organization fact sheet",
+          "type": "search",
+          "queries": [
+            "site:who.int/news-room/fact-sheets/detail rabies World Health Organization fact sheet"
+          ],
+          "sources": null
+        },
+        "status": "completed",
+        "type": "web_search_call"
+      },
+      {
+        "id": "ws_091fee90900a0b06016ae543bf444087d1b4761118e99fcec2",
+        "action": {
+          "query": "WHO rabies fact sheet official World Health Organization",
+          "type": "search",
+          "queries": [
+            "WHO rabies fact sheet official World Health Organization",
+            "site:who.int rabies fact sheet"
+          ],
+          "sources": null
+        },
+        "status": "completed",
+        "type": "web_search_call"
+      },
+      {
+        "id": "ws_091fee90900a0b06016ae543c396bc87d1bad7e5bbf0c222ba",
+        "action": {
+          "type": "open_page",
+          "url": "https://www.who.int/news-room/fact-sheets/detail/rabies"
+        },
+        "status": "completed",
+        "type": "web_search_call"
+      },
+      {
+        "id": "msg_091fee90900a0b06016ae543c4410c87d18f304f347bfbeb10",
+        "content": [
+          {
+            "annotations": [
+              {
+                "end_index": 237,
+                "start_index": 169,
+                "title": "Rabies",
+                "type": "url_citation",
+                "url": "https://www.who.int/news-room/fact-sheets/detail/rabies"
+              }
+            ],
+            "text": "**Title:** *Rabies*  \n**Official URL:** `https://www.who.int/news-room/fact-sheets/detail/rabies`  \n\nThis is the World Health Organization’s official rabies fact sheet. ([who.int](https://www.who.int/news-room/fact-sheets/detail/rabies))",
+            "type": "output_text",
+            "logprobs": []
+          }
+        ],
+        "role": "assistant",
+        "status": "completed",
+        "type": "message",
+        "phase": "final_answer"
+      }
+    ]
+  },
+  "answer": "**Title:** *Rabies*  \n**Official URL:** `https://www.who.int/news-room/fact-sheets/detail/rabies`  \n\nThis is the World Health Organization’s official rabies fact sheet. ([who.int](https://www.who.int/news-room/fact-sheets/detail/rabies))",
+  "status": "completed",
+  "seconds": 10.855
+}

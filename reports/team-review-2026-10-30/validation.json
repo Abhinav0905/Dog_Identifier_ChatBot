@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-30",
+  "branch": "review/single-agent-2026-10-30",
+  "merged_sources": [
+    "662617f",
+    "3b1d59e"
+  ],
+  "existing_main": "98b075f0342cb32663a2a826d8dfda358ec0e6b0",
+  "automated_tests": {
+    "merge_and_agent": 152,
+    "runtime_compatibility": 58,
+    "total": 210,
+    "failures": 0
+  },
+  "evaluated_agent_files_unchanged": true,
+  "agent_runtime_reference": "reports/modular-holdout30-2026-10-28/run1/runtime.json",
+  "latest_live_acceptance": {
+    "pass": 43,
+    "partial": 6,
+    "fail": 1,
+    "percent": 86,
+    "source": "reports/modular-final50-2026-10-30/run2"
+  },
+  "new_live_accuracy_run": false,
+  "production_deployed": false,
+  "s3_changed": false,
+  "merge_decision": "User explicitly requested merge and push for team review despite 86 percent; this supersedes the earlier hold on merging, not the acceptance verdict.",
+  "conflict_resolution": [
+    "Preserved source-diverse fetching and administrative referral classification.",
+    "Used the newer concise legacy evidence prompt and retained local referral passages.",
+    "Regenerated legacy prompt manifest as srini-v2.11-review-2026-10-30; no active release changed."
+  ],
+  "limits": [
+    "Standalone simple_agent remains separate from app.py web/rescue pipeline.",
+    "Automated tests use mocks and fixtures; these are not new live accuracy results.",
+    "Telemetry-unavailable warnings in fixture tests are expected when their temporary database lacks trace tables; dedicated trace persistence tests passed."
+  ],
+  "test_commands": [
+    "python -m unittest test_simple_agent_modular test_single_agent_experiment test_agent_trace test_evidence_retention test_rca_runtime_contracts test_structured_provider_sources test_search_evidence test_prompt_store -v",
+    "python -m unittest test_veterinary_safety test_model_profile test_web_operations test_web_region_release test_prompt_http test_deploy_release -v"
+  ],
+  "credential_scan": {
+    "tracked_and_added_text_files_scope": 1051,
+    "findings": 0
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "version": "single-agent-v1.0.0-2026-10-28",
+  "archive": "single-agent-v1.0.0-2026-10-28.zip",
+  "archive_sha256": "e056a97e301d7835cb94a9cea64b56b8a32f89cd004c21b3a6883766fd1116a2",
+  "manifest_sha256": "b9c3068408735f6f4daa6b8d68961cc25ac35f7a02d17daf87df85bb2c9e9ace",
+  "s3_bucket": null,
+  "s3_prefix": null,
+  "uploaded": false,
+  "activated": false
+}

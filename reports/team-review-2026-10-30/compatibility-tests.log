@@ -1,0 +1,161 @@
+test_contact_bearing_rag_preserves_care_and_masks_unverified_number (test_veterinary_safety.TestGeneralDogCareRag.test_contact_bearing_rag_preserves_care_and_masks_unverified_number) ... 2026-10-30 18:55:20,102 [services.prompt_store] INFO: Activated prompt package srini-v2.11-review-2026-10-30 (228fbfbc6d38)
+2026-10-30 18:55:20,106 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,107 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,108 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,108 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:55:20,109 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+ok
+test_model_outage_still_gives_distressed_dog_immediate_guidance (test_veterinary_safety.TestGeneralDogCareRag.test_model_outage_still_gives_distressed_dog_immediate_guidance) ... 2026-10-30 18:55:20,112 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,113 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,114 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,114 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:55:20,115 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:55:20,115 [services.triage] WARNING: Chat model failed, using fallback response: RuntimeError
+ok
+test_non_safety_question_uses_at_most_three_knowledge_chunks (test_veterinary_safety.TestGeneralDogCareRag.test_non_safety_question_uses_at_most_three_knowledge_chunks) ... 2026-10-30 18:55:20,117 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,118 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,119 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,119 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:55:20,120 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+ok
+test_rag_failure_does_not_suppress_general_answer (test_veterinary_safety.TestGeneralDogCareRag.test_rag_failure_does_not_suppress_general_answer) ... 2026-10-30 18:55:20,120 [services.triage] WARNING: RAG retrieval failed for chat query: offline
+2026-10-30 18:55:20,121 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,122 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,123 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,123 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:55:20,124 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+ok
+test_sick_dog_not_eating_does_not_take_community_food_shortcut (test_veterinary_safety.TestGeneralDogCareRag.test_sick_dog_not_eating_does_not_take_community_food_shortcut) ... 2026-10-30 18:55:20,125 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,126 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,126 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,127 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:55:20,127 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+ok
+test_vehicle_accident_prevention_does_not_take_trauma_shortcut (test_veterinary_safety.TestGeneralDogCareRag.test_vehicle_accident_prevention_does_not_take_trauma_shortcut) ... 2026-10-30 18:55:20,129 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,130 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,132 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,133 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:55:20,134 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+ok
+test_chasing_cures_are_rejected_but_correct_distinctions_pass (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_chasing_cures_are_rejected_but_correct_distinctions_pass) ... ok
+test_current_rider_turn_reaches_model_unchanged_and_useful_answer_survives (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_current_rider_turn_reaches_model_unchanged_and_useful_answer_survives) ... 2026-10-30 18:55:20,137 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,138 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,138 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,139 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+ok
+test_donor_outage_retains_real_emergency_before_budget_planning (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_donor_outage_retains_real_emergency_before_budget_planning) ... ok
+test_explicit_tactic_question_retains_direct_humane_warning (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_explicit_tactic_question_retains_direct_humane_warning) ... ok
+test_generic_intake_does_not_replace_guidance_for_an_established_chase (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_generic_intake_does_not_replace_guidance_for_an_established_chase) ... 2026-10-30 18:55:20,142 [services.triage] WARNING: Generated care answer restarted an already established chase case
+ok
+test_grounded_donor_allocation_is_preserved (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_grounded_donor_allocation_is_preserved) ... ok
+test_hindi_unsolicited_tactic_uses_humane_language (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_hindi_unsolicited_tactic_uses_humane_language) ... 2026-10-30 18:55:20,143 [services.triage] WARNING: Generated care answer failed humane communication or behaviour-claim policy
+ok
+test_prior_assistant_tactic_does_not_authorize_repetition_on_fear_followup (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_prior_assistant_tactic_does_not_authorize_repetition_on_fear_followup) ... 2026-10-30 18:55:20,144 [services.triage] WARNING: Generated care answer failed humane communication or behaviour-claim policy
+ok
+test_rider_followup_stays_concise_after_a_failed_prior_answer (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_rider_followup_stays_concise_after_a_failed_prior_answer) ... 2026-10-30 18:55:20,144 [services.triage] WARNING: Generated care answer failed humane communication or behaviour-claim policy
+2026-10-30 18:55:20,145 [services.triage] WARNING: Generated care answer restarted an already established chase case
+ok
+test_ungrounded_donor_ranking_becomes_conditional_plan (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_ungrounded_donor_ranking_becomes_conditional_plan) ... 2026-10-30 18:55:20,145 [services.triage] WARNING: Generated donor plan lacked grounding or violated care policy
+ok
+test_unsolicited_aversive_prohibition_keeps_urgent_traffic_guidance (test_veterinary_safety.TestHumaneBehaviourAndDonorPolicy.test_unsolicited_aversive_prohibition_keeps_urgent_traffic_guidance) ... 2026-10-30 18:55:20,145 [services.triage] WARNING: Generated care answer failed humane communication or behaviour-claim policy
+ok
+test_bleeding_dog_uses_firm_continuous_pressure_and_escalates (test_veterinary_safety.TestVeterinarySafetyResponses.test_bleeding_dog_uses_firm_continuous_pressure_and_escalates) ... ok
+test_community_dog_food_does_not_recommend_milk_as_a_default (test_veterinary_safety.TestVeterinarySafetyResponses.test_community_dog_food_does_not_recommend_milk_as_a_default) ... ok
+test_deep_wound_receives_guidance_without_assuming_bleeding (test_veterinary_safety.TestVeterinarySafetyResponses.test_deep_wound_receives_guidance_without_assuming_bleeding) ... ok
+test_frightened_unfamiliar_dog_guidance_prioritises_distance (test_veterinary_safety.TestVeterinarySafetyResponses.test_frightened_unfamiliar_dog_guidance_prioritises_distance) ... ok
+test_human_dog_bite_outage_guidance_is_time_sensitive (test_veterinary_safety.TestVeterinarySafetyResponses.test_human_dog_bite_outage_guidance_is_time_sensitive) ... ok
+test_vehicle_trauma_is_an_emergency_even_with_visible_bleeding (test_veterinary_safety.TestVeterinarySafetyResponses.test_vehicle_trauma_is_an_emergency_even_with_visible_bleeding) ... ok
+test_animal_only_case_loses_only_unsolicited_human_footer (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_animal_only_case_loses_only_unsolicited_human_footer) ... ok
+test_delayed_household_wound_remedy_ambiguity_is_rejected (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_delayed_household_wound_remedy_ambiguity_is_rejected) ... 2026-10-30 18:55:20,149 [services.triage] WARNING: Generated human exposure answer failed essential-action validation
+ok
+test_dog_behavior_ending_is_not_a_rider_stopping_instruction (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_dog_behavior_ending_is_not_a_rider_stopping_instruction) ... ok
+test_first_time_hypothetical_footer_is_retained (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_first_time_hypothetical_footer_is_retained) ... ok
+test_new_exposure_and_explicit_first_aid_keep_washing_and_medical_help (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_new_exposure_and_explicit_first_aid_keep_washing_and_medical_help) ... ok
+test_photo_only_evidence_and_handling_prohibition_are_retained (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_photo_only_evidence_and_handling_prohibition_are_retained) ... ok
+test_qualified_rider_reply_loses_only_repeated_footer_without_extra_preface (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_qualified_rider_reply_loses_only_repeated_footer_without_extra_preface) ... ok
+test_real_simultaneous_human_exposure_keeps_human_guidance (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_real_simultaneous_human_exposure_keeps_human_guidance) ... ok
+test_repetition_cleanup_preserves_needed_traffic_correction (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_repetition_cleanup_preserves_needed_traffic_correction) ... ok
+test_terminal_inline_reminder_does_not_erase_reporting_advice (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_terminal_inline_reminder_does_not_erase_reporting_advice) ... ok
+test_unknown_poison_handling_is_replaced_before_sanitizing (test_veterinary_safety.TestWitnessAndRidingOutputSafety.test_unknown_poison_handling_is_replaced_before_sanitizing) ... 2026-10-30 18:55:20,152 [services.triage] WARNING: Generated witness advice suggested handling an unknown substance
+2026-10-30 18:55:20,153 [services.triage] WARNING: Generated witness advice suggested handling an unknown substance
+2026-10-30 18:55:20,153 [services.triage] WARNING: Generated witness advice suggested handling an unknown substance
+ok
+test_text_adapter_uses_completion_token_budget_for_gpt56 (test_model_profile.TestModelProfile.test_text_adapter_uses_completion_token_budget_for_gpt56) ... 2026-10-30 18:55:20,153 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,154 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,154 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,155 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+ok
+test_vision_adapter_respects_vision_role_instead_of_text_model (test_model_profile.TestModelProfile.test_vision_adapter_respects_vision_role_instead_of_text_model) ... 2026-10-30 18:55:20,156 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,156 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,157 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,157 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+ok
+test_alert_logs_keep_ids_and_types_without_private_payloads (test_web_operations.WebOperationsTests.test_alert_logs_keep_ids_and_types_without_private_payloads) ... ok
+test_alert_retry_ack_and_duplicate_suppression (test_web_operations.WebOperationsTests.test_alert_retry_ack_and_duplicate_suppression) ... 2026-10-30 18:55:20,184 [dharmasala.alerts] ERROR: alert_send_failed alert_id=144d7fe6-04ec-48e7-92f9-2809f0efdc45 incident_id=b688755e-ca29-41c1-bdc0-05a79e10697b channel=webhook error_type=TimeoutError
+2026-10-30 18:55:20,185 [dharmasala.alerts] INFO: alert_delivery alert_id=144d7fe6-04ec-48e7-92f9-2809f0efdc45 incident_id=b688755e-ca29-41c1-bdc0-05a79e10697b status=failed
+2026-10-30 18:55:20,188 [dharmasala.alerts] INFO: alert_delivery alert_id=144d7fe6-04ec-48e7-92f9-2809f0efdc45 incident_id=b688755e-ca29-41c1-bdc0-05a79e10697b status=delivered
+ok
+test_alert_retry_cap_and_operator_visibility (test_web_operations.WebOperationsTests.test_alert_retry_cap_and_operator_visibility) ... 2026-10-30 18:55:20,203 [dharmasala.alerts] ERROR: alert_send_failed alert_id=e6ff26d4-945b-4e35-ab99-d6878e16015a incident_id=4f0b4ca2-2c35-474d-9df2-ea4e6a9d2e50 channel=webhook error_type=TimeoutError
+2026-10-30 18:55:20,203 [dharmasala.alerts] INFO: alert_delivery alert_id=e6ff26d4-945b-4e35-ab99-d6878e16015a incident_id=4f0b4ca2-2c35-474d-9df2-ea4e6a9d2e50 status=failed
+2026-10-30 18:55:20,205 [dharmasala.alerts] ERROR: alert_send_failed alert_id=e6ff26d4-945b-4e35-ab99-d6878e16015a incident_id=4f0b4ca2-2c35-474d-9df2-ea4e6a9d2e50 channel=webhook error_type=TimeoutError
+2026-10-30 18:55:20,205 [dharmasala.alerts] INFO: alert_delivery alert_id=e6ff26d4-945b-4e35-ab99-d6878e16015a incident_id=4f0b4ca2-2c35-474d-9df2-ea4e6a9d2e50 status=failed
+2026-10-30 18:55:20,207 [dharmasala.alerts] ERROR: alert_send_failed alert_id=e6ff26d4-945b-4e35-ab99-d6878e16015a incident_id=4f0b4ca2-2c35-474d-9df2-ea4e6a9d2e50 channel=webhook error_type=TimeoutError
+2026-10-30 18:55:20,208 [dharmasala.alerts] INFO: alert_delivery alert_id=e6ff26d4-945b-4e35-ab99-d6878e16015a incident_id=4f0b4ca2-2c35-474d-9df2-ea4e6a9d2e50 status=failed
+ok
+test_backup_restore_check_and_overwrite_protection (test_web_operations.WebOperationsTests.test_backup_restore_check_and_overwrite_protection) ... ok
+test_readiness_checks_active_vector_collection_and_embedding_warmth (test_web_operations.WebOperationsTests.test_readiness_checks_active_vector_collection_and_embedding_warmth) ... ok
+test_readiness_is_passive_and_records_failures_without_error_payloads (test_web_operations.WebOperationsTests.test_readiness_is_passive_and_records_failures_without_error_payloads) ... ok
+test_retention_is_preview_by_default_and_preserves_active_shared_images (test_web_operations.WebOperationsTests.test_retention_is_preview_by_default_and_preserves_active_shared_images) ... ok
+test_case_relative_nearby_keeps_foreign_animal_location (test_web_region_release.WebRegionReleaseTests.test_case_relative_nearby_keeps_foreign_animal_location) ... ok
+test_explicit_correction_replaces_pending_location_and_browser_bias (test_web_region_release.WebRegionReleaseTests.test_explicit_correction_replaces_pending_location_and_browser_bias) ... ok
+test_explicit_foreign_country_is_rejected_without_geocoder_network (test_web_region_release.WebRegionReleaseTests.test_explicit_foreign_country_is_rejected_without_geocoder_network) ... ok
+test_explicit_reporter_location_can_replace_foreign_case_for_new_search (test_web_region_release.WebRegionReleaseTests.test_explicit_reporter_location_can_replace_foreign_case_for_new_search) ... ok
+test_qualified_indian_place_survives_geocoder_timeout_without_fake_pin (test_web_region_release.WebRegionReleaseTests.test_qualified_indian_place_survives_geocoder_timeout_without_fake_pin) ... 2026-10-30 18:55:20,282 [services.region_scope] WARNING: Case location resolution unavailable: TimeoutError
+ok
+test_router_outage_preserves_current_location_correction (test_web_region_release.WebRegionReleaseTests.test_router_outage_preserves_current_location_correction) ... ok
+test_short_acknowledgment_is_not_a_place_clarification (test_web_region_release.WebRegionReleaseTests.test_short_acknowledgment_is_not_a_place_clarification) ... ok
+test_single_clarification_qualifies_indian_locality_without_coordinates (test_web_region_release.WebRegionReleaseTests.test_single_clarification_qualifies_indian_locality_without_coordinates) ... ok
+test_activation_during_http_request_is_seen_only_by_next_request (test_prompt_http.TestPromptHTTP.test_activation_during_http_request_is_seen_only_by_next_request) ... 2026-10-30 18:55:20,296 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:55:20,306 [services.prompt_store] INFO: Activated prompt package srini-v2.11-review-2026-10-30 (228fbfbc6d38)
+2026-10-30 18:55:20,310 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,311 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:55:20,312 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,313 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,317 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,317 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,320 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,321 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,322 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,323 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,323 [dharmasala] INFO: text_turn session_id=19367d55-ff23-4758-bd64-a937b4e0174b action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-30 18:55:20,324 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:55:20,325 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-30 18:55:20,327 [services.prompt_store] INFO: Activated prompt package http-next-release (66e4b9707885)
+2026-10-30 18:55:20,329 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:55:20,331 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:55:20,332 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,333 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,360 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,361 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,369 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,373 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,375 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,376 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:55:20,377 [dharmasala] INFO: text_turn session_id=19367d55-ff23-4758-bd64-a937b4e0174b action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-30 18:55:20,377 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:55:20,378 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_no_valid_package_returns_service_unavailable_without_model_call (test_prompt_http.TestPromptHTTP.test_no_valid_package_returns_service_unavailable_without_model_call) ... 2026-10-30 18:55:20,390 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:55:20,391 [services.prompt_store] ERROR: Prompt reload failed: FileNotFoundError; keeping last valid release
+2026-10-30 18:55:20,391 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 503 Service Unavailable"
+ok
+test_candidate_creation_and_persistent_seed (test_deploy_release.DeploymentFlowTests.test_candidate_creation_and_persistent_seed) ... ok
+test_existing_vectors_not_reseeded_and_create_failure_leaves_old_running (test_deploy_release.DeploymentFlowTests.test_existing_vectors_not_reseeded_and_create_failure_leaves_old_running) ... ok
+test_failed_health_restores_data_and_previous_container (test_deploy_release.DeploymentFlowTests.test_failed_health_restores_data_and_previous_container) ... ok
+test_known_model_failure_or_missing_configuration_blocks_startup (test_deploy_release.DeploymentFlowTests.test_known_model_failure_or_missing_configuration_blocks_startup) ... ok
+test_optional_prompt_mount_is_read_only_and_overrides_package_path (test_deploy_release.DeploymentFlowTests.test_optional_prompt_mount_is_read_only_and_overrides_package_path) ... ok
+
+----------------------------------------------------------------------
+Ran 58 tests in 10.182s
+
+OK

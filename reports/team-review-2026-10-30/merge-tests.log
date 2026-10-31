@@ -1,0 +1,587 @@
+test_api_error_keeps_actionable_details_without_key_or_opaque_value (test_simple_agent_modular.ModularAgentTests.test_api_error_keeps_actionable_details_without_key_or_opaque_value) ... ok
+test_failed_and_empty_responses_are_not_counted_as_completed (test_simple_agent_modular.ModularAgentTests.test_failed_and_empty_responses_are_not_counted_as_completed) ... ok
+test_history_window_and_number_only_output_are_preserved (test_simple_agent_modular.ModularAgentTests.test_history_window_and_number_only_output_are_preserved) ... ok
+test_live_rejected_continuation_metadata_is_not_sent_back (test_simple_agent_modular.ModularAgentTests.test_live_rejected_continuation_metadata_is_not_sent_back) ... ok
+test_photo_result_returns_to_agent_and_trace_excludes_image_and_reasoning (test_simple_agent_modular.ModularAgentTests.test_photo_result_returns_to_agent_and_trace_excludes_image_and_reasoning) ... ok
+test_tool_budget_disables_further_tools (test_simple_agent_modular.ModularAgentTests.test_tool_budget_disables_further_tools) ... ok
+test_tool_error_is_returned_to_model_and_recorded (test_simple_agent_modular.ModularAgentTests.test_tool_error_is_returned_to_model_and_recorded) ... ok
+test_unknown_photo_id_never_reads_arbitrary_file_or_calls_api (test_simple_agent_modular.ModularAgentTests.test_unknown_photo_id_never_reads_arbitrary_file_or_calls_api) ... ok
+test_api_errors_are_recorded_as_errors_not_success (test_single_agent_experiment.TestSingleAgentExperiment.test_api_errors_are_recorded_as_errors_not_success) ... ok
+test_photo_tool_executes_and_continues_agent_without_logging_image_or_reasoning (test_single_agent_experiment.TestSingleAgentExperiment.test_photo_tool_executes_and_continues_agent_without_logging_image_or_reasoning) ... ok
+test_preserves_50_case_order_and_adds_eight_checks (test_single_agent_experiment.TestSingleAgentExperiment.test_preserves_50_case_order_and_adds_eight_checks) ... ok
+test_unknown_photo_id_cannot_read_a_path_or_call_vision (test_single_agent_experiment.TestSingleAgentExperiment.test_unknown_photo_id_cannot_read_a_path_or_call_vision) ... ok
+test_admin_endpoint_requires_existing_admin_credential (test_agent_trace.AgentTraceTests.test_admin_endpoint_requires_existing_admin_credential) ... 2026-10-30 18:54:33,221 [services.prompt_store] INFO: Activated prompt package srini-v2.11-review-2026-10-30 (228fbfbc6d38)
+2026-10-30 18:54:33,242 [dharmasala] INFO: Database initialized at /Users/kumarabhinav/Documents/Gaia/chatbot/gaia-chatbot/.codex-build/review-single-agent-20261030/dharamsala.db
+2026-10-30 18:54:33,242 [dharmasala] INFO: Storage directory: /Users/kumarabhinav/Documents/Gaia/chatbot/gaia-chatbot/.codex-build/review-single-agent-20261030/storage
+2026-10-30 18:54:33,242 [dharmasala] INFO: OpenAI API key configured: True
+2026-10-30 18:54:33,242 [dharmasala] INFO: Dharamsala service-area mode: Deb route polygon + 3.0 km checkpoint buffer
+2026-10-30 18:54:33,244 [httpx] INFO: HTTP Request: GET http://testserver/v1/admin/traces/fff8839ca5ca4b89a231667d6cc79e33 "HTTP/1.1 403 Forbidden"
+2026-10-30 18:54:33,247 [httpx] INFO: HTTP Request: GET http://testserver/v1/admin/traces/fff8839ca5ca4b89a231667d6cc79e33 "HTTP/1.1 200 OK"
+ok
+test_bounds_and_expiration_are_explicit (test_agent_trace.AgentTraceTests.test_bounds_and_expiration_are_explicit) ... ok
+test_calls_keep_actual_request_response_usage_and_parent (test_agent_trace.AgentTraceTests.test_calls_keep_actual_request_response_usage_and_parent) ... ok
+test_content_is_off_outside_exact_allowlist_and_no_wildcard (test_agent_trace.AgentTraceTests.test_content_is_off_outside_exact_allowlist_and_no_wildcard) ... ok
+test_credentials_nested_json_images_and_error_messages_are_excluded (test_agent_trace.AgentTraceTests.test_credentials_nested_json_images_and_error_messages_are_excluded) ... ok
+test_db_and_response_inspection_failures_preserve_actual_call (test_agent_trace.AgentTraceTests.test_db_and_response_inspection_failures_preserve_actual_call) ... 2026-10-30 18:54:33,346 [services.agent_trace] WARNING: Agent trace persistence unavailable (OSError)
+2026-10-30 18:54:33,346 [services.agent_trace] WARNING: Agent span persistence unavailable (OSError)
+2026-10-30 18:54:33,346 [services.agent_trace] WARNING: Agent span persistence unavailable (OSError)
+2026-10-30 18:54:33,346 [services.agent_trace] WARNING: Agent trace completion unavailable (OSError)
+ok
+test_parallel_fetches_preserve_parent_and_turn_isolation (test_agent_trace.AgentTraceTests.test_parallel_fetches_preserve_parent_and_turn_isolation) ... ok
+test_public_trace_contains_no_debug_content (test_agent_trace.AgentTraceTests.test_public_trace_contains_no_debug_content) ... ok
+test_address_or_phone_does_not_require_both (test_evidence_retention.TestEvidenceRetention.test_address_or_phone_does_not_require_both) ... 2026-10-30 18:54:33,373 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:33,375 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,376 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,377 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,378 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,381 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_availability_does_not_invent_tonight_or_a_listed_phone (test_evidence_retention.TestEvidenceRetention.test_availability_does_not_invent_tonight_or_a_listed_phone) ... ok
+test_city_alias_keeps_provider_but_rejects_wrong_state (test_evidence_retention.TestEvidenceRetention.test_city_alias_keeps_provider_but_rejects_wrong_state) ... ok
+test_cross_script_city_keeps_address (test_evidence_retention.TestEvidenceRetention.test_cross_script_city_keeps_address) ... ok
+test_directory_service_and_own_address_can_be_separate (test_evidence_retention.TestEvidenceRetention.test_directory_service_and_own_address_can_be_separate) ... ok
+test_full_address_keeps_locality_as_partial (test_evidence_retention.TestEvidenceRetention.test_full_address_keeps_locality_as_partial) ... ok
+test_published_clinic_category_is_a_lead_without_admission_promise (test_evidence_retention.TestEvidenceRetention.test_published_clinic_category_is_a_lead_without_admission_promise) ... ok
+test_separate_address_cannot_cross_into_another_provider (test_evidence_retention.TestEvidenceRetention.test_separate_address_cannot_cross_into_another_provider) ... ok
+test_queue_timeout_returns_unresolved_instead_of_name_error (test_evidence_retention.TestGeocoderTelemetry.test_queue_timeout_returns_unresolved_instead_of_name_error) ... 2026-10-30 18:54:33,386 [services.place_resolver] WARNING: Place geocoding failed provider=nominatim place='Gajuwaka, Visakhapatnam' country= status=none error=TimeoutError
+ok
+test_successful_autocomplete_does_not_lose_candidates_to_telemetry (test_evidence_retention.TestGeocoderTelemetry.test_successful_autocomplete_does_not_lose_candidates_to_telemetry) ... ok
+test_injured_animal_gets_care_while_city_is_clarified (test_evidence_retention.TestInjuryGuidanceRetention.test_injured_animal_gets_care_while_city_is_clarified) ... 2026-10-30 18:54:33,401 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,404 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,407 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,408 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,408 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,411 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,411 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,414 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,415 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,417 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,418 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,420 [dharmasala] INFO: text_turn session_id=85a1488c-281f-4d8f-8497-4dda0242a438 action=clarify routing_source=model search_ran=False result_kind=clarification scope=ambiguous place='Rampur'
+2026-10-30 18:54:33,420 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,421 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_injured_kitten_gets_care_even_if_lookup_is_partial (test_evidence_retention.TestInjuryGuidanceRetention.test_injured_kitten_gets_care_even_if_lookup_is_partial) ... 2026-10-30 18:54:33,434 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,437 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,439 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,439 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,440 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,442 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,443 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,444 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,445 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,446 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,447 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,448 [dharmasala] INFO: text_turn session_id=6306809a-de5d-47ca-9994-1ed072d12a4c action=search routing_source=model search_ran=False result_kind=contact_unconfirmed scope=unspecified place=''
+2026-10-30 18:54:33,449 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,449 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,450 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_punctuation_does_not_discard_the_same_hospitals_phone (test_evidence_retention.TestPhoneNamePunctuation.test_punctuation_does_not_discard_the_same_hospitals_phone) ... ok
+test_mixed_cat_handling_survives_success_and_search_failure (test_rca_runtime_contracts.TestRcaConversationContracts.test_mixed_cat_handling_survives_success_and_search_failure) ... 2026-10-30 18:54:33,464 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,468 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,469 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,470 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,470 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,472 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,472 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,473 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,474 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,475 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,476 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,476 [dharmasala] INFO: text_turn session_id=1afd6576-04db-44d8-9115-fbfc3029d177 action=search routing_source=model search_ran=False result_kind=search_answer scope=unspecified place=''
+2026-10-30 18:54:33,477 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,478 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,478 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,481 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,483 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,483 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,484 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,485 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,486 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,487 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,487 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,489 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,490 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,491 [dharmasala] INFO: text_turn session_id=1afd6576-04db-44d8-9115-fbfc3029d177 action=search routing_source=model search_ran=False result_kind=contact_unconfirmed scope=unspecified place=''
+2026-10-30 18:54:33,492 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,493 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,493 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,497 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,498 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,499 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,499 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,501 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,501 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,502 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,503 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,504 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,505 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,506 [dharmasala] INFO: text_turn session_id=1afd6576-04db-44d8-9115-fbfc3029d177 action=search routing_source=model search_ran=False result_kind=unavailable scope=unspecified place=''
+2026-10-30 18:54:33,506 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,507 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,508 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_new_institution_and_its_followup_do_not_inherit_agartala (test_rca_runtime_contracts.TestRcaConversationContracts.test_new_institution_and_its_followup_do_not_inherit_agartala) ... 2026-10-30 18:54:33,521 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,525 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,526 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,527 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,528 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,534 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,535 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,535 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,536 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,538 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,538 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,539 [dharmasala] INFO: text_turn session_id=3bcdc624-c04d-4267-a7d4-f3ae34d1b173 action=search routing_source=model search_ran=True result_kind=search_answer scope=unspecified place=''
+2026-10-30 18:54:33,540 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,540 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,541 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,543 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,545 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,545 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,546 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,548 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,549 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,549 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,550 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,551 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,552 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,553 [dharmasala] INFO: text_turn session_id=3bcdc624-c04d-4267-a7d4-f3ae34d1b173 action=search routing_source=model search_ran=True result_kind=search_answer scope=unspecified place=''
+2026-10-30 18:54:33,553 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,554 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,554 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,558 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,560 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,560 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,561 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,563 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,563 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,566 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,566 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,568 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,569 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,570 [dharmasala] INFO: text_turn session_id=3bcdc624-c04d-4267-a7d4-f3ae34d1b173 action=search routing_source=model search_ran=False result_kind= scope=unspecified place=''
+2026-10-30 18:54:33,570 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,571 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,572 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_outside_india_injury_gets_safety_without_foreign_lookup (test_rca_runtime_contracts.TestRcaConversationContracts.test_outside_india_injury_gets_safety_without_foreign_lookup) ... 2026-10-30 18:54:33,587 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,589 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,591 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,591 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,592 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,594 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,595 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,596 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,597 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,599 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,599 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,600 [dharmasala] INFO: text_turn session_id=c02904ac-e1f3-40c6-8599-0900bff207ec action=search routing_source=model search_ran=False result_kind=outside_india scope=outside_india place='Kathmandu, Nepal'
+2026-10-30 18:54:33,601 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,602 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,602 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_pickup_followup_is_direct_and_retains_shillong (test_rca_runtime_contracts.TestRcaConversationContracts.test_pickup_followup_is_direct_and_retains_shillong) ... 2026-10-30 18:54:33,613 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,617 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,619 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,619 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,620 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,622 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,622 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,623 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,623 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,625 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,625 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,626 [dharmasala] INFO: text_turn session_id=ade5628a-8e89-4e46-8e7e-ce4ac2ca87b7 action=search routing_source=model search_ran=False result_kind=search_answer scope=india place='Shillong, Meghalaya, India'
+2026-10-30 18:54:33,627 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,627 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,628 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_sales_email_and_animal_named_code_cannot_bypass_scope (test_rca_runtime_contracts.TestRcaConversationContracts.test_sales_email_and_animal_named_code_cannot_bypass_scope) ... 2026-10-30 18:54:33,641 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,645 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,646 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,647 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,647 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,649 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,661 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,662 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,662 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,663 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,664 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,708 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,709 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,710 [dharmasala] INFO: text_turn session_id=4f95000a-2b94-41ca-adfd-bcfd2786dd0a action=out_of_scope routing_source=scope_contract search_ran=False result_kind=out_of_scope scope=unspecified place=''
+2026-10-30 18:54:33,710 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,711 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,715 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,717 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,717 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,718 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,724 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,729 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,730 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,730 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,755 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,756 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,757 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,758 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,758 [dharmasala] INFO: text_turn session_id=4f95000a-2b94-41ca-adfd-bcfd2786dd0a action=out_of_scope routing_source=scope_contract search_ran=False result_kind=out_of_scope scope=unspecified place=''
+2026-10-30 18:54:33,759 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,760 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_trace_is_correlated_and_never_reuses_previous_request (test_rca_runtime_contracts.TestRcaConversationContracts.test_trace_is_correlated_and_never_reuses_previous_request) ... 2026-10-30 18:54:33,804 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,807 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,808 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,809 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,809 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,811 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,812 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,812 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,813 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,814 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,815 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,816 [dharmasala] INFO: text_turn session_id=aac1296e-2106-44c1-8fc0-e015ddba71aa action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-30 18:54:33,817 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,818 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-30 18:54:33,821 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,823 [services.agent_trace] WARNING: Agent trace session binding unavailable (OperationalError)
+2026-10-30 18:54:33,823 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,824 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,826 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,826 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,827 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,827 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,829 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,829 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,830 [dharmasala] INFO: text_turn session_id=aac1296e-2106-44c1-8fc0-e015ddba71aa action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-30 18:54:33,831 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,831 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+ok
+test_vehicle_nearby_does_not_establish_collision (test_rca_runtime_contracts.TestRcaConversationContracts.test_vehicle_nearby_does_not_establish_collision) ... 2026-10-30 18:54:33,849 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+ok
+test_clear_current_english_precedes_hindi_browser_header (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_clear_current_english_precedes_hindi_browser_header) ... ok
+test_emergency_species_coverage_and_no_hypothetical_alarm (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_emergency_species_coverage_and_no_hypothetical_alarm) ... ok
+test_full_postal_address_and_unverified_pin_keep_exact_entity (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_full_postal_address_and_unverified_pin_keep_exact_entity) ... 2026-10-30 18:54:33,852 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:33,853 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,854 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:33,855 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:33,855 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:33,855 [services.search_evidence] WARNING: Contact evidence review status=unavailable fetched_sources=1 error=TypeError
+2026-10-30 18:54:33,856 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+ok
+test_phone_only_still_rejects_a_different_institution (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_phone_only_still_rejects_a_different_institution) ... ok
+test_qualified_city_is_not_changed_into_city_in (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_qualified_city_is_not_changed_into_city_in) ... ok
+test_same_name_cross_state_geocoder_hits_require_qualification (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_same_name_cross_state_geocoder_hits_require_qualification) ... ok
+test_same_named_city_in_wrong_state_is_rejected (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_same_named_city_in_wrong_state_is_rejected) ... 2026-10-30 18:54:33,859 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+ok
+test_source_fetch_batches_share_a_bounded_worker_pool (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_source_fetch_batches_share_a_bounded_worker_pool) ... 2026-10-30 18:54:33,946 [services.search_evidence] INFO: Contact source fetch reached its deadline
+2026-10-30 18:54:33,946 [services.search_evidence] INFO: Contact source fetch reached its deadline
+2026-10-30 18:54:33,946 [services.search_evidence] INFO: Contact source fetch reached its deadline
+2026-10-30 18:54:33,946 [services.search_evidence] INFO: Contact source fetch attempted_sources=4 readable_sources=0
+2026-10-30 18:54:33,946 [services.search_evidence] INFO: Contact source fetch attempted_sources=4 readable_sources=0
+2026-10-30 18:54:33,946 [services.search_evidence] INFO: Contact source fetch attempted_sources=4 readable_sources=0
+ok
+test_state_clarifications_and_comma_form_preserve_same_provider (test_rca_runtime_contracts.TestRcaEvidenceContracts.test_state_clarifications_and_comma_form_preserve_same_provider) ... ok
+test_fetched_graph_preserves_same_clinic_address_phone_and_animal_service (test_structured_provider_sources.TestStructuredProviderSources.test_fetched_graph_preserves_same_clinic_address_phone_and_animal_service) ... ok
+test_staff_foreign_records_and_research_only_cannot_become_local_clinical_proof (test_structured_provider_sources.TestStructuredProviderSources.test_staff_foreign_records_and_research_only_cannot_become_local_clinical_proof) ... ok
+test_contended_fetch_waits_for_available_slot_within_deadline (test_search_evidence.TestContendedPublicFetch.test_contended_fetch_waits_for_available_slot_within_deadline) ... 2026-10-30 18:54:34,304 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-30 18:54:34,305 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+ok
+test_actual_block_service_before_name_does_not_borrow_another_provider (test_search_evidence.TestSearchEvidence.test_actual_block_service_before_name_does_not_borrow_another_provider) ... ok
+test_address_normalization_never_invents_a_different_locality (test_search_evidence.TestSearchEvidence.test_address_normalization_never_invents_a_different_locality) ... ok
+test_address_only_cannot_use_another_campus_or_infer_parent (test_search_evidence.TestSearchEvidence.test_address_only_cannot_use_another_campus_or_infer_parent) ... ok
+test_address_only_is_not_a_clinical_discovery_request (test_search_evidence.TestSearchEvidence.test_address_only_is_not_a_clinical_discovery_request) ... 2026-10-30 18:54:34,309 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+ok
+test_address_only_repairs_a_model_address_from_the_exact_source_row (test_search_evidence.TestSearchEvidence.test_address_only_repairs_a_model_address_from_the_exact_source_row) ... ok
+test_adequate_provider_options_survive_missing_phone_details (test_search_evidence.TestSearchEvidence.test_adequate_provider_options_survive_missing_phone_details) ... ok
+test_bound_clinical_service_quote_supports_treatment_without_any_phone (test_search_evidence.TestSearchEvidence.test_bound_clinical_service_quote_supports_treatment_without_any_phone) ... ok
+test_clinical_provider_alone_cannot_satisfy_requested_phone_and_address (test_search_evidence.TestSearchEvidence.test_clinical_provider_alone_cannot_satisfy_requested_phone_and_address) ... ok
+test_clinical_title_and_staff_contact_remain_an_identity_lead (test_search_evidence.TestSearchEvidence.test_clinical_title_and_staff_contact_remain_an_identity_lead) ... ok
+test_country_code_plus_domestic_trunk_prefix_matches_local_format (test_search_evidence.TestSearchEvidence.test_country_code_plus_domestic_trunk_prefix_matches_local_format) ... 2026-10-30 18:54:34,313 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,314 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,315 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,316 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,317 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,317 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+2026-10-30 18:54:34,317 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,318 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,319 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,320 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,321 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,321 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_directory_only_live_case_cannot_become_clinical_or_no_pickup_proof (test_search_evidence.TestSearchEvidence.test_directory_only_live_case_cannot_become_clinical_or_no_pickup_proof) ... ok
+test_explicit_companion_animal_service_is_not_hidden_by_generic_care_text (test_search_evidence.TestSearchEvidence.test_explicit_companion_animal_service_is_not_hidden_by_generic_care_text) ... ok
+test_explicit_fictional_college_correction_does_not_reuse_old_contact (test_search_evidence.TestSearchEvidence.test_explicit_fictional_college_correction_does_not_reuse_old_contact) ... 2026-10-30 18:54:34,324 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,325 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,326 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,327 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,328 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,328 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=no_grounded_provider_claims
+ok
+test_explicit_treatment_pickup_distinction_survives_review_rewrite (test_search_evidence.TestSearchEvidence.test_explicit_treatment_pickup_distinction_survives_review_rewrite) ... ok
+test_fabricated_quote_is_rejected_even_when_phone_is_real (test_search_evidence.TestSearchEvidence.test_fabricated_quote_is_rejected_even_when_phone_is_real) ... 2026-10-30 18:54:34,330 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,330 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,331 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,332 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,333 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,333 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+ok
+test_fabricated_service_quote_is_not_evidence_even_with_real_entity (test_search_evidence.TestSearchEvidence.test_fabricated_service_quote_is_not_evidence_even_with_real_entity) ... ok
+test_failed_source_is_not_fetched_again_in_same_turn (test_search_evidence.TestSearchEvidence.test_failed_source_is_not_fetched_again_in_same_turn) ... 2026-10-30 18:54:34,334 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+2026-10-30 18:54:34,334 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+ok
+test_false_entity_match_rejects_even_a_real_source_phone (test_search_evidence.TestSearchEvidence.test_false_entity_match_rejects_even_a_real_source_phone) ... 2026-10-30 18:54:34,335 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,336 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,337 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,337 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,338 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,338 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+ok
+test_fetch_budget_limits_source_count_and_excludes_failed_pages (test_search_evidence.TestSearchEvidence.test_fetch_budget_limits_source_count_and_excludes_failed_pages) ... 2026-10-30 18:54:34,339 [services.search_evidence] INFO: Contact source fetch attempted_sources=12 readable_sources=11
+ok
+test_fetch_enriches_only_two_same_host_contact_service_links_within_existing_cap (test_search_evidence.TestSearchEvidence.test_fetch_enriches_only_two_same_host_contact_service_links_within_existing_cap) ... 2026-10-30 18:54:34,340 [services.search_evidence] INFO: Contact source fetch attempted_sources=12 readable_sources=12
+ok
+test_fetch_enrichment_is_one_hop_and_skips_network_after_deadline (test_search_evidence.TestSearchEvidence.test_fetch_enrichment_is_one_hop_and_skips_network_after_deadline) ... 2026-10-30 18:54:34,340 [services.search_evidence] INFO: Contact source fetch attempted_sources=2 readable_sources=2
+2026-10-30 18:54:34,340 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+ok
+test_first_party_organisation_footer_contact_stays_general (test_search_evidence.TestSearchEvidence.test_first_party_organisation_footer_contact_stays_general) ... ok
+test_first_party_parent_page_can_bind_named_facility_to_footer_contact (test_search_evidence.TestSearchEvidence.test_first_party_parent_page_can_bind_named_facility_to_footer_contact) ... ok
+test_fresh_q01_general_discovery_keeps_real_directory_leads (test_search_evidence.TestSearchEvidence.test_fresh_q01_general_discovery_keeps_real_directory_leads) ... 2026-10-30 18:54:34,347 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,369 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,370 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,371 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,371 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,372 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_general_discovery_drops_bare_department_heading_without_facility (test_search_evidence.TestSearchEvidence.test_general_discovery_drops_bare_department_heading_without_facility) ... ok
+test_general_discovery_drops_identity_only_provider_from_another_city (test_search_evidence.TestSearchEvidence.test_general_discovery_drops_identity_only_provider_from_another_city) ... ok
+test_generic_college_uses_literal_selected_town_in_actual_phone_excerpt (test_search_evidence.TestSearchEvidence.test_generic_college_uses_literal_selected_town_in_actual_phone_excerpt) ... ok
+test_generic_discovery_across_unrelated_states_does_not_invent_an_institution (test_search_evidence.TestSearchEvidence.test_generic_discovery_across_unrelated_states_does_not_invent_an_institution) ... ok
+test_generic_locality_cannot_be_borrowed_from_neighbouring_provider_row (test_search_evidence.TestSearchEvidence.test_generic_locality_cannot_be_borrowed_from_neighbouring_provider_row) ... ok
+test_generic_locality_check_works_across_unrelated_states (test_search_evidence.TestSearchEvidence.test_generic_locality_check_works_across_unrelated_states) ... ok
+test_generic_veterinary_treatment_is_eligible_without_claiming_dog_admission (test_search_evidence.TestSearchEvidence.test_generic_veterinary_treatment_is_eligible_without_claiming_dog_admission) ... ok
+test_geocoder_city_cannot_replace_a_literal_town_or_requested_institution (test_search_evidence.TestSearchEvidence.test_geocoder_city_cannot_replace_a_literal_town_or_requested_institution) ... ok
+test_inadequate_facility_evidence_triggers_one_bounded_refinement (test_search_evidence.TestSearchEvidence.test_inadequate_facility_evidence_triggers_one_bounded_refinement) ... ok
+test_incomplete_model_quote_is_repaired_only_from_source_bound_passage (test_search_evidence.TestSearchEvidence.test_incomplete_model_quote_is_repaired_only_from_source_bound_passage) ... 2026-10-30 18:54:34,388 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,390 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,392 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,393 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,394 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,394 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+2026-10-30 18:54:34,395 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,395 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,397 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,397 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,398 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,398 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+ok
+test_injured_animal_where_to_take_it_always_gets_clinical_review (test_search_evidence.TestSearchEvidence.test_injured_animal_where_to_take_it_always_gets_clinical_review) ... 2026-10-30 18:54:34,399 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,400 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,401 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,402 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,403 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,403 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=no_grounded_provider_claims
+ok
+test_its_number_uses_prior_target_and_actual_fetched_source (test_search_evidence.TestSearchEvidence.test_its_number_uses_prior_target_and_actual_fetched_source) ... 2026-10-30 18:54:34,404 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,404 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,405 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,407 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,407 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,407 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_landmark_hospital_does_not_erase_clinical_service_or_office_role (test_search_evidence.TestSearchEvidence.test_landmark_hospital_does_not_erase_clinical_service_or_office_role) ... ok
+test_live_hospital_heading_opd_blocks_and_treatment_contact_bind (test_search_evidence.TestSearchEvidence.test_live_hospital_heading_opd_blocks_and_treatment_contact_bind) ... ok
+test_live_partial_refinement_retains_source_location_and_verified_contact (test_search_evidence.TestSearchEvidence.test_live_partial_refinement_retains_source_location_and_verified_contact) ... ok
+test_live_provider_fallback_fixture_drops_empty_staff_contact_section (test_search_evidence.TestSearchEvidence.test_live_provider_fallback_fixture_drops_empty_staff_contact_section) ... ok
+test_live_rescue_centre_reordered_quote_uses_actual_service_paragraph (test_search_evidence.TestSearchEvidence.test_live_rescue_centre_reordered_quote_uses_actual_service_paragraph) ... ok
+test_local_animal_husbandry_referral_is_visible_when_clinical_access_is_unknown (test_search_evidence.TestSearchEvidence.test_local_animal_husbandry_referral_is_visible_when_clinical_access_is_unknown) ... 2026-10-30 18:54:34,417 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,418 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,419 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,420 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,420 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,421 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_many_urls_from_one_publisher_do_not_starve_independent_local_pages (test_search_evidence.TestSearchEvidence.test_many_urls_from_one_publisher_do_not_starve_independent_local_pages) ... 2026-10-30 18:54:34,422 [services.search_evidence] INFO: Contact source fetch attempted_sources=12 readable_sources=1
+ok
+test_missing_draft_citation_or_phone_can_be_repaired_from_available_source (test_search_evidence.TestSearchEvidence.test_missing_draft_citation_or_phone_can_be_repaired_from_available_source) ... 2026-10-30 18:54:34,422 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,426 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,427 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,428 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,428 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,429 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_mobile_service_heading_with_another_proper_name_still_blocks_aggregation (test_search_evidence.TestSearchEvidence.test_mobile_service_heading_with_another_proper_name_still_blocks_aggregation) ... ok
+test_model_failure_does_not_leak_draft_number (test_search_evidence.TestSearchEvidence.test_model_failure_does_not_leak_draft_number) ... 2026-10-30 18:54:34,429 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,430 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,431 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,431 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,432 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,432 [services.search_evidence] WARNING: Contact evidence review status=unavailable fetched_sources=1 error=TimeoutError
+ok
+test_multiple_phone_claim_with_ellipsis_uses_actual_clinical_source (test_search_evidence.TestSearchEvidence.test_multiple_phone_claim_with_ellipsis_uses_actual_clinical_source) ... 2026-10-30 18:54:34,433 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,434 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,435 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,435 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,436 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,436 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_named_corrections_keep_full_literal_name_and_initials (test_search_evidence.TestSearchEvidence.test_named_corrections_keep_full_literal_name_and_initials) ... ok
+test_neighbourhood_origin_keeps_treatment_elsewhere_in_the_explicit_city (test_search_evidence.TestSearchEvidence.test_neighbourhood_origin_keeps_treatment_elsewhere_in_the_explicit_city) ... ok
+test_new_city_discovery_does_not_inherit_an_old_college (test_search_evidence.TestSearchEvidence.test_new_city_discovery_does_not_inherit_an_old_college) ... ok
+test_no_provider_evidence_fallback_keeps_generic_actionable_guidance (test_search_evidence.TestSearchEvidence.test_no_provider_evidence_fallback_keeps_generic_actionable_guidance) ... ok
+test_non_contact_answer_is_untouched_and_never_fetched (test_search_evidence.TestSearchEvidence.test_non_contact_answer_is_untouched_and_never_fetched) ... ok
+test_office_number_cannot_satisfy_explicit_clinical_request (test_search_evidence.TestSearchEvidence.test_office_number_cannot_satisfy_explicit_clinical_request) ... 2026-10-30 18:54:34,439 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,440 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,441 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,442 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,443 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,443 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+2026-10-30 18:54:34,444 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,444 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,445 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,446 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,447 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,447 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_office_on_polyclinic_campus_retains_referral_role_without_clinical_substitution (test_search_evidence.TestSearchEvidence.test_office_on_polyclinic_campus_retains_referral_role_without_clinical_substitution) ... ok
+test_outage_does_not_retry_and_gives_generic_referral_not_guessed_contact (test_search_evidence.TestSearchEvidence.test_outage_does_not_retry_and_gives_generic_referral_not_guessed_contact) ... ok
+test_parent_and_campus_supported_by_literal_source_identity_pass (test_search_evidence.TestSearchEvidence.test_parent_and_campus_supported_by_literal_source_identity_pass) ... ok
+test_partial_refinement_compares_grounded_facts_not_prose_or_links (test_search_evidence.TestSearchEvidence.test_partial_refinement_compares_grounded_facts_not_prose_or_links) ... ok
+test_phone_field_cannot_smuggle_text_into_claims (test_search_evidence.TestSearchEvidence.test_phone_field_cannot_smuggle_text_into_claims) ... ok
+test_phone_format_variants_and_short_helpline_require_evidence (test_search_evidence.TestSearchEvidence.test_phone_format_variants_and_short_helpline_require_evidence) ... 2026-10-30 18:54:34,452 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,453 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,454 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,455 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,456 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,456 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+2026-10-30 18:54:34,456 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,457 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,458 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,459 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,459 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,460 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+2026-10-30 18:54:34,460 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,461 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,462 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,463 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,463 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,463 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+ok
+test_phone_in_answer_must_match_the_actual_quote (test_search_evidence.TestSearchEvidence.test_phone_in_answer_must_match_the_actual_quote) ... 2026-10-30 18:54:34,464 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,464 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,465 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,466 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,467 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,467 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+ok
+test_phone_only_abstention_is_short_and_excludes_other_institution_source (test_search_evidence.TestSearchEvidence.test_phone_only_abstention_is_short_and_excludes_other_institution_source) ... ok
+test_provider_discovery_without_phones_still_gets_adequacy_review (test_search_evidence.TestSearchEvidence.test_provider_discovery_without_phones_still_gets_adequacy_review) ... 2026-10-30 18:54:34,468 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,469 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,470 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,471 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,471 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,471 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=no_grounded_provider_claims
+ok
+test_provider_fallback_omits_unrequested_phone_failure_and_empty_fields (test_search_evidence.TestSearchEvidence.test_provider_fallback_omits_unrequested_phone_failure_and_empty_fields) ... ok
+test_publisher_aggregation_does_not_drop_selected_campus_or_accept_unrelated_host (test_search_evidence.TestSearchEvidence.test_publisher_aggregation_does_not_drop_selected_campus_or_accept_unrelated_host) ... ok
+test_publisher_aggregation_rejects_directory_or_competing_provider (test_search_evidence.TestSearchEvidence.test_publisher_aggregation_rejects_directory_or_competing_provider) ... ok
+test_redacted_facility_rows_preserve_location_and_treatment_details (test_search_evidence.TestSearchEvidence.test_redacted_facility_rows_preserve_location_and_treatment_details) ... ok
+test_request_satisfied_is_required_and_strictly_boolean (test_search_evidence.TestSearchEvidence.test_request_satisfied_is_required_and_strictly_boolean) ... ok
+test_router_empty_selection_is_authoritative_and_distinct_from_omitted (test_search_evidence.TestSearchEvidence.test_router_empty_selection_is_authoritative_and_distinct_from_omitted) ... ok
+test_search_preserves_omitted_empty_and_named_selection_when_forwarding_review (test_search_evidence.TestSearchEvidence.test_search_preserves_omitted_empty_and_named_selection_when_forwarding_review) ... ok
+test_selected_assistant_provider_cannot_receive_another_institutions_phone (test_search_evidence.TestSearchEvidence.test_selected_assistant_provider_cannot_receive_another_institutions_phone) ... 2026-10-30 18:54:34,477 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,478 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,479 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,480 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,481 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,481 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+ok
+test_selected_parent_and_campus_cannot_be_truncated_to_generic_clinical_complex (test_search_evidence.TestSearchEvidence.test_selected_parent_and_campus_cannot_be_truncated_to_generic_clinical_complex) ... ok
+test_service_menus_and_own_branches_do_not_erase_local_treatment (test_search_evidence.TestSearchEvidence.test_service_menus_and_own_branches_do_not_erase_local_treatment) ... ok
+test_service_proof_cannot_borrow_another_institutions_treatment_or_species (test_search_evidence.TestSearchEvidence.test_service_proof_cannot_borrow_another_institutions_treatment_or_species) ... ok
+test_shortcodes_in_markdown_and_separate_lines_are_redacted (test_search_evidence.TestSearchEvidence.test_shortcodes_in_markdown_and_separate_lines_are_redacted) ... ok
+test_some_unsupported_contacts_do_not_remove_supported_institution_information (test_search_evidence.TestSearchEvidence.test_some_unsupported_contacts_do_not_remove_supported_institution_information) ... 2026-10-30 18:54:34,489 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,490 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,491 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,492 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,492 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,493 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_source_priority_preserves_citations_and_prefers_clinical_paths_over_noise (test_search_evidence.TestSearchEvidence.test_source_priority_preserves_citations_and_prefers_clinical_paths_over_noise) ... 2026-10-30 18:54:34,494 [services.search_evidence] INFO: Contact source fetch attempted_sources=12 readable_sources=12
+ok
+test_split_first_party_clinic_services_contact_and_address_survive (test_search_evidence.TestSearchEvidence.test_split_first_party_clinic_services_contact_and_address_survive) ... ok
+test_split_publisher_administration_phone_cannot_become_clinical_number (test_search_evidence.TestSearchEvidence.test_split_publisher_administration_phone_cannot_become_clinical_number) ... ok
+test_supported_phone_survives_an_additional_unsupported_phone (test_search_evidence.TestSearchEvidence.test_supported_phone_survives_an_additional_unsupported_phone) ... 2026-10-30 18:54:34,498 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,499 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,500 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,501 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,501 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,501 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+ok
+test_tracking_urls_do_not_poison_valid_sources_and_document_ids_stay_distinct (test_search_evidence.TestSearchEvidence.test_tracking_urls_do_not_poison_valid_sources_and_document_ids_stay_distinct) ... ok
+test_transient_fetch_failure_can_retry_in_a_new_turn_but_success_is_cached (test_search_evidence.TestSearchEvidence.test_transient_fetch_failure_can_retry_in_a_new_turn_but_success_is_cached) ... 2026-10-30 18:54:34,503 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+2026-10-30 18:54:34,503 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,503 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+ok
+test_unfetched_source_or_schema_injection_is_rejected (test_search_evidence.TestSearchEvidence.test_unfetched_source_or_schema_injection_is_rejected) ... 2026-10-30 18:54:34,504 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,504 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,505 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,506 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,507 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,507 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+2026-10-30 18:54:34,507 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,508 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,509 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,510 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,511 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,511 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+2026-10-30 18:54:34,511 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,512 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,513 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,514 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,514 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,514 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+2026-10-30 18:54:34,515 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-30 18:54:34,516 [services.agent_trace] WARNING: Agent trace persistence unavailable (OperationalError)
+2026-10-30 18:54:34,517 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,518 [services.agent_trace] WARNING: Agent span persistence unavailable (OperationalError)
+2026-10-30 18:54:34,518 [services.agent_trace] WARNING: Agent trace completion unavailable (OperationalError)
+2026-10-30 18:54:34,519 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+ok
+test_unknown_pickup_is_not_proof_of_no_pickup (test_search_evidence.TestSearchEvidence.test_unknown_pickup_is_not_proof_of_no_pickup) ... ok
+test_unreadable_address_returns_address_specific_failure (test_search_evidence.TestSearchEvidence.test_unreadable_address_returns_address_specific_failure) ... 2026-10-30 18:54:34,520 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+2026-10-30 18:54:34,520 [services.search_evidence] INFO: Contact evidence review status=unavailable reason=no_readable_sources fetched_sources=0
+ok
+test_unreadable_sources_return_honest_failure_without_model_call (test_search_evidence.TestSearchEvidence.test_unreadable_sources_return_honest_failure_without_model_call) ... 2026-10-30 18:54:34,520 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+2026-10-30 18:54:34,520 [services.search_evidence] INFO: Contact evidence review status=unavailable reason=no_readable_sources fetched_sources=0
+ok
+test_user_can_select_assistant_listed_provider_without_retyping_name (test_search_evidence.TestSearchEvidence.test_user_can_select_assistant_listed_provider_without_retyping_name) ... ok
+test_atomic_activation_reload_and_rollback (test_prompt_store.TestPromptReleases.test_atomic_activation_reload_and_rollback) ... 2026-10-30 18:54:34,551 [services.prompt_store] INFO: Activated prompt package srini-v2.11-review-2026-10-30 (228fbfbc6d38)
+2026-10-30 18:54:34,575 [services.prompt_store] INFO: Activated prompt package review-revision-2 (ddef7c04180b)
+2026-10-30 18:54:34,596 [services.prompt_store] INFO: Activated prompt package srini-v2.11-review-2026-10-30 (228fbfbc6d38)
+ok
+test_bad_update_retains_last_valid_and_reports_degraded (test_prompt_store.TestPromptReleases.test_bad_update_retains_last_valid_and_reports_degraded) ... 2026-10-30 18:54:34,620 [services.prompt_store] INFO: Activated prompt package srini-v2.11-review-2026-10-30 (228fbfbc6d38)
+2026-10-30 18:54:34,620 [services.prompt_store] ERROR: Prompt reload failed: PromptPackageError; keeping last valid release
+ok
+test_broken_activation_preserves_pointer (test_prompt_store.TestPromptReleases.test_broken_activation_preserves_pointer) ... ok
+test_cold_start_refuses_invalid_or_missing_release (test_prompt_store.TestPromptReleases.test_cold_start_refuses_invalid_or_missing_release) ... 2026-10-30 18:54:34,683 [services.prompt_store] ERROR: Prompt reload failed: FileNotFoundError; keeping last valid release
+ok
+test_hindi_and_context_keep_final_contract_last (test_prompt_store.TestPromptReleases.test_hindi_and_context_keep_final_contract_last) ... ok
+test_missing_file_or_hash_mismatch_rejects_package (test_prompt_store.TestPromptReleases.test_missing_file_or_hash_mismatch_rejects_package) ... ok
+test_reference_files_are_not_loaded (test_prompt_store.TestPromptReleases.test_reference_files_are_not_loaded) ... ok
+test_request_pin_survives_an_activation (test_prompt_store.TestPromptReleases.test_request_pin_survives_an_activation) ... 2026-10-30 18:54:34,747 [services.prompt_store] INFO: Activated prompt package srini-v2.11-review-2026-10-30 (228fbfbc6d38)
+2026-10-30 18:54:34,752 [services.prompt_store] INFO: Activated prompt package next-revision (95f3ac9e7fd6)
+ok
+test_shared_policy_drift_rejects_whole_candidate (test_prompt_store.TestPromptReleases.test_shared_policy_drift_rejects_whole_candidate) ... ok
+test_supplied_english_systems_are_used_without_double_policy (test_prompt_store.TestPromptReleases.test_supplied_english_systems_are_used_without_double_policy) ... ok
+test_unknown_placeholder_cannot_be_sealed (test_prompt_store.TestPromptReleases.test_unknown_placeholder_cannot_be_sealed) ... ok
+test_user_template_like_data_is_not_interpreted_recursively (test_prompt_store.TestPromptReleases.test_user_template_like_data_is_not_interpreted_recursively) ... ok
+test_web_context_is_real_json_with_arbitrary_quotes_and_newlines (test_prompt_store.TestPromptReleases.test_web_context_is_real_json_with_arbitrary_quotes_and_newlines) ... ok
+test_worker_thread_inherits_pinned_request (test_prompt_store.TestPromptReleases.test_worker_thread_inherits_pinned_request) ... ok
+
+----------------------------------------------------------------------
+Ran 152 tests in 1.627s
+
+OK

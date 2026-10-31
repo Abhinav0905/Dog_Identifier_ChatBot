@@ -1,0 +1,289 @@
+{
+  "generated_at": "2026-10-31T01:40:10.269573+00:00",
+  "runs": [
+    {
+      "run": "run1",
+      "date": "2026-10-30",
+      "method": "Standalone live API run with manual semantic acceptance review; not a production UI test.",
+      "counts": {
+        "PASS": 31,
+        "PARTIAL": 17,
+        "FAIL": 2
+      },
+      "full_pass_percent": 62,
+      "target_full_passes": 45,
+      "target_met": false,
+      "completed": 50,
+      "api_errors": 0,
+      "api_refusal_items": 0,
+      "model": "gpt-5.6-terra",
+      "started_at": "2026-10-31T01:23:42.328145+00:00",
+      "finished_at": "2026-10-31T01:27:17.183672+00:00",
+      "median_seconds": 9.48,
+      "main_model_calls": 53,
+      "photo_analysis_calls": 3,
+      "search_actions": 80,
+      "search_query_strings": 224,
+      "search_actions_with_sources": 0,
+      "direct_open_actions": 10,
+      "cases_with_search_sources": 0,
+      "prompt_hashes_match_previous_candidate": true,
+      "all_original_code_file_hashes_match": true,
+      "raw_hash_inventory_extra_files": [
+        "._README.txt",
+        ".___init__.py",
+        ".___main__.py",
+        "._agent.py",
+        "._catalog.py",
+        "._tools.py",
+        "._tracing.py",
+        "evaluation/._cases.json",
+        "evaluation/._origin.json",
+        "prompts/._care.txt",
+        "prompts/._guardrails.txt",
+        "prompts/._photo.txt",
+        "prompts/._search.txt",
+        "prompts/._system.txt"
+      ],
+      "extra_file_explanation": "macOS AppleDouble metadata from archive transfer; no missing or changed candidate files.",
+      "remaining_cases": [
+        {
+          "id": "F01",
+          "verdict": "PARTIAL",
+          "reason": "Safe injury advice, but no verified actionable Bhavnagar treatment address or phone; generic local search is left to the user.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F03",
+          "verdict": "FAIL",
+          "reason": "The address-only request receives no address at all after three source-empty search calls.",
+          "pattern": "missing_requested_answer"
+        },
+        {
+          "id": "F05",
+          "verdict": "PARTIAL",
+          "reason": "Kitten safety is useful, but no specific Bhuj public veterinary facility or actionable details.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F06",
+          "verdict": "PARTIAL",
+          "reason": "Careful carrier/handling guidance, but generic Ajmer government service with no actionable address or phone.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F10",
+          "verdict": "PARTIAL",
+          "reason": "Traffic/trauma handling advice, but no verified actionable Bharatpur facility details.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F11",
+          "verdict": "PARTIAL",
+          "reason": "Relevant limping-dog care, but sends user to generic Aizawl government service without address/contact.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F12",
+          "verdict": "PARTIAL",
+          "reason": "Useful puppy care, but vague Itanagar/Naharlagun government-service suggestion without address/contact.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F15",
+          "verdict": "PARTIAL",
+          "reason": "Good traffic/immobilisation/urgent transport advice, but no actual Balasore veterinary facility address/contact.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F17",
+          "verdict": "PARTIAL",
+          "reason": "Uses Himachal clarification, but cannot supply a verified actionable treatment address/contact.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F18",
+          "verdict": "FAIL",
+          "reason": "Explicitly different Una case inherits Himachal Pradesh from prior Hamirpur case; fails to clarify genuinely ambiguous state.",
+          "pattern": "stale_location"
+        },
+        {
+          "id": "F19",
+          "verdict": "PARTIAL",
+          "reason": "Accepts Gujarat correction and suggests 1962 without guarantee, but does not identify the requested treatment facility or ground the number in a cited/traced source.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F20",
+          "verdict": "PARTIAL",
+          "reason": "Corrects Jorhat to Assam and gives care, but no verified local treatment address/contact.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F21",
+          "verdict": "PARTIAL",
+          "reason": "Correct OUAT college/city/PIN and address-only format, but omits published Siripur locality detail from the requested full postal address.",
+          "pattern": "address_completeness"
+        },
+        {
+          "id": "F25",
+          "verdict": "PARTIAL",
+          "reason": "Correctly rejects guaranteed opening/admission, but supplies no useful Patna veterinary option or actionable contact.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F30",
+          "verdict": "PARTIAL",
+          "reason": "Good seizure precautions and urgent vet advice, but says to keep puppy warm after fitting; veterinary guidance warns seizures can cause overheating.",
+          "pattern": "care_wording"
+        },
+        {
+          "id": "F42",
+          "verdict": "PARTIAL",
+          "reason": "Correct urgent breathing/swallowing triage and no waiting for a photo, but added human-exposure paragraph groups eyes/mouth with soap-washing wounds; mucous membranes require clean-water rinsing.",
+          "pattern": "care_wording"
+        },
+        {
+          "id": "F46",
+          "verdict": "PARTIAL",
+          "reason": "Kannada safety response, but no verified Mandya treatment facility address/contact.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F47",
+          "verdict": "PARTIAL",
+          "reason": "Marathi humane cat handling, but no verified Sangli hospital address/contact.",
+          "pattern": "missing_treatment_details"
+        },
+        {
+          "id": "F48",
+          "verdict": "PARTIAL",
+          "reason": "Useful humane alternative to dumping healthy dogs, but appended exposure sentence again groups eyes/mouth with soap-washing wounds.",
+          "pattern": "care_wording"
+        }
+      ],
+      "pattern_counts": {
+        "missing_treatment_details": 13,
+        "missing_requested_answer": 1,
+        "stale_location": 1,
+        "address_completeness": 1,
+        "care_wording": 3
+      },
+      "production_changed": false,
+      "s3_uploaded": false
+    },
+    {
+      "run": "run2",
+      "date": "2026-10-30",
+      "method": "Standalone live API run with manual semantic acceptance review; not a production UI test.",
+      "counts": {
+        "PASS": 43,
+        "PARTIAL": 6,
+        "FAIL": 1
+      },
+      "full_pass_percent": 86,
+      "target_full_passes": 45,
+      "target_met": false,
+      "completed": 50,
+      "api_errors": 0,
+      "api_refusal_items": 0,
+      "model": "gpt-5.6-terra",
+      "started_at": "2026-10-31T01:31:21.414961+00:00",
+      "finished_at": "2026-10-31T01:33:10.029293+00:00",
+      "median_seconds": 5.1,
+      "main_model_calls": 53,
+      "photo_analysis_calls": 3,
+      "search_actions": 34,
+      "search_query_strings": 90,
+      "search_actions_with_sources": 32,
+      "direct_open_actions": 1,
+      "cases_with_search_sources": 28,
+      "prompt_hashes_match_previous_candidate": true,
+      "all_original_code_file_hashes_match": true,
+      "raw_hash_inventory_extra_files": [
+        "._README.txt",
+        ".___init__.py",
+        ".___main__.py",
+        "._agent.py",
+        "._catalog.py",
+        "._tools.py",
+        "._tracing.py",
+        "evaluation/._cases.json",
+        "evaluation/._origin.json",
+        "prompts/._care.txt",
+        "prompts/._guardrails.txt",
+        "prompts/._photo.txt",
+        "prompts/._search.txt",
+        "prompts/._system.txt"
+      ],
+      "extra_file_explanation": "macOS AppleDouble metadata from archive transfer; no missing or changed candidate files.",
+      "remaining_cases": [
+        {
+          "id": "F01",
+          "verdict": "PARTIAL",
+          "reason": "Real Shyam clinic and consistently published phone, but public listings conflict between Amidhara/Top 3 Circle and Shree Aalekh Complex/Lila Circle addresses. The answer does not flag or resolve the conflicting location.",
+          "pattern": "contact_conflict"
+        },
+        {
+          "id": "F18",
+          "verdict": "FAIL",
+          "reason": "Again borrows Himachal Pradesh from the prior Hamirpur animal despite an explicitly different Una case; gives a hospital in an unconfirmed state instead of clarifying.",
+          "pattern": "stale_location"
+        },
+        {
+          "id": "F25",
+          "verdict": "PARTIAL",
+          "reason": "Useful Patna facility and published contact; rejects guaranteed admission, but calls it a verified currently-open option solely from published 24/7 hours. Live opening was not actually confirmed.",
+          "pattern": "availability_overclaim"
+        },
+        {
+          "id": "F30",
+          "verdict": "PARTIAL",
+          "reason": "Core seizure safety is correct, but keep-warm instruction repeats despite overheating risk; should give neutral cool/ventilated environment guidance.",
+          "pattern": "care_wording"
+        },
+        {
+          "id": "F41",
+          "verdict": "PARTIAL",
+          "reason": "Photo tool used and most observations/limits are grounded, but claims the visible roadside setting makes regular food/water harder to access. Availability of care cannot be inferred from this image.",
+          "pattern": "photo_grounding"
+        },
+        {
+          "id": "F43",
+          "verdict": "PARTIAL",
+          "reason": "New photo is actually analysed in Hindi without stale symptoms, but hypothetical inability to breathe/stand or unconsciousness is directed to same-day help rather than immediate emergency help.",
+          "pattern": "care_urgency"
+        },
+        {
+          "id": "F48",
+          "verdict": "PARTIAL",
+          "reason": "Humane alternative to relocation is useful, but human-exposure closing groups eyes/mouth with soap washing; these require clean-water rinsing.",
+          "pattern": "care_wording"
+        }
+      ],
+      "pattern_counts": {
+        "contact_conflict": 1,
+        "stale_location": 1,
+        "availability_overclaim": 1,
+        "care_wording": 2,
+        "photo_grounding": 1,
+        "care_urgency": 1
+      },
+      "production_changed": false,
+      "s3_uploaded": false
+    }
+  ],
+  "latest_complete_run": "run2",
+  "no_best_of_selection": true,
+  "code_or_prompt_changes_between_runs": false,
+  "production_changed": false,
+  "merged": false,
+  "release_recommendation": "Hold merge and release: latest full pass rate is 86%, below the agreed 90% target. Web integration and UI acceptance also remain outstanding.",
+  "limitations": [
+    "A pass is a manual acceptance verdict on this fixed set, not a population-wide accuracy estimate.",
+    "Expected privacy/scope refusals and honest inability to verify exact phone roles count as passes only where the locked rubric permits them.",
+    "Medical and provider sources were checked selectively; no exhaustive clinical audit or live phone confirmation.",
+    "The standalone agent still requires compatible web integration and HTTP/UI acceptance.",
+    "No user-facing messages, rescue alerts or production database operations were triggered by tests."
+  ]
+}

@@ -1,0 +1,147 @@
+{
+  "url": "http://localhost:8001",
+  "messages": [
+    {
+      "role": "user",
+      "content": "Where can I get help for an animal in Palampur, Himachal Pradesh?",
+      "created_at": "2026-09-17T16:48:36.530356+00:00",
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "For animal help in Palampur, I could confirm a local district animal-husbandry contact:\n\n- MFC Palampur \u2014 8894235550 [Source](<https://hpkangra.nic.in/contact-details-2/?utm_source=openai>)\n\nI could not establish a supported public animal-hospital or rescue pickup contact for Palampur from the fetched evidence. If the animal is injured or in distress, please also contact a local veterinarian, district animal husbandry office, or nearby municipal/forest authorities as appropriate.",
+      "created_at": "2026-09-17T16:48:36.533198+00:00",
+      "metadata": {
+        "resource_links": [
+          {
+            "label": "Source: hpkangra.nic.in",
+            "url": "https://hpkangra.nic.in/contact-details-2/?utm_source=openai"
+          }
+        ],
+        "text_action": "search",
+        "contextual_request": "Where can I get help for an animal in Palampur, Himachal Pradesh?",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "search_answer",
+        "model_history_policy": "include"
+      }
+    },
+    {
+      "role": "user",
+      "content": "Give me only the phone number for the Veterinary College in Palampur.",
+      "created_at": "2026-09-17T16:49:29.003712+00:00",
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "I could not establish a supported phone number for the Veterinary College in Palampur from the fetched evidence.",
+      "created_at": "2026-09-17T16:49:29.005418+00:00",
+      "metadata": {
+        "resource_links": [],
+        "text_action": "search",
+        "contextual_request": "phone number for the Veterinary College in Palampur",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": true,
+        "result_kind": "contact_unconfirmed",
+        "model_history_policy": "include"
+      }
+    },
+    {
+      "role": "user",
+      "content": "What should I do if a dog is chasing me on my motor bike?",
+      "created_at": "2026-09-17T16:50:18.704477+00:00",
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "That sounds frightening. Movement, engine noise, or passing through a dog's usual area can trigger chasing; chasing alone does not tell us whether it will bite.\n\n1. **Road safety comes first.** Do not brake suddenly, swerve, or stop in moving traffic. Keep control of the bike and choose a safer route if you can.\n2. Before reaching the usual spot, reduce speed gradually only when traffic conditions allow, give the dog as much space as possible, and pass calmly. Do not race the dog.\n3. Only if you can pull over and stop safely away from traffic, keep the bike between you and the dog, stay quiet, and allow it space to move away. Do not reach toward it.\n\nDo not throw stones, sticks, or other objects, kick, hit, or shout at the dog. Do not use a horn, whistle, or revving engine to startle it. Do not toss treats into the road or feed from a moving bike.\n\nIf it keeps happening, ask nearby residents or regular feeders who know the dog to help arrange an assessment by a veterinarian or trained behaviour professional.\n\nIf a bite or scratch breaks your skin, wash it with soap and running water for at least 15 minutes and seek medical care promptly for a rabies assessment.",
+      "created_at": "2026-09-17T16:50:18.707921+00:00",
+      "metadata": {
+        "resource_links": [],
+        "text_action": "answer",
+        "contextual_request": "What should I do if a dog is chasing me on my motor bike?",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": false,
+        "result_kind": "care_answer",
+        "model_history_policy": "include"
+      }
+    },
+    {
+      "role": "user",
+      "content": "He may bite me if I slow down.",
+      "created_at": "2026-09-17T16:50:51.471181+00:00",
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Your concern about being bitten is understandable. Slowing down does not guarantee the dog will not bite; do not put yourself at risk to try it.\n\n1. **Road safety comes first.** Do not brake suddenly, swerve, or stop in moving traffic. Keep control of the bike and choose a safer route if you can.\n2. Before reaching the usual spot, reduce speed gradually only when traffic conditions allow, give the dog as much space as possible, and pass calmly. Do not race the dog.\n3. Only if you can pull over and stop safely away from traffic, keep the bike between you and the dog, stay quiet, and allow it space to move away. Do not reach toward it.\n\nDo not throw stones, sticks, or other objects, kick, hit, or shout at the dog. Do not use a horn, whistle, or revving engine to startle it. Do not toss treats into the road or feed from a moving bike.\n\nIf it keeps happening, ask nearby residents or regular feeders who know the dog to help arrange an assessment by a veterinarian or trained behaviour professional.\n\nIf a bite or scratch breaks your skin, wash it with soap and running water for at least 15 minutes and seek medical care promptly for a rabies assessment.",
+      "created_at": "2026-09-17T16:50:51.475673+00:00",
+      "metadata": {
+        "resource_links": [],
+        "text_action": "answer",
+        "contextual_request": "The user is asking for safety advice about a dog chasing them on a motor bike and says it may bite if they slow down.",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": false,
+        "result_kind": "care_answer",
+        "model_history_policy": "include"
+      }
+    },
+    {
+      "role": "user",
+      "content": "It happens every day at the same intersection. How can I make it stop?",
+      "created_at": "2026-09-17T16:51:28.757152+00:00",
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "Dealing with a dog that chases every day at the same spot can be challenging. Here are a few steps you can take:\n\n1. **Change your route or time if possible:** This may help avoid the dog altogether.\n\n2. **Ask local residents for help:** Someone who knows the dog may assist in training or redirecting its attention away from chasing.\n\n3. **Create a positive association:** Together with an experienced caregiver, you could try to change the dog's habit by calmly rewarding it when it's calm or not chasing. Make sure this is done safely and only if the dog isn\u2019t aggressive.\n\n4. **Contact local authorities or organisations for help:** They might assist in assessing the situation or finding a long-term solution.\n\n5. **Educate others:** Encourage people in the area to understand the dog's behaviour and work together on solutions.\n\nRemember to always prioritize your safety and avoid direct confrontation with the dog.",
+      "created_at": "2026-09-17T16:51:28.761873+00:00",
+      "metadata": {
+        "resource_links": [],
+        "text_action": "answer",
+        "contextual_request": "How can I make the daily dog-chasing at the same intersection stop?",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": false,
+        "result_kind": "care_answer",
+        "model_history_policy": "include"
+      }
+    },
+    {
+      "role": "user",
+      "content": "It happens every day at the same intersection. How can I make it stop?",
+      "created_at": "2026-09-17T16:55:15.170232+00:00",
+      "metadata": {}
+    },
+    {
+      "role": "assistant",
+      "content": "That sounds frightening. Movement, engine noise, or passing through a dog's usual area can trigger chasing; chasing alone does not tell us whether it will bite.\n\n1. **Road safety comes first.** Do not brake suddenly, swerve, or stop in moving traffic. Keep control of the bike and choose a safer route if you can.\n2. Before reaching the usual spot, reduce speed gradually only when traffic conditions allow, give the dog as much space as possible, and pass calmly. Do not race the dog.\n3. Only if you can pull over and stop safely away from traffic, keep the bike between you and the dog, stay quiet, and allow it space to move away. Do not reach toward it.\n\nDo not throw stones, sticks, or other objects, kick, hit, or shout at the dog. Do not use a horn, whistle, or revving engine to startle it. Do not toss treats into the road or feed from a moving bike.\n\nBecause this happens repeatedly with dogs living in that area, plan with their regular feeders or nearby residents when you are safely off the road. Ask a veterinarian, trained behaviour professional, or local animal-welfare/ABC service to assess triggers and check vaccination and sterilisation status. Do not assume these community dogs have an owner, or try to catch or relocate them yourself. Keep any feeding or supervised behaviour work away from the road and separate from passing traffic; it is not an instant cure for chasing.\n\nIf a bite or scratch breaks your skin, wash it with soap and running water for at least 15 minutes and seek medical care promptly for a rabies assessment.",
+      "created_at": "2026-09-17T16:55:15.171689+00:00",
+      "metadata": {
+        "resource_links": [],
+        "text_action": "answer",
+        "contextual_request": "How can I make the dog chasing me every day at the same intersection stop?",
+        "routing_source": "model",
+        "awaiting_clarification": false,
+        "web_search_ran": false,
+        "result_kind": "care_answer",
+        "model_history_policy": "include"
+      }
+    }
+  ],
+  "search_flags": [
+    true,
+    true,
+    false,
+    false,
+    false,
+    false
+  ],
+  "reload_verified": true,
+  "inline_source_link_verified": true,
+  "last_turn_repeated_after_final_context_fix": true
+}

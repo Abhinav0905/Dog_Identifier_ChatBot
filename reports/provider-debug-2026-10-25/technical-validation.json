@@ -1,0 +1,10 @@
+{
+  "source_revision": "f86ead9",
+  "focused_automated_tests": {
+    "passed": 174,
+    "command": ".venv/bin/python -m unittest test_model_profile test_prompt_store test_prompt_http test_model_directed_search test_search_evidence test_veterinary_safety test_text_turns_review test_deploy_release test_local_validation_runner"
+  },
+  "prompt_version": "srini-v2.3-2026-10-25",
+  "prompt_sha256": "4708f332b9d8e0c30ce441f654485488c73fe553d969c7ca31cf7c5399582e2d",
+  "scope": "Focused automated checks, separate from the actual browser UI results. The full historical suite is not claimed green."
+}

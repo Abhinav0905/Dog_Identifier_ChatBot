@@ -1,0 +1,98 @@
+{
+  "id": "H25",
+  "city": "Cuttack",
+  "question": "Our neighbourhood in Cuttack has a small community-dog budget. Some dogs are thin and unvaccinated. Should we stop all feeding to pay for sterilisation? Give a practical phased plan without inventing prices.",
+  "expected": "Protect immediate nutrition/water and urgent needs; coordinated vaccination and authorised humane sterilisation with distinct benefits and local cost checks; no universal all-money-to-one-activity recommendation or invented counts/prices.",
+  "status": "completed",
+  "answer": "**Do not stop all feeding.** If some community dogs are thin, protecting regular food and clean water is an immediate welfare need. Instead, make feeding more organised and use the budget in phases so nutrition, urgent treatment, rabies prevention and sterilisation can support each other.\n\n### Phase 1: 2–3 week neighbourhood check\nMake a simple list of each dog: photo, area, sex, approximate age, body condition (thin/normal), visible injury or illness, and whether anyone knows its vaccination or sterilisation status.\n\nAt the same time:\n- Keep feeding at one or two **safe, quiet, fixed places and times**, away from traffic and children’s play areas.\n- Ensure clean water daily.\n- Identify dogs that are very thin, injured, weak, unable to eat, or otherwise unwell. These need veterinary assessment before any routine sterilisation plan.\n\n### Phase 2: Protect basic care first\nSet aside enough of the existing budget to maintain:\n- regular food for the thin dogs;\n- water bowls and cleaning;\n- transport or veterinary assessment for urgent cases, if needed.\n\nDo not assume every thin dog only needs more food—worms, skin disease, injury or other illness may also be involved, so a vet’s advice is valuable where possible.\n\n### Phase 3: Plan rabies vaccination\nOnce you know roughly how many dogs are unvaccinated, ask local veterinary/public animal-husbandry services and welfare groups what vaccination support, camps, or subsidised options are available.\n\nPrioritise getting the neighbourhood dogs covered as systematically as possible, rather than vaccinating a few at random. Keep a record of:\n- date,\n- dog description/photo,\n- vaccine provider,\n- any proof or tag given.\n\nVaccination protects community health, but it does not replace feeding, treatment, or behaviour support.\n\n### Phase 4: Arrange sterilisation in manageable batches\nBefore committing money, confirm the **actual local cost and what it includes**: transport, surgery, post-operative recovery, medicines, and return to the same territory.\n\nThen choose batches based on need and practical safety:\n1. Healthy adult females not already sterilised, where safe capture and recovery can be arranged.\n2. Healthy adult males, especially where there are several unsterilised dogs in the same area.\n3. Dogs with health concerns only after veterinary assessment says surgery is suitable.\n\nSterilisation helps prevent future litters and can reduce long-term pressure on the small budget. It is not a guaranteed fix for chasing, territorial behaviour, or every neighbourhood conflict.\n\n### Phase 5: Review monthly and adjust\nEach month, check:\n- Are any dogs still losing weight?\n- Are food and water being maintained reliably?\n- How many dogs are vaccinated and sterilised?\n- Has there been any urgent illness or injury that needs a reserve?\n- Are feeders, residents and local veterinary services coordinating safely?\n\nIf food needs are still unmet, keep protecting them. If the dogs are stable and there is public support for vaccination or surgery, more of the budget can gradually move to sterilisation.\n\n### A practical decision rule\n- **Thin or sick dogs / no reliable food or water:** keep nutrition and urgent care funded first.\n- **Dogs reasonably stable, but vaccination coverage poor:** build vaccination into the next phase.\n- **Dogs stable, records clear, and safe recovery is available:** schedule sterilisation batches.\n- **Free or subsidised vaccination/sterilisation becomes available:** use the saved money for food, treatment, transport, recovery, and record-keeping.\n\nThis approach respects feeding as real welfare support while still building a sustainable sterilisation and vaccination plan for the Cuttack neighbourhood.",
+  "raw_answer": "**Do not stop all feeding.** If some community dogs are thin, protecting regular food and clean water is an immediate welfare need. Instead, make feeding more organised and use the budget in phases so nutrition, urgent treatment, rabies prevention and sterilisation can support each other.\n\n### Phase 1: 2–3 week neighbourhood check\nMake a simple list of each dog: photo, area, sex, approximate age, body condition (thin/normal), visible injury or illness, and whether anyone knows its vaccination or sterilisation status.\n\nAt the same time:\n- Keep feeding at one or two **safe, quiet, fixed places and times**, away from traffic and children’s play areas.\n- Ensure clean water daily.\n- Identify dogs that are very thin, injured, weak, unable to eat, or otherwise unwell. These need veterinary assessment before any routine sterilisation plan.\n\n### Phase 2: Protect basic care first\nSet aside enough of the existing budget to maintain:\n- regular food for the thin dogs;\n- water bowls and cleaning;\n- transport or veterinary assessment for urgent cases, if needed.\n\nDo not assume every thin dog only needs more food—worms, skin disease, injury or other illness may also be involved, so a vet’s advice is valuable where possible.\n\n### Phase 3: Plan rabies vaccination\nOnce you know roughly how many dogs are unvaccinated, ask local veterinary/public animal-husbandry services and welfare groups what vaccination support, camps, or subsidised options are available.\n\nPrioritise getting the neighbourhood dogs covered as systematically as possible, rather than vaccinating a few at random. Keep a record of:\n- date,\n- dog description/photo,\n- vaccine provider,\n- any proof or tag given.\n\nVaccination protects community health, but it does not replace feeding, treatment, or behaviour support.\n\n### Phase 4: Arrange sterilisation in manageable batches\nBefore committing money, confirm the **actual local cost and what it includes**: transport, surgery, post-operative recovery, medicines, and return to the same territory.\n\nThen choose batches based on need and practical safety:\n1. Healthy adult females not already sterilised, where safe capture and recovery can be arranged.\n2. Healthy adult males, especially where there are several unsterilised dogs in the same area.\n3. Dogs with health concerns only after veterinary assessment says surgery is suitable.\n\nSterilisation helps prevent future litters and can reduce long-term pressure on the small budget. It is not a guaranteed fix for chasing, territorial behaviour, or every neighbourhood conflict.\n\n### Phase 5: Review monthly and adjust\nEach month, check:\n- Are any dogs still losing weight?\n- Are food and water being maintained reliably?\n- How many dogs are vaccinated and sterilised?\n- Has there been any urgent illness or injury that needs a reserve?\n- Are feeders, residents and local veterinary services coordinating safely?\n\nIf food needs are still unmet, keep protecting them. If the dogs are stable and there is public support for vaccination or surgery, more of the budget can gradually move to sterilisation.\n\n### A practical decision rule\n- **Thin or sick dogs / no reliable food or water:** keep nutrition and urgent care funded first.\n- **Dogs reasonably stable, but vaccination coverage poor:** build vaccination into the next phase.\n- **Dogs stable, records clear, and safe recovery is available:** schedule sterilisation batches.\n- **Free or subsidised vaccination/sterilisation becomes available:** use the saved money for food, treatment, transport, recovery, and record-keeping.\n\nThis approach respects feeding as real welfare support while still building a sustainable sterilisation and vaccination plan for the Cuttack neighbourhood.",
+  "citations": [],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T18:23:55.317783+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "Our neighbourhood in Cuttack has a small community-dog budget. Some dogs are thin and unvaccinated. Should we stop all feeding to pay for sterilisation? Give a practical phased plan without inventing prices.",
+      "history": [],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T18:23:55.317873+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T18:24:07.264020+00:00",
+      "elapsed_seconds": 11.946,
+      "step": 0,
+      "seconds": 11.946,
+      "response": {
+        "id": "resp_0bbe63272e0b1fb7016ae23dbb64f087d2a7564c1dd1e8293c",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 8362,
+          "input_tokens_details": {
+            "cached_tokens": 8311,
+            "cache_write_tokens": 48
+          },
+          "output_tokens": 838,
+          "output_tokens_details": {
+            "reasoning_tokens": 90
+          },
+          "total_tokens": 9200
+        },
+        "output": [
+          {
+            "id": "msg_0bbe63272e0b1fb7016ae23dbd448c87d2be29a492600d8da2",
+            "content": [
+              {
+                "annotations": [],
+                "text": "**Do not stop all feeding.** If some community dogs are thin, protecting regular food and clean water is an immediate welfare need. Instead, make feeding more organised and use the budget in phases so nutrition, urgent treatment, rabies prevention and sterilisation can support each other.\n\n### Phase 1: 2–3 week neighbourhood check\nMake a simple list of each dog: photo, area, sex, approximate age, body condition (thin/normal), visible injury or illness, and whether anyone knows its vaccination or sterilisation status.\n\nAt the same time:\n- Keep feeding at one or two **safe, quiet, fixed places and times**, away from traffic and children’s play areas.\n- Ensure clean water daily.\n- Identify dogs that are very thin, injured, weak, unable to eat, or otherwise unwell. These need veterinary assessment before any routine sterilisation plan.\n\n### Phase 2: Protect basic care first\nSet aside enough of the existing budget to maintain:\n- regular food for the thin dogs;\n- water bowls and cleaning;\n- transport or veterinary assessment for urgent cases, if needed.\n\nDo not assume every thin dog only needs more food—worms, skin disease, injury or other illness may also be involved, so a vet’s advice is valuable where possible.\n\n### Phase 3: Plan rabies vaccination\nOnce you know roughly how many dogs are unvaccinated, ask local veterinary/public animal-husbandry services and welfare groups what vaccination support, camps, or subsidised options are available.\n\nPrioritise getting the neighbourhood dogs covered as systematically as possible, rather than vaccinating a few at random. Keep a record of:\n- date,\n- dog description/photo,\n- vaccine provider,\n- any proof or tag given.\n\nVaccination protects community health, but it does not replace feeding, treatment, or behaviour support.\n\n### Phase 4: Arrange sterilisation in manageable batches\nBefore committing money, confirm the **actual local cost and what it includes**: transport, surgery, post-operative recovery, medicines, and return to the same territory.\n\nThen choose batches based on need and practical safety:\n1. Healthy adult females not already sterilised, where safe capture and recovery can be arranged.\n2. Healthy adult males, especially where there are several unsterilised dogs in the same area.\n3. Dogs with health concerns only after veterinary assessment says surgery is suitable.\n\nSterilisation helps prevent future litters and can reduce long-term pressure on the small budget. It is not a guaranteed fix for chasing, territorial behaviour, or every neighbourhood conflict.\n\n### Phase 5: Review monthly and adjust\nEach month, check:\n- Are any dogs still losing weight?\n- Are food and water being maintained reliably?\n- How many dogs are vaccinated and sterilised?\n- Has there been any urgent illness or injury that needs a reserve?\n- Are feeders, residents and local veterinary services coordinating safely?\n\nIf food needs are still unmet, keep protecting them. If the dogs are stable and there is public support for vaccination or surgery, more of the budget can gradually move to sterilisation.\n\n### A practical decision rule\n- **Thin or sick dogs / no reliable food or water:** keep nutrition and urgent care funded first.\n- **Dogs reasonably stable, but vaccination coverage poor:** build vaccination into the next phase.\n- **Dogs stable, records clear, and safe recovery is available:** schedule sterilisation batches.\n- **Free or subsidised vaccination/sterilisation becomes available:** use the saved money for food, treatment, transport, recovery, and record-keeping.\n\nThis approach respects feeding as real welfare support while still building a sustainable sterilisation and vaccination plan for the Cuttack neighbourhood.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T18:24:07.264231+00:00",
+      "elapsed_seconds": 11.947,
+      "status": "completed",
+      "error": null,
+      "answer": "**Do not stop all feeding.** If some community dogs are thin, protecting regular food and clean water is an immediate welfare need. Instead, make feeding more organised and use the budget in phases so nutrition, urgent treatment, rabies prevention and sterilisation can support each other.\n\n### Phase 1: 2–3 week neighbourhood check\nMake a simple list of each dog: photo, area, sex, approximate age, body condition (thin/normal), visible injury or illness, and whether anyone knows its vaccination or sterilisation status.\n\nAt the same time:\n- Keep feeding at one or two **safe, quiet, fixed places and times**, away from traffic and children’s play areas.\n- Ensure clean water daily.\n- Identify dogs that are very thin, injured, weak, unable to eat, or otherwise unwell. These need veterinary assessment before any routine sterilisation plan.\n\n### Phase 2: Protect basic care first\nSet aside enough of the existing budget to maintain:\n- regular food for the thin dogs;\n- water bowls and cleaning;\n- transport or veterinary assessment for urgent cases, if needed.\n\nDo not assume every thin dog only needs more food—worms, skin disease, injury or other illness may also be involved, so a vet’s advice is valuable where possible.\n\n### Phase 3: Plan rabies vaccination\nOnce you know roughly how many dogs are unvaccinated, ask local veterinary/public animal-husbandry services and welfare groups what vaccination support, camps, or subsidised options are available.\n\nPrioritise getting the neighbourhood dogs covered as systematically as possible, rather than vaccinating a few at random. Keep a record of:\n- date,\n- dog description/photo,\n- vaccine provider,\n- any proof or tag given.\n\nVaccination protects community health, but it does not replace feeding, treatment, or behaviour support.\n\n### Phase 4: Arrange sterilisation in manageable batches\nBefore committing money, confirm the **actual local cost and what it includes**: transport, surgery, post-operative recovery, medicines, and return to the same territory.\n\nThen choose batches based on need and practical safety:\n1. Healthy adult females not already sterilised, where safe capture and recovery can be arranged.\n2. Healthy adult males, especially where there are several unsterilised dogs in the same area.\n3. Dogs with health concerns only after veterinary assessment says surgery is suitable.\n\nSterilisation helps prevent future litters and can reduce long-term pressure on the small budget. It is not a guaranteed fix for chasing, territorial behaviour, or every neighbourhood conflict.\n\n### Phase 5: Review monthly and adjust\nEach month, check:\n- Are any dogs still losing weight?\n- Are food and water being maintained reliably?\n- How many dogs are vaccinated and sterilised?\n- Has there been any urgent illness or injury that needs a reserve?\n- Are feeders, residents and local veterinary services coordinating safely?\n\nIf food needs are still unmet, keep protecting them. If the dogs are stable and there is public support for vaccination or surgery, more of the budget can gradually move to sterilisation.\n\n### A practical decision rule\n- **Thin or sick dogs / no reliable food or water:** keep nutrition and urgent care funded first.\n- **Dogs reasonably stable, but vaccination coverage poor:** build vaccination into the next phase.\n- **Dogs stable, records clear, and safe recovery is available:** schedule sterilisation batches.\n- **Free or subsidised vaccination/sterilisation becomes available:** use the saved money for food, treatment, transport, recovery, and record-keeping.\n\nThis approach respects feeding as real welfare support while still building a sustainable sterilisation and vaccination plan for the Cuttack neighbourhood.",
+      "citations": []
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 11.947,
+  "history_messages": 0,
+  "completed_at": "2026-10-28T18:24:07.264331+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "new_welfare_tasks"
+}
