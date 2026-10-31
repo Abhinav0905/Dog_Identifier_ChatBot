@@ -17,7 +17,7 @@ OFF_TOPIC_PATTERNS = [
 
 # Patterns suggesting prompt injection attempts
 INJECTION_PATTERNS = [
-    r"ignore (all |your |previous )?instructions",
+    r"ignore (all |your |previous )?(?:instructions|rules)",
     r"new system prompt",
     r"disregard (all |your )?previous",
     r"override (your |the )?rules",
@@ -59,6 +59,11 @@ def check_input(text: str) -> GuardrailResult:
 
     if not lower or len(lower) < 2:
         return GuardrailResult(False, "Input is too short to process.", "empty")
+
+    if re.search(r"\b(?:invent|fabricate|make\s+up)\b[^.!?]{0,100}\b(?:phone|contact|hospital|number)\b", lower) and not re.search(
+        r"\b(?:why|never|do\s+not|don't|not\s+to)\b.{0,30}\b(?:invent|fabricate|make\s+up)\b", lower,
+    ):
+        return GuardrailResult(False, "I won't invent a hospital or phone number. Contacts must be supported by a source.", "fabrication")
 
     # Prompt injection check
     for pattern in INJECTION_PATTERNS:

@@ -1,0 +1,59 @@
+RCA runtime contracts release (v2.8)
+
+Base: deployed source 440951f, prompts srini-v2.4-2026-10-25.
+
+Changes:
+- Separate explicitly named institution lookups from stored animal-case geography.
+- Share address-only/phone-only contracts across routing, search and fallback.
+- Normalize natural city/state qualifiers; reject explicitly conflicting source states.
+- Retain same-name geocoder candidates across states and request qualification.
+- Compose requested handling/care with verified provider output. Extend animal safety
+  coverage to cats/kittens. Keep general safety available at the India-only boundary.
+- Route out-of-scope writing tasks to an application-owned animal-welfare redirect.
+- Answer pickup/admission availability directly with a call-to-confirm step.
+- Use current-message or explicitly requested language before browser locale/history.
+- Record correlated stage diagnostics without credentials; expose functional outcome
+  aggregates separately from model readiness.
+- Preserve separately published adjacent phone numbers in directory rows.
+- Keep explicitly labelled regional directory leads as incomplete referrals when
+  a facility city cannot be proved; never present them as confirmed local treatment.
+- Bind a neighbourhood to its city only through fetched address evidence and label
+  that geographic source separately from facility contact evidence.
+- Refuse invented-contact requests early and retain their chat evidence.
+- Bound evidence fetching with a shared four-worker pool and bounded submission queue.
+
+All model prompt changes remain in prompts/runtime-v2 text files. The original Deb
+reference text and historical prompt source blocks are preserved. Clinical numbers,
+addresses and services still require entity-bound source evidence. Published services
+do not establish current admission or dispatch.
+
+Verification before live testing:
+python -m unittest test_rca_runtime_contracts test_text_turns test_text_turns_review \
+  test_search_evidence test_model_directed_search test_veterinary_safety \
+  test_web_operations test_prompt_store test_web_search_reliability \
+  test_deploy_release test_prompt_http test_model_profile
+
+New RCA regressions: 15, including three contended synthetic source-fetch batches.
+End-to-end UI verification and actual provider-data completion must be reported
+separately. Deployment uses a candidate release and atomic prompt activation with
+rollback; the production database is never rewound for testing or rollback.
+
+Handling guidance references (general handling, not UK service/cost promises):
+https://www.rspca.org.uk/adviceandwelfare/pets/cats/emergency
+https://www.cats.org.uk/help-and-advice/health/cat-first-aid
+Geocoding ambiguity reference:
+https://docs.locationiq.com/docs/search-forward-geocoding
+
+Follow-up from the completed 40-question UI run (v2.9):
+- Preserve bounded publisher JSON-LD veterinary contacts as separate source records.
+  Keep each facility name, phone and address together; exclude Person records and
+  explicitly foreign addresses. Do not infer live hours, admission or pickup.
+- Narrow the vehicle-trauma trigger: an injured animal near a parked car does not
+  establish a collision. Preserve explicit hit-by and injured-by vehicle cases.
+- 232 offline checks passed, including same-record contact validation, long publisher
+  descriptions, staff/foreign/research exclusions, and parked-car versus collision.
+- Follow-up UI checks use the same question text and existing chat, and are reported
+  separately from the unchanged 40-answer v2.8 run.
+Structured publisher vocabulary references:
+https://schema.org/VeterinaryCare
+https://schema.org/telephone

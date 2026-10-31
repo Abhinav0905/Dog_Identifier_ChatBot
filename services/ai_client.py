@@ -7,6 +7,8 @@ Select the provider via the MODEL_PROVIDER environment variable:
   MODEL_PROVIDER=openai             — uses configured GPT-5.6 text/vision roles
 """
 
+from services import agent_trace
+
 from config import ANTHROPIC_API_KEY, OPENAI_API_KEY, MODEL_PROVIDER, OPENAI_CHAT_MODEL, OPENAI_VISION_MODEL
 
 _ANTHROPIC_MODEL = "claude-sonnet-4-5-20250929"
@@ -94,7 +96,7 @@ def _anthropic_chat(system_prompt: str, messages: list[dict], max_tokens: int) -
     from anthropic import Anthropic
 
     client = Anthropic(api_key=ANTHROPIC_API_KEY)
-    response = client.messages.create(
+    response = agent_trace.model_call('legacy_chat', client.messages.create,
         model=_ANTHROPIC_MODEL,
         max_tokens=max_tokens,
         system=system_prompt,
@@ -113,7 +115,7 @@ def _anthropic_vision(
     from anthropic import Anthropic
 
     client = Anthropic(api_key=ANTHROPIC_API_KEY)
-    response = client.messages.create(
+    response = agent_trace.model_call('legacy_vision', client.messages.create,
         model=_ANTHROPIC_MODEL,
         max_tokens=max_tokens,
         system=system_prompt,
@@ -145,7 +147,7 @@ def _openai_embedding(text: str) -> list[float]:
     from openai import OpenAI
 
     client = OpenAI(api_key=OPENAI_API_KEY)
-    response = client.embeddings.create(
+    response = agent_trace.model_call('embedding', client.embeddings.create,
         model=_OPENAI_EMBEDDING_MODEL,
         input=text,
     )
@@ -157,7 +159,7 @@ def _openai_chat(system_prompt: str, messages: list[dict], max_tokens: int) -> s
 
     client = OpenAI(api_key=OPENAI_API_KEY)
     oai_messages = [{"role": "system", "content": system_prompt}] + messages
-    response = client.chat.completions.create(
+    response = agent_trace.model_call('legacy_chat', client.chat.completions.create,
         model=_OPENAI_MODEL,
         **({"max_completion_tokens": max_tokens, "reasoning_effort": "none"}
            if _OPENAI_MODEL.startswith("gpt-5.6") else {"max_tokens": max_tokens}),
@@ -176,7 +178,7 @@ def _openai_vision(
     from openai import OpenAI
 
     client = OpenAI(api_key=OPENAI_API_KEY)
-    response = client.chat.completions.create(
+    response = agent_trace.model_call('legacy_vision', client.chat.completions.create,
         model=OPENAI_VISION_MODEL,
         **({"max_completion_tokens": max_tokens, "reasoning_effort": "none"}
            if OPENAI_VISION_MODEL.startswith("gpt-5.6") else {"max_tokens": max_tokens}),

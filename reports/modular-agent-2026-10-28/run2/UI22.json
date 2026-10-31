@@ -1,0 +1,181 @@
+{
+  "id": "UI22",
+  "question": "It is very hot in Nagpur. What food and water can I safely leave for community dogs?",
+  "expected": "Shade, clean water and suitable feeding; no default milk, spoiled food, unsafe ingredients or unnecessary location gate.",
+  "execution_order": 23,
+  "previous_verdict": "PASS",
+  "previous_reason": "Prioritizes shaded clean water and suitable small food portions, safe placement, spoilage control and avoiding toxic foods/cooked bones; no unnecessary location gate.",
+  "status": "completed",
+  "answer": "In hot weather, the most helpful thing is **clean drinking water in the shade**.\n\n- Leave **2–3 wide, heavy bowls of fresh water** in shaded, quiet places away from traffic and building entrances. Refill at least morning and evening; wash bowls daily.\n- For food, use **plain dog food**, or simple cooked food such as **plain rice with boiled egg or cooked chicken** (no bones, spices, onion, garlic, chilli, or excess salt).\n- Give **small portions at a fixed time and place**, and remove leftovers after about 20–30 minutes so they do not spoil or attract insects.\n- Avoid milk, sugary drinks, spicy leftovers, cooked bones, chocolate, grapes/raisins, and food left in direct sun.\n- If possible, place a bowl near a shaded resting spot, but do not pour water directly over dogs or force them to drink.\n\nA regular local feeder can also notice quickly if a dog seems weak, vomiting, heavily panting, or unable to get up—those signs need veterinary help.",
+  "raw_answer": "In hot weather, the most helpful thing is **clean drinking water in the shade**.\n\n- Leave **2–3 wide, heavy bowls of fresh water** in shaded, quiet places away from traffic and building entrances. Refill at least morning and evening; wash bowls daily.\n- For food, use **plain dog food**, or simple cooked food such as **plain rice with boiled egg or cooked chicken** (no bones, spices, onion, garlic, chilli, or excess salt).\n- Give **small portions at a fixed time and place**, and remove leftovers after about 20–30 minutes so they do not spoil or attract insects.\n- Avoid milk, sugary drinks, spicy leftovers, cooked bones, chocolate, grapes/raisins, and food left in direct sun.\n- If possible, place a bowl near a shaded resting spot, but do not pour water directly over dogs or force them to drink.\n\nA regular local feeder can also notice quickly if a dog seems weak, vomiting, heavily panting, or unable to get up—those signs need veterinary help.",
+  "citations": [],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T18:05:37.943011+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "It is very hot in Nagpur. What food and water can I safely leave for community dogs?",
+      "history": [
+        {
+          "role": "user",
+          "content": "Give me only the clinical reception phone number for Birsa Agricultural University Veterinary Clinical Complex, Ranchi."
+        },
+        {
+          "role": "assistant",
+          "content": "I can’t verify a clinical reception phone number.\n"
+        },
+        {
+          "role": "user",
+          "content": "A dog is bleeding heavily near Arera Colony, Bhopal. What should I do and where can I go now?"
+        },
+        {
+          "role": "assistant",
+          "content": "**Press a clean cloth firmly and continuously on the bleeding area if you can do so safely.** Keep the dog quiet, away from traffic, and do not give food, water, or medicines. If the cloth soaks through, add another cloth on top rather than lifting the first one.\n\n**Go now to:**\n\n**Pet Spectrum Veterinary Clinic & Surgery Center**  \nA61, Sakshi Bungalow, near Aura Mall, Gulmohar, Arera Colony, Bhopal, Madhya Pradesh 462039  \n**Emergency: 92013 11262**  \nIts clinic states it is open 24 hours and handles emergencies; call while arranging transport so they can prepare. ([petspectrumvet.com](https://www.petspectrumvet.com/?utm_source=openai))\n\nIf you cannot safely lift or transport the dog, call **Rescue Routes: 96300 57355** and share the exact Arera Colony landmark and a photo. Their page says they assist with injured-animal transport, but pickup timing cannot be guaranteed. ([rescueroutes.org](https://www.rescueroutes.org/resources/emergency-response?utm_source=openai))\n\nIf the dog is conscious but frightened or snapping from pain, do not try to restrain or muzzle them—wait for trained help.\nhttps://www.petspectrumvet.com/?utm_source=openai\nhttps://www.rescueroutes.org/resources/emergency-response?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "A dog was hit by a car near Police Bazaar, Shillong. Find help."
+        },
+        {
+          "role": "assistant",
+          "content": "If the dog is in the road, first **ask people to slow traffic and keep a safe space around the dog**. Move them only if it can be done safely; keep handling minimal. If there is active external bleeding, hold a clean cloth with steady pressure over it. Do not give food, water, or medicines.\n\n**Take the dog to the Government Veterinary Hospital, Shillong**—the Meghalaya Animal Husbandry Department lists trauma care, X-ray/ultrasound, and emergency surgical interventions there. It is the main government treatment option for a road-accident case. Its listed hours are Monday–Friday 8 am–5 pm and weekends/holidays 9 am–12 noon, so call first if possible. ([megahvt.gov.in](https://megahvt.gov.in/hospitals.html?utm_source=openai))\n\nFor directions/urgent coordination, call the **District Animal Husbandry & Veterinary Officer, East Khasi Hills: 88374 06592**. This is an official department contact; I cannot confirm from the published page whether they provide pickup or current after-hours admission. ([megahvt.gov.in](https://megahvt.gov.in/contacts.html?utm_source=openai))\n\nIf the dog cannot stand, is breathing with difficulty, or is barely responsive, arrange the fastest safe transport in a flat, secure vehicle if possible—avoid bending the body or forcing them into a small space.\nhttps://megahvt.gov.in/hospitals.html?utm_source=openai\nhttps://megahvt.gov.in/contacts.html?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "Will they pick it up tonight?"
+        },
+        {
+          "role": "assistant",
+          "content": "I can’t verify that they will pick the dog up tonight. The published Shillong Veterinary Hospital hours are **8 am–5 pm on weekdays** and **9 am–12 noon on weekends/holidays**, and the official information does not confirm night pickup. ([megahvt.gov.in](https://megahvt.gov.in/hospitals.html?utm_source=openai))\n\nCall **1962** (the Meghalaya animal-distress/mobile veterinary help line) now and give the exact Police Bazaar landmark; ask specifically whether a mobile unit can attend tonight. The department also lists the East Khasi Hills District Veterinary Officer at **88374 06592**, but after-hours response is not confirmed. ([megahvt.gov.in](https://www.megahvt.gov.in/latest_news.html?utm_source=openai))\n\nIf no team confirms pickup and the dog is in immediate road danger, arrange the safest available transport to a veterinary facility rather than waiting.\nhttps://megahvt.gov.in/hospitals.html?utm_source=openai\nhttps://www.megahvt.gov.in/latest_news.html?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "Find an animal rescue and phone number for an injured dog in Kathmandu."
+        },
+        {
+          "role": "assistant",
+          "content": "I’m sorry the dog is hurt. I can’t look up or provide location-specific rescue contacts outside India. Please contact a local veterinary clinic, municipal animal service, or established animal-welfare group in Kathmandu urgently.\n\nUntil help arrives: keep the dog away from traffic if safe, minimise handling, and apply gentle continuous pressure with a clean cloth to active bleeding. Do not give human medicines or force food or water.\n"
+        },
+        {
+          "role": "user",
+          "content": "Give me only the phone number for Sunshine Paws Rescue Centre, Udaipur."
+        },
+        {
+          "role": "assistant",
+          "content": "I can’t verify a phone number for Sunshine Paws Rescue Centre, Udaipur.\n"
+        },
+        {
+          "role": "user",
+          "content": "Which veterinary hospital in Guwahati will definitely admit a street dog tonight?"
+        },
+        {
+          "role": "assistant",
+          "content": "No veterinary hospital can be confirmed to **definitely** admit a community dog tonight without speaking to its team first.\n\nFor an injured street dog, call **JBF Animal Relief Centre’s published 24-hour emergency line: 99544 49528** and ask specifically whether they can **accept the dog tonight** and whether transport is available. Their published information describes treatment and recovery facilities for homeless animals, but admission still depends on the dog’s condition and available capacity. ([doglover.in](https://doglover.in/veterinary-hospitals/?utm_source=openai))\nhttps://doglover.in/veterinary-hospitals/?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "My seven-year-old is scared of community dogs near our building in Bengaluru. Explain what she should do if one comes near."
+        },
+        {
+          "role": "assistant",
+          "content": "It makes sense that she feels scared. You can tell her:\n\n**“If a dog comes near, be a tree.”**\n\n1. **Stop walking or running.** Stand still with your hands by your sides.  \n2. **Look a little away**, not straight into the dog’s eyes.  \n3. **Use a quiet voice**—no shouting or waving hands.  \n4. **Let the dog sniff from a distance if it wants to**, but don’t reach out to touch it.  \n5. When the dog moves away, **walk slowly to a trusted adult or into the building**.\n\nDogs often become more excited when people run or scream; being calm helps the dog understand she is not a threat. She should not try to feed, pet, or pick up a dog she does not know.\n\nIf a dog ever bites or scratches her, wash the place with soap and running water and tell a trusted adult straight away, so they can take her to a doctor.\n"
+        },
+        {
+          "role": "user",
+          "content": "मेरे पिता कहते हैं कि कुत्ते के काटने के बाद पूजा कर लेना काफी है। उनकी आस्था का सम्मान रखते हुए सरल हिंदी में बताइए कि क्या करना चाहिए।"
+        },
+        {
+          "role": "assistant",
+          "content": "आपके पिता की आस्था का सम्मान करना बहुत जरूरी है। **पूजा मन को सहारा और शक्ति दे सकती है**, लेकिन कुत्ते के काटने के बाद परिवार की सुरक्षा के लिए **इलाज भी तुरंत जरूरी है**।\n\nसरल बात यह है:\n\n1. **घाव को तुरंत साबुन और बहते पानी से कम-से-कम 15 मिनट धोएँ।**  \n2. **आज ही अस्पताल/सरकारी एंटी-रेबीज़ क्लिनिक जाएँ** और डॉक्टर से रेबीज़ के टीके के बारे में सलाह लें—छोटा घाव, खरोंच, या “घर का कुत्ता” होने पर भी।  \n3. पूजा साथ में की जा सकती है; वह इलाज का विकल्प नहीं है।  \n\nरेबीज़ से बचाव समय पर घाव धोने और डॉक्टर की सलाह से संभव है, इसलिए लक्षण आने का इंतज़ार नहीं करना चाहिए। ([ncdc.mohfw.gov.in](https://ncdc.mohfw.gov.in/wp-content/uploads/2025/06/Rabies-Guidelines.pdf?utm_source=openai))\nhttps://ncdc.mohfw.gov.in/wp-content/uploads/2025/06/Rabies-Guidelines.pdf?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "Our village has a small budget for community dogs. Should we spend it all on feeding, or also on vaccination and sterilisation? We want the most useful long-term plan."
+        },
+        {
+          "role": "assistant",
+          "content": "Don’t spend it all on one thing. The strongest long-term plan usually **protects regular feeding and water, while building vaccination and sterilisation into the budget**.\n\n### Start with a quick local check\nBefore deciding amounts, list:\n\n- How many community dogs are there, and which are already sterilised or vaccinated?\n- Are any dogs injured, thin, sick, pregnant, or nursing puppies?\n- Is there a reliable feeder and clean water point already?\n- What do the government veterinary service, panchayat/municipality, or an authorised Animal Birth Control (ABC) provider charge—or provide free/subsidised—including transport and post-operative recovery?\n\n### A practical priority order\n1. **Keep existing food and clean water support going.**  \n   Regular, responsible feeding helps dogs stay healthier and makes it easier for known community carers to notice illness or injury. Use a fixed feeding place and time away from school gates, play areas, busy entrances and traffic; clean up afterwards. The ABC Rules provide for mutually agreed feeding points and timings with local bodies/community representatives. ([awbi.gov.in](https://awbi.gov.in/uploads/regulations/167956418266ABC%20Rule%202023.pdf?utm_source=openai))\n\n2. **Set aside an urgent-care reserve.**  \n   Even a small reserve for an injured dog, transport, or veterinary examination can prevent serious suffering. Do not commit every rupee to planned procedures if there is no way to respond to an emergency.\n\n3. **Arrange a coordinated anti-rabies vaccination drive.**  \n   This is the key public-health investment. Government guidance describes mass dog vaccination as the most cost-effective single measure to protect people from rabies, with a target of about **70% coverage** of the local dog population and repeat campaigns to maintain coverage. Work with the veterinary department rather than buying vaccines or attempting it yourselves. ([ncdc.mohfw.gov.in](https://ncdc.mohfw.gov.in/uploads/pdf/COH12.pdf?utm_source=openai))\n\n4. **Add humane sterilisation through an authorised ABC programme.**  \n   Sterilisation prevents future litters and can make it easier to maintain vaccination coverage over time as fewer new, unvaccinated puppies enter the area. It is not a guaranteed fix for chasing, guarding, or every conflict, so pair it with safe feeding arrangements and community education. Under the Animal Birth Control Rules, local bodies/panchayats are responsible for ABC sterilisation and immunisation programmes; use an AWBI-recognised provider or municipal programme with safe surgery and recovery arrangements. ([awbi.gov.in](https://awbi.gov.in/uploads/circular/175518103486Circulation%20of%20ABC%20Rules%2027.03.2023%20%281%29.pdf?utm_source=openai))\n\n### If the budget is very small\nA sensible first-year approach is:\n\n- maintain the food/water that is already preventing hunger;\n- keep a modest emergency veterinary/transport fund;\n- combine your money with panchayat, municipality, Animal Husbandry Department, donor, or NGO support for a **planned vaccination/ABC camp**, rather than paying for one or two isolated procedures at high cost.\n\nKeep a simple register: dog photo/description, location, sex, sterilisation status, vaccine date, health concerns, and regular feeder contact. That prevents duplicated spending and helps the village ask public services for the right support.\n\nThe aim is not to choose feeding *versus* vaccination *versus* sterilisation. It is to meet current welfare needs while steadily reducing rabies risk and unplanned births through a locally coordinated plan.\nhttps://awbi.gov.in/uploads/regulations/167956418266ABC%20Rule%202023.pdf?utm_source=openai\nhttps://ncdc.mohfw.gov.in/uploads/pdf/COH12.pdf?utm_source=openai\nhttps://awbi.gov.in/uploads/circular/175518103486Circulation%20of%20ABC%20Rules%2027.03.2023%20%281%29.pdf?utm_source=openai"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T18:05:37.943305+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T18:05:42.813747+00:00",
+      "elapsed_seconds": 4.871,
+      "step": 0,
+      "seconds": 4.87,
+      "response": {
+        "id": "resp_01d247083efc989b016ae23972039887d2ab984c2471198d82",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 11032,
+          "input_tokens_details": {
+            "cached_tokens": 8311,
+            "cache_write_tokens": 2718
+          },
+          "output_tokens": 304,
+          "output_tokens_details": {
+            "reasoning_tokens": 83
+          },
+          "total_tokens": 11336
+        },
+        "output": [
+          {
+            "id": "msg_01d247083efc989b016ae239738d1887d2b6ca70cb520e7351",
+            "content": [
+              {
+                "annotations": [],
+                "text": "In hot weather, the most helpful thing is **clean drinking water in the shade**.\n\n- Leave **2–3 wide, heavy bowls of fresh water** in shaded, quiet places away from traffic and building entrances. Refill at least morning and evening; wash bowls daily.\n- For food, use **plain dog food**, or simple cooked food such as **plain rice with boiled egg or cooked chicken** (no bones, spices, onion, garlic, chilli, or excess salt).\n- Give **small portions at a fixed time and place**, and remove leftovers after about 20–30 minutes so they do not spoil or attract insects.\n- Avoid milk, sugary drinks, spicy leftovers, cooked bones, chocolate, grapes/raisins, and food left in direct sun.\n- If possible, place a bowl near a shaded resting spot, but do not pour water directly over dogs or force them to drink.\n\nA regular local feeder can also notice quickly if a dog seems weak, vomiting, heavily panting, or unable to get up—those signs need veterinary help.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T18:05:42.813931+00:00",
+      "elapsed_seconds": 4.871,
+      "status": "completed",
+      "error": null,
+      "answer": "In hot weather, the most helpful thing is **clean drinking water in the shade**.\n\n- Leave **2–3 wide, heavy bowls of fresh water** in shaded, quiet places away from traffic and building entrances. Refill at least morning and evening; wash bowls daily.\n- For food, use **plain dog food**, or simple cooked food such as **plain rice with boiled egg or cooked chicken** (no bones, spices, onion, garlic, chilli, or excess salt).\n- Give **small portions at a fixed time and place**, and remove leftovers after about 20–30 minutes so they do not spoil or attract insects.\n- Avoid milk, sugary drinks, spicy leftovers, cooked bones, chocolate, grapes/raisins, and food left in direct sun.\n- If possible, place a bowl near a shaded resting spot, but do not pour water directly over dogs or force them to drink.\n\nA regular local feeder can also notice quickly if a dog seems weak, vomiting, heavily panting, or unable to get up—those signs need veterinary help.",
+      "citations": []
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 4.871,
+  "history_messages": 20,
+  "completed_at": "2026-10-28T18:05:42.814013+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "original40"
+}

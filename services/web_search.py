@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from io import BytesIO
+from services import agent_trace
+
 import ipaddress
 import json
 import logging
@@ -441,6 +443,7 @@ def search_animal_question(
     history: Iterable[dict] = (),
     *,
     contextual_request: str = "",
+    output_format: str = "text",
     resolved_place: str = "",
     resolved_country_code: str = "",
     resolved_city: str = "",
@@ -466,6 +469,7 @@ def search_animal_question(
         "requested_institution": str(requested_institution or "")[:300],
         "requested_location_text": str(requested_location_text or "")[:500],
         "phone_only": phone_only,
+        "output_format": output_format,
     }
     if lat is not None and lng is not None and _coordinates_are_valid(lat, lng):
         context["shared_coordinates"] = {"latitude": float(lat), "longitude": float(lng)}
@@ -510,6 +514,7 @@ def search_animal_question(
                 requested_institution=requested_institution,
                 requested_location_text=requested_location_text,
                 phone_only=phone_only,
+                output_format=output_format,
                 deadline=deadline,
                 requested_place=resolved_place,
                 requested_city=resolved_city,
@@ -522,9 +527,14 @@ def search_animal_question(
                 candidate.request_satisfied = getattr(review, "request_satisfied", None)
                 candidate.validated_facts = getattr(review, "validated_facts", [])
                 candidate.evidence_issue = getattr(review, "evidence_issue", "")
+                if candidate.request_satisfied is False and not candidate.evidence_issue:
+                    candidate.evidence_issue = "requested_contact_or_service_unverified"
         return candidate
 
     result = review_result(result)
+    agent_trace.decision("search.refinement_gate", needed=_provider_research_needs_refinement(message, contextual_request, result, phone_only=effective_phone_only),
+                         remaining_seconds=round(deadline-time.monotonic(), 2), evidence_issue=result.evidence_issue,
+                         request_satisfied=result.request_satisfied)
     if _provider_research_needs_refinement(message, contextual_request, result, phone_only=effective_phone_only) and deadline - time.monotonic() >= 24.0:
         # One adaptive pass shares the same total turn budget and source cache.
         # This is evidence repair, never a fallback to an unrelated city/provider.
@@ -547,12 +557,18 @@ def search_animal_question(
         candidate = _run_search(refined_messages, ngo_mode=False, tool_choice="required",
             model_directed=True, language=language, deadline=deadline)
         candidate = review_result(candidate)
+        agent_trace.decision("search.refinement_comparison", previous_facts=result.validated_facts,
+                             candidate_facts=candidate.validated_facts,
+                             candidate_satisfied=candidate.request_satisfied,
+                             preserves_and_adds_facts=_validated_partial_is_richer(result, candidate))
         if candidate.result_kind != "unavailable" and (
             not _provider_research_needs_refinement(message, contextual_request, candidate, phone_only=effective_phone_only)
             or (not result.resource_links and candidate.resource_links)
             or _validated_partial_is_richer(result, candidate)
         ):
             result = candidate
+        agent_trace.decision("search.refinement_selected", selected="candidate" if result is candidate else "original",
+                             evidence_issue=result.evidence_issue, request_satisfied=result.request_satisfied)
     # Retain an explicitly requested service boundary even when evidence review
     # rewrites an answer or removes unsupported contact details.
     request_text = f"{message}\n{contextual_request}"
@@ -710,6 +726,7 @@ def unavailable_response() -> str:
     )
 
 
+@agent_trace.stage('search.research')
 def _run_search(
     prompt: str | list[dict[str, str]],
     *,
@@ -745,7 +762,7 @@ def _run_search(
             if model_directed and config.OPENAI_WEB_SEARCH_MODEL.startswith("gpt-5")
             else {}
         )
-        response = client.responses.create(
+        response = agent_trace.model_call('search', client.responses.create,
             model=config.OPENAI_WEB_SEARCH_MODEL,
             tools=[_web_search_tool(search_context_size="medium" if model_directed else "low")],
             tool_choice=tool_choice,
@@ -1776,7 +1793,7 @@ def _request_structured_web_search(
             logger.info("Structured web research skipped after overall deadline")
             return None
         try:
-            response = client.responses.create(
+            response = agent_trace.model_call('structured_search', client.responses.create,
                 model=config.OPENAI_WEB_SEARCH_MODEL,
                 tools=[web_search_tool],
                 tool_choice="required",
@@ -2473,6 +2490,72 @@ def _all_attempted_page_fetches_failed(
     return bool(attempted) and all(value is None for value in attempted)
 
 
+def _structured_contact_blocks(soup) -> list[str]:
+    """Keep bounded publisher JSON-LD facts that HTML text extraction drops.
+
+    Each organization stays a separate record. Never execute scripts, fetch
+    linked @ids, merge faculty contacts, or infer live opening/admission status.
+    """
+    blocks = []
+    allowed = {"VeterinaryCare", "AnimalShelter", "Organization", "NGO", "LocalBusiness"}
+    def scalar(value, limit=240):
+        return re.sub(r"\s+", " ", value).strip()[:limit] if isinstance(value, str) else ""
+    for script in soup.find_all("script", attrs={"type": "application/ld+json"})[:16]:
+        raw = script.string or script.get_text()
+        if not raw or len(raw) > 100000:
+            continue
+        try:
+            value = json.loads(raw)
+        except (ValueError, TypeError, RecursionError):
+            continue
+        pending = list(value)[:40] if isinstance(value, list) else [value]
+        cursor = 0
+        while cursor < len(pending) and cursor < 40:
+            record = pending[cursor]
+            cursor += 1
+            if not isinstance(record, dict):
+                continue
+            graph = record.get("@graph")
+            if isinstance(graph, list):
+                pending.extend(graph[:max(0, 40 - len(pending))])
+            kind = record.get("@type", [])
+            kinds = {str(item).rsplit("/", 1)[-1] for item in (kind if isinstance(kind, list) else [kind])}
+            if "Person" in kinds or not kinds & allowed:
+                continue
+            name, description = scalar(record.get("name")), scalar(record.get("description"), 800)
+            if not name or not (kinds & {"VeterinaryCare", "AnimalShelter"} or re.search(r"\b(?:veterinar\w*|animals?|pets?|dogs?|cats?|rescue|shelter)\b", name + " " + description, re.I)):
+                continue
+            address = record.get("address")
+            if isinstance(address, dict):
+                country = address.get("addressCountry", "")
+                if isinstance(country, dict):country = country.get("name", "")
+                if scalar(country) and scalar(country).casefold() not in {"in", "india", "bharat", "भारत"}:
+                    continue
+                postal = address.get("postalCode", "")
+                if isinstance(postal, int) and not isinstance(postal, bool) and 100000 <= postal <= 999999:postal = str(postal)
+                address = ", ".join(part for part in [scalar(address.get(key), 160) for key in ("streetAddress", "addressLocality", "addressRegion")] + [scalar(postal), scalar(country, 80)] if part)
+            else:
+                address = scalar(address, 450)
+            phones = record.get("telephone", [])
+            if not isinstance(phones, list):phones = [phones]
+            phones = [scalar(phone, 80) for phone in phones[:4] if scalar(phone, 80)]
+            if not address and not phones:
+                continue
+            clinical_type = "VeterinaryCare" in kinds and not re.search(r"\b(?:research|teaching)\b|\b(?:no|not)\b.{0,35}\b(?:clinical|treatment|veterinary)\b", description, re.I)
+            # The words describe the explicitly published Schema.org type,
+            # rather than inferring veterinary care from a business's name.
+            body = name
+            if phones:
+                body += ". Telephone: " + "; ".join(phones) + "."
+            body += (" Veterinary care: " if clinical_type else " Published organization metadata: ") + description
+            if address:
+                body += " Address: " + address + "."
+            if body not in blocks:blocks.append(body)
+            if len(blocks) >= 12:return blocks
+    return blocks
+
+
+@agent_trace.stage('source.fetch')
 def _fetch_public_page_text(
     url: str,
     *,
@@ -2485,11 +2568,18 @@ def _fetch_public_page_text(
         return None
     # A second search must wait for an occupied slot within its existing
     # source-fetch deadline, rather than discard every URL after 250 ms.
+    queued_at = time.monotonic()
     if not PAGE_FETCH_SEMAPHORE.acquire(timeout=remaining):
         logger.info("Public page fetch reached its deadline while waiting for a slot")
+        web_operations.record_event("fetch:queue", "timeout", error_type="FetchQueueDeadline")
         return None
+    started = time.monotonic()
+    web_operations.record_event("fetch:queue", "ok", round((started - queued_at) * 1000))
     try:
-        return _fetch_public_page_text_unlocked(url, deadline=queue_deadline, allow_public_redirects=allow_public_redirects)
+        page = _fetch_public_page_text_unlocked(url, deadline=queue_deadline, allow_public_redirects=allow_public_redirects)
+        web_operations.record_event("fetch:page", "ok" if page else "unavailable", round((time.monotonic() - started) * 1000),
+                                   "" if page else "UnreadableSource")
+        return page
     finally:
         PAGE_FETCH_SEMAPHORE.release()
 
@@ -2593,10 +2683,12 @@ def _fetch_public_page_text_unlocked(
                 current_url = urljoin(current_url, redirect)
                 continue
             if response.status != 200:
+                web_operations.record_event("fetch:http", "error", error_type="HTTP" + str(response.status))
                 return None
             content_type = str(response.headers.get("Content-Type") or "").lower()
             media_type = content_type.split(";", 1)[0].strip()
             if media_type not in {"text/html", "application/xhtml+xml", "text/plain", "application/pdf"}:
+                web_operations.record_event("fetch:media", "unavailable", error_type="UnsupportedMediaType")
                 return None
             max_bytes = config.DOG_WEB_PDF_VERIFY_MAX_BYTES if media_type == "application/pdf" else config.DOG_WEB_PAGE_VERIFY_MAX_BYTES
             content_encoding = str(response.headers.get("Content-Encoding") or "").lower()
@@ -2644,6 +2736,7 @@ def _fetch_public_page_text_unlocked(
                     return PublicPageText(text, source_hostname=hostname) if text.strip() else None
                 except Exception as exc:
                     logger.info("Public PDF text unavailable: %s", type(exc).__name__)
+                    web_operations.record_event("fetch:pdf", "error", error_type=type(exc).__name__)
                     return None
             charset_match = re.search(r"charset=([^;\s]+)", content_type)
             encoding = (
@@ -2687,12 +2780,13 @@ def _fetch_public_page_text_unlocked(
                     page_links.append(linked_url)
                 if len(page_links) >= 200:
                     break
+            structured_blocks = _structured_contact_blocks(soup)
             for element in soup(
                 ["script", "style", "noscript", "svg", "iframe", "form", "template"]
             ):
                 element.decompose()
             block_tags = ("address", "p", "li", "tr", "dd", "dt", "div")
-            blocks: list[str] = []
+            blocks: list[str] = list(structured_blocks)
             seen_blocks: set[str] = set()
             for element in soup.find_all(block_tags):
                 if element.name == "div" and element.find(block_tags):
@@ -2708,7 +2802,7 @@ def _fetch_public_page_text_unlocked(
                 if len(blocks) >= 500:
                     break
             return PublicPageText(
-                soup.get_text(" ", strip=True)[:100_000],
+                ("\n\n".join(structured_blocks) + "\n\n" + soup.get_text(" ", strip=True))[:100_000],
                 identity_text=" ".join(part for part in identity_parts if part)[:2_000],
                 identity_blocks=identity_blocks,
                 blocks=blocks,

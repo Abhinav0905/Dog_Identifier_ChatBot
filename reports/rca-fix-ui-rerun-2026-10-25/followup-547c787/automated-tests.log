@@ -1,0 +1,335 @@
+2026-10-27 07:12:48,506 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,519 [services.prompt_store] INFO: Activated prompt package srini-v2.9-2026-10-25 (a18f3fbb6fc7)
+2026-10-27 07:12:48,528 [dharmasala] INFO: text_turn session_id=45f3e26a-d51b-40ee-93a1-227e56dda020 action=search routing_source=model search_ran=False result_kind=search_answer scope=unspecified place=''
+2026-10-27 07:12:48,529 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,530 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,538 [dharmasala] INFO: text_turn session_id=45f3e26a-d51b-40ee-93a1-227e56dda020 action=search routing_source=model search_ran=False result_kind=contact_unconfirmed scope=unspecified place=''
+2026-10-27 07:12:48,539 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,539 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,546 [dharmasala] INFO: text_turn session_id=45f3e26a-d51b-40ee-93a1-227e56dda020 action=search routing_source=model search_ran=False result_kind=unavailable scope=unspecified place=''
+2026-10-27 07:12:48,547 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,548 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:48,564 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,571 [dharmasala] INFO: text_turn session_id=432d3470-3ad4-4e0e-9d03-47f22c1ee684 action=search routing_source=model search_ran=True result_kind=search_answer scope=unspecified place=''
+2026-10-27 07:12:48,572 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,572 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,578 [dharmasala] INFO: text_turn session_id=432d3470-3ad4-4e0e-9d03-47f22c1ee684 action=search routing_source=model search_ran=True result_kind=search_answer scope=unspecified place=''
+2026-10-27 07:12:48,578 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,579 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,585 [dharmasala] INFO: text_turn session_id=432d3470-3ad4-4e0e-9d03-47f22c1ee684 action=search routing_source=model search_ran=False result_kind= scope=unspecified place=''
+2026-10-27 07:12:48,586 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,586 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:48,603 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,610 [dharmasala] INFO: text_turn session_id=960e762c-38e0-4be4-8b9d-66894857de2e action=search routing_source=model search_ran=False result_kind=outside_india scope=outside_india place='Kathmandu, Nepal'
+2026-10-27 07:12:48,611 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,611 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:48,625 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,631 [dharmasala] INFO: text_turn session_id=4ea839d0-4647-456b-86a6-5ce99fe57b9a action=search routing_source=model search_ran=False result_kind=search_answer scope=india place='Shillong, Meghalaya, India'
+2026-10-27 07:12:48,632 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,632 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:48,646 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,655 [dharmasala] INFO: text_turn session_id=87a40c22-f526-4367-894d-7ce2f324add9 action=out_of_scope routing_source=scope_contract search_ran=False result_kind=out_of_scope scope=unspecified place=''
+2026-10-27 07:12:48,656 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,664 [dharmasala] INFO: text_turn session_id=87a40c22-f526-4367-894d-7ce2f324add9 action=out_of_scope routing_source=scope_contract search_ran=False result_kind=out_of_scope scope=unspecified place=''
+2026-10-27 07:12:48,664 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:48,679 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,686 [dharmasala] INFO: text_turn session_id=b868d2bc-270b-47f0-9235-24de2a92efe2 action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-27 07:12:48,687 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,694 [dharmasala] INFO: text_turn session_id=b868d2bc-270b-47f0-9235-24de2a92efe2 action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-27 07:12:48,694 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:48,709 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+.......2026-10-27 07:12:48,794 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.2026-10-27 07:12:48,871 [services.search_evidence] INFO: Contact source fetch reached its deadline
+2026-10-27 07:12:48,871 [services.search_evidence] INFO: Contact source fetch reached its deadline
+2026-10-27 07:12:48,871 [services.search_evidence] INFO: Contact source fetch reached its deadline
+2026-10-27 07:12:48,872 [services.search_evidence] INFO: Contact source fetch attempted_sources=4 readable_sources=0
+2026-10-27 07:12:48,872 [services.search_evidence] INFO: Contact source fetch attempted_sources=4 readable_sources=0
+2026-10-27 07:12:48,872 [services.search_evidence] INFO: Contact source fetch attempted_sources=4 readable_sources=0
+..2026-10-27 07:12:48,875 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.2026-10-27 07:12:48,877 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,877 [services.query_router] WARNING: Text action model unavailable: ValueError
+.2026-10-27 07:12:48,877 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.2026-10-27 07:12:48,878 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,878 [services.query_router] WARNING: Text action model unavailable: TimeoutError
+.2026-10-27 07:12:48,880 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.2026-10-27 07:12:48,895 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,902 [dharmasala] INFO: text_turn session_id=97953928-eb7a-4e70-aadb-9e52c8493a1d action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-27 07:12:48,903 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:48,915 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,924 [dharmasala] INFO: text_turn session_id=151b7b05-3398-4f6f-9088-787ea97615dc action=clarify routing_source=model search_ran=False result_kind=clarification scope=unspecified place=''
+2026-10-27 07:12:48,925 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:48,939 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,951 [dharmasala] INFO: text_turn session_id=984d75bf-f7c3-43e9-a47c-ab45a287dab7 action=search routing_source=model search_ran=True result_kind=search_answer scope=india place='Palampur, Himachal Pradesh, India'
+2026-10-27 07:12:48,952 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,952 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,962 [dharmasala] INFO: text_turn session_id=984d75bf-f7c3-43e9-a47c-ab45a287dab7 action=search routing_source=model search_ran=True result_kind=search_answer scope=india place='Palampur, Himachal Pradesh, India'
+2026-10-27 07:12:48,963 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:48,964 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,971 [dharmasala] INFO: text_turn session_id=984d75bf-f7c3-43e9-a47c-ab45a287dab7 action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-27 07:12:48,971 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,978 [dharmasala] INFO: text_turn session_id=984d75bf-f7c3-43e9-a47c-ab45a287dab7 action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-27 07:12:48,979 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,984 [dharmasala] INFO: text_turn session_id=984d75bf-f7c3-43e9-a47c-ab45a287dab7 action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-27 07:12:48,985 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:48,988 [httpx] INFO: HTTP Request: GET http://testserver/v1/conversations/984d75bf-f7c3-43e9-a47c-ab45a287dab7/messages "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,001 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,009 [dharmasala] INFO: text_turn session_id=b271cd01-bc1e-4575-a812-2058678f7acc action=search routing_source=model search_ran=True result_kind=search_answer scope=unspecified place=''
+2026-10-27 07:12:49,010 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,010 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,027 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,033 [dharmasala] INFO: text_turn session_id=599b5c44-302d-496d-aaee-ff00ef454b06 action=search routing_source=model search_ran=True result_kind=search_answer scope=india place='Mysuru, India'
+2026-10-27 07:12:49,034 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,035 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,046 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,052 [dharmasala] INFO: text_turn session_id=95eaad0b-2eb6-425f-bace-59caf3abcc43 action=search routing_source=model search_ran=False result_kind=outside_india scope=outside_india place='San Jose, USA'
+2026-10-27 07:12:49,053 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,053 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,065 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,072 [dharmasala] INFO: text_turn session_id=94657798-8e26-487e-a6ae-5fba7170fcd2 action=answer routing_source=model_unavailable search_ran=False result_kind=unavailable scope=unspecified place=''
+2026-10-27 07:12:49,073 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,084 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,090 [dharmasala] INFO: text_turn session_id=efc21869-f24d-4c35-b66f-bdf6d5b29add action=answer routing_source=model_unavailable search_ran=False result_kind=model_answer scope=unspecified place=''
+2026-10-27 07:12:49,090 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,102 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,106 [dharmasala] WARNING: Open text search failed: TimeoutError
+2026-10-27 07:12:49,108 [dharmasala] INFO: text_turn session_id=b22399c8-4a19-4417-a9c6-6cd1a041a8c2 action=search routing_source=model search_ran=False result_kind=unavailable scope=unspecified place=''
+2026-10-27 07:12:49,109 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,109 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,121 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,128 [dharmasala] INFO: text_turn session_id=6ffba59d-617c-4f86-9ede-2671bfb1a3bd action=search routing_source=model search_ran=True result_kind=search_answer scope=ambiguous place='Mysuru'
+2026-10-27 07:12:49,128 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,129 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,140 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,152 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,157 [dharmasala] WARNING: Open text search failed: TimeoutError
+2026-10-27 07:12:49,159 [dharmasala] INFO: text_turn session_id=47ab93b0-3392-4842-a2ca-b96b92e964bd action=search routing_source=model search_ran=False result_kind=unavailable scope=unspecified place=''
+2026-10-27 07:12:49,159 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,160 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,172 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,178 [dharmasala] INFO: text_turn session_id=24b00c4d-96a9-4569-9fb1-b5cf067b36b5 action=search routing_source=model search_ran=False result_kind=contact_unconfirmed scope=unspecified place=''
+2026-10-27 07:12:49,178 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,179 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,185 [dharmasala] INFO: text_turn session_id=24b00c4d-96a9-4569-9fb1-b5cf067b36b5 action=search routing_source=model search_ran=False result_kind=unavailable scope=unspecified place=''
+2026-10-27 07:12:49,185 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,186 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,192 [dharmasala] INFO: text_turn session_id=24b00c4d-96a9-4569-9fb1-b5cf067b36b5 action=search routing_source=model search_ran=False result_kind=search_answer scope=unspecified place=''
+2026-10-27 07:12:49,193 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,194 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,206 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,212 [dharmasala] INFO: text_turn session_id=431367a5-dee6-4ab4-a6f5-db6f777e722a action=answer routing_source=model_unavailable search_ran=True result_kind=search_answer scope=unspecified place=''
+2026-10-27 07:12:49,213 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,213 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,227 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,234 [dharmasala] INFO: text_turn session_id=c8546bac-374e-4381-a06f-c374e95c5708 action=search routing_source=model search_ran=True result_kind=search_answer scope=india place='Dr. Ambedkar Nagar, Indore, Madhya Pradesh, India'
+2026-10-27 07:12:49,234 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,235 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,240 [dharmasala] INFO: text_turn session_id=c8546bac-374e-4381-a06f-c374e95c5708 action=search routing_source=model search_ran=True result_kind=search_answer scope=india place='Dr. Ambedkar Nagar, Indore, Madhya Pradesh, India'
+2026-10-27 07:12:49,241 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,241 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,254 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,263 [dharmasala] INFO: text_turn session_id=3fa7d70e-eb0c-4e79-aa6d-ff059d664799 action=search routing_source=model search_ran=False result_kind= scope=unspecified place=''
+2026-10-27 07:12:49,265 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,267 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,287 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,294 [dharmasala] INFO: text_turn session_id=7f33a6fd-6f89-4bf5-93f5-e24af22ccc8f action=answer routing_source=model_unavailable search_ran=True result_kind=search_answer scope=unspecified place=''
+2026-10-27 07:12:49,295 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,295 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,308 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,314 [dharmasala] INFO: text_turn session_id=0e57a88d-59b0-4607-92d0-0e3add12787c action=answer routing_source=model_unavailable search_ran=True result_kind=search_answer scope=unspecified place=''
+2026-10-27 07:12:49,314 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,315 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,327 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:12:49,334 [dharmasala] INFO: text_turn session_id=0f725565-8080-49ed-bca1-851c72b6cc5c action=search routing_source=model search_ran=True result_kind=search_answer scope=outside_india place='San Jose, USA'
+2026-10-27 07:12:49,334 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,335 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:12:49,694 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,695 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+....2026-10-27 07:12:49,707 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+......2026-10-27 07:12:49,716 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,718 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+2026-10-27 07:12:49,718 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,719 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+...2026-10-27 07:12:49,724 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,724 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=no_grounded_provider_claims
+..2026-10-27 07:12:49,726 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,726 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+..2026-10-27 07:12:49,728 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+2026-10-27 07:12:49,728 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+.2026-10-27 07:12:49,729 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,729 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+.2026-10-27 07:12:49,730 [services.search_evidence] INFO: Contact source fetch attempted_sources=12 readable_sources=11
+.2026-10-27 07:12:49,732 [services.search_evidence] INFO: Contact source fetch attempted_sources=12 readable_sources=12
+.2026-10-27 07:12:49,732 [services.search_evidence] INFO: Contact source fetch attempted_sources=2 readable_sources=2
+2026-10-27 07:12:49,733 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+...2026-10-27 07:12:49,742 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,744 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+..........2026-10-27 07:12:49,758 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,758 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+2026-10-27 07:12:49,758 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,759 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+.2026-10-27 07:12:49,760 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,760 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=no_grounded_provider_claims
+.2026-10-27 07:12:49,761 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,761 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+......2026-10-27 07:12:49,778 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,779 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+..2026-10-27 07:12:49,780 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,780 [services.search_evidence] WARNING: Contact evidence review status=unavailable fetched_sources=1 error=TimeoutError
+.2026-10-27 07:12:49,781 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,782 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+......2026-10-27 07:12:49,785 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,785 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+2026-10-27 07:12:49,785 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,786 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+......2026-10-27 07:12:49,790 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,791 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+2026-10-27 07:12:49,791 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,791 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+2026-10-27 07:12:49,792 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,792 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+.2026-10-27 07:12:49,792 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,793 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+..2026-10-27 07:12:49,794 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,794 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=no_grounded_provider_claims
+........2026-10-27 07:12:49,799 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,800 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+.....2026-10-27 07:12:49,806 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,806 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+.2026-10-27 07:12:49,807 [services.search_evidence] INFO: Contact source fetch attempted_sources=12 readable_sources=12
+...2026-10-27 07:12:49,811 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,811 [services.search_evidence] INFO: Contact evidence review status=approved fetched_sources=1 reason=reviewed
+..2026-10-27 07:12:49,812 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+2026-10-27 07:12:49,813 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,813 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+.2026-10-27 07:12:49,813 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,813 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+2026-10-27 07:12:49,813 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,814 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+2026-10-27 07:12:49,814 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,814 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+2026-10-27 07:12:49,814 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=1
+2026-10-27 07:12:49,814 [services.search_evidence] INFO: Contact evidence review status=unavailable fetched_sources=1 reason=evidence_validation_failed
+..2026-10-27 07:12:49,815 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+2026-10-27 07:12:49,815 [services.search_evidence] INFO: Contact evidence review status=unavailable reason=no_readable_sources fetched_sources=0
+.2026-10-27 07:12:49,835 [services.search_evidence] INFO: Contact source fetch attempted_sources=1 readable_sources=0
+2026-10-27 07:12:49,835 [services.search_evidence] INFO: Contact evidence review status=unavailable reason=no_readable_sources fetched_sources=0
+..2026-10-27 07:12:49,837 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,837 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=False cited_sources=0
+.2026-10-27 07:12:49,839 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,839 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+2026-10-27 07:12:49,840 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,840 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+..2026-10-27 07:12:49,843 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,843 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+.2026-10-27 07:12:49,844 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,844 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=1
+.2026-10-27 07:12:49,846 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,846 [services.web_search] INFO: Dog web search skipped: enabled=False api_key_configured=False
+.2026-10-27 07:12:49,847 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,847 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+2026-10-27 07:12:49,848 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,848 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+2026-10-27 07:12:49,849 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,849 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+.2026-10-27 07:12:49,850 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,850 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=1
+..2026-10-27 07:12:49,852 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,852 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=False cited_sources=0
+2026-10-27 07:12:49,852 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,852 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=False cited_sources=0
+.2026-10-27 07:12:49,854 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,854 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=1
+.2026-10-27 07:12:49,855 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,855 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+2026-10-27 07:12:49,856 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,856 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+.2026-10-27 07:12:49,858 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,858 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=1
+.2026-10-27 07:12:49,859 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,859 [services.web_search] INFO: Animal-question response completed: model=gpt-4.1 searched=True cited_sources=0
+2026-10-27 07:12:49,860 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,860 [services.web_search] INFO: Animal-question response completed: model=gpt-4.1 searched=True cited_sources=0
+.2026-10-27 07:12:49,861 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,861 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=1
+.2026-10-27 07:12:49,862 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,862 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+.2026-10-27 07:12:49,863 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,864 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+2026-10-27 07:12:49,864 [services.search_evidence] INFO: Contact evidence review status=unavailable reason=model_unavailable fetched_sources=0
+2026-10-27 07:12:49,864 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,865 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,865 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+2026-10-27 07:12:49,865 [services.search_evidence] INFO: Contact evidence review status=unavailable reason=model_unavailable fetched_sources=0
+2026-10-27 07:12:49,865 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+..2026-10-27 07:12:49,868 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,868 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+2026-10-27 07:12:49,869 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,869 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=0
+.2026-10-27 07:12:49,870 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,870 [services.web_search] INFO: Animal-question response completed: model=gpt-5.6-terra searched=True cited_sources=2
+.2026-10-27 07:12:49,871 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,872 [services.web_search] WARNING: Dog web search failed: TimeoutError
+.2026-10-27 07:12:49,873 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.2026-10-27 07:12:49,875 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+2026-10-27 07:12:49,875 [services.triage] WARNING: Chat model failed, using fallback response: RuntimeError
+.2026-10-27 07:12:49,876 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.2026-10-27 07:12:49,877 [services.triage] WARNING: RAG retrieval failed for chat query: offline
+2026-10-27 07:12:49,878 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.2026-10-27 07:12:49,878 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.2026-10-27 07:12:49,879 [services.web_operations] WARNING: Operational telemetry unavailable (OperationalError)
+.....2026-10-27 07:12:49,883 [services.triage] WARNING: Generated care answer restarted an already established chase case
+..2026-10-27 07:12:49,885 [services.triage] WARNING: Generated care answer failed humane communication or behaviour-claim policy
+.2026-10-27 07:12:49,885 [services.triage] WARNING: Generated care answer failed humane communication or behaviour-claim policy
+.2026-10-27 07:12:49,885 [services.triage] WARNING: Generated care answer failed humane communication or behaviour-claim policy
+2026-10-27 07:12:49,886 [services.triage] WARNING: Generated care answer restarted an already established chase case
+.2026-10-27 07:12:49,886 [services.triage] WARNING: Generated donor plan lacked grounding or violated care policy
+.2026-10-27 07:12:49,886 [services.triage] WARNING: Generated care answer failed humane communication or behaviour-claim policy
+........2026-10-27 07:12:49,889 [services.triage] WARNING: Generated human exposure answer failed essential-action validation
+.........2026-10-27 07:12:49,893 [services.triage] WARNING: Generated witness advice suggested handling an unknown substance
+2026-10-27 07:12:49,893 [services.triage] WARNING: Generated witness advice suggested handling an unknown substance
+2026-10-27 07:12:49,893 [services.triage] WARNING: Generated witness advice suggested handling an unknown substance
+..2026-10-27 07:12:49,923 [dharmasala.alerts] ERROR: alert_send_failed alert_id=47fabd53-8a28-4619-9e43-c354519e3129 incident_id=257e9793-e537-417a-9099-02c58441f7e3 channel=webhook error_type=TimeoutError
+2026-10-27 07:12:49,923 [dharmasala.alerts] INFO: alert_delivery alert_id=47fabd53-8a28-4619-9e43-c354519e3129 incident_id=257e9793-e537-417a-9099-02c58441f7e3 status=failed
+2026-10-27 07:12:49,927 [dharmasala.alerts] INFO: alert_delivery alert_id=47fabd53-8a28-4619-9e43-c354519e3129 incident_id=257e9793-e537-417a-9099-02c58441f7e3 status=delivered
+.2026-10-27 07:12:49,945 [dharmasala.alerts] ERROR: alert_send_failed alert_id=71a543d4-7ec3-44fd-a17f-6f2ee4bb4d92 incident_id=d013fc25-63ab-4c32-aa4e-1b1b9913fc6a channel=webhook error_type=TimeoutError
+2026-10-27 07:12:49,945 [dharmasala.alerts] INFO: alert_delivery alert_id=71a543d4-7ec3-44fd-a17f-6f2ee4bb4d92 incident_id=d013fc25-63ab-4c32-aa4e-1b1b9913fc6a status=failed
+2026-10-27 07:12:49,947 [dharmasala.alerts] ERROR: alert_send_failed alert_id=71a543d4-7ec3-44fd-a17f-6f2ee4bb4d92 incident_id=d013fc25-63ab-4c32-aa4e-1b1b9913fc6a channel=webhook error_type=TimeoutError
+2026-10-27 07:12:49,947 [dharmasala.alerts] INFO: alert_delivery alert_id=71a543d4-7ec3-44fd-a17f-6f2ee4bb4d92 incident_id=d013fc25-63ab-4c32-aa4e-1b1b9913fc6a status=failed
+2026-10-27 07:12:49,949 [dharmasala.alerts] ERROR: alert_send_failed alert_id=71a543d4-7ec3-44fd-a17f-6f2ee4bb4d92 incident_id=d013fc25-63ab-4c32-aa4e-1b1b9913fc6a channel=webhook error_type=TimeoutError
+2026-10-27 07:12:49,950 [dharmasala.alerts] INFO: alert_delivery alert_id=71a543d4-7ec3-44fd-a17f-6f2ee4bb4d92 incident_id=d013fc25-63ab-4c32-aa4e-1b1b9913fc6a status=failed
+.....2026-10-27 07:12:50,044 [services.prompt_store] INFO: Activated prompt package srini-v2.9-2026-10-25 (a18f3fbb6fc7)
+2026-10-27 07:12:50,060 [services.prompt_store] INFO: Activated prompt package review-revision-2 (4d3ee6f8ebed)
+2026-10-27 07:12:50,079 [services.prompt_store] INFO: Activated prompt package srini-v2.9-2026-10-25 (a18f3fbb6fc7)
+.2026-10-27 07:12:50,097 [services.prompt_store] INFO: Activated prompt package srini-v2.9-2026-10-25 (a18f3fbb6fc7)
+2026-10-27 07:12:50,097 [services.prompt_store] ERROR: Prompt reload failed: PromptPackageError; keeping last valid release
+..2026-10-27 07:12:50,180 [services.prompt_store] ERROR: Prompt reload failed: FileNotFoundError; keeping last valid release
+....2026-10-27 07:12:50,226 [services.prompt_store] INFO: Activated prompt package srini-v2.9-2026-10-25 (a18f3fbb6fc7)
+2026-10-27 07:12:50,230 [services.prompt_store] INFO: Activated prompt package next-revision (ff790c8b3c9d)
+........2026-10-27 07:12:50,303 [services.web_search] INFO: Exact-city NGO discovery completed reason=no_deterministic_candidates city=Patna region=Bihar
+2026-10-27 07:12:50,303 [services.web_search] INFO: Structured dog NGO web search completed with no verified options
+.....2026-10-27 07:12:50,307 [services.web_search] INFO: Exact-city NGO discovery completed reason=no_deterministic_candidates city=Pune region=Maharashtra
+2026-10-27 07:12:50,307 [services.web_search] INFO: Structured dog NGO web search completed with no verified options
+.2026-10-27 07:12:50,307 [services.web_search] INFO: Skipping NGO cache save reason=incomplete_candidate_discovery key=ngo:v21:in:himachal pradesh:dharamshala:en:5
+....2026-10-27 07:12:50,310 [services.web_search] INFO: Exact-city NGO discovery completed reason=no_deterministic_candidates city=Pune region=Maharashtra
+2026-10-27 07:12:50,311 [services.web_search] INFO: Structured dog NGO web search completed: model=gpt-5.6-terra verified_options=1
+.2026-10-27 07:12:50,311 [services.web_search] INFO: Deduplicated verified NGO reason=duplicate_official_site site=example.org
+2026-10-27 07:12:50,311 [services.web_search] INFO: Deduplicated verified NGO reason=duplicate_official_site site=example.org
+2026-10-27 07:12:50,311 [services.web_search] INFO: Official-site NGO verification retained candidates=1; continuing reason=merge_additional_exact_city_candidates
+2026-10-27 07:12:50,311 [services.web_search] INFO: Returning deterministic NGO candidates reason=model_merge_unavailable verified_options=1
+.2026-10-27 07:12:50,312 [services.web_search] INFO: Official-site NGO verification retained candidates=1; continuing reason=merge_additional_exact_city_candidates
+2026-10-27 07:12:50,312 [services.web_search] INFO: Structured dog NGO web search completed: model=gpt-5.6-terra verified_options=2
+............2026-10-27 07:13:00,345 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:13:00,361 [services.prompt_store] INFO: Activated prompt package srini-v2.9-2026-10-25 (a18f3fbb6fc7)
+2026-10-27 07:13:00,371 [dharmasala] INFO: text_turn session_id=4e735b20-dcb2-4b7b-8b5e-eb244f36c0a3 action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-27 07:13:00,372 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+2026-10-27 07:13:00,374 [services.prompt_store] INFO: Activated prompt package http-next-release (cc45ba8018d1)
+2026-10-27 07:13:00,382 [dharmasala] INFO: text_turn session_id=4e735b20-dcb2-4b7b-8b5e-eb244f36c0a3 action=answer routing_source=model search_ran=False result_kind=care_answer scope=unspecified place=''
+2026-10-27 07:13:00,382 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 200 OK"
+.2026-10-27 07:13:00,396 [httpx] INFO: HTTP Request: POST http://testserver/v1/conversations "HTTP/1.1 200 OK"
+2026-10-27 07:13:00,397 [services.prompt_store] ERROR: Prompt reload failed: FileNotFoundError; keeping last valid release
+2026-10-27 07:13:00,398 [httpx] INFO: HTTP Request: POST http://testserver/v1/chat/query "HTTP/1.1 503 Service Unavailable"
+.....
+----------------------------------------------------------------------
+Ran 232 tests in 11.920s
+
+OK

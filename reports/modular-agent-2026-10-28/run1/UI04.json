@@ -1,0 +1,286 @@
+{
+  "id": "UI04",
+  "question": "Who can treat an injured street dog in Port Blair?",
+  "expected": "Research Port Blair treatment facilities; supported local service and actionable details, with no Dharamshala or Palampur default.",
+  "execution_order": 3,
+  "previous_verdict": "FAIL",
+  "previous_reason": "Generic fallback again; no identified local facility, address or contact.",
+  "status": "completed",
+  "answer": "Keep the dog away from traffic if safe, and handle as little as possible—pain can make even a gentle community dog frightened. If there is active bleeding and the dog accepts it, hold a clean cloth with steady gentle pressure.\n\n**For treatment in/near Port Blair:**\n\n- **Veterinary Hospital, Junglighat** — **03192 232252**  \n- **Veterinary Hospital, Garacharma** — **03192 252823**\n\nThe Andaman & Nicobar Animal Husbandry Department has published these two government veterinary hospitals for animal emergencies in the municipal area, including round-the-clock service. Call first, explain that it is an **injured street dog**, give the landmark, and ask whether they can receive the dog now or advise transport. ([andamanchronicle.net](https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai))\n\nIf you cannot move the dog safely, contact the **Directorate of Animal Husbandry & Veterinary Services, Haddo, Port Blair: 03192 233286** for guidance to the appropriate local veterinary service. ([ahvs.andamannicobar.gov.in](https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai))\n\nDo not put turmeric, oil, powders, or other household substances on the wound.",
+  "raw_answer": "Keep the dog away from traffic if safe, and handle as little as possible—pain can make even a gentle community dog frightened. If there is active bleeding and the dog accepts it, hold a clean cloth with steady gentle pressure.\n\n**For treatment in/near Port Blair:**\n\n- **Veterinary Hospital, Junglighat** — **03192 232252**  \n- **Veterinary Hospital, Garacharma** — **03192 252823**\n\nThe Andaman & Nicobar Animal Husbandry Department has published these two government veterinary hospitals for animal emergencies in the municipal area, including round-the-clock service. Call first, explain that it is an **injured street dog**, give the landmark, and ask whether they can receive the dog now or advise transport. ([andamanchronicle.net](https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai))\n\nIf you cannot move the dog safely, contact the **Directorate of Animal Husbandry & Veterinary Services, Haddo, Port Blair: 03192 233286** for guidance to the appropriate local veterinary service. ([ahvs.andamannicobar.gov.in](https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai))\n\nDo not put turmeric, oil, powders, or other household substances on the wound.",
+  "citations": [
+    {
+      "url": "https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai",
+      "title": "Department of AH&VS Makes Available Telephone Services to Facilitate Emergency Response Process – Andaman Chronicle",
+      "start_index": 714,
+      "end_index": 882
+    },
+    {
+      "url": "https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai",
+      "title": "Department of Animal Husbandry & Veterinary Services",
+      "start_index": 1080,
+      "end_index": 1174
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-28T17:57:08.002651+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "Who can treat an injured street dog in Port Blair?",
+      "history": [
+        {
+          "role": "user",
+          "content": "A street dog has a deep wound near Vijay Nagar, Indore. Where can I take it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if you can do so safely, and avoid touching the deep wound. If it is bleeding, apply **gentle continuous pressure with a clean cloth** only if the dog will tolerate it without struggling.\n\n**Closest practical help for Vijay Nagar:**\n\n1. **Arham Animal Ambulance, Indore — call 89890 80848.**  \n   Their published coverage includes **Vijay Nagar** and they state that they rescue and treat injured street/community animals. Tell them the exact landmark, that it is a **deep wound**, whether the dog can stand, and send a photo if asked. Availability still needs confirmation when you call. ([alwayscare.org](https://alwayscare.org/ambulances/indore?utm_source=openai))\n\n2. **If you can safely transport the dog:**  \n   **Government Veterinary Hospital & Polyclinic**  \n   Patthar Godam Road, below Rajkumar Bridge, Snehlataganj, Indore  \n   Phone: **0731 2543312**  \n   Online listings show 7 am–6 pm, but please call first to confirm the doctor and admission. ([kaam.com](https://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai))\n\nDo not put turmeric, oil, powder, or household remedies into the wound. If the dog becomes weak, cannot stand, has heavy bleeding, or you see maggots, describe that clearly on the ambulance call—it needs urgent veterinary care.\nhttps://alwayscare.org/ambulances/indore?utm_source=openai\nhttps://kaam.com/b/government-veterinary-hospital-and-polyclinic-indore?utm_source=openai"
+        },
+        {
+          "role": "user",
+          "content": "I found an injured community dog in Kochi, Kerala. Where can I take it?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the dog away from traffic if it is safe to do so, and minimise handling—an injured dog may bite from pain or fear. If there is active external bleeding and the dog allows it, hold a clean cloth gently and continuously over the wound while arranging help.\n\n**In Kochi, these are practical options:**\n\n1. **Government Veterinary Hospital, Edappally**  \n   Ganapathy Temple Road, Edappally P.O., Kochi – 682024.  \n   This is listed by Kerala’s Animal Husbandry Department as a veterinary hospital. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n2. **Veterinary Polyclinic, Mattancherry**  \n   Star Junction, Mattancherry P.O., Kochi – 682002.  \n   Also listed by the Kerala Animal Husbandry Department. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n3. **Government Mobile Veterinary Hospital / District Veterinary Centre, Ernakulam**  \n   Club Road, Ernakulam – 682011  \n   **Phone: 0484 2351264**  \n   The department lists this number for the Mobile Veterinary Hospital and District Veterinary Centre. Call to ask whether they can attend or direct you to the nearest clinician; a listing does not guarantee immediate pickup. ([ahd.kerala.gov.in](https://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai))\n\n4. **Animal Rescue Kochi — rescue support**  \n   **Helpline: 97477 73950**  \n   Their rescue coverage is limited mainly to Fort Kochi, Mattancherry, Thoppumpady, Wellington Island, Palluruthy, Edakochi, Perumbadappu, Kumbalangi and Chellanam. Call with the exact locality and injury details; they may be able to assist or advise on transport within that area. ([animalrescuekochi.org](https://animalrescuekochi.org/contact-us/?utm_source=openai))\n\nDo not put turmeric, oil, powders, or household remedies into the wound. If the dog cannot stand, is struggling to breathe, has severe bleeding, or has been hit by a vehicle, tell the clinic/rescue that clearly—it needs urgent veterinary assessment.\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://ahd.kerala.gov.in/en/ernakulam/?utm_source=openai\nhttps://animalrescuekochi.org/contact-us/?utm_source=openai"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "ba96b156f60d91a102056b88622d99822e557010758644cf433bb670593a536f",
+        "search": "005eb995968419f0ed91fa2bfb66c349de78d4e3269dfbe02a132d02eb1356c4",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-28T17:57:08.002782+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-28T17:57:16.496368+00:00",
+      "elapsed_seconds": 8.494,
+      "step": 0,
+      "seconds": 8.494,
+      "response": {
+        "id": "resp_04e16af77bc3aca1016ae237741ac887d2bd62e9b17e659678",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 17399,
+          "input_tokens_details": {
+            "cached_tokens": 8617,
+            "cache_write_tokens": 593
+          },
+          "output_tokens": 346,
+          "output_tokens_details": {
+            "reasoning_tokens": 89
+          },
+          "total_tokens": 17745
+        },
+        "output": [
+          {
+            "id": "ws_04e16af77bc3aca1016ae23775538c87d2980924810c4241d0",
+            "action": {
+              "query": "Port Blair Andaman veterinary hospital injured dog contact Animal Husbandry Department",
+              "type": "search",
+              "queries": [
+                "Port Blair Andaman veterinary hospital injured dog contact Animal Husbandry Department",
+                "site:andaman.gov.in Port Blair veterinary hospital phone animal husbandry",
+                "Port Blair animal rescue injured street dog veterinary hospital"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://ahvs.andamannicobar.gov.in/contactus"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahvs.andamannicobar.gov.in/docs/DisasterManagementPlan.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://nlmuat.ndlm.co.in/Home/ContactUs"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahvs.andamannicobar.gov.in/veterinary"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.indiacustomercare.com/department-animal-husbandry-and-veterinary-services-no"
+                },
+                {
+                  "type": "url",
+                  "url": "https://andamannicobar.gov.in/department"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahd.kerala.gov.in/storage/2026/01/OperationalGuidelinesforLHDCP.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://it.scribd.com/document/550395754/94-Mailing-List1"
+                },
+                {
+                  "type": "url",
+                  "url": "https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://thephoenixpost.in/monsoon-misery-for-strays-awbi-seeks-publics-help-to-save-vulnerable-animals/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahvs.andamannicobar.gov.in/telephonedirectory"
+                },
+                {
+                  "type": "url",
+                  "url": "https://barkindia.org/rescue-programme/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://wwwcaasramandamansorg.mailchimpsites.com/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://fard.odisha.gov.in/sites/default/files/2022-04/8.%20Animal%20Helpline%20Facility%20With%20Veterinary%20Ambulance%20Services.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://awbi.gov.in/uploads/documents/168207525636revised_abc_module_c.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://dt.andamannicobar.gov.in/DetailNews.aspx?newsid=xS3MwCjrX7L6ZsAYU9XE2XR14VoYpquVzUNHNrh3wLs%3D"
+                },
+                {
+                  "type": "url",
+                  "url": "https://csharyana.gov.in/WriteReadData/Placement%20Announcements/Services-II/5747.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.vci.dahd.gov.in/sites/default/files/News%20update/FINAL%20ER-4.3.24.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/hyderabad/comments/1l5n0cn/every_ngo_you_can_try_to_save_a_street_dogs_life/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/india/comments/1hvlwhd/1962_animal_helpline/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Madurai/comments/1u9qynn/animal_injured/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/hyderabad/comments/1rv2uie/injured_labrador_seen_on_bn_reddy_mirpet_road/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Andaman_and_Nicobar/comments/1h7zn5a"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Animal_Aid_Unlimited"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Philippine_Animal_Welfare_Society"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Blue_Cross_of_India"
+                },
+                {
+                  "type": "url",
+                  "url": "https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_04e16af77bc3aca1016ae237791c0887d2ba0573fa7efc2bfa",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 882,
+                    "start_index": 714,
+                    "title": "Department of AH&VS Makes Available Telephone Services to Facilitate Emergency Response Process – Andaman Chronicle",
+                    "type": "url_citation",
+                    "url": "https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai"
+                  },
+                  {
+                    "end_index": 1174,
+                    "start_index": 1080,
+                    "title": "Department of Animal Husbandry & Veterinary Services",
+                    "type": "url_citation",
+                    "url": "https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai"
+                  }
+                ],
+                "text": "Keep the dog away from traffic if safe, and handle as little as possible—pain can make even a gentle community dog frightened. If there is active bleeding and the dog accepts it, hold a clean cloth with steady gentle pressure.\n\n**For treatment in/near Port Blair:**\n\n- **Veterinary Hospital, Junglighat** — **03192 232252**  \n- **Veterinary Hospital, Garacharma** — **03192 252823**\n\nThe Andaman & Nicobar Animal Husbandry Department has published these two government veterinary hospitals for animal emergencies in the municipal area, including round-the-clock service. Call first, explain that it is an **injured street dog**, give the landmark, and ask whether they can receive the dog now or advise transport. ([andamanchronicle.net](https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai))\n\nIf you cannot move the dog safely, contact the **Directorate of Animal Husbandry & Veterinary Services, Haddo, Port Blair: 03192 233286** for guidance to the appropriate local veterinary service. ([ahvs.andamannicobar.gov.in](https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai))\n\nDo not put turmeric, oil, powders, or other household substances on the wound.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-28T17:57:16.496612+00:00",
+      "elapsed_seconds": 8.494,
+      "status": "completed",
+      "error": null,
+      "answer": "Keep the dog away from traffic if safe, and handle as little as possible—pain can make even a gentle community dog frightened. If there is active bleeding and the dog accepts it, hold a clean cloth with steady gentle pressure.\n\n**For treatment in/near Port Blair:**\n\n- **Veterinary Hospital, Junglighat** — **03192 232252**  \n- **Veterinary Hospital, Garacharma** — **03192 252823**\n\nThe Andaman & Nicobar Animal Husbandry Department has published these two government veterinary hospitals for animal emergencies in the municipal area, including round-the-clock service. Call first, explain that it is an **injured street dog**, give the landmark, and ask whether they can receive the dog now or advise transport. ([andamanchronicle.net](https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai))\n\nIf you cannot move the dog safely, contact the **Directorate of Animal Husbandry & Veterinary Services, Haddo, Port Blair: 03192 233286** for guidance to the appropriate local veterinary service. ([ahvs.andamannicobar.gov.in](https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai))\n\nDo not put turmeric, oil, powders, or other household substances on the wound.",
+      "citations": [
+        {
+          "url": "https://andamanchronicle.net/department-of-ahvs-makes-available-telephone-services-to-facilitate-emergency-response-process/?utm_source=openai",
+          "title": "Department of AH&VS Makes Available Telephone Services to Facilitate Emergency Response Process – Andaman Chronicle",
+          "start_index": 714,
+          "end_index": 882
+        },
+        {
+          "url": "https://ahvs.andamannicobar.gov.in/contactus?utm_source=openai",
+          "title": "Department of Animal Husbandry & Veterinary Services",
+          "start_index": 1080,
+          "end_index": 1174
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 8.494,
+  "history_messages": 4,
+  "completed_at": "2026-10-28T17:57:16.496696+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "original40"
+}

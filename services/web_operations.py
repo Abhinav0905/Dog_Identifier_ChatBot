@@ -6,6 +6,9 @@ Maintenance retries existing alerts only; retention always requires apply=True.
 from __future__ import annotations
 
 from datetime import datetime, timedelta, timezone
+from contextvars import ContextVar
+from functools import wraps
+import uuid
 import logging
 from pathlib import Path
 import re
@@ -14,9 +17,31 @@ import config
 import database as db
 
 logger = logging.getLogger(__name__)
+_turn_trace = ContextVar("web_turn_trace", default=None)
+
+
+def traced_turn(function):
+    @wraps(function)
+    def run(*args, **kwargs):
+        from services import agent_trace
+        trace_id = uuid.uuid4().hex
+        token = _turn_trace.set({"id": trace_id, "events": []})
+        try:
+            with agent_trace.turn(trace_id):
+                return function(*args, **kwargs)
+        finally:
+            _turn_trace.reset(token)
+    return run
+
+
+def current_turn_trace() -> dict:
+    trace = _turn_trace.get()
+    return {"id": trace["id"], "events": list(trace["events"])} if trace else {}
 
 
 def initialize() -> None:
+    from services import agent_trace
+    agent_trace.initialize()
     with db.get_db() as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS web_service_events (
             id INTEGER PRIMARY KEY AUTOINCREMENT, observed_at TEXT NOT NULL,
@@ -33,6 +58,12 @@ def record_event(component: str, status: str, latency_ms: int = 0, error_type: s
     if status not in {"ok", "error", "timeout", "unavailable", "empty", "fallback"}:
         status = "error"
     safe_error = error_type if re.fullmatch(r"[a-zA-Z][a-zA-Z0-9_]{0,79}", error_type or "") else ""
+    from services import agent_trace
+    agent_trace.event(component, status, max(0, int(latency_ms)), safe_error)
+    trace = _turn_trace.get()
+    if trace is not None and len(trace["events"]) < 120:
+        trace["events"].append({"component": component, "status": status,
+                                "latency_ms": max(0, int(latency_ms)), "error_type": safe_error})
     try:
         with db.get_db() as conn:
             conn.execute(
@@ -118,6 +149,12 @@ def readiness() -> dict:
     model_events = [row for row in state["latest"] if row["component"].startswith("model:") and row["observed_at"] >= recent_cutoff]
     result["model_observations"] = model_events
     result["observation_window_minutes"] = 30
+    with db.get_db() as conn:
+        result["functional_observations"] = [dict(row) for row in conn.execute(
+            "SELECT component,status,COUNT(*) AS count,ROUND(AVG(latency_ms)) AS mean_latency_ms "
+            "FROM web_service_events WHERE observed_at >= ? AND component NOT LIKE 'model:%' "
+            "GROUP BY component,status", (recent_cutoff,),
+        )]
     result["models"] = "not_configured" if not config.OPENAI_API_KEY else (
         "recent_failure" if any(row["status"] != "ok" for row in model_events) else
         "recent_success" if model_events else "not_observed"
@@ -138,6 +175,8 @@ def readiness() -> dict:
 def maintenance_tick() -> dict:
     """Run bounded web alert recovery and expire only operational telemetry."""
     from services import alerts
+    from services import agent_trace
+    agent_trace.expire((datetime.now(timezone.utc) - timedelta(days=7)).isoformat())
     retried = alerts.retry_failed_alerts(limit=10)
     with db.get_db() as conn:
         conn.execute("DELETE FROM web_service_events WHERE observed_at < ?",

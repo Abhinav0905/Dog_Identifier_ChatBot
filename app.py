@@ -47,6 +47,8 @@ from services import (
     response_policy,
     request_limits,
     web_operations,
+    text_contract,
+    agent_trace,
 )
 from services.prompts import PromptCatalog
 from services import prompt_store
@@ -140,9 +142,15 @@ def _detect_language(accept_language: str, text: str = "") -> str:
     Prefers the user's actual input language (Devanagari detected), then falls
     back to the browser's Accept-Language header. Defaults to English.
     """
+    if re.search(r"\b(?:reply|answer|respond|explain|write)\b.{0,25}\bin\s+hindi\b|\bhindi\s+(?:mein|me)\b", text, re.I):
+        return "hi"
+    if re.search(r"\b(?:reply|answer|respond|explain|write)\b.{0,25}\bin\s+english\b|अंग्रेज़ी\s+में|English\s+में", text, re.I):
+        return "en"
     # If the user typed in Hindi (Devanagari script), respond in Hindi
     if any("\u0900" <= c <= "\u097F" for c in text):
         return "hi"
+    if re.search(r"[A-Za-z]", text):
+        return "en"
     # Parse the primary language tag from the Accept-Language header
     primary = accept_language.split(",")[0].split(";")[0].split("-")[0].strip().lower()
     if primary == "hi":
@@ -524,6 +532,7 @@ async def triage_image(
 
 
 @app.post("/v1/chat/query")
+@web_operations.traced_turn
 def chat_query(
     http_request: Request,
     http_response: Response,
@@ -532,8 +541,18 @@ def chat_query(
     """Model-directed conversation and open animal-help search, on a worker thread."""
     deadline = time.monotonic() + config.CHAT_TURN_TIMEOUT_SECONDS
     session_id = _resolve_request_session(http_request, http_response, request.session_id)
+    agent_trace.bind_session(session_id)
+    agent_trace.decision("turn.request", message=request.message)
     guard = guardrails.check_input(request.message)
     if not guard.allowed:
+        agent_trace.decision("answer.final", answer=guard.reason, result_kind="guardrail_refusal",
+                             guardrail_category=guard.category, model_call_skipped=True)
+        if guard.category != "empty":
+            db.save_chat_message(session_id, "user", request.message)
+            db.save_chat_message(session_id, "assistant", guard.reason, metadata={
+                "text_action": "refuse", "result_kind": "guardrail_refusal", "guardrail_category": guard.category,
+                "web_search_ran": False, "model_history_policy": "omit", "stage_trace": web_operations.current_turn_trace(),
+            })
         return ChatResponse(response=guard.reason)
 
     history = db.get_chat_history(session_id, limit=config.CONVERSATION_HISTORY_LIMIT)
@@ -549,6 +568,14 @@ def chat_query(
         deadline=deadline,
     )
     effective_phone_only = turn.phone_only
+    from services.search_evidence import _number_only_request
+    output_format = ("address_only" if text_contract.address_only_request(request.message) else
+                     "phone_only" if _number_only_request(request.message) or effective_phone_only else turn.output_format)
+    effective_phone_only = output_format == "phone_only"
+    if (turn.action == query_router.TextAction.CLARIFY and output_format != "text"
+        and text_contract.distinctive_institution(turn.requested_institution, turn.location_text)
+        and query_router._asks_for_location(turn.clarification_question)):
+        turn = replace(turn, action=query_router.TextAction.SEARCH, clarification_question="")
     if turn.routing_failed:
         from services.search_evidence import _number_only_request
         effective_phone_only = _number_only_request(request.message)
@@ -557,27 +584,38 @@ def chat_query(
         # Keep the transcript, but do not let a new animal inherit an old case location.
         with db.get_db() as conn:
             conn.execute("DELETE FROM session_case_locations WHERE session_id = ?", (session_id,))
-    if turn.action == query_router.TextAction.CLARIFY and case_location and case_location.get("scope") == region_scope.INDIA and re.search(
+    if turn.action == query_router.TextAction.CLARIFY and turn.location_kind == "none" and case_location and case_location.get("scope") == region_scope.INDIA and re.search(
         r"\b(?:which|what|share|provide|tell)\b.{0,60}\b(?:city|location|state|place)\b", turn.clarification_question, re.I
     ):
         turn = replace(turn, action=query_router.TextAction.SEARCH, clarification_question="", local_help=True)
     with region_scope.place_resolver.geocoding_budget(deadline):
         scope = _text_turn_scope(turn, request, case_location, history)
     requested_location_text = _literal_case_location_text(turn, history, scope)
+    agent_trace.decision("turn.routing", plan=turn, output_format=output_format,
+                         scope=scope, requested_location_text=requested_location_text)
     if scope.explicit_location and scope.scope in {region_scope.INDIA, region_scope.OUTSIDE_INDIA, region_scope.AMBIGUOUS}:
         db.save_session_case_location(session_id, scope.as_case_location())
     elif turn.location_kind == region_scope.place_resolver.NAMED_PLACE:
         db.save_session_case_location(session_id, {"scope": scope.scope, "place": turn.location_text, "source": "current_unresolved_place"})
 
     # An old place must not gate a newly started general behavior conversation.
-    outside_case = scope.is_outside_india and (turn.local_help or turn.needs_immediate_guidance)
+    outside_case = scope.is_outside_india and (turn.local_help or turn.needs_immediate_guidance
+                    or (scope.explicit_location and turn.action == query_router.TextAction.SEARCH))
     links = []
     searched = False
     result_kind = "care_answer"
     request_satisfied = None
     evidence_issue = ""
-    if config.INDIA_ONLY_SCOPE_ENABLED and outside_case:
+    validated_facts = []
+    if turn.action == query_router.TextAction.OUT_OF_SCOPE or text_contract.clearly_off_topic_task(request.message):
+        answer = ("मैं भारत में पशु कल्याण, सामुदायिक पशुओं और सुरक्षित मदद से जुड़े सवालों का उत्तर देता हूँ।" if language == "hi" else
+                  "I can help with animal welfare, community animals and finding animal-care resources in India.")
+        result_kind = "out_of_scope"
+    elif config.INDIA_ONLY_SCOPE_ENABLED and outside_case:
         answer = region_scope.INDIA_ONLY_RESPONSE
+        if output_format == "text" and turn.needs_immediate_guidance:
+            guidance = triage.search_care_guidance(request.message, language) or triage.immediate_rescue_guidance(request.message, language)
+            answer = _prepend_immediate_guidance(guidance, answer)
         result_kind = "outside_india"
     elif (scope.needs_clarification and turn.local_help) or turn.action == query_router.TextAction.CLARIFY:
         answer = region_scope.location_clarification_response(scope, language=language) if scope.needs_clarification else turn.clarification_question
@@ -586,12 +624,20 @@ def chat_query(
                 request.message, history, contextual_message=turn.contextual_request,
                 language=language,
             )
-            answer = _prepend_immediate_guidance(guidance or "", answer)
+            answer = _prepend_immediate_guidance(guidance or triage.immediate_rescue_guidance(request.message, language), answer)
         result_kind = "clarification"
     elif turn.action == query_router.TextAction.SEARCH or turn.routing_failed:
         # An actual safety response remains available even when both models are
         # down. No old NGO directory, cache, or guessed place is a fallback.
-        guidance = None if effective_phone_only else triage.urgent_caption_guidance(request.message, language)
+        guidance = None if output_format != "text" else triage.search_care_guidance(request.message, language)
+        if not guidance and output_format == "text" and turn.needs_immediate_guidance:
+            guidance = triage.immediate_rescue_guidance(request.message, language)
+        if not guidance and output_format == "text" and turn.needs_care_guidance:
+            guidance = triage.generate_chat_response(
+                request.message, history, session_id, language,
+                contextual_message=turn.contextual_request, deadline=min(deadline, time.monotonic() + 12),
+                care_only=True,
+            )
         try:
             result = web_search.search_animal_question(
                 request.message,
@@ -609,6 +655,7 @@ def chat_query(
                 requested_institution=None if turn.routing_failed else turn.requested_institution,
                 requested_location_text=requested_location_text,
                 phone_only=None if turn.routing_failed else turn.phone_only,
+                output_format=output_format,
                 deadline=deadline,
             )
         except Exception as exc:
@@ -621,13 +668,17 @@ def chat_query(
         searched, result_kind = result.searched, result.result_kind
         request_satisfied = getattr(result, "request_satisfied", None)
         evidence_issue = getattr(result, "evidence_issue", "")
-        if not effective_phone_only:
+        validated_facts = getattr(result, "validated_facts", [])
+        if output_format == "text":
             # Contact review and search outages must not erase first aid for
             # explicit current injuries. Do this before any model fallback;
             # ordinary discovery and feared future bites remain unchanged.
             answer = _prepend_immediate_guidance(
                 guidance or "", answer,
             )
+            if text_contract.direct_availability_question(request.message):
+                availability = triage.provider_availability_guidance(request.message, language, getattr(result, "validated_facts", []))
+                answer = _prepend_immediate_guidance(availability, answer)
         # Only a real condition receives immediate guidance. A general
         # provider lookup must never acquire a welcome/checklist prefix.
         if result_kind == "unavailable" and not effective_phone_only and not guidance and (turn.needs_immediate_guidance or turn.routing_failed):
@@ -645,8 +696,15 @@ def chat_query(
             deadline=deadline,
         )
 
+    agent_trace.decision("answer.before_sanitization", answer=answer, resource_links=links)
     answer = guardrails.sanitize_text_response(answer)
+    if output_format == "text":
+        answer = _prepend_immediate_guidance(triage.humane_deterrent_boundary(request.message, language), answer)
     db.save_chat_message(session_id, "user", request.message)
+    agent_trace.decision("answer.final", answer=answer, resource_links=links,
+                         result_kind=result_kind, request_satisfied=request_satisfied,
+                         evidence_issue=evidence_issue, validated_facts=validated_facts,
+                         output_format=output_format)
     db.save_chat_message(session_id, "assistant", answer, metadata={
         "resource_links": links,
         "text_action": turn.action.value,
@@ -663,6 +721,11 @@ def chat_query(
         "case_place": scope.place,
         "phone_only": effective_phone_only,
         "local_help": turn.local_help,
+        "output_format": output_format,
+        "lookup_scope": scope.source,
+        "needs_care_guidance": turn.needs_care_guidance,
+        "stage_trace": web_operations.current_turn_trace(),
+        "validated_facts": validated_facts,
         "latency_ms": round((config.CHAT_TURN_TIMEOUT_SECONDS - max(0, deadline - time.monotonic())) * 1000),
     })
     logger.info(
@@ -671,7 +734,10 @@ def chat_query(
         session_id, turn.action.value, turn.source, searched,
         result_kind, scope.scope, scope.place,
     )
-    return ChatResponse(response=answer, resource_links=links, answer_format="phone_only" if effective_phone_only else "text")
+    if turn.action == query_router.TextAction.SEARCH or searched:
+        web_operations.record_event("lookup:outcome", "fallback" if request_satisfied is False or result_kind == "unavailable" else "ok",
+                                   error_type="IncompleteLookup" if request_satisfied is False else "")
+    return ChatResponse(response=answer, resource_links=links, answer_format=output_format)
 
 
 def _literal_case_location_text(
@@ -703,9 +769,20 @@ def _text_turn_scope(
 ) -> region_scope.ScopeDecision:
     """Resolve explicit places only; missing geocodes do not prevent text search."""
     resolver = region_scope.place_resolver
+    if turn.action == query_router.TextAction.OUT_OF_SCOPE:
+        return region_scope.ScopeDecision(region_scope.UNSPECIFIED, source="out_of_scope")
+    if turn.location_kind == resolver.NONE and turn.action == query_router.TextAction.ANSWER and not turn.routing_failed and not (turn.local_help or turn.needs_immediate_guidance):
+        return region_scope.ScopeDecision(region_scope.UNSPECIFIED, source="general_question")
+    latest = next((row.get("metadata") or {} for row in reversed(history or []) if row.get("role") == "assistant"), {})
+    same_entity_lookup = (isinstance(latest, dict) and latest.get("lookup_scope") == "institution_lookup"
+                          and turn.requested_institution and turn.requested_institution == latest.get("requested_institution"))
+    if turn.location_kind == resolver.NONE and (
+        text_contract.explicit_new_institution(request.message, turn.requested_institution) or same_entity_lookup
+    ):
+        return region_scope.ScopeDecision(region_scope.UNSPECIFIED, source="institution_lookup")
     if turn.location_kind in {resolver.NAMED_PLACE, resolver.NEAR_ME} or (case_location and case_location.get("scope") == region_scope.AMBIGUOUS):
         try:
-            return region_scope.classify_text_scope(
+            decision = region_scope.classify_text_scope(
                 request.message,
                 lat=request.lat,
                 lng=request.lng,
@@ -715,6 +792,13 @@ def _text_turn_scope(
                     turn.location_kind, turn.location_text, source="text_action_model",
                 ),
             )
+            if (decision.needs_clarification
+                and (turn.phone_only or turn.output_format in {"phone_only", "address_only"} or text_contract.address_only_request(request.message))
+                and text_contract.distinctive_institution(turn.requested_institution, turn.location_text)):
+                # Exact institution details can be researched without silently
+                # choosing a state. Outside-India decisions are never bypassed.
+                return region_scope.ScopeDecision(region_scope.UNSPECIFIED, source="institution_lookup")
+            return decision
         except Exception as exc:
             logger.warning("Text location context unavailable: %s", type(exc).__name__)
             return region_scope.ScopeDecision(
@@ -1176,6 +1260,15 @@ def health():
 def admin_operations(admin_password: str = Header("", alias="X-Admin-Password")):
     _require_admin_password(admin_password)
     return {"readiness": web_operations.readiness(), "operations": web_operations.snapshot()}
+
+
+@app.get("/v1/admin/traces/{trace_id}")
+def admin_trace(trace_id: str, admin_password: str = Header("", alias="X-Admin-Password")):
+    _require_admin_password(admin_password)
+    trace = agent_trace.read(trace_id)
+    if trace is None:
+        raise HTTPException(404, "Trace not found")
+    return trace
 
 
 @app.post("/v1/admin/alerts/{alert_id}/acknowledge")

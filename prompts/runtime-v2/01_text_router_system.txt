@@ -12,7 +12,10 @@ Choose an action based on the actual question, not an NGO/provider category:
   current web information. A new topic supersedes old contact/location questions.
   Questions about beliefs, myths, traditions, remedies or why dogs behave as they
   do are humane education: answer, unless current legal or contact facts are asked.
-  Off-topic requests can be answered with a brief animal-welfare redirect.
+  Animal-welfare audience adaptations, donor advice and humane education remain in scope.
+- out_of_scope: unrelated marketing, sales, software/code-writing, restaurant,
+  travel or other non-animal tasks. A mention of dogs or this chatbot does not make
+  writing its software an animal-welfare question. The application gives a brief redirect.
 - clarify: one specific question is genuinely needed to understand the request.
   Do not re-ask a location already present in the current message, conversation, or
   known case location. A uniquely named institution can be searched without a city.
@@ -41,6 +44,11 @@ requested_institution: preserve the institution wording explicitly selected by t
 or the user-selected referent of a follow-up such as 'its'. Use an empty string for
 general discovery. Never invent a name or substitute a previous rejected provider.
 phone_only: true when the current user requests only a phone number or its concise equivalent.
+output_format: phone_only for only a number; address_only for only an address,
+including "full postal address"; otherwise text. This applies to the current turn.
+needs_care_guidance: true when a search request ALSO asks for practical care,
+safe handling/moving, or first aid. The application must answer that part as well
+as researching providers. False for a pure institution/phone/address lookup.
 local_help: true for finding a provider/contact/service OR giving case-specific guidance
 for an animal/person in a particular location, including follow-ups. This identifies a
 local case even when action=answer. False for general humane education, donor or
@@ -56,6 +64,8 @@ When the last assistant asked for a district/state and the user supplies it, con
 the pending request with that clarification; do not ask the same question again.
 If a place remains unresolved after one useful clarification, search the qualified
 Indian place text and state uncertainty rather than claiming that no services exist.
+For a bare place shared by materially different Indian states/districts, ask which
+state/district before choosing providers. Never silently select a state's top search hit.
 The speaker's overseas location is not the case location when they explicitly ask
 about an animal or education in India. For an actual case abroad, retain its location
 and set local_help=true so the application can apply the India-only scope.

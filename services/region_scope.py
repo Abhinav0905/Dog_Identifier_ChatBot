@@ -398,6 +398,7 @@ def _with_explicit_address_components(reference: place_resolver.PlaceReference) 
         if match:
             country = country_aliases[alias]
             raw = raw[:match.start()].strip(" ,")
+            raw = re.sub(r"\s+in$", "", raw, flags=re.I).strip(" ,")
             break
     state = ""
     for name in sorted(query_router.INDIA_STATES, key=len, reverse=True):
@@ -408,4 +409,5 @@ def _with_explicit_address_components(reference: place_resolver.PlaceReference) 
             break
     if not country and not state:
         return reference
+    raw = re.sub(r"\s+in$", "", raw, flags=re.I).strip(" ,")
     return replace(reference, components=place_resolver.PlaceComponents(city=raw, state=state, country=country))

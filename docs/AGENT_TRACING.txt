@@ -1,0 +1,39 @@
+Agent execution traces
+
+Every chat turn has one trace ID, also saved in the assistant message's
+metadata.stage_trace.id. Model calls record their role, model, exact call
+boundaries, parent span, provider response ID, usage and returned output.
+The surrounding router, care, search, fetch and evidence stages record final
+decisions. Source fetch spans contain HTTP/readability events. Evidence spans
+identify the provider, source, quote and rejection or downgrade reason. Search
+refinement records its gate, fact comparison and selected result. answer.final
+records the assembled answer and functional outcome, including early refusal.
+
+Execution status and answer completeness are separate: status=ok means the
+code returned normally, not that request_satisfied is true or a UI test passed.
+
+Inputs and outputs are hashed by default. To capture diagnostic text for a
+synthetic test conversation, set AGENT_TRACE_CONTENT_SESSION_IDS to its exact
+conversation UUID (or a comma-separated list). There is no wildcard. Set
+APP_SOURCE_REVISION to the deployed commit. The pinned prompt version and
+digest are recorded at turn start. No prompts or model settings are modified
+by tracing; a zero-model-call refusal/clarification is a valid trace.
+
+Credentials, URL query strings, embedded images and model reasoning items are
+excluded. Text is bounded to 80,000 characters per captured value, 1,200,000
+per turn, and 200 spans. Truncation/omission and dropped spans are explicit.
+Source-page excerpts are bounded; these are diagnostics, not a full web archive.
+Detailed text may contain test conversation history and should remain internal.
+
+Traces live in agent_traces and agent_trace_spans in the existing database.
+Starts and completions are persisted separately so an interrupted call is
+visible as running. They expire after seven days through existing maintenance.
+Access: GET /v1/admin/traces/{trace_id} with the existing X-Admin-Password.
+The public chat endpoint/history does not expose these detailed spans.
+Export the test traces before expiry; remove a conversation from the allowlist
+when it is no longer being used for debugging.
+
+Model calls outside a chat turn still get a metadata-only standalone trace.
+Tracing failures preserve the model result/exception. Controlled tests cover
+concurrent turn isolation, copied worker context, redaction, size limits,
+admin access, retention, telemetry outages and response-serialization faults.

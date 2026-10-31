@@ -1,5 +1,11 @@
 # Dharamsala Animal Rescue Chatbot
 
+The consolidated single-agent review is on `review/single-agent-2026-10-30`.
+Start with [the team handoff](docs/TEAM_REVIEW_2026-10-30.txt) for setup, test
+commands, results and known issues. Latest fresh-set result: **43 pass / 6 partial /
+1 fail (86%)**. The evaluated `simple_agent` package is a separate CLI/API entry
+point; starting `app.py` still runs the existing web/rescue pipeline.
+
 Ask Dorjee provides humane community-dog education, practical safety guidance,
 photo assessment and animal-care discovery across India. It can look for veterinary
 hospitals, colleges, clinics, public services and welfare organisations according

@@ -1,0 +1,47 @@
+{
+  "source_revision": "857bc23",
+  "prompt_version": "srini-v2.8-2026-10-25",
+  "prompt_sha256": "4134c1ee1afcbc855ebffc5c412ff9ae8794d911a146bcf76954e9bbbb08d2de",
+  "branch": "fix/rca-runtime-contracts",
+  "base_deployed_revision": "440951f",
+  "offline_checks": {
+    "passed": 229,
+    "new_regression_tests": 15,
+    "includes": "controlled concurrent source-fetch batches; no live network in automated checks"
+  },
+  "ui_retest": {
+    "planned": 40,
+    "same_questions": true,
+    "same_order": true,
+    "same_existing_chat": true,
+    "status": "completed",
+    "counts": {
+      "PASS": 30,
+      "PARTIAL": 9,
+      "FAIL": 1
+    }
+  },
+  "important_distinctions": [
+    "Private backend smoke checks are separate from the UI rerun.",
+    "Published contacts do not confirm current admission or pickup.",
+    "Regional leads and unconfirmed locality remain incomplete lookups.",
+    "The 40-turn run is a long-chat stress test, not an isolated fresh-session benchmark.",
+    "Latency and complete clinical-directory coverage remain measured outcomes, not assumed fixed."
+  ],
+  "interim_run": {
+    "source": "7268739",
+    "cases": 18,
+    "reason": "Stopped to correct exact-institution contact lookup being blocked by city ambiguity."
+  },
+  "latest_build": {
+    "source_revision": "547c787",
+    "prompt_version": "srini-v2.9-2026-10-25",
+    "offline_checks_passed": 232,
+    "targeted_ui_cases": 8,
+    "targeted_counts": {
+      "PASS": 4,
+      "PARTIAL": 4,
+      "FAIL": 0
+    }
+  }
+}

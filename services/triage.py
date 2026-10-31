@@ -3,6 +3,8 @@ Vision triage service: uses the OpenAI Responses API for vision and chat
 from uploaded stray dog images.
 """
 
+from services import agent_trace
+
 import base64
 import json
 import logging
@@ -65,7 +67,7 @@ def _dar_contact_phrase() -> str:
 # ordinary dog-welfare questions, while the cases below receive stable instructions
 # that can be regression tested word-for-word and never contain contact details.
 _SAFETY_ANIMAL_RE = re.compile(
-    r"\b(?:community\s+|street\s+|stray\s+)?(?:dog|dogs|puppy|puppies|animals?)\b",
+    r"\b(?:community\s+|street\s+|stray\s+)?(?:dog|dogs|puppy|puppies|cats?|kittens?|animals?)\b",
     re.IGNORECASE,
 )
 _BLEEDING_CASE_RE = re.compile(
@@ -80,10 +82,14 @@ _SERIOUS_WOUND_RE = re.compile(
 )
 _VEHICLE_TRAUMA_RE = re.compile(
     r"(?:"
-    r"\b(?:hit|struck|hurt|injured|run\s+over|knocked\s+down)\b.{0,50}"
+    r"\b(?:hit|struck|run\s+over|knocked\s+down)\b.{0,50}"
     r"\b(?:cars?|vehicles?|bikes?|motorbikes?|motorcycles?|trucks?|bus(?:es)?)\b"
+    r"|\b(?:hurt|injured)\s+by\s+(?:(?:a|an|the)\s+)?(?:moving\s+)?"
+    r"(?:cars?|vehicles?|bikes?|motorbikes?|motorcycles?|trucks?|bus(?:es)?)\b"
     r"|\b(?:cars?|vehicles?|bikes?|motorbikes?|motorcycles?|trucks?|bus(?:es)?)\b.{0,50}"
-    r"\b(?:hit|struck|hurt|injured|collision|crash|accident)\b"
+    r"\b(?:hit|struck|collision|crash|accident)\b"
+    r"|\b(?:cars?|vehicles?|bikes?|motorbikes?|motorcycles?|trucks?|bus(?:es)?)\s+"
+    r"(?:(?:has|had)\s+)?(?:hurt|injured)\b"
     r"|\b(?:road|traffic|vehicle)\s+(?:accidents?|collisions?|trauma|crashes?)\b"
     r")",
     re.IGNORECASE,
@@ -569,7 +575,7 @@ def analyze_image(
             last_error = "Photo assessment deadline exceeded"
             break
         try:
-            response = client.responses.create(
+            response = agent_trace.model_call('vision', client.responses.create,
                 model=OPENAI_VISION_MODEL,
                 input=[
                     {"role": "system", "content": PromptCatalog.vision_system(language)},
@@ -721,7 +727,7 @@ def enrich_recommended_actions(triage_result: dict, language: str = "en") -> lis
     system_prompt = PromptCatalog.enrichment_system(language, rag_context=rag_context)
 
     try:
-        response = client.responses.create(
+        response = agent_trace.model_call('enrichment', client.responses.create,
             model=OPENAI_CHAT_MODEL,
             input=[
                 {"role": "system", "content": system_prompt},
@@ -1037,7 +1043,61 @@ def urgent_caption_guidance(message: str, language: str = "en") -> str | None:
         or _positive_symptom(_SERIOUS_WOUND_RE, message)
         or (_positive_symptom(_VEHICLE_TRAUMA_RE, message) and not _VEHICLE_PREVENTION_RE.search(message))
     )
-    return immediate_safety_response(message, language=language) if actual_human or actual_animal else None
+    answer = immediate_safety_response(message, language=language) if actual_human or actual_animal else None
+    if answer and language != "hi" and re.search(r"\b(?:cat|kitten)\b", message, re.I) and not re.search(r"\bdog\b", message, re.I):
+        answer = re.sub(r"\bdog\b", "cat", answer, flags=re.I)
+    return answer
+
+
+def search_care_guidance(message: str, language: str = "en") -> str | None:
+    """Compose requested handling with urgent guidance before provider review.
+
+    Handling principles checked against RSPCA emergency-cat and Cats Protection
+    first-aid guidance. These are server-owned safety responses, not model prompts.
+    """
+    urgent = urgent_caption_guidance(message, language)
+    cat = bool(re.search(r"\b(?:cats?|kittens?)\b|बिल्ली", message, re.I))
+    handling = bool(re.search(r"\b(?:mov(?:e|ing)|transport|hiding|frightened|under\s+a\s+(?:parked\s+)?car)\b|छिप|ले\s+जा|डरी", message, re.I))
+    if not (cat and handling):
+        return urgent
+    advice = (
+        "डरी या घायल बिल्ली को न दौड़ाएँ, न गाड़ी के नीचे हाथ डालें। चालक को गाड़ी न हिलाने दें और खुद यातायात से दूर रहें। "
+        "पशु चिकित्सक या प्रशिक्षित हैंडलर से मदद लें। सुरक्षित हो और बिल्ली छूने दे तभी तौलिये से शरीर को सहारा देकर "
+        "हवादार, सुरक्षित कैरियर में रखें; चेहरे या साँस को न ढकें और चोट पर दबाव न दें। जबरन पकड़ने की कोशिश न करें।"
+        if language == "hi" else
+        "Do not chase the frightened cat or reach under the car. Ask the driver not to move it and keep yourself out of traffic. "
+        "Call a veterinarian or trained animal handler for help with safe capture. Only if she tolerates handling and you can do it safely, "
+        "support her body with a towel and place her gently in a secure, ventilated carrier. Keep her face clear and avoid pressure on injuries. "
+        "A towel does not prevent bites or scratches; stop if she struggles and do not force a capture."
+    )
+    return "\n\n".join(part for part in (urgent, advice) if part)
+
+
+def provider_availability_guidance(message: str, language: str, facts: list[dict]) -> str:
+    """Published service evidence never certifies admission or dispatch now."""
+    pickup = bool(re.search(r"pick|लेने\s+आ", message, re.I))
+    has_phone = any(fact.get("kind") == "phone" for fact in facts)
+    if language == "hi":
+        contact = "बताए गए संपर्क पर" if has_phone else "संबंधित सुविधा से सीधे"
+        return (f"पशु को लेने आने की वर्तमान उपलब्धता सुनिश्चित नहीं है। {contact} स्थान और समय बताकर पिकअप तथा सुरक्षित परिवहन पूछें।"
+                if pickup else "अभी प्रवेश की पुष्टि नहीं हुई है। जाने से पहले सुविधा से इस पशु के इलाज, प्रवेश और सही स्थान की पुष्टि करें।")
+    contact = "Call the listed contact" if has_phone else "Contact the facility directly"
+    return (f"Pickup at the requested time is not confirmed. {contact} to ask whether they cover this location and can collect the animal; also ask about safe transport if pickup is unavailable."
+            if pickup else "Current admission is not confirmed. Contact the facility before travelling to confirm they can see this animal and to check the correct location.")
+
+
+def humane_deterrent_boundary(message: str, language: str = "en") -> str:
+    """Directly reject only the aversive objects the user actually proposes."""
+    if not re.search(r"\b(?:should|would|can|could)\s+(?:I|we|carrying|throwing|hitting|waving|using)\b", message, re.I):
+        return ""
+    if not re.search(r"\bdogs?\b", message, re.I):
+        return ""
+    sentences = []
+    if re.search(r"\bstones?\b", message, re.I):
+        sentences.append("कुत्ते पर पत्थर न फेंकें।" if language == "hi" else "No—do not throw stones at the dog.")
+    if re.search(r"\bsticks?\b", message, re.I):
+        sentences.append("कुत्ते को डंडे से न मारें और न उसकी ओर डंडा लहराएँ।" if language == "hi" else "Do not hit the dog or wave a stick at it; avoid threatening or startling it.")
+    return " ".join(sentences)
 
 
 def _human_exposure_answer_is_safe(answer: str) -> bool:
@@ -1418,6 +1478,7 @@ def validate_generated_care_response(
     return guardrails.clean_response_layout(cleaned)
 
 
+@agent_trace.stage('care.answer')
 def generate_chat_response(
     message: str,
     history: list[dict],
@@ -1425,6 +1486,7 @@ def generate_chat_response(
     language: str = "en",
     contextual_message: str = "",
     deadline: float | None = None,
+    care_only: bool = False,
 ) -> str:
     """Use the model for contextual, audience-aware care with bounded retrieval.
 
@@ -1455,6 +1517,9 @@ def generate_chat_response(
     )
 
     messages = _history_for_chat_model(history)
+    if care_only:
+        messages.append({"role": "developer", "content": PromptCatalog.search_care_only()})
+    messages.append({"role": "developer", "content": PromptCatalog.reply_language(language)})
     messages.append({"role": "user", "content": message})
 
     model_started = time.monotonic()
@@ -1465,7 +1530,7 @@ def generate_chat_response(
             return _fallback_chat_response(message, history, contextual_message, language)
         care_options = ({"reasoning": {"effort": "medium"}, "text": {"verbosity": "low"}}
                         if OPENAI_CHAT_MODEL.startswith("gpt-5") else {})
-        response = client.responses.create(
+        response = agent_trace.model_call('care', client.responses.create,
             model=OPENAI_CHAT_MODEL,
             input=[{"role": "system", "content": system_prompt}] + messages,
             store=False,
@@ -1494,9 +1559,13 @@ def immediate_rescue_guidance(message: str, language: str = "en") -> str:
     Provider discovery is intentionally separate so a web-search failure can never
     suppress the safety answer the user asked for.
     """
-    del message  # The router has already established a current distressed-animal case.
+    # The router has established a current distressed-animal case. Keep the
+    # existing safe response, but do not turn a kitten or unspecified animal
+    # into a dog while discovery or location clarification is in progress.
+    cat = bool(re.search(r"\b(?:cats?|kittens?)\b|बिल्ली", message, re.I))
+    dog = bool(re.search(r"\b(?:dogs?|pupp(?:y|ies))\b|कुत्त|पिल्ल", message, re.I))
     if language == "hi":
-        return (
+        answer = (
             "**अभी क्या करें**\n\n"
             "1. लोगों और वाहनों को कुत्ते से दूर रखें। अगर वह दर्द में या डरा हुआ है, तो उसे अचानक न छुएं।\n"
             "2. सही जगह, पास का लैंडमार्क और कुत्ते की हालत लिखें। सुरक्षित हो तो फोटो या छोटा वीडियो लें।\n"
@@ -1504,7 +1573,8 @@ def immediate_rescue_guidance(message: str, language: str = "en") -> str:
             "4. सुरक्षित हो तो पास के लोगों से उसके मालिक या नियमित देखभाल करने वाले के बारे में पूछें।\n"
             "5. कुत्ते को प्रशिक्षित बचावकर्मी या पशु चिकित्सक से जल्द जांच की जरूरत है।"
         )
-    return (
+        return answer.replace("कुत्ते", "बिल्ली" if cat else "पशु") if not dog else answer
+    answer = (
         "**What to do now**\n\n"
         "1. Keep people and traffic away from the dog. Avoid sudden handling if it is in severe pain or frightened.\n"
         "2. Note the exact location, a nearby landmark, and what is wrong. Take a photo or short video if it is safe.\n"
@@ -1512,6 +1582,7 @@ def immediate_rescue_guidance(message: str, language: str = "en") -> str:
         "4. If it is safe, ask nearby people whether the dog has an owner or regular feeder, and stay where rescuers can find it.\n"
         "5. The dog needs prompt assessment by a trained rescuer or veterinarian."
     )
+    return answer.replace("dog", "cat" if cat else "animal") if not dog else answer
 
 
 def _fallback_chat_response(

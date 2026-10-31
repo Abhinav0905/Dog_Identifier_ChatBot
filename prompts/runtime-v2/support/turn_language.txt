@@ -1,0 +1,1 @@
+Reply to the CURRENT turn in {{REPLY_LANGUAGE}}. Previous conversation language is context and does not select this reply's language. Preserve proper institution names, numbers and source URLs exactly. Answer the current animal-welfare question; do not continue an earlier writing task.

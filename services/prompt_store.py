@@ -34,11 +34,12 @@ SUPPORT_FILES = tuple(f"support/{name}.txt" for name in (
     "care_context", "prior_conversation", "web_refinement", "ngo_candidates_strict",
     "ngo_candidates_open", "ngo_rules_strict", "ngo_rules_fast", "ngo_rules_regional",
     "ngo_discovery_city", "ngo_discovery_regional", "language_default", "language_hindi",
-    "final_language_default", "final_language_hindi",
+    "final_language_default", "final_language_hindi", "turn_language", "search_care_only",
 ))
 REQUIRED_FILES = frozenset((*MAIN_FILES, *SUPPORT_FILES))
 TOKEN_RE = re.compile(r"\{\{([A-Z][A-Z0-9_]*)\}\}")
 EXPECTED_TOKENS = {
+    "support/turn_language.txt": {"REPLY_LANGUAGE"},
     "03_web_search_system_template_english.txt": {"RUNTIME_CONTEXT_JSON"},
     "07_query_analysis_template.txt": {"CURRENT_MESSAGE", "RECENT_CONTEXT"},
     "08_place_extraction_template.txt": {"CURRENT_MESSAGE"},

@@ -1,0 +1,9 @@
+{
+  "source_revision": "547c787",
+  "service_directory": "/home/ec2-user/gaia-releases/547c787",
+  "source_files_checked": 276,
+  "hash_mismatches": [],
+  "prompt_version": "srini-v2.9-2026-10-25",
+  "prompt_sha256": "a18f3fbb6fc727b5e10f9809cea433fdcd9f9490065e2fb4cf7eea6e396f4ee4",
+  "database": "ready"
+}

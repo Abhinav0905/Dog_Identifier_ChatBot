@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "version": "srini-v2.6-2026-10-25",
+  "version": "srini-v2.11-review-2026-10-30",
   "files": {
-    "01_text_router_system.txt": "88d7866e561bb597cd7ffa87af7800d19b3ea3ce75dad96fe0955d69fec8a95b",
-    "02_care_system_english.txt": "3abaef964bb41a7853b7d356ae9581e1cf0be754cddd7536a57f3b6506ca76a1",
-    "03_web_search_system_template_english.txt": "79e3778b7b80b45db35ccd1d5033b22c6fa393d5d7a084ca4d44ec025b86bec1",
-    "04_contact_evidence_review_system.txt": "67ff7bf991ed264e7acee3f01e8863b5d1b8d85727daa181d36bdedd1cfad8d2",
+    "01_text_router_system.txt": "392ee9f11c15365bf255a30ba483ac5cce0373c11486c186d347e29127afe2a7",
+    "02_care_system_english.txt": "0e0ab13e1535f2bb48947f6687c97cfbed270389caefa829c99eb34c749fea08",
+    "03_web_search_system_template_english.txt": "2cb3b654e19cc12a62c753835b22b1c16e02629bff7540cf17ba5d0cbce057b4",
+    "04_contact_evidence_review_system.txt": "47708c9d2f4a812ae5303e6373745e1c48788fe2165968cc94a3b47ff0e0d919",
     "05_vision_system_english.txt": "38e189cf37e16dfc4afc97bc03e4a1cc2024a23a6cea707c389a119cb5fbb490",
     "06_enrichment_system_english.txt": "a55b02925bec687ed15c4364cb9c44613248c00d01e51998795115e6fd7fdfd6",
     "07_query_analysis_template.txt": "b60806cfc737ff7c11d6905785076110b16ada0fb7382fdc3377a9c6ef96eae1",
@@ -26,6 +26,8 @@
     "support/ngo_rules_regional.txt": "13640d38e900f78e4b89cc10a1af4de06b852b25988f6700dc5eccac579feca1",
     "support/ngo_rules_strict.txt": "c7d8c505494493e18e2135781fe0dc73f11f5710956f92ba3fb92733f167479b",
     "support/prior_conversation.txt": "f04b1a42c8462d993e1b93620e3bab0d2c9fa48e0b3b6dd24702e3af97b3991e",
+    "support/search_care_only.txt": "9f322a36bb3fa7a0fca552e36adc7f5af312295aee6cd163fdea8d8f14925774",
+    "support/turn_language.txt": "851287eb53cc53f3e0e173739e5b0ad2587276f25f6cff9bfb7e73e565f3e967",
     "support/vision_reporter_context.txt": "0b9f40c4b9d2b15c038a7cd5796a4a3b3e40538d468d133aaa3e884e7b453d14",
     "support/vision_user.txt": "f24dd5ded5e36d9c8d3737761d9813c74da46ce95a01fa8574104f178a340f1a",
     "support/web_refinement.txt": "01614a7e738f19c124472a7a1036192d1fde518f5e0624f95406d3bbb23ec326"

@@ -53,6 +53,9 @@ For a provider-options request, retain source-supported names, locations and ser
 even when a current phone cannot be established; explain the missing detail separately.
 Identify actual facilities, their locality and relevant treatment service. A district-wide
 hospital count or a generic department description alone does not answer where to get treatment.
+If a facility's directory row names only a neighbourhood, research a published address
+that explicitly links that neighbourhood to the requested city. Include that geographic
+source too. Do not invent the parent city or silently move a facility to another state.
 If no phone was requested, prioritize useful facility details rather than a phone abstention.
 
 Keep published location separate from service coverage. Being in the same district, nearby,
