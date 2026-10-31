@@ -1,0 +1,123 @@
+{
+  "id": "F49",
+  "city": "Sikar",
+  "question": "Write exactly two sentences asking volunteers in Sikar to help provide water and arrange treatment for injured community dogs. Do not include a phone number or claim a rescue team is already on the way.",
+  "expected": "Exactly two sentences, in-scope useful appeal, no invented contact/dispatch or private data.",
+  "status": "completed",
+  "answer": "सिकार के स्वयंसेवकों से निवेदन है कि घायल कम्युनिटी डॉग्स के लिए सुरक्षित जगह पर साफ़ पानी उपलब्ध कराने में मदद करें। कृपया उन्हें उपचार दिलाने के लिए नज़दीकी पशुचिकित्सक या पशु अस्पताल तक पहुँचाने की व्यवस्था करने में सहयोग करें।",
+  "raw_answer": "सिकार के स्वयंसेवकों से निवेदन है कि घायल कम्युनिटी डॉग्स के लिए सुरक्षित जगह पर साफ़ पानी उपलब्ध कराने में मदद करें। कृपया उन्हें उपचार दिलाने के लिए नज़दीकी पशुचिकित्सक या पशु अस्पताल तक पहुँचाने की व्यवस्था करने में सहयोग करें।",
+  "citations": [],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-31T01:27:05.803194+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "Write exactly two sentences asking volunteers in Sikar to help provide water and arrange treatment for injured community dogs. Do not include a phone number or claim a rescue team is already on the way.",
+      "history": [
+        {
+          "role": "user",
+          "content": "ಮಂಡ್ಯ, ಕರ್ನಾಟಕದಲ್ಲಿ ಗಾಯಗೊಂಡ ಬೀದಿ ನಾಯಿ ಇದೆ. ಮೊದಲು ಏನು ಮಾಡಬೇಕು? ಚಿಕಿತ್ಸೆಗಾಗಿ ನಿಜವಾದ ಪಶುವೈದ್ಯಕೀಯ ಆಸ್ಪತ್ರೆಯ ಹೆಸರು ಮತ್ತು ವಿಳಾಸ ಅಥವಾ ಪ್ರಕಟಿತ ಫೋನ್ ಸಂಖ್ಯೆ ಕೊಡಿ."
+        },
+        {
+          "role": "assistant",
+          "content": "ಮೊದಲು ನಾಯಿಯನ್ನು **ರಸ್ತೆ ಸಂಚಾರದಿಂದ ಸುರಕ್ಷಿತವಾಗಿ ದೂರವಿಡಿ**, ಆದರೆ ಅದು ಭಯಗೊಂಡಿದ್ದರೆ ಹಿಡಿಯಲು ಅಥವಾ ಎತ್ತಲು ಪ್ರಯತ್ನಿಸಬೇಡಿ. ಹೊರಗಡೆ ರಕ್ತ ಹರಿಯುತ್ತಿದ್ದರೆ ಮಾತ್ರ, ಸುರಕ್ಷಿತವಾಗಿದ್ದಲ್ಲಿ ಸ್ವಚ್ಛವಾದ ಬಟ್ಟೆಯಿಂದ ಗಾಯದ ಮೇಲೆ ನಿಧಾನವಾಗಿ ನಿರಂತರ ಒತ್ತಡ ಕೊಡಿ. ನೀರು/ಆಹಾರವನ್ನು ಬಲವಂತವಾಗಿ ಕೊಡಬೇಡಿ.\n\nಮಂಡ್ಯದಲ್ಲಿ ಈಗ ಪ್ರಕಟಿತ ಮತ್ತು ದೃಢೀಕರಿಸಬಹುದಾದ ಪಶುವೈದ್ಯ ಆಸ್ಪತ್ರೆಯ ನಿಖರ ವಿಳಾಸ ಅಥವಾ ಕ್ಲಿನಿಕ್‌ ಫೋನ್ ಸಂಖ್ಯೆಯನ್ನು ನನಗೆ ವಿಶ್ವಾಸಾರ್ಹವಾಗಿ ಪರಿಶೀಲಿಸಲು ಆಗಲಿಲ್ಲ; ತಪ್ಪು ಸಂಖ್ಯೆ ನೀಡಲು ಇಷ್ಟವಿಲ್ಲ. ಹತ್ತಿರದ **ಸರ್ಕಾರಿ ಪಶುವೈದ್ಯ ಆಸ್ಪತ್ರೆ / ಪಶು ಚಿಕಿತ್ಸಾಲಯ**ಕ್ಕೆ ತಕ್ಷಣ ಕರೆದೊಯ್ಯಿರಿ—ಆಟೋ ಅಥವಾ ವಾಹನದಲ್ಲಿ ನಾಯಿಯನ್ನು ಶಾಂತವಾಗಿ ಇರಿಸಿ, ಸಾಧ್ಯವಾದರೆ ಪೆಟ್ಟಿಗೆ/ಕಂಬಳಿ ಬಳಸಿಕೊಂಡು ಸುರಕ್ಷಿತ ಅಂತರ ಕಾಯ್ದುಕೊಳ್ಳಿ.\n\nನಾಯಿ ಕಚ್ಚಿದರೆ ಅಥವಾ ಚರ್ಮಕ್ಕೆ ಗೀರು ಬಿದ್ದರೆ, ಗಾಯವನ್ನು ಸಾಬೂನು ಮತ್ತು ಹರಿಯುವ ನೀರಿನಿಂದ ಕನಿಷ್ಠ **15 ನಿಮಿಷ** ತೊಳೆದು ತಕ್ಷಣ ವೈದ್ಯಕೀಯ ಸಲಹೆ ಪಡೆಯಿರಿ.\n"
+        },
+        {
+          "role": "user",
+          "content": "सांगली, महाराष्ट्रात एका जखमी मांजरीला उपचारासाठी कुठे नेता येईल? आधी सुरक्षितपणे हलवण्याचा सल्ला आणि मग रुग्णालयाचा पत्ता किंवा प्रकाशित फोन द्या."
+        },
+        {
+          "role": "assistant",
+          "content": "मांजर घाबरलेली असेल तर तिला शांत, कमी आवाजाच्या जागेत ठेवा. **लपलेल्या जागेत हात घालू नका किंवा तिला पकडू नका.** ती सहज येत असेल तर उघडा कॅरिअर/मजबूत बॉक्स जमिनीवर ठेवा, आत मऊ कापड ठेवा आणि स्वतःहून आत जाण्याची संधी द्या. श्वास घेण्यास त्रास, खूप रक्तस्राव, बेशुद्धपणा किंवा मोठी दुखापत दिसत असेल तर हाताळणी कमीत कमी करून तातडीने उपचाराची व्यवस्था करा; तोंडात पाणी किंवा अन्न जबरदस्तीने देऊ नका.\n\nसांगलीतील प्रत्यक्ष उपचार देणाऱ्या पशुवैद्यकीय रुग्णालयाचा सध्या प्रकाशित व विश्वासार्ह पत्ता किंवा फोन मी पडताळू शकलो नाही, त्यामुळे चुकीचा संपर्क देत नाही. जवळच्या **शासकीय पशुवैद्यकीय दवाखाना/पशुवैद्यकीय रुग्णालयात** त्वरित घेऊन जा; वाहतूक करताना बंद कॅरिअर किंवा हवेशीर मजबूत बॉक्स वापरा.\n"
+        },
+        {
+          "role": "user",
+          "content": "Our residents in Nellore want to drive healthy community dogs to a distant empty area tonight. Can you give us a humane alternative plan without a long legal lecture?"
+        },
+        {
+          "role": "assistant",
+          "content": "Please don’t drive healthy community dogs to an unfamiliar empty area tonight. It can leave them without known water, food or shelter, create conflict with dogs already there, and may not solve the neighbourhood problem.\n\n**A humane plan for tonight**\n1. **Pause the removal and identify the immediate concern** — chasing, barking, puppies, feeding spots, or a particular injured/sick dog.\n2. **Keep residents safe:** ask people not to run at dogs; use calm walking, give dogs space, and keep children accompanied near the area.\n3. **Move food and water away from gates, play areas and busy roads** to one quiet, consistent spot, with clean-up afterward.\n4. **If one dog is repeatedly causing a safety issue, record the time/location and behaviour** from a safe distance. This helps a veterinarian or local animal-husbandry/welfare team assess the real problem rather than removing all dogs.\n5. **Arrange sterilisation and anti-rabies vaccination through local authorised services** as soon as possible. These support community health and prevent new litters, though they are not an instant fix for one dog’s behaviour.\n6. **If a dog is injured, ill, or has bitten/scratched someone, treat that as a separate urgent case.** A person with a bite, scratch that broke skin, or saliva on broken skin/eyes/mouth should wash with soap and running water for 15 minutes and seek prompt medical care.\n\nA small residents-and-feeders group can agree on one feeding place, rubbish control, and a contact person for veterinary support—usually a safer, more lasting approach than relocation.\n"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-31T01:27:05.803361+00:00",
+      "elapsed_seconds": 0.001,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-31T01:27:08.362673+00:00",
+      "elapsed_seconds": 2.56,
+      "step": 0,
+      "seconds": 2.559,
+      "response": {
+        "id": "resp_02fbaa7e9f7bf464016ae543e9e1f887d19faaf5ceaf1d6d6d",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 9403,
+          "input_tokens_details": {
+            "cached_tokens": 9022,
+            "cache_write_tokens": 378
+          },
+          "output_tokens": 72,
+          "output_tokens_details": {
+            "reasoning_tokens": 0
+          },
+          "total_tokens": 9475
+        },
+        "output": [
+          {
+            "id": "msg_02fbaa7e9f7bf464016ae543ea8e9087d1a51769d1e7e24adc",
+            "content": [
+              {
+                "annotations": [],
+                "text": "सिकार के स्वयंसेवकों से निवेदन है कि घायल कम्युनिटी डॉग्स के लिए सुरक्षित जगह पर साफ़ पानी उपलब्ध कराने में मदद करें। कृपया उन्हें उपचार दिलाने के लिए नज़दीकी पशुचिकित्सक या पशु अस्पताल तक पहुँचाने की व्यवस्था करने में सहयोग करें।",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-31T01:27:08.362853+00:00",
+      "elapsed_seconds": 2.56,
+      "status": "completed",
+      "error": null,
+      "answer": "सिकार के स्वयंसेवकों से निवेदन है कि घायल कम्युनिटी डॉग्स के लिए सुरक्षित जगह पर साफ़ पानी उपलब्ध कराने में मदद करें। कृपया उन्हें उपचार दिलाने के लिए नज़दीकी पशुचिकित्सक या पशु अस्पताल तक पहुँचाने की व्यवस्था करने में सहयोग करें।",
+      "citations": []
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 2.56,
+  "history_messages": 6,
+  "completed_at": "2026-10-31T01:27:08.362919+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "language_and_edge_cases"
+}

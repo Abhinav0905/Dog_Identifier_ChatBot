@@ -1,0 +1,19 @@
+{
+  "verified_at": "2026-10-31T01:40:22.887901+00:00",
+  "case_file_sha256": "87f8b6ac32e2234bd11bc9d71e8a634e9753230edd5a0f9d402f77400b60bb30",
+  "reviewed_responses": 100,
+  "distinct_new_questions": 50,
+  "complete_runs": 2,
+  "trace_equality_checked": true,
+  "original_code_and_prompt_hashes_unchanged": true,
+  "local_report_links_checked": 208,
+  "missing_local_links": [],
+  "credential_pattern_findings": [],
+  "artifact_files": 232,
+  "artifact_bytes": 3438100,
+  "product_changes": false,
+  "production_changes": false,
+  "merge_performed": false,
+  "release_gate": "not met: 43/50 full passes, target 45/50",
+  "whitespace_note": "Raw model answers preserve Markdown two-space line breaks in generated report/text; blank-at-eol warnings are intentional."
+}

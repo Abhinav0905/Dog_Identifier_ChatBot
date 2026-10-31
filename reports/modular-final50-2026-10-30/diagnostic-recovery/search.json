@@ -1,0 +1,138 @@
+{
+  "started_at": "2026-10-31T01:30:21.159135+00:00",
+  "control": "search",
+  "question": "Search the internet for the official World Health Organization rabies fact sheet. Return its title and official URL with a source citation.",
+  "method": "Same API model and search tool; only a helpful-assistant system prompt; not an acceptance case.",
+  "response": {
+    "id": "resp_0be7ce5b635d0777016ae544ad9c4487d1bce6880339fd35ef",
+    "incomplete_details": null,
+    "model": "gpt-5.6-terra",
+    "status": "completed",
+    "usage": {
+      "input_tokens": 8434,
+      "input_tokens_details": {
+        "cached_tokens": 4356,
+        "cache_write_tokens": 0
+      },
+      "output_tokens": 87,
+      "output_tokens_details": {
+        "reasoning_tokens": 41
+      },
+      "total_tokens": 8521
+    },
+    "output": [
+      {
+        "id": "ws_0be7ce5b635d0777016ae544ae7aa887d1a9ad5bc4d5d0d982",
+        "action": {
+          "query": "site:who.int/news-room/fact-sheets/detail rabies World Health Organization fact sheet",
+          "type": "search",
+          "queries": [
+            "site:who.int/news-room/fact-sheets/detail rabies World Health Organization fact sheet"
+          ],
+          "sources": [
+            {
+              "type": "url",
+              "url": "https://www.who.int/news-room/fact-sheets/detail/rabies"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/en/news-room/fact-sheets/detail/rabies"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/health-topics/rabies"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/news-room/fact-sheets"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/en/news-room/fact-sheets"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/news-room/fact-sheets/detail/animal-bites"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/health-topics/rabies?trk=article-ssr-frontend-pulse_little-text-block"
+            },
+            {
+              "type": "url",
+              "url": "https://iris.who.int/bitstream/handle/10665/380453/9789240106475-eng.pdf?sequence=1"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/india/health-topics/rabies"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/teams/health-product-policy-and-standards/standards-and-specifications/norms-and-standards/vaccine-standardization/rabies"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/teams/immunization-vaccines-and-biologicals/diseases/rabies"
+            },
+            {
+              "type": "url",
+              "url": "https://iris.who.int/bitstream/handle/10665/365138/9789240064652-eng.pdf"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/teams/control-of-neglected-tropical-diseases/rabies"
+            },
+            {
+              "type": "url",
+              "url": "https://cdn.who.int/media/docs/default-source/searo/india/health-topic-pdf/rabies-infographic-updated-global-international-meeting.pdf?sfvrsn=6f9abb6d_2"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/publications/b/76730"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/docs/default-source/ntds/rabies/rabies-general-public-faqs.pdf?sfvrsn=ac59055f_4"
+            },
+            {
+              "type": "url",
+              "url": "https://iris.who.int/bitstream/handle/10665/378100/9789240093607-eng.pdf?isAllowed=y&sequence=1"
+            },
+            {
+              "type": "url",
+              "url": "https://www.who.int/news-room/fact-sheets/detail/rabies?utm_source=openai"
+            }
+          ]
+        },
+        "status": "completed",
+        "type": "web_search_call"
+      },
+      {
+        "id": "msg_0be7ce5b635d0777016ae544b05ce487d1b3f1e0f90da3c677",
+        "content": [
+          {
+            "annotations": [
+              {
+                "end_index": 187,
+                "start_index": 101,
+                "title": "Rabies",
+                "type": "url_citation",
+                "url": "https://www.who.int/news-room/fact-sheets/detail/rabies?utm_source=openai"
+              }
+            ],
+            "text": "**Title:** Rabies  \n**Official WHO URL:** https://www.who.int/news-room/fact-sheets/detail/rabies  \n\n([who.int](https://www.who.int/news-room/fact-sheets/detail/rabies?utm_source=openai))",
+            "type": "output_text",
+            "logprobs": []
+          }
+        ],
+        "role": "assistant",
+        "status": "completed",
+        "type": "message",
+        "phase": "final_answer"
+      }
+    ]
+  },
+  "answer": "**Title:** Rabies  \n**Official WHO URL:** https://www.who.int/news-room/fact-sheets/detail/rabies  \n\n([who.int](https://www.who.int/news-room/fact-sheets/detail/rabies?utm_source=openai))",
+  "status": "completed",
+  "seconds": 3.752
+}

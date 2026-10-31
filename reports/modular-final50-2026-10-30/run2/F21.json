@@ -1,0 +1,201 @@
+{
+  "id": "F21",
+  "city": "Bhubaneswar",
+  "question": "What is the full postal address of the Veterinary Clinical Complex at OUAT in Bhubaneswar, Odisha? Please output the address only.",
+  "expected": "Same VCC/campus complete supported postal address; no unrelated human health centre, no extra explanatory prose.",
+  "status": "completed",
+  "answer": "Veterinary Clinical Complex, College of Veterinary Science & Animal Husbandry, OUAT Campus, Siripur, Near Surya Nagar Post Office, Bhubaneswar, Odisha – 751003",
+  "raw_answer": "Veterinary Clinical Complex, College of Veterinary Science & Animal Husbandry, OUAT Campus, Siripur, Near Surya Nagar Post Office, Bhubaneswar, Odisha – 751003",
+  "citations": [],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-31T01:31:58.478651+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "What is the full postal address of the Veterinary Clinical Complex at OUAT in Bhubaneswar, Odisha? Please output the address only.",
+      "history": [],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-31T01:31:58.478749+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-31T01:32:01.796194+00:00",
+      "elapsed_seconds": 3.318,
+      "step": 0,
+      "seconds": 3.317,
+      "response": {
+        "id": "resp_0b4dcb5c2405a668016ae5450e8d7487d1aadd77d8b64d3312",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 14663,
+          "input_tokens_details": {
+            "cached_tokens": 8343,
+            "cache_write_tokens": 0
+          },
+          "output_tokens": 97,
+          "output_tokens_details": {
+            "reasoning_tokens": 55
+          },
+          "total_tokens": 14760
+        },
+        "output": [
+          {
+            "id": "ws_0b4dcb5c2405a668016ae5450f3b4487d1b11d7a6ec5ffdaa8",
+            "action": {
+              "query": "site:ouat.ac.in Veterinary Clinical Complex OUAT Bhubaneswar address",
+              "type": "search",
+              "queries": [
+                "site:ouat.ac.in Veterinary Clinical Complex OUAT Bhubaneswar address",
+                "OUAT Veterinary Clinical Complex full postal address Bhubaneswar Odisha"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://ouat.ac.in/college-of-veterinary-science-animal-husbandry/veterinary-clinical-complex/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://yappe.in/odisha/bhubaneswar/college-of-veterinary-science-animal-husbandry/1629304"
+                },
+                {
+                  "type": "url",
+                  "url": "https://in.near-place.com/teaching-veterinary-clinical-complex-veterinary-college-siripur"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ouat.ac.in/wp-content/uploads/2023/09/Institutional-Email-IDs-of-Offices-Faculties-Scientists-Staff_08.09.2023.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://magicpin.in/Bhubaneswar/Surya-Nagar/Education/College-Of-Veterinary-Science-and-Animal-Husbandry/store/1094395"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.practo.com/bhubaneswar/clinic/tvcc-c-v-sc-a-h-ouat-rajbhawan/services"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bharatibiz.com/en/college-of-veterinary-science-animal_1a-0674-239-7970"
+                },
+                {
+                  "type": "url",
+                  "url": "https://asiantender.com/tender-summary/57815255"
+                },
+                {
+                  "type": "url",
+                  "url": "https://yappe.in/odisha/bhubaneswar/department-of-veterinary-surgery-and-radiology/786845"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ouat.ac.in/wp-content/uploads/2023/07/Engagement-of-Guest-Faculty.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://in.worldorgs.com/catalog/bhubaneswar/college/college-of-veterinary-science-animal-husbandry"
+                },
+                {
+                  "type": "url",
+                  "url": "https://broxer.com/institutions/college-of-veterinary-science-animal-husbandry-bhubaneswar-c-21465/contact"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tenders.infralens.in/tender/construction-of-proposed-veterinary-clinical-complex-at-college-of-2023-ouat-94827-1"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.wikidata.org/wiki/Q42306736"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.thepharmajournal.com/archives/2023/vol12issue1/PartF/12-1-100-847.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ouat.ac.in/wp-content/uploads/2024/06/ouat_prospectus-2017-2018-1.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://ouat.ac.in/wp-content/uploads/2023/05/annual_report_2020-21_3.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Bhubaneswar/comments/1tarunu/vet_recommendation_needed/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Center_for_Post-Graduate_Studies%2C_Bhubaneswar"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Bhubaneswar/comments/1bnflvg/need_recommendations_for_a_good_vet/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/Bhubaneswar/comments/1hutf96"
+                },
+                {
+                  "type": "url",
+                  "url": "https://en.wikipedia.org/wiki/Ama_Bus"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_0b4dcb5c2405a668016ae545115e0487d1a3dedebb899bef10",
+            "content": [
+              {
+                "annotations": [],
+                "text": "Veterinary Clinical Complex, College of Veterinary Science & Animal Husbandry, OUAT Campus, Siripur, Near Surya Nagar Post Office, Bhubaneswar, Odisha – 751003",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-31T01:32:01.796432+00:00",
+      "elapsed_seconds": 3.318,
+      "status": "completed",
+      "error": null,
+      "answer": "Veterinary Clinical Complex, College of Veterinary Science & Animal Husbandry, OUAT Campus, Siripur, Near Surya Nagar Post Office, Bhubaneswar, Odisha – 751003",
+      "citations": []
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 3.318,
+  "history_messages": 0,
+  "completed_at": "2026-10-31T01:32:01.796501+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "institution_and_evidence"
+}

@@ -1,0 +1,300 @@
+{
+  "checked_on": "2026-10-30",
+  "method": "Targeted primary-source and directory cross-checks, including indexed copies where direct fetching failed, plus direct inspection of the three image fixtures. No provider phone calls; opening and admission are not verified. This is not an exhaustive clinical or contact audit.",
+  "checks": [
+    {
+      "cases": [
+        "F08",
+        "F09"
+      ],
+      "url": "https://upvetuniv.edu.in/tvcc/",
+      "finding": "Official DUVASU page identifies the VCC as Kothari Veterinary Hospital and publishes the university campus address Mathura 281001. Central-office footer numbers do not establish emergency reception."
+    },
+    {
+      "cases": [
+        "F13"
+      ],
+      "url": "https://ivri.nic.in/Naac/CriteriaV/5.2.1/20-21_5.2.1_Student.pdf",
+      "finding": "Government of Manipur posting order dated 23 May 2022 explicitly names State Veterinary Hospital, Sanjenthong. Corroborates facility/location, not current opening."
+    },
+    {
+      "cases": [
+        "F14"
+      ],
+      "url": "https://megahvt.gov.in/hospitals.html",
+      "finding": "Official hospital table includes Tura, West Garo Hills; lists treatment and other veterinary services."
+    },
+    {
+      "cases": [
+        "F14"
+      ],
+      "url": "https://megahvt.gov.in/contacts.html",
+      "finding": "Official table binds Joint Director M. B. Diengdoh, Tura, to 98561-20924. The response correctly labels this as departmental referral, not hospital reception."
+    },
+    {
+      "cases": [
+        "F21"
+      ],
+      "url": "https://ouat.ac.in/",
+      "finding": "Official university directions identify Siripur near Gopabandhu Nagar; the run1 full-address answer omits Siripur."
+    },
+    {
+      "cases": [
+        "F21",
+        "F22"
+      ],
+      "url": "https://ouat.ac.in/college-of-veterinary-science-animal-husbandry/veterinary-clinical-complex/",
+      "finding": "Official VCC page ties department and doctors to OUAT veterinary college. Individual faculty numbers must not automatically be labeled clinical reception."
+    },
+    {
+      "cases": [
+        "F29"
+      ],
+      "url": "https://www.pdsa.org.uk/pet-help-and-advice/pet-health-hub/conditions/heatstroke-in-dogs",
+      "finding": "Immediate water cooling, airflow and urgent vet guidance support the answer; do not force drinking or trap heat in covering towels."
+    },
+    {
+      "cases": [
+        "F30"
+      ],
+      "url": "https://www.pdsa.org.uk/pet-help-and-advice/pet-health-hub/other-veterinary-advice/first-aid-for-fitsseizures-in-pets",
+      "finding": "No restraint or mouth handling; clear hazards and time seizure. Warns against wrapping/overheating and recommends keeping the room cool, so run1 keep-warm wording is problematic."
+    },
+    {
+      "cases": [
+        "F35",
+        "F50"
+      ],
+      "url": "https://www.who.int/news-room/fact-sheets/detail/rabies",
+      "finding": "Bites/scratches and saliva exposure differ from barking alone; immediate 15-minute soap/water wound washing and prompt medical care are recommended."
+    },
+    {
+      "cases": [
+        "F42",
+        "F48"
+      ],
+      "url": "https://www.hpsc.ie/a-z/zoonotic/rabies/factsheet/",
+      "finding": "Distinguishes soap/water washing of wounds from clean-water rinsing of eye/mouth saliva exposure. Run1 should not group these under soap washing."
+    },
+    {
+      "cases": [
+        "F01"
+      ],
+      "url": "https://jivdayahospital.org/contact",
+      "finding": "Later search returned a provider-owned Bhavnagar location/contact with domestic and street-animal treatment description. Shows discoverable alternatives exist after query results resumed; does not validate live intake or proximity."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F01",
+        "F02"
+      ],
+      "url": "https://threebestrated.in/veterinary-hospitals-in-bhavnagar-gj",
+      "finding": "Lists Shyam at Amidhara Society near Top 3 Circle with phone 7984771868; conflicts with another public address for the same clinic."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F01",
+        "F02"
+      ],
+      "url": "https://yappe.in/gujarat/bhavnagar/shyam-vet-clinic-multi-speciality-dr-nayan-joshi/1981747",
+      "finding": "Lists Shyam at G17 Shree Aalekh Complex, Lila Circle Road, Kaliyabid, with the same phone. Run2 should acknowledge unresolved address conflict."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F03"
+      ],
+      "url": "https://www.kamdhenuuniversity.edu.in/covs-junagadh",
+      "finding": "Official college page locates the college and VCC on the JAU main campus near the agricultural engineering college; supports the campus landmark used in run2."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F05"
+      ],
+      "url": "https://www.scribd.com/document/1076998416/GEMC-511687796873698-27012025",
+      "finding": "Indexed copy of a January 2025 government procurement contract binds Bhuj Veterinary Polyclinic office to opposite Reliance Mall, Mundra Road, 370001, and 02832-230910. Not a live reception check."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F06",
+        "F07"
+      ],
+      "url": "https://tolfa.in/who-we-are/location/",
+      "finding": "Provider-owned page distinguishes the Kharekhari hospital and city dispensary locations and their respective contact numbers."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F07"
+      ],
+      "url": "https://tolfa.in/local-services/rescue/",
+      "finding": "Provider publishes rescue helpline 9829965585 and daytime helpline hours; no guarantee of immediate pickup."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F09"
+      ],
+      "url": "https://upvetuniv.edu.in/",
+      "finding": "Official homepage publishes hospital contact 9412492735, supporting the hospital-specific number in run2."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F10"
+      ],
+      "url": "https://mgvcbharatpur.com/",
+      "finding": "College-owned page identifies its veterinary clinical services, Bharatpur NH21 location, published phone and advertised emergency service."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F11"
+      ],
+      "url": "https://ahvety.mizoram.gov.in/page/nadrs",
+      "finding": "Indexed official table binds Aizawl Veterinary Polyclinic Hospital to doctor mobile 8731987576 and landline 03892333273. Landline column is Broadband; it is not independent proof of emergency reception."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F12"
+      ],
+      "url": "https://arunkhabar.in/states-first-veterinary-polyclinic-inaugurated-in-itanagar/",
+      "finding": "July 2026 reporting identifies the inaugurated state veterinary polyclinic at Abotani Colony, Itanagar; corroborates facility existence and location."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F14"
+      ],
+      "url": "https://megahvt.gov.in/contacts.html",
+      "finding": "Indexed official contact result binds Tura hospital officer Dr Daryl S Sangma to 8730038757, supporting run2; the directly fetched page did not expose that indexed row."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F15"
+      ],
+      "url": "https://odocmms.nic.in/OCMMS/allReports/popApplicationCountAllModuleCtohalf?cat=green&districtName=All&fromDateStr=2017-04-01&groupId=All&number=3&toDateStr=2024-07-22&type=bmw",
+      "finding": "Government pollution-control register identifies Veterinary Hospital Balasore at Ranipatna, corroborating that the locality contains an actual hospital."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F23"
+      ],
+      "url": "https://keralaagriculture.gov.in/wp-content/uploads/2024/02/Farmguide-2024.pdf",
+      "finding": "Official directory distinguishes Mannuthy hospital phone 0487-2972065 from Kokkalai hospital phone 0487-2423415."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F25"
+      ],
+      "url": "https://www.doghospital.co.in/",
+      "finding": "Provider publishes Patna branches, 7280844944 and advertised 24/7 service. Published hours do not establish that it is actually open or accepting a patient now."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F30"
+      ],
+      "url": "https://www.pdsa.org.uk/pet-help-and-advice/pet-health-hub/other-veterinary-advice/first-aid-for-fitsseizures-in-pets",
+      "finding": "Run2 repeats keep-warm wording. The veterinary source advises a cool room and warns against overheating after seizures."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F42"
+      ],
+      "url": "https://gauvanshsewadham.org/",
+      "finding": "Provider-owned page publishes animal treatment, Patiala address and 24-hour helpline 9317195000/9217195000; supports the run2 referral without guaranteeing availability."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F48"
+      ],
+      "url": "https://www.hpsc.ie/a-z/zoonotic/rabies/factsheet/",
+      "finding": "Run2 repeats grouping eye/mouth exposure with soap washing. The public-health source distinguishes skin wounds from mucous membranes, which should be rinsed with clean water."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F46"
+      ],
+      "url": "https://www.ahvs.kar.nic.in/pdfs/others/Mandya_1.pdf",
+      "finding": "Indexed official hospital table associates VH Mandya with doctor mobile 9845397235. This supports a published facility contact, not present staffing."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F46"
+      ],
+      "url": "https://ru.scribd.com/document/483255849/Mandya",
+      "finding": "Indexed mirror of the official Mandya staff directory binds VH Mandya, Kasabha Hobli, 571401 to landline 08232-220192. Original PDF direct fetch failed; the mirror was used only for this corroboration."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F47"
+      ],
+      "url": "https://dahd.maharashtra.gov.in/en/directory/dr-ajaynath-thore-2/",
+      "finding": "Official department contact binds the Sangli district office phone 02332222233 to the veterinary polyclinic compound, Dr Ambedkar Road, Zaribag, Miraj 416410. Answer labels the number as departmental."
+    },
+    {
+      "runs": [
+        "run2"
+      ],
+      "cases": [
+        "F47"
+      ],
+      "url": "https://www.animalrahat.com/about-animal-rahat/contact-us/",
+      "finding": "Provider-owned contact page publishes Sangli animal-emergency number 9850958484, matching run2."
+    }
+  ]
+}

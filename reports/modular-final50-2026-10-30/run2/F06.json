@@ -1,0 +1,235 @@
+{
+  "id": "F06",
+  "city": "Ajmer",
+  "question": "A frightened cat with an injured leg is hiding behind a shop in Ajmer, Rajasthan. How should we transport her, and which local veterinary facility could treat her?",
+  "expected": "Quiet space, voluntary carrier/trained help; no forced grabbing; real Ajmer veterinary facility with actionable address/contact.",
+  "status": "completed",
+  "answer": "Keep the cat **quiet, contained, and away from traffic**. Because she is frightened and may have a painful leg, do not reach into the hiding place or try to pull her out.\n\n**Safer transport**\n1. Bring a secure cat carrier if possible; otherwise use a strong cardboard box with air holes and a firm lid.\n2. Place the open carrier/box near her hiding spot, with a little food at the far end, and give her space to enter voluntarily.\n3. Once she is inside, close it gently, cover it loosely with a cloth to reduce stress, and keep the carrier level in the vehicle.\n4. Do not try to straighten, splint, or massage the leg. Do not give human pain medicines or force food/water.\n5. If she cannot be safely contained, ask the clinic whether they can advise a local trained handler—do not chase her or grab her if she panics.\n\nFor treatment, a well-supported option is:\n\n**TOLFA Animal Hospital**  \nKharekhari Village, near Foy Sagar, Ajmer, Rajasthan 305005  \nOffice: **9116 633585** | Dispensary: **9116 622585**  \nThey also list a city dispensary at **Gujar Mohalla, Kaluram ki Bagichi, Paharganj, Ajmer 305001**, phone **7728 885105**. Call first, explain that this is a frightened community cat with a possible leg injury, and ask whether they can receive her immediately and whether someone can help with safe capture. ([tolfa.in](https://tolfa.in/who-we-are/location/?utm_source=openai))\n\nA nearer private option with X-ray facilities listed is **Shree Vet Hospital**, Shop No. 1 & 2, Maa Bhawani Complex, near Canara Bank, Makadwali Road, Ajmer 305001; **9460111191**. Its site says it treats cats and provides on-site X-ray and urgent stabilisation, which can be useful for a suspected leg injury. Please call to confirm current hours and acceptance before travelling. ([shreevethospital.com](https://shreevethospital.com/?utm_source=openai))",
+  "raw_answer": "Keep the cat **quiet, contained, and away from traffic**. Because she is frightened and may have a painful leg, do not reach into the hiding place or try to pull her out.\n\n**Safer transport**\n1. Bring a secure cat carrier if possible; otherwise use a strong cardboard box with air holes and a firm lid.\n2. Place the open carrier/box near her hiding spot, with a little food at the far end, and give her space to enter voluntarily.\n3. Once she is inside, close it gently, cover it loosely with a cloth to reduce stress, and keep the carrier level in the vehicle.\n4. Do not try to straighten, splint, or massage the leg. Do not give human pain medicines or force food/water.\n5. If she cannot be safely contained, ask the clinic whether they can advise a local trained handler—do not chase her or grab her if she panics.\n\nFor treatment, a well-supported option is:\n\n**TOLFA Animal Hospital**  \nKharekhari Village, near Foy Sagar, Ajmer, Rajasthan 305005  \nOffice: **9116 633585** | Dispensary: **9116 622585**  \nThey also list a city dispensary at **Gujar Mohalla, Kaluram ki Bagichi, Paharganj, Ajmer 305001**, phone **7728 885105**. Call first, explain that this is a frightened community cat with a possible leg injury, and ask whether they can receive her immediately and whether someone can help with safe capture. ([tolfa.in](https://tolfa.in/who-we-are/location/?utm_source=openai))\n\nA nearer private option with X-ray facilities listed is **Shree Vet Hospital**, Shop No. 1 & 2, Maa Bhawani Complex, near Canara Bank, Makadwali Road, Ajmer 305001; **9460111191**. Its site says it treats cats and provides on-site X-ray and urgent stabilisation, which can be useful for a suspected leg injury. Please call to confirm current hours and acceptance before travelling. ([shreevethospital.com](https://shreevethospital.com/?utm_source=openai))",
+  "citations": [
+    {
+      "url": "https://tolfa.in/who-we-are/location/?utm_source=openai",
+      "title": "Location - TOLFA",
+      "start_index": 1317,
+      "end_index": 1386
+    },
+    {
+      "url": "https://shreevethospital.com/?utm_source=openai",
+      "title": "Shree Vet Hospital | Veterinary Hospital & Diagnostics in Ajmer",
+      "start_index": 1770,
+      "end_index": 1843
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-31T01:31:21.432776+00:00",
+      "elapsed_seconds": 0.001,
+      "question": "A frightened cat with an injured leg is hiding behind a shop in Ajmer, Rajasthan. How should we transport her, and which local veterinary facility could treat her?",
+      "history": [],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-31T01:31:21.432967+00:00",
+      "elapsed_seconds": 0.001,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 79.999
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-31T01:31:29.261950+00:00",
+      "elapsed_seconds": 7.83,
+      "step": 0,
+      "seconds": 7.829,
+      "response": {
+        "id": "resp_0a0fd4a1cefa2a28016ae544e9c76887d1bd1802fb85e785f5",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 16445,
+          "input_tokens_details": {
+            "cached_tokens": 8348,
+            "cache_write_tokens": 0
+          },
+          "output_tokens": 527,
+          "output_tokens_details": {
+            "reasoning_tokens": 78
+          },
+          "total_tokens": 16972
+        },
+        "output": [
+          {
+            "id": "ws_0a0fd4a1cefa2a28016ae544eab60c87d19310d7f28c93505a",
+            "action": {
+              "query": "Ajmer Rajasthan veterinary hospital animal husbandry contact address",
+              "type": "search",
+              "queries": [
+                "Ajmer Rajasthan veterinary hospital animal husbandry contact address",
+                "Ajmer veterinary hospital Rajasthan official address phone",
+                "Ajmer veterinary college hospital Rajasthan official"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://rajuvas.ac.in/affiliated-colleges/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/who-we-are/location/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://shreevethospital.com/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.msmedijaipur.gov.in/frontupload/Ajmer.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Ajmer/Public-Veterinary-Hospitals/nct-11192430"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bharatibiz.com/en/IN/ajmer/veterinarians-and-animal-clinics"
+                },
+                {
+                  "type": "url",
+                  "url": "https://petfriendlyplaces.in/places/pets-on-animal-hospital"
+                },
+                {
+                  "type": "url",
+                  "url": "https://environment.rajasthan.gov.in/content/dam/doitassets/Medical-and-Health-Portal/Bhamashah-Swasthya-Bima-Yojana/pdf/Pvt%20Hospital%20List%20as%20on%2004-01-2018.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://bdir.in/p/best/in/veterinary-hospitals-in-ajmer-rj/MTIxMjE1"
+                },
+                {
+                  "type": "url",
+                  "url": "https://petcare.ai/vets/dr-devendra-singh-ajmer-7c90de"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.bharatibiz.com/en/animal-husbandry-department-joint-0145-242-9640"
+                },
+                {
+                  "type": "url",
+                  "url": "https://doctar.in/hospitals/ajmer/opp-mochi-showroom/dr-dev-pet-hospital-ajmer-3f91fa"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.justdial.com/Ajmer/Government-Animal-Subcenter-Dorai/9999PX145-X145-231107191219-G6D4_BZDET"
+                },
+                {
+                  "type": "url",
+                  "url": "https://bdir.in/p/best/in/veterinary-hospitals-in-ajmer-rj/MTc2MjQ%3D"
+                },
+                {
+                  "type": "url",
+                  "url": "https://rajuvas.org/wp-content/uploads/2021/12/DEE_Annual_Report_2019-20.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://rajuvas.org/wp-content/uploads/2023/11/152_44_4_PROSPECTUS-AHDP-2023-24.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://hte.rajasthan.gov.in/dept/dce/university_of_rajasthan/government_shakamdhar_pg_college%2C_sambhar_lake/uploads/doc/Medical%20Bill%20Reimbursement.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://mospi.gov.in/sites/default/files/economic-census/Directories_of_Establishment/urban_08.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/who-we-are/location/?utm_source=openai"
+                },
+                {
+                  "type": "url",
+                  "url": "https://shreevethospital.com/?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_0a0fd4a1cefa2a28016ae544ec8f7087d1b75bba20eebac695",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 1386,
+                    "start_index": 1317,
+                    "title": "Location - TOLFA",
+                    "type": "url_citation",
+                    "url": "https://tolfa.in/who-we-are/location/?utm_source=openai"
+                  },
+                  {
+                    "end_index": 1843,
+                    "start_index": 1770,
+                    "title": "Shree Vet Hospital | Veterinary Hospital & Diagnostics in Ajmer",
+                    "type": "url_citation",
+                    "url": "https://shreevethospital.com/?utm_source=openai"
+                  }
+                ],
+                "text": "Keep the cat **quiet, contained, and away from traffic**. Because she is frightened and may have a painful leg, do not reach into the hiding place or try to pull her out.\n\n**Safer transport**\n1. Bring a secure cat carrier if possible; otherwise use a strong cardboard box with air holes and a firm lid.\n2. Place the open carrier/box near her hiding spot, with a little food at the far end, and give her space to enter voluntarily.\n3. Once she is inside, close it gently, cover it loosely with a cloth to reduce stress, and keep the carrier level in the vehicle.\n4. Do not try to straighten, splint, or massage the leg. Do not give human pain medicines or force food/water.\n5. If she cannot be safely contained, ask the clinic whether they can advise a local trained handler—do not chase her or grab her if she panics.\n\nFor treatment, a well-supported option is:\n\n**TOLFA Animal Hospital**  \nKharekhari Village, near Foy Sagar, Ajmer, Rajasthan 305005  \nOffice: **9116 633585** | Dispensary: **9116 622585**  \nThey also list a city dispensary at **Gujar Mohalla, Kaluram ki Bagichi, Paharganj, Ajmer 305001**, phone **7728 885105**. Call first, explain that this is a frightened community cat with a possible leg injury, and ask whether they can receive her immediately and whether someone can help with safe capture. ([tolfa.in](https://tolfa.in/who-we-are/location/?utm_source=openai))\n\nA nearer private option with X-ray facilities listed is **Shree Vet Hospital**, Shop No. 1 & 2, Maa Bhawani Complex, near Canara Bank, Makadwali Road, Ajmer 305001; **9460111191**. Its site says it treats cats and provides on-site X-ray and urgent stabilisation, which can be useful for a suspected leg injury. Please call to confirm current hours and acceptance before travelling. ([shreevethospital.com](https://shreevethospital.com/?utm_source=openai))",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-31T01:31:29.262215+00:00",
+      "elapsed_seconds": 7.83,
+      "status": "completed",
+      "error": null,
+      "answer": "Keep the cat **quiet, contained, and away from traffic**. Because she is frightened and may have a painful leg, do not reach into the hiding place or try to pull her out.\n\n**Safer transport**\n1. Bring a secure cat carrier if possible; otherwise use a strong cardboard box with air holes and a firm lid.\n2. Place the open carrier/box near her hiding spot, with a little food at the far end, and give her space to enter voluntarily.\n3. Once she is inside, close it gently, cover it loosely with a cloth to reduce stress, and keep the carrier level in the vehicle.\n4. Do not try to straighten, splint, or massage the leg. Do not give human pain medicines or force food/water.\n5. If she cannot be safely contained, ask the clinic whether they can advise a local trained handler—do not chase her or grab her if she panics.\n\nFor treatment, a well-supported option is:\n\n**TOLFA Animal Hospital**  \nKharekhari Village, near Foy Sagar, Ajmer, Rajasthan 305005  \nOffice: **9116 633585** | Dispensary: **9116 622585**  \nThey also list a city dispensary at **Gujar Mohalla, Kaluram ki Bagichi, Paharganj, Ajmer 305001**, phone **7728 885105**. Call first, explain that this is a frightened community cat with a possible leg injury, and ask whether they can receive her immediately and whether someone can help with safe capture. ([tolfa.in](https://tolfa.in/who-we-are/location/?utm_source=openai))\n\nA nearer private option with X-ray facilities listed is **Shree Vet Hospital**, Shop No. 1 & 2, Maa Bhawani Complex, near Canara Bank, Makadwali Road, Ajmer 305001; **9460111191**. Its site says it treats cats and provides on-site X-ray and urgent stabilisation, which can be useful for a suspected leg injury. Please call to confirm current hours and acceptance before travelling. ([shreevethospital.com](https://shreevethospital.com/?utm_source=openai))",
+      "citations": [
+        {
+          "url": "https://tolfa.in/who-we-are/location/?utm_source=openai",
+          "title": "Location - TOLFA",
+          "start_index": 1317,
+          "end_index": 1386
+        },
+        {
+          "url": "https://shreevethospital.com/?utm_source=openai",
+          "title": "Shree Vet Hospital | Veterinary Hospital & Diagnostics in Ajmer",
+          "start_index": 1770,
+          "end_index": 1843
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 7.83,
+  "history_messages": 0,
+  "completed_at": "2026-10-31T01:31:29.262308+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "northern_treatment"
+}

@@ -1,0 +1,61 @@
+{
+  "started_at": "2026-10-31T01:30:24.911461+00:00",
+  "control": "direct_open",
+  "question": "Open https://www.who.int/news-room/fact-sheets/detail/rabies and say how long it recommends washing a bite wound. Cite this page.",
+  "method": "Same API model and search tool; only a helpful-assistant system prompt; not an acceptance case.",
+  "response": {
+    "id": "resp_045f0a27769f29f6016ae544b0f94c87d1903a7f4d0f0b837d",
+    "incomplete_details": null,
+    "model": "gpt-5.6-terra",
+    "status": "completed",
+    "usage": {
+      "input_tokens": 8530,
+      "input_tokens_details": {
+        "cached_tokens": 4362,
+        "cache_write_tokens": 0
+      },
+      "output_tokens": 89,
+      "output_tokens_details": {
+        "reasoning_tokens": 38
+      },
+      "total_tokens": 8619
+    },
+    "output": [
+      {
+        "id": "ws_045f0a27769f29f6016ae544b1b72487d1b3eb627d9fa51be0",
+        "action": {
+          "type": "open_page",
+          "url": "https://www.who.int/news-room/fact-sheets/detail/rabies"
+        },
+        "status": "completed",
+        "type": "web_search_call"
+      },
+      {
+        "id": "msg_045f0a27769f29f6016ae544b2782487d1abdd4dd52f7c4db2",
+        "content": [
+          {
+            "annotations": [
+              {
+                "end_index": 231,
+                "start_index": 163,
+                "title": "Rabies",
+                "type": "url_citation",
+                "url": "https://www.who.int/news-room/fact-sheets/detail/rabies"
+              }
+            ],
+            "text": "WHO recommends washing a bite or scratch wound with soap and water for **at least 15 minutes**, as soon as possible after exposure, and seeking medical attention. ([who.int](https://www.who.int/news-room/fact-sheets/detail/rabies))",
+            "type": "output_text",
+            "logprobs": []
+          }
+        ],
+        "role": "assistant",
+        "status": "completed",
+        "type": "message",
+        "phase": "final_answer"
+      }
+    ]
+  },
+  "answer": "WHO recommends washing a bite or scratch wound with soap and water for **at least 15 minutes**, as soon as possible after exposure, and seeking medical attention. ([who.int](https://www.who.int/news-room/fact-sheets/detail/rabies))",
+  "status": "completed",
+  "seconds": 2.134
+}

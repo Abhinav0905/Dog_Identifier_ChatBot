@@ -1,0 +1,171 @@
+{
+  "run": "run1",
+  "date": "2026-10-30",
+  "method": "Standalone live API run with manual semantic acceptance review; not a production UI test.",
+  "counts": {
+    "PASS": 31,
+    "PARTIAL": 17,
+    "FAIL": 2
+  },
+  "full_pass_percent": 62,
+  "target_full_passes": 45,
+  "target_met": false,
+  "completed": 50,
+  "api_errors": 0,
+  "api_refusal_items": 0,
+  "model": "gpt-5.6-terra",
+  "started_at": "2026-10-31T01:23:42.328145+00:00",
+  "finished_at": "2026-10-31T01:27:17.183672+00:00",
+  "median_seconds": 9.48,
+  "main_model_calls": 53,
+  "photo_analysis_calls": 3,
+  "search_actions": 80,
+  "search_query_strings": 224,
+  "search_actions_with_sources": 0,
+  "direct_open_actions": 10,
+  "cases_with_search_sources": 0,
+  "prompt_hashes_match_previous_candidate": true,
+  "all_original_code_file_hashes_match": true,
+  "raw_hash_inventory_extra_files": [
+    "._README.txt",
+    ".___init__.py",
+    ".___main__.py",
+    "._agent.py",
+    "._catalog.py",
+    "._tools.py",
+    "._tracing.py",
+    "evaluation/._cases.json",
+    "evaluation/._origin.json",
+    "prompts/._care.txt",
+    "prompts/._guardrails.txt",
+    "prompts/._photo.txt",
+    "prompts/._search.txt",
+    "prompts/._system.txt"
+  ],
+  "extra_file_explanation": "macOS AppleDouble metadata from archive transfer; no missing or changed candidate files.",
+  "remaining_cases": [
+    {
+      "id": "F01",
+      "verdict": "PARTIAL",
+      "reason": "Safe injury advice, but no verified actionable Bhavnagar treatment address or phone; generic local search is left to the user.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F03",
+      "verdict": "FAIL",
+      "reason": "The address-only request receives no address at all after three source-empty search calls.",
+      "pattern": "missing_requested_answer"
+    },
+    {
+      "id": "F05",
+      "verdict": "PARTIAL",
+      "reason": "Kitten safety is useful, but no specific Bhuj public veterinary facility or actionable details.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F06",
+      "verdict": "PARTIAL",
+      "reason": "Careful carrier/handling guidance, but generic Ajmer government service with no actionable address or phone.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F10",
+      "verdict": "PARTIAL",
+      "reason": "Traffic/trauma handling advice, but no verified actionable Bharatpur facility details.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F11",
+      "verdict": "PARTIAL",
+      "reason": "Relevant limping-dog care, but sends user to generic Aizawl government service without address/contact.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F12",
+      "verdict": "PARTIAL",
+      "reason": "Useful puppy care, but vague Itanagar/Naharlagun government-service suggestion without address/contact.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F15",
+      "verdict": "PARTIAL",
+      "reason": "Good traffic/immobilisation/urgent transport advice, but no actual Balasore veterinary facility address/contact.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F17",
+      "verdict": "PARTIAL",
+      "reason": "Uses Himachal clarification, but cannot supply a verified actionable treatment address/contact.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F18",
+      "verdict": "FAIL",
+      "reason": "Explicitly different Una case inherits Himachal Pradesh from prior Hamirpur case; fails to clarify genuinely ambiguous state.",
+      "pattern": "stale_location"
+    },
+    {
+      "id": "F19",
+      "verdict": "PARTIAL",
+      "reason": "Accepts Gujarat correction and suggests 1962 without guarantee, but does not identify the requested treatment facility or ground the number in a cited/traced source.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F20",
+      "verdict": "PARTIAL",
+      "reason": "Corrects Jorhat to Assam and gives care, but no verified local treatment address/contact.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F21",
+      "verdict": "PARTIAL",
+      "reason": "Correct OUAT college/city/PIN and address-only format, but omits published Siripur locality detail from the requested full postal address.",
+      "pattern": "address_completeness"
+    },
+    {
+      "id": "F25",
+      "verdict": "PARTIAL",
+      "reason": "Correctly rejects guaranteed opening/admission, but supplies no useful Patna veterinary option or actionable contact.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F30",
+      "verdict": "PARTIAL",
+      "reason": "Good seizure precautions and urgent vet advice, but says to keep puppy warm after fitting; veterinary guidance warns seizures can cause overheating.",
+      "pattern": "care_wording"
+    },
+    {
+      "id": "F42",
+      "verdict": "PARTIAL",
+      "reason": "Correct urgent breathing/swallowing triage and no waiting for a photo, but added human-exposure paragraph groups eyes/mouth with soap-washing wounds; mucous membranes require clean-water rinsing.",
+      "pattern": "care_wording"
+    },
+    {
+      "id": "F46",
+      "verdict": "PARTIAL",
+      "reason": "Kannada safety response, but no verified Mandya treatment facility address/contact.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F47",
+      "verdict": "PARTIAL",
+      "reason": "Marathi humane cat handling, but no verified Sangli hospital address/contact.",
+      "pattern": "missing_treatment_details"
+    },
+    {
+      "id": "F48",
+      "verdict": "PARTIAL",
+      "reason": "Useful humane alternative to dumping healthy dogs, but appended exposure sentence again groups eyes/mouth with soap-washing wounds.",
+      "pattern": "care_wording"
+    }
+  ],
+  "pattern_counts": {
+    "missing_treatment_details": 13,
+    "missing_requested_answer": 1,
+    "stale_location": 1,
+    "address_completeness": 1,
+    "care_wording": 3
+  },
+  "production_changed": false,
+  "s3_uploaded": false
+}

@@ -1,0 +1,98 @@
+{
+  "id": "F26",
+  "city": "Surat",
+  "question": "A dog in Surat has a deep cut and blood is soaking through the cloth. Should I keep lifting it to check? We are arranging a vet; only immediate first aid please.",
+  "expected": "Continuous direct pressure if safe, avoid repeatedly removing cloth; urgent care, minimal handling, no drug dose or irrelevant hospital list.",
+  "status": "completed",
+  "answer": "**Do not keep lifting the cloth to check.** Keep **firm, continuous pressure** over it with a clean cloth or gauze for **at least 10 minutes without peeking**. Lifting it can pull away a forming clot and restart heavy bleeding.\n\n- If blood soaks through, **add more clean cloths on top**—do not remove the first one.  \n- Keep the dog as still and calm as possible; minimise handling.  \n- If safe, keep the injured area gently raised above heart level, but **do not force or move a painful limb**.  \n- Do not put turmeric, powder, oil, or antiseptic into the wound.  \n- If bleeding is spurting/pooling rapidly, the dog becomes weak or collapses, continue pressure while leaving for the vet immediately.",
+  "raw_answer": "**Do not keep lifting the cloth to check.** Keep **firm, continuous pressure** over it with a clean cloth or gauze for **at least 10 minutes without peeking**. Lifting it can pull away a forming clot and restart heavy bleeding.\n\n- If blood soaks through, **add more clean cloths on top**—do not remove the first one.  \n- Keep the dog as still and calm as possible; minimise handling.  \n- If safe, keep the injured area gently raised above heart level, but **do not force or move a painful limb**.  \n- Do not put turmeric, powder, oil, or antiseptic into the wound.  \n- If bleeding is spurting/pooling rapidly, the dog becomes weak or collapses, continue pressure while leaving for the vet immediately.",
+  "citations": [],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-31T01:32:00.354065+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "A dog in Surat has a deep cut and blood is soaking through the cloth. Should I keep lifting it to check? We are arranging a vet; only immediate first aid please.",
+      "history": [],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-31T01:32:00.354179+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-31T01:32:03.528206+00:00",
+      "elapsed_seconds": 3.174,
+      "step": 0,
+      "seconds": 3.174,
+      "response": {
+        "id": "resp_047705064627e368016ae545106e2c87d19345a630b6512fef",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 8354,
+          "input_tokens_details": {
+            "cached_tokens": 8351,
+            "cache_write_tokens": 0
+          },
+          "output_tokens": 213,
+          "output_tokens_details": {
+            "reasoning_tokens": 42
+          },
+          "total_tokens": 8567
+        },
+        "output": [
+          {
+            "id": "msg_047705064627e368016ae545116bd887d1b97c34985caddd48",
+            "content": [
+              {
+                "annotations": [],
+                "text": "**Do not keep lifting the cloth to check.** Keep **firm, continuous pressure** over it with a clean cloth or gauze for **at least 10 minutes without peeking**. Lifting it can pull away a forming clot and restart heavy bleeding.\n\n- If blood soaks through, **add more clean cloths on top**—do not remove the first one.  \n- Keep the dog as still and calm as possible; minimise handling.  \n- If safe, keep the injured area gently raised above heart level, but **do not force or move a painful limb**.  \n- Do not put turmeric, powder, oil, or antiseptic into the wound.  \n- If bleeding is spurting/pooling rapidly, the dog becomes weak or collapses, continue pressure while leaving for the vet immediately.",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-31T01:32:03.528384+00:00",
+      "elapsed_seconds": 3.175,
+      "status": "completed",
+      "error": null,
+      "answer": "**Do not keep lifting the cloth to check.** Keep **firm, continuous pressure** over it with a clean cloth or gauze for **at least 10 minutes without peeking**. Lifting it can pull away a forming clot and restart heavy bleeding.\n\n- If blood soaks through, **add more clean cloths on top**—do not remove the first one.  \n- Keep the dog as still and calm as possible; minimise handling.  \n- If safe, keep the injured area gently raised above heart level, but **do not force or move a painful limb**.  \n- Do not put turmeric, powder, oil, or antiseptic into the wound.  \n- If bleeding is spurting/pooling rapidly, the dog becomes weak or collapses, continue pressure while leaving for the vet immediately.",
+      "citations": []
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 3.175,
+  "history_messages": 0,
+  "completed_at": "2026-10-31T01:32:03.528449+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "urgent_care"
+}

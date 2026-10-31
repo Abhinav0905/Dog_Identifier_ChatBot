@@ -1,0 +1,244 @@
+{
+  "id": "F07",
+  "city": "Ajmer",
+  "question": "Does the first facility you listed collect cats from the street at night? Give a pickup contact only if it is explicitly published.",
+  "expected": "Keep entity; distinguish treatment from collection; supported pickup only or precise uncertainty, no guaranteed rescue.",
+  "status": "completed",
+  "answer": "TOLFA explicitly publishes that its small-animal rescue team collects **street dogs and cats**, and says its teams operate **from 8 am until 11 pm**. However, its published rescue helpline is only listed as available **8 am–5 pm**, so I cannot verify a night-time pickup booking/contact number. ([tolfa.in](https://tolfa.in/who-we-are/team-tolfa/?utm_source=openai))\n\n**Published pickup/rescue contact:** **9829 965585** — TOLFA ambulance/rescue helpline, **8 am–5 pm**. ([tolfa.in](https://tolfa.in/local-services/rescue/?utm_source=openai))",
+  "raw_answer": "TOLFA explicitly publishes that its small-animal rescue team collects **street dogs and cats**, and says its teams operate **from 8 am until 11 pm**. However, its published rescue helpline is only listed as available **8 am–5 pm**, so I cannot verify a night-time pickup booking/contact number. ([tolfa.in](https://tolfa.in/who-we-are/team-tolfa/?utm_source=openai))\n\n**Published pickup/rescue contact:** **9829 965585** — TOLFA ambulance/rescue helpline, **8 am–5 pm**. ([tolfa.in](https://tolfa.in/local-services/rescue/?utm_source=openai))",
+  "citations": [
+    {
+      "url": "https://tolfa.in/who-we-are/team-tolfa/?utm_source=openai",
+      "title": "Team TOLFA - TOLFA",
+      "start_index": 295,
+      "end_index": 366
+    },
+    {
+      "url": "https://tolfa.in/local-services/rescue/?utm_source=openai",
+      "title": "Rescue - TOLFA",
+      "start_index": 471,
+      "end_index": 542
+    }
+  ],
+  "trace": [
+    {
+      "stage": "turn_start",
+      "at": "2026-10-31T01:31:29.263277+00:00",
+      "elapsed_seconds": 0.0,
+      "question": "Does the first facility you listed collect cats from the street at night? Give a pickup contact only if it is explicitly published.",
+      "history": [
+        {
+          "role": "user",
+          "content": "A frightened cat with an injured leg is hiding behind a shop in Ajmer, Rajasthan. How should we transport her, and which local veterinary facility could treat her?"
+        },
+        {
+          "role": "assistant",
+          "content": "Keep the cat **quiet, contained, and away from traffic**. Because she is frightened and may have a painful leg, do not reach into the hiding place or try to pull her out.\n\n**Safer transport**\n1. Bring a secure cat carrier if possible; otherwise use a strong cardboard box with air holes and a firm lid.\n2. Place the open carrier/box near her hiding spot, with a little food at the far end, and give her space to enter voluntarily.\n3. Once she is inside, close it gently, cover it loosely with a cloth to reduce stress, and keep the carrier level in the vehicle.\n4. Do not try to straighten, splint, or massage the leg. Do not give human pain medicines or force food/water.\n5. If she cannot be safely contained, ask the clinic whether they can advise a local trained handler—do not chase her or grab her if she panics.\n\nFor treatment, a well-supported option is:\n\n**TOLFA Animal Hospital**  \nKharekhari Village, near Foy Sagar, Ajmer, Rajasthan 305005  \nOffice: **9116 633585** | Dispensary: **9116 622585**  \nThey also list a city dispensary at **Gujar Mohalla, Kaluram ki Bagichi, Paharganj, Ajmer 305001**, phone **7728 885105**. Call first, explain that this is a frightened community cat with a possible leg injury, and ask whether they can receive her immediately and whether someone can help with safe capture. ([tolfa.in](https://tolfa.in/who-we-are/location/?utm_source=openai))\n\nA nearer private option with X-ray facilities listed is **Shree Vet Hospital**, Shop No. 1 & 2, Maa Bhawani Complex, near Canara Bank, Makadwali Road, Ajmer 305001; **9460111191**. Its site says it treats cats and provides on-site X-ray and urgent stabilisation, which can be useful for a suspected leg injury. Please call to confirm current hours and acceptance before travelling. ([shreevethospital.com](https://shreevethospital.com/?utm_source=openai))\nhttps://tolfa.in/who-we-are/location/?utm_source=openai\nhttps://shreevethospital.com/?utm_source=openai"
+        }
+      ],
+      "image_ids": [],
+      "prompt_hashes": {
+        "system": "49937d53873fe0f1b9f2c878454f9e2e06b72ca3a21640c71b4ce43dc7ffe810",
+        "guardrails": "1348fb5e7e654c15545a1f520789388b070d814d87c34fa1239cb94ed3c127bf",
+        "care": "2c15c01bd2ffe5080b1f0a9ecdcbe8d635e33ec222b61ed8ba66b911ab1e3213",
+        "search": "b84269d78fa405800fb8e8c9cfba7c1d6c05d8095ac26bc4ed831cef4e3b424b",
+        "photo": "d5cd9986394c2ec78dd42c2ce177a744b0bb3321e1e7b2563a9ca509c7059e3d"
+      },
+      "model": "gpt-5.6-terra"
+    },
+    {
+      "stage": "agent_request",
+      "at": "2026-10-31T01:31:29.263416+00:00",
+      "elapsed_seconds": 0.0,
+      "step": 0,
+      "available_tools": [
+        "web_search",
+        "analyze_photo"
+      ],
+      "remaining_seconds": 80.0
+    },
+    {
+      "stage": "agent",
+      "at": "2026-10-31T01:31:33.669592+00:00",
+      "elapsed_seconds": 4.407,
+      "step": 0,
+      "seconds": 4.406,
+      "response": {
+        "id": "resp_0ba1ef29abe46541016ae544f155c087d19ed34efa4fffaf8d",
+        "incomplete_details": null,
+        "model": "gpt-5.6-terra",
+        "status": "completed",
+        "usage": {
+          "input_tokens": 17135,
+          "input_tokens_details": {
+            "cached_tokens": 8348,
+            "cache_write_tokens": 523
+          },
+          "output_tokens": 236,
+          "output_tokens_details": {
+            "reasoning_tokens": 95
+          },
+          "total_tokens": 17371
+        },
+        "output": [
+          {
+            "id": "ws_0ba1ef29abe46541016ae544f2325487d1bb3ce6b647837140",
+            "action": {
+              "query": "site:tolfa.in Ajmer rescue pickup night street cats contact TOLFA",
+              "type": "search",
+              "queries": [
+                "site:tolfa.in Ajmer rescue pickup night street cats contact TOLFA",
+                "site:tolfa.in emergency rescue contact Ajmer TOLFA ambulance",
+                "TOLFA Ajmer street animal pickup night cat rescue contact"
+              ],
+              "sources": [
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/local-services/rescue/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/contact/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/who-we-are/team-tolfa/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/local-services/owned-animal-care/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/local-services/abc/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/who-we-are/our-facilities/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfacharity.org/rescue-and-care/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/our-projects/rescue-and-care/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/local-services/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/how-to-help/corporate-sponsorship/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/who-we-are/"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.globalgiving.org/pfil/55864/projdoc.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/wp-content/uploads/2022/07/INDIA-Annual-Report-2020-21.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/wp-content/uploads/2022/07/INDIA-Annual-Report-2018-19.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://awbi.gov.in/uploads/documents/167765247993Authorization%20Letter%20Colony%20Animal%20Caretaker%20List%20as%2016.02.2023.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.globalgiving.org/pfil/26817/projdoc.pdf"
+                },
+                {
+                  "type": "url",
+                  "url": "https://www.reddit.com/r/ajmer/comments/1jgh7t4"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/who-we-are/team-tolfa/?utm_source=openai"
+                },
+                {
+                  "type": "url",
+                  "url": "https://tolfa.in/local-services/rescue/?utm_source=openai"
+                }
+              ]
+            },
+            "status": "completed",
+            "type": "web_search_call"
+          },
+          {
+            "id": "msg_0ba1ef29abe46541016ae544f4772487d1a379f8d4a7768a0c",
+            "content": [
+              {
+                "annotations": [
+                  {
+                    "end_index": 366,
+                    "start_index": 295,
+                    "title": "Team TOLFA - TOLFA",
+                    "type": "url_citation",
+                    "url": "https://tolfa.in/who-we-are/team-tolfa/?utm_source=openai"
+                  },
+                  {
+                    "end_index": 542,
+                    "start_index": 471,
+                    "title": "Rescue - TOLFA",
+                    "type": "url_citation",
+                    "url": "https://tolfa.in/local-services/rescue/?utm_source=openai"
+                  }
+                ],
+                "text": "TOLFA explicitly publishes that its small-animal rescue team collects **street dogs and cats**, and says its teams operate **from 8 am until 11 pm**. However, its published rescue helpline is only listed as available **8 am–5 pm**, so I cannot verify a night-time pickup booking/contact number. ([tolfa.in](https://tolfa.in/who-we-are/team-tolfa/?utm_source=openai))\n\n**Published pickup/rescue contact:** **9829 965585** — TOLFA ambulance/rescue helpline, **8 am–5 pm**. ([tolfa.in](https://tolfa.in/local-services/rescue/?utm_source=openai))",
+                "type": "output_text",
+                "logprobs": []
+              }
+            ],
+            "role": "assistant",
+            "status": "completed",
+            "type": "message",
+            "phase": "final_answer"
+          }
+        ]
+      }
+    },
+    {
+      "stage": "turn_end",
+      "at": "2026-10-31T01:31:33.669814+00:00",
+      "elapsed_seconds": 4.407,
+      "status": "completed",
+      "error": null,
+      "answer": "TOLFA explicitly publishes that its small-animal rescue team collects **street dogs and cats**, and says its teams operate **from 8 am until 11 pm**. However, its published rescue helpline is only listed as available **8 am–5 pm**, so I cannot verify a night-time pickup booking/contact number. ([tolfa.in](https://tolfa.in/who-we-are/team-tolfa/?utm_source=openai))\n\n**Published pickup/rescue contact:** **9829 965585** — TOLFA ambulance/rescue helpline, **8 am–5 pm**. ([tolfa.in](https://tolfa.in/local-services/rescue/?utm_source=openai))",
+      "citations": [
+        {
+          "url": "https://tolfa.in/who-we-are/team-tolfa/?utm_source=openai",
+          "title": "Team TOLFA - TOLFA",
+          "start_index": 295,
+          "end_index": 366
+        },
+        {
+          "url": "https://tolfa.in/local-services/rescue/?utm_source=openai",
+          "title": "Rescue - TOLFA",
+          "start_index": 471,
+          "end_index": 542
+        }
+      ]
+    }
+  ],
+  "error": null,
+  "api_refusal_items": [],
+  "elapsed_seconds": 4.407,
+  "history_messages": 2,
+  "completed_at": "2026-10-31T01:31:33.669886+00:00",
+  "verdict": "UNREVIEWED",
+  "verdict_note": "A completed answer is not automatically a correctness pass.",
+  "group": "northern_treatment"
+}
