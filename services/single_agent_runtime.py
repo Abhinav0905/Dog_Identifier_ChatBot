@@ -98,7 +98,7 @@ def answer(session_id, question, *, image_bytes=None, media_type="image/jpeg", d
                 ImageOps.exif_transpose(image).convert("RGB").save(path, format="JPEG", quality=90)
             result = agent.turn(question or "Please assess this animal photo.", history, image_path=path)
     for event in result["trace"]:
-        if event["stage"] in {"function_result", "agent_error", "turn_end"}:
+        if event["stage"] in {"function_result", "contact_answer_repair", "contact_withheld", "agent_error", "turn_end"}:
             agent_trace.decision("single_agent." + event["stage"], event=event)
     if result["error"] or result["status"] != "completed" or not result["answer"]:
         raise HTTPException(503, "I could not complete this answer. Please try again.")

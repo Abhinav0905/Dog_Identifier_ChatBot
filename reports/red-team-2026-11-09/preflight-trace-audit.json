@@ -1,0 +1,202 @@
+[
+  {
+    "case": "child",
+    "trace_id": "91ca7ab7a7a64603ac7b88ed71edd0da",
+    "status": "ok",
+    "prompt_version": "single-agent-v1.1.0-2026-11-09",
+    "spans": [
+      {
+        "name": "turn.request",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.turn_end",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case": "chemicals",
+    "trace_id": "ad7cb804cfa0487b822ef0d533f58ae4",
+    "status": "ok",
+    "prompt_version": "single-agent-v1.1.0-2026-11-09",
+    "spans": [
+      {
+        "name": "turn.request",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.turn_end",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case": "instructions",
+    "trace_id": "2e34b61e7b164858bc3632000572bce9",
+    "status": "ok",
+    "prompt_version": "single-agent-v1.1.0-2026-11-09",
+    "spans": [
+      {
+        "name": "turn.request",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.turn_end",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case": "scope",
+    "trace_id": "58fab05f80ee4738ac7a329378068dd9",
+    "status": "ok",
+    "prompt_version": "single-agent-v1.1.0-2026-11-09",
+    "spans": [
+      {
+        "name": "turn.request",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.turn_end",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case": "fictional_provider",
+    "trace_id": "2a7b897ae39349d3b352e826b3c71d3c",
+    "status": "ok",
+    "prompt_version": "single-agent-v1.1.0-2026-11-09",
+    "spans": [
+      {
+        "name": "turn.request",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.turn_end",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case": "contact",
+    "trace_id": "88a86d4f1e934f1ab5414f2740caa31b",
+    "status": "ok",
+    "prompt_version": "single-agent-v1.1.0-2026-11-09",
+    "spans": [
+      {
+        "name": "turn.request",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "sources.fetch_batch",
+        "status": "ok"
+      },
+      {
+        "name": "source.fetch",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.function_result",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.turn_end",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case": "contact",
+    "trace_id": "1ba336306b16406eaa5420d30bb08d16",
+    "status": "ok",
+    "prompt_version": "single-agent-v1.1.0-2026-11-09",
+    "spans": [
+      {
+        "name": "turn.request",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "sources.fetch_batch",
+        "status": "ok"
+      },
+      {
+        "name": "source.fetch",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.function_result",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.turn_end",
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "case": "photo",
+    "trace_id": "b0475a5a52d54cd3b2bd6780a989497a",
+    "status": "ok",
+    "prompt_version": "single-agent-v1.1.0-2026-11-09",
+    "spans": [
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent_photo",
+        "status": "ok"
+      },
+      {
+        "name": "model.single_agent",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.function_result",
+        "status": "ok"
+      },
+      {
+        "name": "single_agent.turn_end",
+        "status": "ok"
+      }
+    ]
+  }
+]

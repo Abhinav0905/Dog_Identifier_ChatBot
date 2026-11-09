@@ -49,7 +49,7 @@ def main():
     from openai import OpenAI
     agent = SingleAgent(OpenAI(max_retries=0), config, prompts)
     runtime = {"started_at": utc_now(), "method": "Isolated live Responses API; not a production UI test",
-               "config": asdict(config), "tools": ["web_search", "analyze_photo"],
+               "config": asdict(config), "tools": ["web_search", "analyze_photo", "verify_contact"],
                "system_lines": len(prompts.system.splitlines()), "prompt_hashes": prompts.hashes(),
                "code_hashes": code_hashes(), "groups": {k: len(v) for k, v in groups.items()},
                "s3_reads": 0, "production_database_access": False, "production_changes": False,

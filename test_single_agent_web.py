@@ -39,19 +39,21 @@ class SingleAgentHTTPTests(unittest.TestCase):
         return self.client.post("/v1/chat/query", json={"session_id": self.session, "message": text})
 
     def test_real_agent_http_history_number_contract_and_private_traces(self):
-        self.model.responses.create.side_effect = [response([message("01894230000")], "01894230000"),
+        call = {"type": "function_call", "name": "verify_contact", "call_id": "verify1", "arguments": json.dumps({"institution": "Veterinary College Palampur", "phone": "01894230000", "source_url": "https://example.org/college"})}
+        self.model.responses.create.side_effect = [response([call]), response([message("01894230000")], "01894230000"),
                                                    response([message("Yes.")], "Yes.")]
         with patch.object(app.query_router, "plan_text_turn", side_effect=AssertionError("Legacy router")), \
-             patch.object(app.guardrails, "check_input", side_effect=AssertionError("Legacy filter")):
+             patch.object(app.guardrails, "check_input", side_effect=AssertionError("Legacy filter")), \
+             patch("simple_agent.contacts._fetch_sources", return_value={"https://example.org/college": "Veterinary College Palampur\nPhone: 01894230000"}):
             first = self.post("Only the college number")
             second = self.post("Is that the same college?")
         self.assertEqual(first.status_code, 200, first.text)
         self.assertEqual(first.json()["response"], "01894230000")
         self.assertEqual(first.json()["answer_format"], "phone_only")
         self.assertEqual(second.status_code, 200)
-        self.assertEqual(first.headers["x-prompt-package-version"], "single-agent-v1.0.0-2026-10-28")
+        self.assertEqual(first.headers["x-prompt-package-version"], load_bundle(config.BASE_DIR / "prompts/V1").version)
         transcript = self.model.responses.create.call_args.kwargs["input"]
-        self.assertIn({"role": "assistant", "content": "01894230000"}, transcript)
+        self.assertTrue(any(x.get("role") == "assistant" and x["content"].startswith("01894230000") for x in transcript))
         history = db.get_chat_history(self.session)
         trace = agent_trace.read(history[-1]["metadata"]["stage_trace"]["id"])
         self.assertEqual(trace["prompt_version"], first.headers["x-prompt-package-version"])

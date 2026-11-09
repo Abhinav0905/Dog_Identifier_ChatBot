@@ -1,0 +1,4 @@
+175 unique unittest checks passed (duplicate imported tests removed).
+Modules: test_single_agent_contacts, test_single_agent_web, test_simple_agent_modular, test_prompt_http, test_prompt_store, test_agent_trace, test_web_operations, test_text_turns, test_web_region_release, test_search_evidence.
+GAIA_ENV_FILE=/dev/null; no external model calls in these checks.
+git diff --check passed.
