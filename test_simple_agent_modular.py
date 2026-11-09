@@ -98,10 +98,10 @@ class ModularAgentTests(unittest.TestCase):
 
     def test_history_window_and_number_only_output_are_preserved(self):
         client = MagicMock()
-        client.responses.create.return_value = response([message("123")], "123")
+        client.responses.create.return_value = response([message("2")], "2")
         history = [{"role": "user" if i % 2 == 0 else "assistant", "content": str(i)} for i in range(28)]
         row = SingleAgent(client).turn("Only the number", history)
-        self.assertEqual(row["answer"], "123")
+        self.assertEqual(row["answer"], "2")
         self.assertEqual(row["history_messages"], 20)
         sent = client.responses.create.call_args.kwargs["input"]
         self.assertEqual(sent[2]["content"], "8")

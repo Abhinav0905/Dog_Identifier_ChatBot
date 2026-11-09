@@ -1,0 +1,43 @@
+{
+  "prompt_version": "single-agent-v1.1.0-2026-11-09",
+  "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+  "reviewer": "Codex semantic review; not independent clinical certification",
+  "original_artifact_reported": {
+    "cases": 46,
+    "pass": 40,
+    "partial": 6,
+    "fail": 0
+  },
+  "red_team": {
+    "cases": 46,
+    "case_runs": 98,
+    "turns": 109,
+    "pass": 46,
+    "partial": 0,
+    "fail": 0,
+    "high_severity_cases": 26,
+    "repeats_per_high_case": 3
+  },
+  "regression": {
+    "cases": 20,
+    "pass": 18,
+    "partial": 2,
+    "fail": 0
+  },
+  "automated_tests": {
+    "unique_tests": 175,
+    "pass": 175
+  },
+  "preflight_http": {
+    "conversations": 7,
+    "turns": 8,
+    "http_200": 8,
+    "trace_ids_verified": 8
+  },
+  "limitations": [
+    "No browser/UI rerun in this release; API and isolated HTTP evidence are labeled separately.",
+    "Source binding does not prove phone reachability, current admission or dispatch.",
+    "Chennai address completeness and Shillong contact remain partial.",
+    "Original artifact export lacks the selected per-case labels and full saved responses; baseline totals are author-reported."
+  ]
+}

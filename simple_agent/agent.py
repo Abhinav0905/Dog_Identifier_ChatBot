@@ -6,6 +6,7 @@ import re
 import time
 
 from .catalog import PromptCatalog
+from .contacts import ContactVerificationTool
 from .tools import SearchTool, ImageAnalysisTool
 from .tracing import TraceRecorder, public_response, safe_error, utc_now
 
@@ -72,7 +73,9 @@ class SingleAgent:
         transcript = self.prompts.messages() + history[-20:] + [{"role": "user", "content": message}]
         trace.record("turn_start", question=question, history=history[-20:], image_ids=list(images),
                      prompt_hashes=self.prompts.hashes(), model=self.config.model)
-        definitions = [SearchTool.definition(), self.photo_tool.definition()]
+        contacts = ContactVerificationTool()
+        definitions = [SearchTool.definition(), self.photo_tool.definition(), contacts.definition()]
+        contact_repair_used = False
         calls_used = 0
         answer, status, error = "", "error", None
         sources, refusals = [], []
@@ -81,6 +84,9 @@ class SingleAgent:
             if remaining <= 0:
                 error = {"type": "TurnDeadline"}
                 break
+            if step == self.config.max_steps - 1 and step > 0:
+                definitions = []
+                transcript.append({"role": "developer", "content": "This is the final response step. Answer now using the evidence already available. Keep useful safety guidance and supported provider facts. Use only nonempty contact fields returned by verify_contact; briefly state any requested field that remains unverified. Do not make more tool calls."})
             options = {"tools": definitions, "tool_choice": "auto", "max_tool_calls": max(1, self.config.tool_budget - calls_used)} if definitions else {}
             trace.record("agent_request", step=step, available_tools=[d.get("name", d["type"]) for d in definitions], remaining_seconds=round(remaining, 3))
             call_started = time.monotonic()
@@ -104,13 +110,31 @@ class SingleAgent:
                         error = {"type": "IncompleteResponse", "status": status}
                     elif not answer.strip():
                         status, error = "error", {"type": "EmptyAnswer"}
+                    elif contacts.unsupported_spans(answer) and not contact_repair_used and step + 1 < self.config.max_steps:
+                        contact_repair_used = True
+                        trace.record("contact_answer_repair", reason="unverified_phone", count=len(contacts.unsupported_spans(answer)))
+                        transcript.extend(continuation_items(outputs))
+                        transcript.append({"role": "developer", "content": "Your draft contains a phone that verify_contact has not verified in this turn. Verify it with that tool, or remove it and briefly state the phone could not be verified in the user's language. Preserve useful supported facts and the requested institution; do not substitute a different provider silently."})
+                        if calls_used >= self.config.tool_budget:
+                            definitions = []
+                        answer, status = "", "error"
+                        continue
                     break
                 # Opaque API reasoning state stays only in this continuation.
                 transcript.extend(continuation_items(outputs))
                 for call in functions:
                     try:
                         args = json.loads(call["arguments"])
-                        result = self.photo_tool.execute(args, images, deadline, trace) if call["name"] == "analyze_photo" else {"error": "Unknown tool."}
+                        if call["name"] == "analyze_photo":
+                            result = self.photo_tool.execute(args, images, deadline, trace)
+                        elif call["name"] == "verify_contact":
+                            result = contacts.execute(args, deadline)
+                            if result.get("verified"):
+                                source = {"url": result["source_url"], "title": result["institution"] + ": published contact"}
+                                if not any(c["url"] == source["url"] for c in sources):
+                                    sources.append(source)
+                        else:
+                            result = {"error": "Unknown tool."}
                     except Exception as exc:
                         result = {"error": safe_error(exc)}
                     trace.record("function_result", name=call["name"], arguments=call["arguments"], output=result)
@@ -123,7 +147,11 @@ class SingleAgent:
                 break
         else:
             error = {"type": "AgentStepLimit"}
-        rendered = re.sub(r"cite[^]*", "", answer).strip() if sources else answer.strip()
+        rendered = re.sub(r"cite[^]*", "", answer).strip()
+        unsupported = contacts.unsupported_spans(rendered)
+        if unsupported:
+            trace.record("contact_withheld", count=len(unsupported), reason="no_verified_source_binding")
+            rendered = contacts.withhold_unsupported(rendered)
         trace.record("turn_end", status=status, error=error, answer=rendered, citations=sources)
         if rendered:
             history.extend([{"role": "user", "content": question},

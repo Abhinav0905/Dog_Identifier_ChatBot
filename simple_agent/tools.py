@@ -1,4 +1,4 @@
-"""Two capabilities: native web search and an allowlisted image-analysis function."""
+"""Native web search and allowlisted image analysis; contact checks live in contacts.py."""
 import base64
 import hashlib
 import json
