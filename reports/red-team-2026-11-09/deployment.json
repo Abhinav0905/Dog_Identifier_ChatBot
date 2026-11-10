@@ -1,0 +1,150 @@
+{
+  "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+  "old_source_revision": "9d6b040a724816cbe54df8b2da7d3de27b861a4b",
+  "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+  "previous_prompt": "/home/ec2-user/ask-dorjee-single-prompts/current.releases/single-agent-v1.0.0-2026-10-28-b9c306840873",
+  "backup": "/home/ec2-user/gaia-deploy-backups/redteam-20261109T235951Z",
+  "rollback": "/home/ec2-user/gaia-deploy-backups/redteam-20261109T235951Z/rollback.py",
+  "incidents_before": 23,
+  "status": "active",
+  "health": {
+    "database": "ready",
+    "models": "recent_success",
+    "knowledge": {
+      "backend": "sqlite",
+      "status": "ready",
+      "sqlite_fallback_chunks": 156,
+      "chunks": 156,
+      "required_for_chat": false
+    },
+    "model_probe_performed": false,
+    "outbound_messages_sent": false,
+    "model_observations": [
+      {
+        "component": "model:single_agent",
+        "status": "ok",
+        "error_type": "",
+        "observed_at": "2026-11-09T23:33:08.451830+00:00"
+      }
+    ],
+    "observation_window_minutes": 30,
+    "functional_observations": [],
+    "status": "ready",
+    "alert_delivery_configured": false,
+    "alerts_needing_operator_attention": 0,
+    "version": "1.1.0-web-rc",
+    "prompt_catalog_version": "single-agent-v1.1.0-2026-11-09",
+    "prompt_package": {
+      "version": "single-agent-v1.1.0-2026-11-09",
+      "sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "status": "valid",
+      "engine": "single_agent"
+    },
+    "operational_prompt_package": {
+      "version": "srini-v2.9-2026-10-25",
+      "sha256": "a18f3fbb6fc727b5e10f9809cea433fdcd9f9490065e2fb4cf7eea6e396f4ee4",
+      "status": "ready",
+      "source": "local_files",
+      "reload_error": null
+    },
+    "chat_engine": "single_agent",
+    "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+    "india_only_scope": true,
+    "india_boundary_loaded": true,
+    "location_required_for_assessment": false,
+    "location_required_for_local_report": true,
+    "max_image_size_mb": 100,
+    "heic_supported": true,
+    "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+    "timestamp": "2026-11-09T23:59:54.399129+00:00"
+  },
+  "post_activation_checks": {
+    "public_https_conversations": 7,
+    "public_https_turns": 8,
+    "http_200": 8,
+    "semantic_pass_turns": 8,
+    "durable_traces_verified": 8,
+    "additional_laptop_curl_photo_pass": true,
+    "health_after": {
+      "database": "ready",
+      "models": "recent_success",
+      "knowledge": {
+        "backend": "sqlite",
+        "status": "ready",
+        "sqlite_fallback_chunks": 156,
+        "chunks": 156,
+        "required_for_chat": false
+      },
+      "model_probe_performed": false,
+      "outbound_messages_sent": false,
+      "model_observations": [
+        {
+          "component": "model:single_agent_photo",
+          "status": "ok",
+          "error_type": "",
+          "observed_at": "2026-11-10T00:02:45.256556+00:00"
+        },
+        {
+          "component": "model:single_agent",
+          "status": "ok",
+          "error_type": "",
+          "observed_at": "2026-11-10T00:02:47.322997+00:00"
+        }
+      ],
+      "observation_window_minutes": 30,
+      "functional_observations": [
+        {
+          "component": "fetch:page",
+          "status": "ok",
+          "count": 4,
+          "mean_latency_ms": 129.0
+        },
+        {
+          "component": "fetch:page",
+          "status": "unavailable",
+          "count": 1,
+          "mean_latency_ms": 84.0
+        },
+        {
+          "component": "fetch:queue",
+          "status": "ok",
+          "count": 5,
+          "mean_latency_ms": 0.0
+        }
+      ],
+      "status": "ready",
+      "alert_delivery_configured": false,
+      "alerts_needing_operator_attention": 0,
+      "version": "1.1.0-web-rc",
+      "prompt_catalog_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_package": {
+        "version": "single-agent-v1.1.0-2026-11-09",
+        "sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+        "status": "valid",
+        "engine": "single_agent"
+      },
+      "operational_prompt_package": {
+        "version": "srini-v2.9-2026-10-25",
+        "sha256": "a18f3fbb6fc727b5e10f9809cea433fdcd9f9490065e2fb4cf7eea6e396f4ee4",
+        "status": "ready",
+        "source": "local_files",
+        "reload_error": null
+      },
+      "chat_engine": "single_agent",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "india_only_scope": true,
+      "india_boundary_loaded": true,
+      "location_required_for_assessment": false,
+      "location_required_for_local_report": true,
+      "max_image_size_mb": 100,
+      "heic_supported": true,
+      "health_scope": "Local readiness and recent real requests; does not certify answers or rescue dispatch.",
+      "timestamp": "2026-11-10T00:02:47.447892+00:00"
+    },
+    "preflight_service_stopped": true,
+    "incidents_after": 23,
+    "test_incidents_created": 0,
+    "test_alerts_triggered": 0,
+    "initial_attempt_issue": "Laptop Python requests completed seven text turns, then photo upload failed before an HTTP response with SSLV3_ALERT_BAD_RECORD_MAC. Fresh full public-HTTPS run from EC2 and separate curl photo upload from laptop succeeded; TLS verification remained enabled."
+  }
+}

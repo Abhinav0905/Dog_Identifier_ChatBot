@@ -35,9 +35,18 @@
     "trace_ids_verified": 8
   },
   "limitations": [
-    "No browser/UI rerun in this release; API and isolated HTTP evidence are labeled separately.",
+    "No browser/UI rerun in this release; live API, isolated HTTP and public production HTTPS evidence are labeled separately.",
     "Source binding does not prove phone reachability, current admission or dispatch.",
     "Chennai address completeness and Shillong contact remain partial.",
     "Original artifact export lacks the selected per-case labels and full saved responses; baseline totals are author-reported."
-  ]
+  ],
+  "production_http": {
+    "conversations": 7,
+    "turns": 8,
+    "http_200": 8,
+    "semantic_pass_turns": 8,
+    "trace_ids_verified": 8,
+    "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+    "additional_laptop_photo": "PASS"
+  }
 }

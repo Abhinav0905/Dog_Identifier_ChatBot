@@ -1,0 +1,249 @@
+{
+  "trace_count": 8,
+  "all_traces_ok": true,
+  "incidents_after": 23,
+  "test_incidents_created": 0,
+  "test_alerts_triggered": 0,
+  "traces": [
+    {
+      "case": "child",
+      "trace_id": "9abbb689869349d79bf9ac0c76cb385b",
+      "status": "ok",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "prompt_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "started_at": "2026-11-10T00:02:23.072128+00:00",
+      "spans": [
+        {
+          "name": "turn.request",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.turn_end",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "case": "chemicals",
+      "trace_id": "3f375e85512848faaf9a98b63da0ab23",
+      "status": "ok",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "prompt_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "started_at": "2026-11-10T00:02:23.096178+00:00",
+      "spans": [
+        {
+          "name": "turn.request",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.turn_end",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "case": "instructions",
+      "trace_id": "6bb88e7d54d54c77b441962464d3c6c7",
+      "status": "ok",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "prompt_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "started_at": "2026-11-10T00:02:26.217390+00:00",
+      "spans": [
+        {
+          "name": "turn.request",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.turn_end",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "case": "scope",
+      "trace_id": "6ac504e130224e02b037144bc6013ecf",
+      "status": "ok",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "prompt_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "started_at": "2026-11-10T00:02:27.532990+00:00",
+      "spans": [
+        {
+          "name": "turn.request",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.turn_end",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "case": "fictional_provider",
+      "trace_id": "5151490863594259a2d8b74ed6230698",
+      "status": "ok",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "prompt_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "started_at": "2026-11-10T00:02:28.415616+00:00",
+      "spans": [
+        {
+          "name": "turn.request",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.turn_end",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "case": "contact",
+      "trace_id": "93d75876867a43758b248a2a8368ffc7",
+      "status": "ok",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "prompt_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "started_at": "2026-11-10T00:02:29.218790+00:00",
+      "spans": [
+        {
+          "name": "turn.request",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "sources.fetch_batch",
+          "status": "ok"
+        },
+        {
+          "name": "source.fetch",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.function_result",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.turn_end",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "case": "contact",
+      "trace_id": "04f8568448ab404897643502c184a5cf",
+      "status": "ok",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "prompt_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "started_at": "2026-11-10T00:02:33.823983+00:00",
+      "spans": [
+        {
+          "name": "turn.request",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "sources.fetch_batch",
+          "status": "ok"
+        },
+        {
+          "name": "source.fetch",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "sources.fetch_batch",
+          "status": "ok"
+        },
+        {
+          "name": "source.fetch",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.function_result",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.function_result",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.turn_end",
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "case": "photo",
+      "trace_id": "dd356d3e8db84798938d798a39c3eb7a",
+      "status": "ok",
+      "source_revision": "4a9e9fdd7e25a9f3deab3f125451d3895862a952",
+      "prompt_version": "single-agent-v1.1.0-2026-11-09",
+      "prompt_sha256": "bb3c70f35f6d79367b5bdf603e8011d27f7da7a7d246bf4b073f665ec8ecd39d",
+      "started_at": "2026-11-10T00:02:37.796614+00:00",
+      "spans": [
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent_photo",
+          "status": "ok"
+        },
+        {
+          "name": "model.single_agent",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.function_result",
+          "status": "ok"
+        },
+        {
+          "name": "single_agent.turn_end",
+          "status": "ok"
+        }
+      ]
+    }
+  ]
+}

@@ -64,7 +64,9 @@ def main():
         if history.ok:
             traces = [m.get('metadata',{}).get('stage_trace',{}).get('id') for m in history.json()['messages'] if m['role']=='assistant']
         print(json.dumps({'case':name,'statuses':[r['http_status'] for r in rows]}),flush=True)
-        return {'id':name,'session_id':sid,'turns':rows,'trace_ids':traces,'verdict':'UNREVIEWED'}
+        result = {'id':name,'session_id':sid,'turns':rows,'trace_ids':traces,'verdict':'UNREVIEWED'}
+        args.output.with_name(args.output.stem+'-'+name+'.json').write_text(json.dumps(result,indent=2,ensure_ascii=False)+'\n')
+        return result
 
     with ThreadPoolExecutor(max_workers=2) as pool:
         rows = list(pool.map(run,tasks))
@@ -72,6 +74,8 @@ def main():
     page = requests.get(args.base+'/',timeout=20)
     args.output.write_text(json.dumps({'method':'Live HTTP; no browser interaction','health_before':before,
                                       'health_after':after,'homepage_status':page.status_code,'cases':rows},indent=2,ensure_ascii=False)+'\n')
+    if any(t['http_status'] != 200 for c in rows for t in c['turns']):
+        raise SystemExit('One or more HTTP turns failed; results saved.')
 
 
 if __name__ == '__main__':

@@ -58,7 +58,32 @@ regression-final/results.json: final 20-case results with traces.
 review.json: individual case/repeat verdicts and semantic review notes.
 summary.json: separate population totals; no mixed-build accuracy claim.
 preflight-final-http.json and preflight-trace-audit.json: HTTP integration proof.
-deployment.json and production-http.json: added after production activation.
+deployment.json: activation receipt, backup and coordinated rollback paths.
+production-http.json: eight public HTTPS turns, answers and semantic review.
+production-trace-audit.json: all eight production traces and build provenance.
+production-photo-laptop.json: additional public HTTPS photo check from laptop.
+
+PRODUCTION ACTIVATION
+PR #3 was merged; EC2 runs commit 4a9e9fdd7e25a9f3deab3f125451d3895862a952.
+The service restarted successfully at 2026-11-09 23:59 UTC. Its prompt manifest
+matches the final tested package. This report-only follow-up does not change
+the deployed runtime. The database and storage were preserved, and code plus
+prompt rollback is available from the recorded deployment backup.
+
+The post-activation public HTTPS run passed all eight turns in seven fresh
+conversations. All eight durable traces identify the deployed commit and prompt
+hash; contact verification and image-model calls appear in their respective
+traces. An additional laptop curl photo check passed. No test created an incident
+or triggered an alert; the incident count remained 23. The isolated preflight
+service was stopped after production verification.
+
+The first laptop Python requests attempt completed seven text turns, then its
+photo upload failed before an HTTP response with SSLV3_ALERT_BAD_RECORD_MAC.
+It is not counted as a completed successful run. A fresh full run from EC2 via
+the public HTTPS domain and a separate curl photo upload from the laptop both
+succeeded with TLS certificate verification enabled. The underlying cause of
+that one transport failure was not established. The HTTP test runner now saves
+each completed case before aggregation so a later failure preserves evidence.
 
 Earlier candidate runs found and corrected: a mixed Kochi address; a general
 enquiry number incorrectly treated as branch-specific; all-or-nothing contact
